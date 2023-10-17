@@ -1,0 +1,248 @@
+= Movement
+
+== Kinematic movement
+
+Kinematic movement::
+Věci se prostě hýbou konstantní rychlostí, bez ohledu na fyziku.
+
+What is movement concerned about?::
+Pohyb postavy v rámci levelu (tedy obvykle ne animace ksichtů).
+
+What dimensions do we consider?::
+Obvykle jen dvě (a půl), pokud postava vysloveně nelétá.
+
+How is the orientation represented?::
+Jako úhel / směrový vektor / quaternion.
+
+What are the base kinematic characteristics? What is the difference between kinematic and steering (dynamic) movement algorithms?::
+* _Kinematic movement_ -- prostě se hýbou (často jen konstantní rychlostí) a nezajímají se o fyziku.
+* _Dynamic movement_ -- rychlost se mění, zohledňuje i zrychlení a respektuje fyziku (setrvačnost, tření, atd).
+
+How do we update the position?::
+Za předpokladu, že FPS jsou dostatečně vysoká, tak
++
+[source,bash]
+----
+position += velocity * delta_time # pozice ve světě
+orientation += rotation * delta_time # směr pohledu
+velocity += steering.linear * delta_time # rychlost
+rotation += steering.angular * delta_time # úhlová rychlost
+----
+
+What is the goal of seeking? How is the kinematic seek implemented?::
+Otočit postavu směrem k cíli.
++
+[source, bash]
+----
+velocity = normalize(target.position - position) * max_speed
+orientation = atan2(- velocity.x, velocity.z) # dívej se směrem k cíli
+rotation = 0
+----
+
+What is the difference between seek, flee, and arrival?::
+* _Seek_ -- jde k cíli.
+* _Flee_ -- jde od cíle.
+* _Arrival_ -- jde k cíli, ale zastaví se kousek před ním, aby do něj nevrazil.
+
+How is the kinematic arrival implemented?::
++
+[source,python]
+----
+vec = target.position - position
+if (|vec| >= radius)
+    seek
+----
+
+What is wandering? How is the kinematic wandering implemented?::
+Charakter jde přímo za nosem (`orientation`).
++
+[source,python]
+----
+velocity = orientation.vec * max_speed
+rotation = (random(0, 1) - random(0, 1)) * maxRotation # čísla v intervalu (-1, 1) ale nejčastěji kolem 0   
+----
+
+== Base steering behaviours
+
+Dynamic movement::
+Zrychlení, tření a podobné srandy.
+
+What are the characteristics of the dynamic movement? What is the goal of matching?::
+* _Dynamic movement / steering behaviour_ -- postavy akcelerují a brzdí v souladu s fyzikou.
+* _Variable matching -- vezmeš dvě kinematiky (proměnné), třeba orientaci postavy a orientaci cíle, a snažíš se postavu zarovnat podle cíle.
+
+How is the dynamic position update implemented?::
++
+[source,python]
+----
+position += velocity * time_delta
+orientation += rotation * time_delta
+velocity += steering.linear * time_delta # když steering.linear < 0, postava zpomaluje
+rotation += steering.angular * time_delta
+if (|velocity| > max_speed)
+    velocity = normalize(velocity)
+    velocity *= max_speed
+----
+
+How is the (dynamic) seek implemented?::
++
+[source,python]
+----
+steering.linear = max_acceleration * normalize(target.position - character.position)
+steering.angular = 0
+----
+
+Compare the base differences in implementations of dynamic behaviors seek, flee, and arrival::
+* _Seek_ -- `target.position - character.position`
+* _Flee_ -- `character.position - target.position`
+* _Arrival_ -- počítá optimální rychlost.
+
+How is the (dynamic) arrival implemented?::
++
+[source]
+----
+dir = target.position - character.position
+if (|dir| < target_radius)
+    return
+
+target_speed =|dir| > slow_radius
+    ? max_speed
+    : max_speed * |dir| / slow_radius
+
+target_velocity = normalize(dir) * target_speed
+
+steering.linear = (target_velocity - character.velocity) / time_to_target
+
+if (|steering.linear| > max_acceleration)
+    steering.linear = normalize(steering.linear) * max_acceleration
+
+steering.angular = 0
+----
+
+What is the goal of alignment?::
+Match the orientation of the character with the orientation of the target.
+
+What is the goal of velocity matching? How is it implemented?::
+Equalize the velocity of the character with the velocity of the target.
++
+[source]
+----
+steering.linear = (target_velocity - character.velocity) / time_to_target
+if (|steering.linear| > max_acceleration)
+    steering.linear = normalize(steering.linear) * max_acceleration
+
+steering.angular = 0
+----
+
+== Delegated and combined behaviors
+
+Delegated behaviours::
+Spočítají target a pak delegují práci seeku & flee, arrivalu nebo velocity matchingu.
+
+Do you know how the pursue behavior can improve over seek?::
+Předvídá, kde target bude.
+
+Describe the implementation of the pursue behavior.::
++
+[source, python]
+----
+dir = target.position - character.position
+if (speed <= |dir| / max_prediction)
+    prediction = max_prediction
+else
+    prediction = |dir| / speed
+seek(target.velocity * prediction)
+----
+
+Describe the face behavior and its implementation.::
+Chceme, aby se postava dívala na cíl.
++
+[source,python]
+----
+dir = target.position - character.position
+if (|dir| == 0)
+    return
+
+align(atan2(-dir.x, dir.z))
+----
+
+Describe "looking where you're going" behavior and its implementation.::
+Chceme, aby se postava dívala ve směru své rychlosti.
++
+[source, python]
+----
+if (|character.velocity| == 0)
+    return
+
+align(atan2(-character.velocity.x, character.velocity.z))
+----
+
+How can we improve over kinematic wandering?::
+Randomizovat orientaci místo úhlové rychlosti a započítat orientaci z minulého frameu. Pohyb pak bude méně trhaný.
+
+How is the base path following processed? How can you improve it? Are there any issues?::
+1. Najdi bod na křivce, který je postavě nejblíže.
+2. Najdi bod na křivce, který je od toho nejblížšího trochu dál.
+3. Seek.
++
+Predicted path following je plynulejší a řeže zatáčky.
+
+Describe and compare implementations of path following and predictive path following.::
++
+[source,python]
+----
+# get the parameter of the path nearest the character's position
+current_par = path.get_param(character.position)
+target.position = path.get_position(current_par + offset)
+seek(target.position)
+----
++
+V predictive path following se míto character.position použije `future_pos = character.position + character.velocit * predict_time`.
+
+Describe separation and cohesion.::
+* _Separation_ -- snaha udržovat si daných entit odstup.
+* _Cohesion_ -- snaha shlukovat se s danými entitami.
+
+How could the separation behavior be implemented?::
+Pokud detekuješ, že entita je moc blíko, pak evade! Evade může mít různou sílu:
+* lineární: stem:[\text{max\_acceleration} \cdot \frac{\text{threshold} - \text{distance}}{\text{threshold}}]
+* inverse square: stem:[\min \left(
+    \frac{\text{decay}}{\text{distance}^2}, \text{max\_acceleration}
+\right)]
+
+Describe how does obstacle avoidance work. Are there any issues with obstacle avoidance? How would you solve particular cases?::
+Charakter raycastuje a podle detekovaných překážek modifikuje svůj cíl. Má problémy s úzkými překážkami, délkou rayů a lokálními pastmi.
+
+What is the difference between blending and arbitration?::
+* _Blending_ -- kombinuje steering behaviours váženým součtem.
+* _Arbitration_ -- kombinuje steering behaviours tím, že jedno zvolí (a nebo blenduje podmnožinu).
+
+Can you describe some example of a weighted blending?::
+Dav, co se snaží zůstat v jednom shluku (cohesion), ale zároveň do sebe nenarážet (separation).
+
+What is flocking?::
+Separation + alignment + cohesion.
+
+Can you describe examples of blending problems?::
+* _Equilibria_ -- postava se zasekne mezi dvěma cíli (a ani zaokrouhlovací chyba jí nepomůže).
+* _Constrained environments_ -- nemůže se vyhnout překážkám zatímco někoho pronásleduje, nemůže trefit dveře, nevidí slepé uličky na dlouhé vzdálenosti.
+
+How does the blending with priorities work?::
+Jednotlivá steering behaviours jsou sdružena do skupin podle priorit. Třeba collision avoidace, seperation a arrive budou ve skupině s nejvyšší prioritou. Pokud vyprodukují jen malý steering, pak se teprve bere v úvahu skupina se seek and evade.
+
+What is formation? And formation motion?::
+* _Formation_ -- množina pozic, které mohou postavy ve skupině zaujmout, přičemž jedna z postav jim obvykle velí.
+* _Formation motion_ -- takový pohyb skupiny postav, že zachovává formaci.
+
+Can you describe fixed formations?::
+Podle velitele se počítají sloty pro ostatní postavy (pomocí nějakého offsetu). Ostatní postavy tak nemusí mít kinematiku ani steering, ale velitel musí brát v úvahu velikost svojí skupiny.
+
+Explain emergent formations.::
+Každá postava má svůj steering behaviour, ale vybere si jinou postavu, kterou se řídí. Dohromady udělají strom a chovají se jako hejno ptáků.
+
+How do you combine fixed and emergent formation?::
+1. Na dvou úrovních, kde na první je leader se svojí fixed formation a na druhé je emergent formation.
+2. Bez velitele ale s anchor pointem, kterým taky můžeme šibovat.
+
+How can we work with slot roles and their assignment?::
+Ne každý slot je vhodný pro každou postavu. Sloty mohou mít různou cenu pro každou postavu -> optimalizační NP-úplný problém.

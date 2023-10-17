@@ -1,0 +1,53 @@
+= Tactics
+
+== Waypoint tactics
+
+Waypoint uzel v pathfindingu s přidanou taktickou hodnotou.
+
+What is the tactical location?::
+Waypointy pro taktické situace jako jsou úkryty a pasti.
+
+Discuss primitive and compound tactics.::
+* _Primitive properties_ -- krytost, stín, expozice.
+* _Compound tactics_ -- sniper location = cover AND good visibility.
+
+How fuzzy logic is used in continuous tactics?::
+Taktické vlastnosti jsou spojité, takže se na to fuzzy logika dobře hodí. Nicméně, znamená to vyšší nároky na paměť.
+
+Why is it important to consider the context-sensitivity of tactical locations?::
+Sniper je k ničemu, když se nepřítel plíží výhradně kanály.
+
+What is the difference between precomputation and raycasting while implementing context-sensitivity?::
+* _Precomputation_ -- předpočítáš si třeba, z jakých směrů je úkryt užitečný. Rychlé (za běhu hry).
+* _Raycasting_ -- drahé, děje se za runtimeu hry.
+
+Discuss the importance of particular extensions of tactical locations.::
+1. Jednoduché taktické označení.
+2. Context sensitivity.
+3. Spojité taktické hodnoty.
+4. Compound tactics (fuzzy logika).
+
+Why is the simple tactical movement weak?::
+Používá se decision tree. Postva jen hledá taktický waypoint, až ho potřebuje (protože jí došly náboje). Vůbec nezohledňuje taktické informace při rozhodování. Ten úkryt ani nemusí být dostupný!
+
+Can you show an example of how tactical information can be included in the decision making process?::
+Viz slide 278.
+
+How can be tactical properties of a waypoint defined?::
+* Manuálně.
+* Automaticky -- uložené v prefabu, předpočítané.
+
+How can be cover points computed?::
+Střílej (a nebo raycastuj) na bod z mnoha úhlů, výšek postavy, pozic nepřátel. Počítej kolik útoků bylo úspěšných.
+
+How can be visibility points and shadow points computed?::
+* _Visibility points_ -- závisí na průměrné délce paprsku vystřeleného z lokace.
+* _Shadow points_ -- bere se světlo z levelu.
+
+How can be waypoints generated automatically?::
+1. Pozorováním lidských hráčů.
+2. Zkoušel všechny body, vyřazuj, kodenzuj.
+
+== Tactical analyses, tactical pathfinding, coordinated action.
+
+1. ???

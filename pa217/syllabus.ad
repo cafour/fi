@@ -1,0 +1,32 @@
+= Syllabus 
+
+* Introduction and history.
+* Movement:
+** kinematic movement,
+** steering behaviors,
+** combining steering behaviors.
+* Search and pathfinding:
+** introduction to search algorithms,
+** A* data structures and heuristics,
+** world representation,
+** hierarchical pathfinding.
+* Decision making for a single character:
+** decision trees,
+** state machines,
+** behavior trees,
+** fuzzy logic,
+** Markov systems,
+** goal-oriented behavior,
+** rule-based systems,
+** blackboard architectures,
+** action execution.
+* Strategy and tactics:
+** tactical waypoints,
+** tactical analyses,
+** tactical pathfinding,
+** coordinated action.
+* Board games:
+** minimaxing,
+** transposition tables,
+** Monte Carlo search.
+* Implementation of AI algorithms in Unity.

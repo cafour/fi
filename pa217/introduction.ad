@@ -1,0 +1,70 @@
+= Introduction and history
+
+What is the Turing test? How would you define artificial intelligence?::
+* _Turing test_ -- test schopnosti stroje chovat se jako člověk.
+* _Artificial intelligence_ -- něco, co není člověk, ale dokáže to plnit úkoly jako zvířata a lidi.
+
+What is the difference between academic AI and game AI? What type of questions were studied by them?::
+Akademická AI se snaží být optimální a nezáleží jí až tak moc na HW, zatímco herní AI se snaží zabavit hráče na běžně dostupném HW.
+
+Discuss early days of AI.::
+* AI před počítači: Co jsou hergot myšlenky? Jak můžeme dát šutrům vědomí?
+* První počítače: Simulace válek, prolamování šifer.
+
+What were the achievements of AI  from 1950 till 1985?::
+* _Symbolic artificial intelligence_ -- reprezentuje svět pomocí symbolů, pak s nimi manipuluje a tím "myslí".
+* _Expert systems_ -- symbolický přístup, kdy má AI velkou databázi vědomostí, ze které pomocí pravidel vyvozuje nové závěry.
+
+Discuss important ideas of AI since 1986.::
+* Díky backpropagation se začaly znovu rozvíjet neuronky.
+* _Bayesian Neural Network_ -- učí se pravděpodobnosti jevů na základě trénovacích dat.
+* _Convolutional Neural Network_ -- neuronky na obrázcích.
+
+What ideas are behind AI in the Pac-Man game?::
+* State machine.
+* Různí duchové, různý cíl pronásledování.
+* Náhoda na křižovatkách.
+* Víc důchů dává iluzi složitosti.
+
+What kind of AI features were explored in particular games over the years?::
+* 1979: _Pac-Man_ <- `state machine`
+* 1994: _Warcraft_ <- `pathfinding`
+* 1997: _Goldeneye 007_ <- `sense simulation system`
+* 1998: _Warhammer: Dark Omen_ <- `emotional models of soldiers`, `robust formation motion`
+* 1998: _Half-Life_ <- `AI characters collaborate with the player`
+* 1997-2001: _Creatures_ <- `simulated hormone system and NN-based brain`
+* 2001: _Halo_ <- `decision trees`
+* 2005: _F.E.A.R._ <- `goal-oriented action planning`
+
+Give examples of the simple things that can look good.::
+Pac-Man a semi-náhodná rozhodnutí duchů na křižovatkách.
+
+Give examples of the complex things looking bad.::
+Black and White -- hráči omylem naučili NN špatné návyky.
+
+Why the perception window is important?::
+Hráči obvykle potkávají AI jen chvilkově, což nemusí být dost na to, aby pochopili, jak funguje.
+
+What is important to create an illusion of intelligence?::
+Že hráč věří, že ta která postava je inteligentní. Takže vizuály, zvuky a animace jsou klíčové.
+
+What kinds of AI can be in games?::
+Hacky, heuristiky a algoritmy. Pravděpodobně všechny dohromady.
++
+Pathfinding, steering behaviours, state machines, behaviour trees, PRNG, sensorové systémy, machine learning, atd.
+
+Discuss the AI model.::
+* _World interface_ -- něco, co AI říká, co v tom světě je.
+* _Animace a fyzika_ -- vnější projevy AI na obrazovce.
+* _Execution management_ -- co dělá AI v runtime.
+** _Decision making a movement_ -- každé AI za sebe.
+** _Strategie_ -- interakce více AI jako skupiny.
+
+What type of AI is represented by movement?::
+Taková, která nemá ranged zbraně a vrhá se na hráče. Taková, která se potřebuje vyhýbat překážkám.
+
+What is decision making in games? Do you know some examples?::
+Když se AI může rozhodovat mezi více chováními. Třeba kráva se může pást nebo se posunout o půl metru a pást se tam.
+
+What is the role of strategy in games? Do you know some examples?::
+Ve skupině charakterů se sice každý rozhoduje za sebe, ale s nějakým společným cílem.

@@ -1,0 +1,208 @@
+= Pathfinding
+
+Algoritmus A*::
+Dijkstra + heuristika.
+
+Hierarchical pathfinding::
+Pathfinding na vícero úrovních scény.
+
+== Search algorithms
+
+Why should we combine movement and pathfinding?::
+Movement je efektivní, ale jen lokální a může se zaseknout. Pathfinding je pomalý ale globální.
+
+What is a search problem? What types of search problems do you know?::
+Když se snažíš v množině stavů najít nějaký konkrétní stav pomocí nějaké successor funkce.
++
+Obvykle hledání v nějakém grafu.
+
+Define the base terminology related to pathfinding graphs.::
+* _State space_ -- množina stavů.
+* _Initial spate_ -- startovní stav.
+* _Goal state_ -- cílový stav.
+* _Set of actions / successor function_ -- možnosti přechodu mezi stavy.
+* _Action cost_ -- cena přechodu / váha hrany.
+
+Describe graph representation using adjacency lists.::
+stem:[Adj \lbrack x \rbrack = {y \;|\; (x, y) \in E}]
+
+Describe graph representation using the adjacency matrix.::
+stem:[E_{ij} = \begin{cases}
+    1 & \text{if } (i, j) \in E \\
+    0 & \text{jinak} \\
+\end{cases}]
+
+How would you represent a tile-based map? What is the waypoint graph?::
+Záleží na velikosti mapy. U malé mapy je matice gut, u velké not so much.
+* _Waypoint graph_ -- uzly jsou důležitá místa na mapě (ne každý jeden bod), hrany jsou pak cesty bez kolizí.
+
+How is the graph explored by BFS? Describe the implementation of BFS.::
+Po "vlnách". Má frontu.
+
+How is the graph explored by DFS? Describe the implementation of DFS.::
+Po "alternativních vesmírech". Má zásobník.
+
+Compare BFS and DFS.::
+BFS najde nejkratší cestu, DFS najde každou cestu.
+
+Describe the implementation of the Dijkstra algorithm.::
+How would you implement the Dijkstra algorithm to compute the shortest path for all nodes?::
+Discuss exploration of the graph on slide 24 using the Dijkstra algorithm.::
+BFS s prioritní frontou, takže zohledňuje váhy na hranách. Prochází postupně vrcholy a hrany z nich a pokud narazí na "zkratku", tak ji vezme. Tím, že používá prioritní frontu se nemůže stát, že by později narazil na něco, co způsobí "kaskádu" updatů.
+
+== The A* algorithm
+
+Compare the differences between BFS, Dijkstra, greedy, and A* algorithms.::
+* BFS -- neumí váhy.
+* Dijkstra -- najde nejkratší cestu, ale neumí cykly a trvá mu to dlouho.
+* Greedy "Best-first" -- rychlý, ale nenajde nejkratší cestu.
+* A* -- jako Dijkstra ale pomáhá si k efektivitě heuristikou.
+
+Describe the implementation of the A* algorithm.::
++
+[source, c]
+----
+astar(source, goal, V, Adj, h)
+    // f is the heuristic-enhanced distance to from source to every node
+    for (u in V)
+        f[u] = Infinity
+    v = source
+    f[v] = 0
+    // g is the true non-heuristic distance from source to every node
+    g[v] = 0
+    Q = (V, f) // priority min queue on V where f is the priority
+    enqueue(Q, v)
+    while (v != goal)
+        v = dequeue(Q)
+        for (u in Adj[v])
+            // cost is the actual weight of (v, u)
+            new_g = g[v] + cost(v, u)
+            if (new_g < g[u])
+                g[u] = new_g
+
+            // h is the heuristic
+            new_f = g[u] + h(u)
+            if (new_f < f[u])
+                f[u] = new_f
+                update(Q, u, new_f)
+                // set parent
+                p[u] = v
+    return path to goal
+
+----
+
+What is admissible heuristics? Why is it important? What would happen if the heuristic would overestimate the length of the path to the goal?::
++
+[stem]
+++++
+\text{A heuristic is admissible} \Longleftrightarrow (\forall v \in V)(h(v) \le h^*(v)),
+++++
+kde stem:[h^*] je opravdová nejkratší vzdálenost.
++
+Jinými slovy, stem:[h] nikdy nenadcení cestu k cíli. Je optimistická.
+
+What data structures are needed by the A* algorithm?::
+Prioritní fronta, seznam sousedností, pár polí.
+
+What is the priority heap? Discuss the complexity of operations.::
+Prioritní fronta je fronta, kde prvky s (obvykle) nižší prioritou mají přednost. Složitost závisí na implementaci, binární halda má složitost operací (s výjimkou hledání nejmenšího prvku) stem:[\mathcal{O}(\log n)].
+
+What are the bucketed priority queues?::
+Prioritní fronty, kde jsou prvky rozděleny do více malých polí. Pole polí je seřazené, prvky v těch polích ne. Ve hrách to moc užitečné není, ale když máš miliony uzlů, tak to bodne, protože CPU cache.
+
+Compare underestimating and overestimating heuristics for A*.::
+* _Podceňující_ -- poběží dýl, ale najde správné řešení.
+* _Nadceňující_ -- bude rychlejší, ale nemusí najít nejkratší cestu.
+
+What are the characteristics of the Euclidian distance heuristics?::
+* Cesta vdušnou čarou.
+* Je vždy přesná nebo podceňující.
+* Dobrá v exteriérech, špatná v interiérech.
+
+Describe and discuss cluster heuristic.::
+Seskupovaní uzlů v clusterech (manuálně, algoritmicky, jako vedlejší produkt level designu). Pro cestu v rámci jednoho clusteru se používá Euklidovská heuristika. Inter-clusterové cestování používá look-up table cest mezi clustery.
+
+== World representations
+
+What is the division scheme and what are its properties?::
+Definuje, jak se z levelu stane graf a obráceně.
++
+* _Quantization / Localization_ -- pozice hráče -> uzel / uzel -> pozice ve světě.
+* _Generation_ -- způsob rozdělování prostoru levelu do regionů a spojení.
+* _Validity_ -- každé dva body v dotýkajících se regionech musí mít mezi sebou cestu (v praxi se na to trochu sere).
+
+Describe and discuss tile-based graphs.::
+2D pole čtvercových regionů (hexagonů, kostek, ...). Je jich hrozně moc a neporadí si s částečnou zabraností.
+
+Describe and discuss world representation using Dirichlet domains.::
+Taky se jim říká Voronoiovy diagramy. Rozmístíš po mape body a necháš je růst. Kvůli pofidérním tvarům se může stát, že cesta mezi dvěma regiony povede přes třetí region, který není průchozí, takže tento přístup není vždy validní. Nicméně, v praxi se ty charakteristické body rozmisťují podle překážek, takže nevalidnost je vzácná.
+
+Describe and discuss points of visibility graph.::
+Protože optimální cesty skrz prostředí mají body ohybu u konvexních vertexů prostředí (sevřený úhel je menší než 90 stupňů), je výhodné právě tam umístit charakteristické body. Mezi nimi bude hrana, pokud ray cast netrefí překážku. Bodů však může vzniknout příliš mnoho.
+
+Describe and discuss navigation meshes.::
+Využívá polygony v podlaze jako regiony.
+
+How can we use as cost functions for world representations?::
+* Vzdálenost.
+* Čas nutný k přechodu.
+* Viditelnost (reconnaissance).
+* Obtížnost terénu (tanky).
+
+What is path smoothing? Discuss the algorithm for simple path smoothing.::
+Pokud se dvě hrany cesty dají sloučit, aniž by postava do nečeho vrazila, tak je sluč. Opakuj, dokud se něco děje.
+
+What is hierarchical pathfinding? How does it work?::
+Např. nejdřív naji cestu mezi domy, pak teprve od vchodových dveří k ledničce.
++
+Nejdřív clusteruje uzly, pak clusteruje clustery, atd.
+
+How do you compute the distance between clusters using minimum distance? Discuss it for the example.::
+Optimistický odhad. Minimální vzdálenost mezi dvěma uzly v různých clusterech.
+
+How do you compute the distance between clusters using maximin distance? Discuss it for the example.::
+Pesimistický odhad. Očekává, že přinejhorším musí postava projít celým regionem.
++
+1. Najdi tu nejdelší z nezkratších cest mezi libovolným vstupním a libovolným výstupním uzlem z clusteru.
+2. Přičti tuhle cenu k ceně nejkratší cesty mezi dvěma clustery.
+
+How do you compute the distance between clusters using average minimum distance? Discuss it for the example.::
+Pragmatický odhad. Podobná jeko maximin, ale nebereš maximum, nýbrž aritmetický průměr.
+
+What is the instance graph?::
+Když máš nějakou budovu milionkrát, tak nemáš pro každou zvlášť pathfinding graf, ale máš jeden graf pro budovu jako takovou a dekorátor, který změní idčka uzlů, aby se tvářily unikátně. Obvykle se předpokládá, že exit node budovy má cenu rovnu 0.
+
+== Varianty A*
+
+What does it mean open goal pathfinding? Discuss approaches to solve it.::
+Rozhodovací logika v pathfindingu. Když chceš náboje, tak tě nemusí nutně zajímat ty nejbližší. Obvykle se někdo jiný rozhodne a pathfindingu předá jen cíl.
+
+What is the interest in dynamic pathfinding? Discuss its solution approaches.::
+Prostředí se mění, nemusí bý statitické.
++
+* _D*_ -- přepočítává jen tu část levelu, která se změnila. Vyžaduje však velké množství paměti.
+* _Iterative deepening A* (IDA*)_
+* _Simplified memory-bounded A* (SMA*)_
+
+Explain IDA* and its properties.::
+Má cut-off value. Pokud je cena cesty vyšší než cut-off value, zkusí jinou cestu. Pokud nenajde řešení, zvýší cut-off value. Je úplný a optimální, s exponenciální časovou a lineární prostorovou složitostí.
+
+Explain SMA* and its properties.::
+Fixní limit na počet uvažovaných uzlů. Prostě nimi naplníš paměť, co to jen jde, a doufáš, že to na tu nejkratší cestu bude stačit.
+
+What are the ideas behind interruptible pathfinding?::
+A* se dá přerušit, takže pokud je pathfinding požadavků mnoho, dají se plánovat.
+
+Why pool of planners is needed?::
+Protože CPU zvládne jen omezený počet pathfinding požadavků najednou.
+
+Explain vehicle pathfinding as an example of continuous time pathfinding. What graph representation is behind it? How is such pathfinding processed?::
+Hráče nahání policie. AI policie si musí vybrat, kolik času stráví v kterém pruhu.
++
+Uzly tak představují stavy spíš než pozice v prostoru. Graf se tvoří dynamicky, takže continuous time pathfinding by se měl používat jen velice lokalizovaně a na nejnižším levelu hierarchie. SMA* je dobrá volba.
+
+What is movement planning and why it is used? Explain graph representation behind it::
+Není tak úplně pathfinding. Spíš je to podobné příkladu s policajty výše. Cílem je naplánovat takovou posloupnost animací, aby se postava dostala, kam má, a zároveň byla posloupnost validní (a vypadala přirozeně).
+
+Describe an example with the walking bipedal character.::
+Má animace typu: chůze, vstaň, sedni, ukroč, otoč se na místě. Každá animace začne a skončí buď uprostřed chůze nebo v klidovém stání. Naším cílem je najít takovou posloupnost anmimací, abychom se dostali z bodu A do bodu B.

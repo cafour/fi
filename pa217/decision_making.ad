@@ -1,0 +1,247 @@
+= Decision making
+
+What's going on in decision making? Can you give some examples?::
+Postava si musí vybrat, co bude dělat, aby splnila svůj cíl. Třeba kráva se může hýbat, pást se, nebo kadit.
+
+== Decision trees
+
+What is the decision tree? How do you work with it?::
+Strom, kde vnitřní uzly jsou podmínky a listy akce. Začneš u kořene a sestupuješ dolů, dokud nedostaneš tu jednu akci, kterou máš provést.
+
+How do you combine decisions using the decision trees?::
+Zapojíš je do stromu (podobně jako při parsování booleanovských expressions).
+
+Discuss binary and non-binary decision trees.::
+Nebinární můžou být někdy rychlejší, ale binární se líp reprezentují, existují pro ně cool algoritmy a mají tooling.
+
+Why and how do we use random decision trees?::
+Rozhodovací stromy jsou moc deterministické -> AI vypadá moc jednoduše. Takže se přidá do rozhodování random. Nicméně, proces musí být stabilní. Pokud se příště AI rozhodne jinak, musí to být protože se něco změnilo ve světě.
+
+== State machines
+
+Describe the basic state machine using the example. Discuss properties of state machines.::
+Postavy mají nějaký _stav_, při přechodech mezi stavy provádí _akce_. Pokud jsou splněny podmínky pro přechod je přechod _triggered_. Pokud přejde po přechodu, pak je přechod _fired_. Přechod může mít entry a exit akce.
++
+* Jsou jednoduché.
+* Je pro ně notace.
+* Efektivní.
+* Ale jsou orientované na stav, těžko se v nich implementují cíle.
+
+Why are hierarchical state machines helpful? Can you also explain it on the example from slides?::
+Občas máš robota, co se musí jít nabít nehledě na to, co právě dělá. Tam se hodí mít vícevrstvý DFA.
+
+== Behavior trees
+
+What do leaf nodes represent in behavior trees?::
+Conditions a actions.
+
+What is selector and sequence in the behavior tree? Give their examples.::
+Discuss example on slide 6. Think about alternate sequences and selectors on slide 9.::
+Vnitřní uzly behavior tree. *Potomci jsou vyhodnocování ve striktiním pořadí.* Selector je efektivně liné ořítko. Sequence je pak líné andítko.
++
+TIP: Přestav si jak to funguje v céčku. Selector skončí u prvního dítěte, co vrátí `true`. Sequence u prvního, co vrátí `false`.
+
+Why are non-deterministic behavior trees helpful? Can you describe it using an example?::
+Aby to AI vypadalo složitější, než je, tak můžeš potomka vybrat náhodně. Chceš to jen u některých composites.
+
+What are the decorator and filter? Why do you use decorators for a limited resource? Discuss some examples. Discuss guarding resources using decorators.::
+* _Decorator_ -- podobně jako v OOP modifikuje jiný uzel, ale zachovává jeho rozhraní. Dají se použít k animacím i k naroubování synchronizace na omezené zdroje (třeba dveře).
+* _Filter_ -- rozhodují se, jestli nechají svého potomka vyhodnotit nebo ne.
+
+When parallel versions of sequence and selector are helpful? Describe it using an example.::
+Třeba, když mám group AI a chci, aby každý vojáček dělal jinou činnost, ale všichni naráz.
++
+* _Parallel sequence_ -- zkus všechny děti paralelně, pokud jeden selže, požádej ostatní aby přestali a vrať false.
+* _Prallel selector_ -- zkus všechny děti paralelně, selži, až pokud selžou všichni do jednoho.
+
+Why do we add data to behavior trees? What is the behavior blackboard? Demonstrate it on the example.::
+Velká kolekce dat, odkud můžou uzly číst a kam můžou psát. Může být globální nebo hierarchická (overriding, yay!)
++
+Hodí se to například, pokud jeden uzel hledá viditelného protivníka, a jiný na něj útočí.
+
+Why and how we reuse behavior trees?::
+* Při vývoji, protože reuse je obvykle efektivnější (co se doby vývoje týče) než přepis.
+* Za běhu hry, protože pamět je resource a není radno s ní plýtvat.
+
+What do you think about behavior trees? Discuss their limitations.::
+* Je těžké udělat je tak, aby reagovaly rychle. Dají se ale použít interrupter dekorátory nebo zkombinovat s DFA.
+
+Do you have any experiences with the implementation of decision making (in Unity), for example using behavior trees or finite state machines? Can you discuss it?::
+Z HW. :D
+
+== Fuzzy logic
+
+What is the difference between fuzzy sets and normal sets? What are fuzzification and defuzzification?::
+Do obyčejné množiny prvky buď patří, nebo nepatří. Do fuzzy množiny patří s nějakou "jistotou" z intervalu [0, 1]. Hodí se například v případech, kdy má být postava buď opatrná nebo odvážná -- intuitivně by tu mělo být dost prostoru mezi oběma.
++
+* _Fuzzification_ -- překlad obyčejné příslušnosti (0 / 1) na fuzzy příslušnost ([0, 1]).
+* _Defuzzification_ -- opačný proces.
+
+Describe defuzzification using the highest membership, blending, and center of gravity.::
+* _Highest degree of membership_ -- vyber tu množinu, do které patří nejvíc.
+* _Blending_ -- výstupní hodnota bude lineární kombinace hodnot charakteristických pro každou množinu.
++
+[NOTE]
+====
+stem:[v = \frac{0.2}{sum}v_\text{creep} + \frac{0.4}{sum}v_\text{walk} + \frac{0.2}{sum}v_\text{run}], kde
+stem:[sum = 0.2 + 0.4 + 0.7].
+====
+* _Center of gravity_ -- seřízni funkci každého stavu na hodnotě, kterou prvek má, nanes je na jedny osy a spočítej těžiště plochy pod křivkou.
+
+What fuzzy set operators do you know and how do they work?::
+* `AND` -- průnik ploch funkcí -- stem:[\min(m_A, m_B)].
+* `OR` -- sjednocení ploch funkcí -- stem:[\max(m_A, m_b)].
+* `NOT` -- inverze -- stem:[1 - m_A].
+
+What is the fuzzy rule? Can you describe fuzzy rule inference?::
+* `IF 'antecedent A' THEN 'consequent B'`
+* Pokud jsme blízko odbočky a jedeme rychle, měli bychom zpomalit.
+* Crips inputs __**-Fuzzification->**__
+  Fuzzy inputs __**-Fuzzy rules->**__
+  Fuzzy outputs __**-Defuzzification->**__
+  Crisp outputs
+
+Can you explain the fuzzy logic decision making using the example on page 16?::
+Předpoklady jsou booleanovské výrazy, které se vyhodnocují pomocí fuzzy set operací, výsledek je přiřazen do výstupního stavu za `THEN`.
++
+Pokud je pro jeden výstupní stav vícero pravidel, pak se ORují, tedy bere se maximum.
++
+--
+* Rules
+** `IF corner-entry AND going-fast THEN brake`
+** `IF corner-exit AND going-fast THEN accelerate`
+** `IF corner-entry AND going-slow THEN acceleerate`
+** `IF corner-exit AND going-slow THEN acceleerate`
+* Inputs
+** `corner-entry = 0.1`
+** `corner-exit = 0.9`
+** `going-fast = 0.4`
+** `going-slow = 0.6`
+* Results
+** `brake = min(0.1, 0.4) = 0.1`
+** `accelerate = max(min(0.9, 0.4), min(0.1, 0.6), min(0.9, 0.6))`
+--
+
+Why and how do we use the Combs method in fuzzy logic decision making? Discuss it with help of the example from slides.::
+Combs metods využívá stem:[((p \land q) \implies r) \iff ((p \implies r) \lor (q \implies r))], aby zabránila kombinatorické explozi v počtu uvažovaných pravidel.
++
+Z `IF a_1 AND a_2 AND ... AND a_n THEN c`, dělá `IF a_1 THEN c`, `IF a_2 THEN c`, ..., `IF a_n THEN c`.
+
+What are fuzzy state machines? Discuss it with the help of an example.::
+Jako state machines, ale všechny stavy s degree of membership (DOM) > 0 jsou aktivní. Každou iteraci:
++
+1. Procházej všechny aktivní stavy od toho s nejvyšším DOM.
+2. Projdi všechny přechody z aktuálního aktivního stavu a rozhodni jsem mají být fired.
+3. Vytvoř nový seznam aktivních stavů.
++
+NOTE: Funguje to, protože AND i OR jsou asociativní.
+
+== Markov processes
+
+Describe what is the Markov process/non-deterministic state machine.::
+Discuss on the example from page 24 how can we use Markov processes in games.::
+Takové stavové stroje, kde se přechází do více stavů najednou. Každý přechod má určitou pravděpodobnost. Iniciálním stavovým vektorem může být třeba (1, 0, 0, 0, 0) pro stavy (start, approach, right, left, jump). Na začátku tak postava je ve stavu start se 100% pravděpodobností. Tyto hodnoty se mění pronásobením transition matrix.
++
+Akce jsou nepřímým důsledkem interpretace stavového vektoru.
+
+
+== Goal-oriented behavior
+
+AI nemusí být jen reaktivní, ale může aktivně chtít něco robiť.
+
+What are goals and actions in goal-oriented behavior? How do they interact?::
+* _Goals_ (_Motives_) -- `jez`, `zabíjej nepřátele`, `zůstaň naživu`. Každý má prioritu (_Insistance_).
+* _Actions_ -- interakce se světem, které má postava k dispozici.
+* Akce mění parametry, kterých se goals snaží dosáhnout.
+* _Simple selection_ -- vyber nejdůležitejší goal, vyber akci, která ho nejvíc plní.
+
+Can you explain goal-oriented behavior using the example on page 30?::
++
+[source]
+----
+Goal:   Eat = 4
+Goal:   Sleep = 3
+Action: Get-Raw-Food (Eat –= 3)
+Action: Get-Snack (Eat –= 2)
+Action: Sleep-In-Bed (Sleep –= 4)
+Action: Sleep-On-Sofa (Sleep –= 2)
+----
++
+Závěr, Eat má nejvyšší insistance, takže vyber Get-Raw-Food, protože to ji sníží nejvíce.
+
+Why and how do we use the overall utility in goal-oriented behavior?::
+Aby simíci šli na záchod před tím, než se půjdou znova napít.
++
+* _Global utility_ (_Discontentment_, _Energy metric_) -- rovnice udávající celkovou insistance/nespokojenost/energii postavy. Např.: `Discontentment = Eat^2 + Bathroom^2`, pak si simík rozmyslí, jestli si dá tu limonádu předtím, než půjde na záchod.
+
+How would you add timing into the goal-oriented behavior (GOB)?::
+1. Zakomponovat do `Discontentment`.
+2. Započítat čas přímo do goals a actions (třeba `Goal: Eat = 4 + 4 per hour`).
+3. Pokaždé, když přijde na řadu vyhodnotit GOB, přepočítej aktuální goals, protože se můžou měnit i méně předvídatelně.
+
+How can we solve goal-oriented planning using search?::
+Ne všechny akce jde provést kdykoliv (třeba meč jde přibrousit jen před bojem), přístup výše tohle neuvažuje. Můžeme uvažovat sekvenci stem:[k] akcí, sestavit strom, prohledat ho do hlobky a vybrat tu nejlepší variantu.
++
+Je to jednoduché, ale neefektivní (stem:[\mathcal{O}(nm^k)], kde stem:[n] je počet goals, stem:[m] počet dostupných akcí a stem:[k] počet kroků). Taky nemůže vědět, které akce budou v kterém kroku k dispozici.
++
+Alternativně můžeme simulovat celý svět, nejen naši postavu (a ukládat si do stromu jen diffy). Na to pak aplikovat heuristiky jako "nikdy nevol cestu zvyšující discomfort". Taky můžeme použít A*, jen potřebujeme heuristiku, která určí, jak daleko je svět od toho, aby postava splnila svůj cíl.
+
+How does the smelly goal-oriented behavior work?::
+Každý způsob, jak může postava dosáhnout svého cíle nějak voní. Zápach se pomalu šíří světem a postava jen čuchá.
+
+== Rule-based systems
+
+What do rules look like in rule-based systems? How is the database matching processed?::
+Tradičně v expertních systémech. Májí podobu `IF Conditions THEN Action`, třeba `IF Whisker.health < 15 AND Whisker.has-radio THEN Sell the radio`.
++
+V každé iteraci se změní stav světa a zkontroluje se, která pravidla byla triggnuta. Pravidla mohou používát wildcards (`ANYONE`, `MY`), pak jsou unifikováná. Akce mění databázi nepřímo, zejména nemusí uspět. Pravidla mohou měnit ostatní pravidla.
++
+_Forward chaining_ -- aplikuj pravidla, dokud se něco mění.
+
+How can we select rules?::
+Rule arbitration:
++
+* _First applicable_ -- první možné, je potřeba ho vyřadit na další kolo.
+* _Least recently used_ -- použité nejvíc dávno.
+* _Random_.
+* _Most specific condition_.
+* _Dynamic priority allocation_ -- priorita pravidel se mění podle situace (když mám málo života, chci lékárničku).
+
+How do you complete processing in a rule-based system using the Rete algorithm? Describe computation using the example on page 9.::
+* _Top nodes_ -- patterny v podmínkách.
+* _Join nodes_ -- vnitřní uzly, konjunkce.
+* _Bottom nodes_ -- pravidla, která mohou být aplikována.
++
+Algoritmus:
++
+1. Nasyp world state do top nodes.
+2. Matches jsou podsunuty join nodes, u wildcardů si držíš jeden nebo více bindings.
+3. Rule arbiter se rozhodne, které z namatchovaných pravidel zvolí.
+
+== Blackboard architectures
+
+Why and how do we use blackboard architectures?::
+Chceme, aby se na svět podívalo vícero expertů. Arbiter vybere experta, ten na tabuli udělá změny a vzdá se kontroly. Vyberou se akce, na kterých se experti shodnou.
+
+What types of actions do you know?::
+* _State change_ -- změň nějakou vlastnost na něčem ve hře.
+* _Animations_.
+* _Movement_.
+* _AI requests_ -- přehoď práci na nižší AI.
+* _Interface commands_ -- zobraz hráči, co se děje.
+
+Discuss interrupting, compound, and scripted actions.::
+* _Interrupting_ -- akce trvají nějaký čas, takže je potřeba je umět přerušit, když se objeví důležitější akce.
+* _Compound_ -- koordinace několika akcí dohromady.
+* _Scripted_ -- složité chování, které předpřipravil vývojář.
+
+How is the action specified? How are actions processed by the action manager?::
+Každá akce má:
++
+* expirační dobu,
+* prioritu,
+* možnost zkontrolovat, jestli proběhla,
+* kompatibilitu s jinými akcemi,
+* schopnost přerušit jiné akce.
++
+Action manager má frontu, kde akce čekají na to, aby byly provedeny.

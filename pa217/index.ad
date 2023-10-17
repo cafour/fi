@@ -1,0 +1,15 @@
+= AI for Games
+:page-math: true
+:page-liquid: true
+:baseurl: {{ site.baseurl }}
+:toc:
+:toc-title: Obsah
+
+include::syllabus.ad[leveloffset=1]
+
+include::introduction.ad[leveloffset=1]
+include::movement.ad[leveloffset=1]
+include::pathfinding.ad[leveloffset=1]
+include::decision_making.ad[leveloffset=1]
+include::tactics.ad[leveloffset=1]
+include::board_games.ad[leveloffset=1]
