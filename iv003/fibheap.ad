@@ -1,0 +1,17 @@
+= Fibonacciho halda
+
+Fibonacci Heap::
+* Introduction
+* Insert and Extract Min
+* Decrease Key
+* Rank
+* Meld and Delete
+
+Halda s vícero stromy. Kořeny stromů jsou uloženy jako cyklický spojovaný seznam.
+
+[quote, Fredman-Tarjan]
+____
+Každá posloupnost stem:[m] operací `Insert`, `Extract-Min` a `Decrease-Key`, která zahrnuje stem:[n] `Insertů`, má složitost stem:[\mathcal{O}(m + n \log n)].
+____
+
+Původně vznikla, aby vylepšila časovou složitost Dijkstrova algoritgmu z stem:[\mathcal{O}(m \log n)] na stem:[\mathcal{O}(m + n \log n)].

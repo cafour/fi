@@ -1,0 +1,263 @@
+= Toky
+
+Max Flow::
+* Ford-Fulkerson
+* Capacity Scaling
+* Shortest Augmenting Path
+* Push Relabel
+* Applications
+
+Flow network::
+Pětice stem:[G = (V, E, s, t, c)], kde
++
+--
+* stem:[(V, E)] je orientovaný graf,
+* stem:[s \in V] je source (zdroj),
+* stem:[t \in V] je sink (odtok),
+* stem:[c(e): E \to X], kde stem:[X] jsou obvykle stem:[\N_0] nebo stem:[\R_0^+], je kapacita hrany stem:[e].
+--
+
+stem:[st]-řezy::
+Je rozklad vrcholů na stem:[(A, B)] takový, že stem:[s \in A] a stem:[t \in B].
+
+Kapacita stem:[st]-řezu::
+Součet kapacit hran na rozhraní stem:[A] a stem:[B]:
++
+[stem]
+++++
+\text{cap}(A, B) = \sum_{e \text{ ven z } A} c(e)
+++++
+
+stem:[st]-toky::
+Funkce stem:[f] taková, že:
++
+* platí _kapacitní podmínka_: stem:[(\forall e \in E)(0 \le f(e) \le c(e))],
+* platí _zachování toku_: stem:[
+    (\forall v \in V - \{ s, t \})(\sum_{e \text{ do } v} f(e) = \sum_{e \text{ ven z } v} f(e))
+].
+
+Hodnota toku::
++
+[stem]
+++++
+\text{val}(f) = \sum_{e \text{ ven z } s} f(e) - \sum_{e \text{ do } s} f(e)
+++++
+
+Residual network::
+Síť, která vzniká, když je už část kapacity hrany využívána tokem stem:[f]. Umožnuje algoritmům změnit přechozí rozhodnutí a získat využitou kapacitu zpět.
++
+Je to pětice stem:[G_f = (V, E_f, s, t, c_f)], kde
++
+* stem:[E_f = \{ e \in E : f(e) < c(e) \} \cup \{ e^\text{reverse} : f(e) > 0 \}],
+* pokud stem:[e = (u, v) \in E], stem:[e^\text{reverse} = (v, u)],
+* stem:[
+    c_f = \begin{cases}
+        c(e) - f(e) & e \in E \\
+        f(e)        & e^\text{reverse} \in E
+    \end{cases}
+]
+
+Augmenting path stem:[P]::
+Jednoduchá stem:[s \rightsquigarrow t] cesta v residuální síti stem:[G_f].
++
+NOTE: T.j. cesta která může jít i proti směru toku stem:[f].
++
+_Bottleneck kapacita_ je nejmenší kapacita hran v augmenting path stem:[P].
++
+To krásné na augmenting cestách je, že pro flow stem:[f] a augmenting path stem:[P] v grafu stem:[G_f], existuje tok stem:[f'] takový, že stem:[\text{val}(f') = \text{val}(f) + \text{bottleneck}(G_f, P)]. Nový tok stem:[f'] lze získat takto:
++
+[source,subs=normal]
+----
+*Augment*(f, c, P)
+{
+    delta = bottleneck(P)
+    *foreach*(e in P)
+    {
+        *if*(e in E)
+        {
+            f[e] = f[e] + delta
+        }
+        *else*
+        {
+            f[reverse(e)] = f[reverse(e)] - delta
+        }
+    }
+    *return* f
+}
+----
+
+Max-flow min-cut theorem::
+Hodnota maximálního toku je rovna kapacitě minimálního řezu.
+
+Ford-Fulkerson vs Goldberg::
++
+[%header,cols="1,1"]
+|===
+| Ford-Fulkerson
+| Goldberg
+
+| global character
+| local character
+
+| update flow along an augmenting path
+| update flow on edges
+
+| flow conservation
+| preflow
+|===
+
+== Ford-Fulkersonova metoda (augmenting path method)
+
+1. stem:[f(e) = 0] pro každou stem:[e \in E].
+2. Najdi stem:[s \rightsquigarrow t] cestu stem:[P] v reziduální síti stem:[G_f].
+3. Augmentuj tok podél stem:[P].
+4. Opakuj dokud se nezasekneš.
+
+[source,subs=normal]
+----
+*Ford–Fulkerson*(G)
+{
+    *foreach* (e in E)
+    {
+        f(e) = 0
+    }
+
+    G_f = reziduální síť vzniklá z G vzhledem k toku f
+    *while* (existuje s ~> t cesta v G_f)
+    {
+        f = Augment(f, c, P)
+        Updatuj G_f
+    }
+    *return* f
+}
+----
+
+== Goldbergova metoda (push-relabel method)
+
+Pre-flow::
+Funkce stem:[f] taková, že
++
+* platí _kapacitní podmínka_: stem:[(\forall e \in E)(0 \le f(e) \le c(e))],
+* platí _relexováné zachování toku_: stem:[
+    (\forall v \in V - \{ s, t \})(\sum_{e \text{ do } v} f(e) \ge \sum_{e \text{ ven z } v} f(e))
+].
+
+Overflowing vertex::
+Takový vertex stem:[v \in V - \{ s, t \}], do kterého více přitéká než odtéká.
++
+[stem]
+++++
+\sum_{e \text{ do } v} f(e) > \sum_{e \text{ ven z } v} f(e)
+++++
+
+Excess flow::
+To, co je v overflowing vertexu navíc.
++
+[stem]
+++++
+e_f(v) = \sum_{e \text{ do } v} f(e) - \sum_{e \text{ ven z } v} f(e)
+++++
+
+Height function::
+Funkce stem:[h : V \to \N_0]. Řekneme, že stem:[h] je _kompatibilní s preflow stem:[f]_, právě když
++
+* _source_: stem:[h(s) = |V| = n],
+* _sink_: stem:[h(t) = 0],
+* _height difference_: stem:[(\forall (v, w) \in E_{G_f})(h(v) \le h(w) + 1)].
++
+NOTE: Pokud mezi dvěma vrcholy stem:[(v, w)] v reziduální síti vede hrana, pak je stem:[v] nejvýše o jednu úroveň výš než stem:[w].
+
+[TIP]
+====
+Lemma::
+Pokud je stem:[f] **pre**flow a stem:[h] je height function kompatibilní s stem:[f], pak neexistuje stem:[s \rightsquigarrow t] cesta v stem:[G_f].
+
+Důkaz::
+Nejdelší jednoduchá stem:[s \rightsquigarrow t] cesta má stem:[n] vrcholů a stem:[n-1] hran. Z definice stem:[h] plyne (kombinací nerovností) stem:[h(s) \le h(t) + n - 1]. Protože stem:[h(t)] je z definice 0, pak stem:[h(s) < n], což je spor, protože stem:[h(s) = n].
+====
+
+[TIP]
+====
+Lemma::
+Pokud je stem:[f] **flow** (tedy zejména preflow) a stem:[h] je height function kompatibilní s stem:[f], pak je stem:[f] maximální tok.
+====
+
+Push operace::
+Pro (reziduálně-grafovou) hranu stem:[(v, w)] se pokusí přesunout excess flow z stem:[v] do stem:[w], aniž by porušil (reziduální) kapacitu stem:[(v, w)].
++
+[source, subs=normal]
+----
+// Assumptions: e_f[v] > 0, c_f( (v, w) > 0) > 0, h[v] > h[w]
+*Push*(f, h, v, w)
+{
+    delta_f = min(e_f[v], c_f(v, w))
+    *if*( (v, w) in E)
+        f[(v, w)] += delta_f
+    *else*
+        f[(w, v)] -= delta_f
+    e_f[v] -= delta_f
+    e_f[w] += delta_f
+}
+----
+
+Relabel operace::
+Zvýší výšku stem:[h(v)] natolik, aby neporušil kompatibilitu stem:[h] s stem:[f].
++
+[source, subs=normal]
+----
+// Assumptions:
+//   - v is overflowing: e_f[v] > 0
+//   - all residual neighbors of v the same height or higher: forall (v, w) in E_f: h[v] \<= h[w]
+*Relabel*(f, h, v)
+{
+    h[v] = 1 + min(h[w] | (v, w) in E_f)
+}
+----
+
+Generic Push-Relabel::
++
+[source, subs=normal]
+----
+*Generic-Push-Relabel*(V, E, s, t, c)
+{
+    // initialize preflow -- default values
+    *for*(v in V)
+    {
+        h[v] = 0    // height function
+        e_f[v] = 0  // excess flow
+    }
+    n = |V|
+    h[s] = n
+
+    *for*(e in E)
+    {
+        f[e] = 0    // (pre)flow
+    }
+
+    // initialize preflow -- saturate connections from s
+    *for*( (s, v) in E)
+    {
+        f[(s, v)] = c(s, v) // preflow maxes out all capacity
+        e_f[v] = c(s, v)    // presume all of it excess
+        e_f[s] -= c(s, v)   // yes, it will be negative
+    }
+
+    // the juicy part
+    *while*(_any vertex is overflowing_)
+    {
+        v = _an overflowing vertex_ (has e_f[v] > 0)
+        *if*(v _has a neighbor_ w _in_ G_f _such that_ h(v) > h(w))
+        {
+            Push(f, h, v, w)
+        }
+        else
+        {
+            Relabel(f, h, v)
+        }
+    }
+    *return* f
+}
+----
+
+Amortizovaná složitost Push-Relabel::
+stem:[\mathcal{O}(V^2 E)] operací `Push` nebo `Relabel`.

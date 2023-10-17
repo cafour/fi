@@ -1,0 +1,28 @@
+= Dynamické programování
+
+Dynamic Programming::
+* Interval Scheduling
+* Parenthesization
+* Knapsack
+* CYK
+* Sequence Alignment
+* Bellman-Ford
+* Conclusion
+
+--
+1. Rozděl problém na (překrývající se) podproblémy.
+2. Napiš rekurzivní algoritmus.
+3. Urči správné pořadí počítání podproblémů tak, aby se každý počítal právě jednou (bottom-up přístup).
+4. Pokud je to nutné, sestav z optimální hodnoty její realizaci (třeba cestu nebo něco).
+5. Sepiš pseudokód.
+6. Dokaž korektnost rekurentního vztahu, bottom-up pořadí a rekonstrukce (zejména terminace).
+7. Okomentuj složitost.
+--
+
+Problémy::
+* Interval Scheduling (plánování přednášek)
+* Parenthesization (uzávorkování)
+* Knapsack (batoh)
+* Cocke-Younger-Kasami (CYK) (analýza bezkontextových jazyků)
+* Sequence alignment (rozdíl dvou řetězců)
+* Bellman-Forde-Moore (nejkratší cesta v orientovaném grafu)

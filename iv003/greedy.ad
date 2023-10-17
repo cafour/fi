@@ -1,0 +1,19 @@
+= Hladové (greedy) algoritmy
+
+Greedy Algorithms::
+* Coins
+* Interval Scheduling
+* Interval Partitioning
+* Lateness
+* Spanning trees
+* Dijkstra
+
+Inkrementálně řeší problém aplikací nějakého lokálního kritéria.
+
+Problémy::
+* Coins
+* Interval Scheduling
+* Interval Partitioning
+* Lateness
+* Spanning trees
+* Dijkstra

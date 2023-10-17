@@ -1,0 +1,8 @@
+= Divide and Conquer
+
+Divide-and-Conquer::
+* MinMax
+* Peaks
+* Closest Pairs
+
+Rozděl problém na nezávislé podproblémy, vyřeš každý podproblém a zkombinuj jejich řešení.

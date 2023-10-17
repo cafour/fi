@@ -1,0 +1,49 @@
+= Algoritmy a datové struktury II
+:toc:
+:toc-title: Obsah
+
+.Slidy
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lecture1.pdf[
+    Complexity of Problems and Algorithms
+]
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lecture2.pdf[
+    Amortized Complexity
+]
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lect3.pdf[
+    Fibonacci Heap
+]
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lect4.pdf[
+    Union Find
+]
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lect5.pdf[
+    Divide-and-Conquer
+]
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lect6.pdf[
+    Dynamic Programming I: _interval scheduling, parenthesization, knapsack_
+]
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lect7.pdf[
+    Dynamic Programming II: _CYK, sequence alignment, Bellman-Ford_
+]
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lect8.pdf[
+    Greedy Algorithms I: _coins, interval scheduling, interval partitioning, lateness_
+]
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lect9.pdf[
+    Greedy Algorithms II: _spanning trees, Dijkstra_
+]
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lect10.pdf[
+    Max Flow I: _Ford-Fulkerson_
+]
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lect11.pdf[
+    Max Flow II: _push-relabel_
+]
+* link:https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/IV003_slides_lect12.pdf[
+    Max Flow III: _applications_
+]
+
+include::./complexity.ad[leveloffset=1]
+include::fibheap.ad[leveloffset=1]
+include::union-find.ad[leveloffset=1]
+include::divide-conquer.ad[leveloffset=1]
+include::dynamic.ad[leveloffset=1]
+include::greedy.ad[leveloffset=1]
+include::flow.ad[leveloffset=1]

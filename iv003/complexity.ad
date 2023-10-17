@@ -1,0 +1,41 @@
+= Složitost
+
+Complexity of Problems and Algorithms::
+* Complexity of Problems
+* Complexity of Recursive Algorithms
+* Complexity of Iterative Algorithms
+
+Amortized Complexity::
+* Introduction
+* Aggregate Method
+* Cashier Method
+* Method of Potential Function
+* Dynamic Tables
+
+Složitost problému::
+Je zdola ohraničená dokazovaním a zhora ohraničená složitostí konkrétního algoritmu, který problém řeší.
+
+Amortizovaná složitost::
+Nejhorší složitost *posloupnosti* operací na dané datové struktuře.
+
+== Aggregační metoda
+
+Hrubou silou sečti složitosti jednotlivých operací v posloupnosti.
+
+== Kreditová (accounting / banker's) metoda
+
+1. stem:[c_i] je opravdová složitost stem:[i]-té operace.
+2. stem:[\hat{c_i}] je počet "kreditů", které stem:[i]-tá operace stojí.
+3. Pokud stem:[\hat{c_i} > c_i], pak ukládáme kredity "do zásoby".
+4. Pokud stem:[\hat{c_i} < c_i], musíme doplatit rozdíl kredity, které jsme si dali do zásoby *dříve*.
+5. Před první operací je v zásobě 0 kreditů: stem:[D_0 = 0].
+6. _Kreditový invariant:_ V kreditové zásobě stem:[D_i] musí být vždy nezáporný počet kreditů: stem:[\sum_{i=1} \hat{c_i} - \sum_{i=1}c_i \ge 0].
+7. Amortizovaná složitost libovolné posloupnosti operací je nejvýše součet kreditové hodnoty každé z operací.
+
+== Potenciálová metoda
+
+1. Vymysli potenciálovou funkci stem:[\Phi(D_i)], která každé datové struktuře, jenž může vzniknout některou z operací, přiřadí reálné číslo.
+2. Musí platit stem:[\Phi(D_0) = 0] a stem:[\Phi(D_i) \ge 0].
+3. stem:[c_i] je opravdová složitost stem:[i]-té operace.
+4. stem:[\hat{c_i} = c_i + \Phi(D_i) - \Phi(D_{i-1})] je amortizovaná složitost stem:[i]-té operace.
+5. Složitost libovolné posloupnosti operací je nejvýše součet amortizovaných složitostí jednotlivých operací.

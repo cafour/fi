@@ -1,0 +1,12 @@
+= Union-Find
+
+Union Find::
+* Union
+* Find
+* Analysis
+
+Struktura pro vzájemně disjunktní množiny. Podporuje 3 operace:
+
+* `Make-Set(x)` -- vytvoř novou množinu obsahující jen x.
+* `Find(x)` -- vrať kanonický element z množiny obsahující x.
+* `Union(x, y)` -- nahraď množiny obsahující x a y jejich sjednocením.
