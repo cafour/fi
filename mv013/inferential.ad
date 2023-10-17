@@ -1,0 +1,161 @@
+= Inferential statistics
+
+Když chceš z data něco odvodit, musíš je modelovat. Jak ale zvolit parametry modelu? Máš dva hlavní přístupy:
+
+* _Parameter estimation_ -- spočítej odhad té hodnoty, nebo interval, do kterého patří,
+* _Hypothesis testing_ -- něco si vymysli a pak otestuj, jestli to na tvoje data sedí.
+
+== Parameter estimation
+
+Parameter estimation::
+Když se snažíš vymyslet, jaké asi hodnoty mají parametery té které distribuce mít, aby co nejlíp pasovala na tvoje samply.
+
+Point estimate::
+Počítáš jeden konkrétní nejlepší odhad -- jedno číslo. Jak? Třeba pomocí _Maximum likelihood estimate_ nebo _Method of moments_.
+
+Likelihood::
+Číslo, které udává, jak dobře náš model (zvolení rozdělení se zvolenými parametry stem:[f(x, \theta)]) sedí na dané samply. Nemá jednotku a není to pravděpodobnost. Je to funkce parametrů modelu, ne jevů. Pro fixní dataset samplů stem:[x_1, x_2, ..., x_n]:
++
+stem:[
+    L(\theta) = \prod_{i=1}^n f(x_i, \theta)
+]
++
+NOTE: Tenhle součin se obvykle logaritmuje, protože sčítat je snazší a stejně to nemá jednotku.
+
+Maximum likelihood estimate (MLE)::
+Takové stem:[\hat{\theta}], že stem:[\hat{\theta} = \argmax_{\theta \in \Theta}L(\theta)].
+
+Method of moments::
+Alternativa k maximum likelihood. Víš jak chceš, aby stem:[\mu(\theta) = \overline{X}]? Tak si vyrobil tolik takových rovnic, kolik máš parametrů modelu v stem:[\theta] a vyřeš soustavu rovnic:
++
+[stem]
+++++
+\begin{aligned}
+\mu_1(\theta) &= \frac{1}{n} \sum_{i=1}^n X_i^1\\
+\mu_2(\theta) &= \frac{1}{n} \sum_{i=1}^n X_i^2\\
+&... \\
+\mu_p(\theta) &= \frac{1}{n} \sum_{i=1}^n X_i^p\\
+\end{aligned}
+++++
++
+NOTE: Pokud ti některé rovnice vyjdou lineárně závislé, přihoď další!
+
+Confidence interval::
+Když ti jedno číslo nestačí a chceš interval, do kterého odhad spadá s nějakou mírou jistoty.
+
+Confidence level stem:[\alpha]::
+Confidence interval má confidence level stem:[\alpha], pro který byl spočítán. Pokud stem:[\alpha = 0.05], pak 95% intervalů, které pro stem:[\alpha] můžeš spočítat, obsahují opravdovou hledanou hodnotu.
+
+One-sided confidence interval::
+* stem:[\lbrack L(X_1, ..., X_n), \infty)], kde stem:[P(L(X_1, ..., X_n) \le \theta) = 1 - \alpha], nebo
+* stem:[(-\infty, U(X_1, ..., X_n) \rbrack], kde stem:[P(\theta \le U(X_1, ..., X_n)) = 1 - \alpha].
++
+NOTE: stem:[L] a stem:[U] jsou náhodné proměnné, které vyjadřují Lower bound a Upper bound.
+
+Two-sided confidence interval::
+stem:[\lbrack L(X_1, ..., X_n), U(X_1, ..., X_n) \rbrack],
++
+kde stem:[P(L(X_1, ..., X_n) \le \theta \le U(X_1, ..., X_n)) = 1 - \alpha]
++
+a stem:[\theta \in \Theta] -- tedy musí to platit pro všechny možné hodnoty parametru stem:[\theta].
+
+== Model selection
+
+Q-Q plot::
+Pokud veličina je rozdělená normálně, pak je v Q-Q plotu 45° čára. Q because it's quantil.
+
+P-P plot::
+Jako Q-Q plot, ale probability.
+
+Histogram::
+Z něj taky poznáš, co je to za distribuci.
+
+Kernel density estimator::
+Histogram, but smooth.
+
+Empirical distribution function::
+Vezmeš samply a uděláš z nich distribution function.
+
+Shapiro-Wilk test::
+Test na to, jestli je náhodná veličina rozdělená normálně.
+
+Kolmogorov-Smirnov (K-S) test::
+Jsou tyhle dvě proměnné rozdělené stejně?
+
+Lilliefors test::
+Upgrade K-S testu, který si dopočítá stem:[\mu] a stem:[\sigma].
+
+Cramer-von Mises test::
+Test, co porovnává CDF s empirickou DF nebo dvě empirické DF.
+
+Anderson-Darling test::
+Jak dobře data sedí na danou distribuci?
+
+Pearson's stem:[\chi^2] goodness of fit test::
+Dá se použít na testování goodness of fit, homogeneity a nezávislosti kategorické náhodné proměnné.
+
+Score-based principle::
+Model s vyšším  likelihood je lepší než model s nižším likelihood.
+
+Akaike's information criterion (AIC)::
+Když modely s mrakem parametrů nejsou až tak cool, tak uprav likelihood takto:
++
+stem:[
+    \text{AIC} = -2 l (\hat{\theta}) + 2p
+]
+
+== Hypothesis testing
+
+Hypotézy vyjadřují očekávání o nějakém parametru populace. Significance test nám říká, jestli hypotéza dává smysl pro sample data, která máme.
+
+Null hypothesis stem:[H_0]::
+Parametr má *specifickou* hodnotu. Bude vyvrácena, pokud data dostatečně dokazují, že tomu tak není.
+
+Alternative hypothesis stem:[H_1]::
+Parametr spadá do nějakého intervalu hodnot. stem:[H_0] a stem:[H_1] se vždy vzájemně vylučují.
+
+Metafora se soudem::
+Podobně jako u soudu tu platí presumpce nevinný. Předpokládáme, že stem:[H_0] je _pravda_, dokud nedokážeme opak. Nicméně, pokud se nám nepodaří vyvrátit stem:[H_0], tak nevíme jestli stem:[H_0] nebo stem:[H_1] platí.
+
+Type I error::
+Když zavrhneš stem:[H_0], ačkoli je pravdivá.
+
+Type II errror::
+Když nezavrhneš stem:[H_0], ačkoli stem:[H_1] je pravdivá.
+
+stem:[p]-value::
+Pravděpodobnost, že došlo k chybě typu I -- zavrhnuli jsme stem:[H_0], ačkoli platí.
++
+stem:[
+    p = P(\text{type I error}) = P(\text{we reject } H_0 \;|\; H_0)
+]
++
+Pokud stem:[p]-value vyjde menší než significance level stem:[\alpha], pak pravděpodobnost, že došlo k chybě typu I je dostatečně malá na to, abychom mohli tvrdit, že zavrhujeme stem:[H_0], protože stem:[H_0] neplatí, a tedy akceptujeme stem:[H_1].
+
+--
+* Exact test
+* Asymptotic test
+* Welch's stem:[t]-test
+* two-sample stem:[t]-test
+* stem:[F]-test
+* paired stem:[t]-test
+* ANOVA
+* Levene's test
+* Bartlett's test
+* Tukey's HSD
+* Pearson's stem:[\chi^2] test of independence
+
+* Nonparametric tests
+** Sign test
+** One-sample Wilcoxon test
+** Two-sample Wilcoxon test
+** Two-sample Kolmogorov-Smirnov test
+** Spearman's correlation coefficient
+** Kendall's tau
+--
+
+== Linear regression models
+
+* Least squares estimate
+* Coefficient of determination
+* Stepwise regression

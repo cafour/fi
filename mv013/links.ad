@@ -1,0 +1,48 @@
+= Odkazy
+:page-liquid: true
+
+.Obecné
+* link:https://www.rdocumentation.org/[R Documentation]
+* link:https://www.statisticshowto.com[Statistics How To]
+* link:https://stanford.edu/~shervine/teaching/cme-106/cheatsheet-probability#probability-distributions[Probability cheatsheet]
+* link:http://www.wzchen.com/probability-cheatsheet[The Only Probability Cheatsheet You'll Ever Need]
+* link:{baseurl}/questions/statistika[Státnicová otázka ze statistiky]
+
+
+.Slidy MV013
+1. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-01.pdf[
+    What is statistics? Motivation and examples.
+]
+2. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-02.pdf[
+    Exploratory data analysis
+]
+3. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-03.pdf[
+    Probability theory - a quick revision
+]
+4. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-04.pdf[
+    Probability distributions
+]
+5. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-05.pdf[
+    Parameter estimates
+]
+6. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-06.pdf[
+    Confidence intervals and testing statistical hypotheses
+]
+7. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-07.pdf[
+    Checking model assumptions, model selection
+]
+8. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-08.pdf[
+    Testing statistical hypotheses II
+]
+9. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-09.pdf[
+    Testing statistical hypotheses III - ANOVA, testing of independence
+]
+10. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-10.pdf[
+    Nonparametric tests
+]
+11. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-11.pdf[
+    Review of linear regression models
+]
+12. link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/um/lectures/MV013-12.pdf[
+    Final remarks
+]

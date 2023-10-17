@@ -1,0 +1,241 @@
+= Descriptive statistics
+
+Když máš nějaký data set a stručně popsat, co v něm je a jaký to má tvar (třeba co se tam vyskytuje nejčastěji).
+
+Exploratory data analysis::
+Fancy název pro sadu postupů, jak přemýšlet o a vizualizovat data.
+
+== Measures of location
+
+* Mean
+* Median
+* Mode
+* Trimmed mean
+* Winsorized mean
+* Quantile
+* Quartile
+
+== Measures of variability
+
+* Variance
+* Standard deviations
+* Range
+* Interquartile range (IQR)
+* Median absolute deviation (MAD)
+
+== Measures of shape
+
+Skewness::
+Vztah polohy meanu vůči mediánu. Vyjadřuje symetrii dat.
+
+Kurtosis::
+Jak vysoký je peak? Jak moc je to rozpláclé.
+
+== Plots
+
+* Box plot
+* Histogram
+* Kernel density estimator
+* Table of relative (cumulative) frequencies
+* Plot of relative frequencies (bar chart)
+
+== Multiple dimensions
+
+* Correlation matrix
+* Scatter plot
+* Scatter plot matrix
+* Covariance and correlation
+* Correlogram
+* Anscombe's quartet
+* Flury faces
+* Principal component analysis
+* Spearman's correlation coefficient, Kendall's tau
+
+== Theory of probability
+
+--
+* Probability space
+* Conditional probability
+* Random variables and vectors
+** Discrete
+** Continuous
+* Cumulative distribution function (CDF)
+* Probability mass function (PMF)
+* Quantile function
+* Variance
+* Skewness
+* Kurtosis
+* Covariance
+* Correlation coefficient
+* Law of large numbers
+* Central limit theorem
+** Lindeberg-Lévy
+** Moivre-Laplace
+* Continuity correction
+--
+
+Expected value (mean) stem:[E(X), \mu]::
+Zobecnění váženého průměru, kde váhy jsou pravděpodobnosti jednotlivých možných výsledků.
+
+Sample mean stem:[\overline{X}]::
+Aritmetický průměr proměnné stem:[X] spočítaný z nějaké množiny vzorků.
+
+Probability density function stem:[f(x)] (PDF)::
+Pokud ji zintegruješ, zjistíš jaká je pravděpodobnost, že náhodná spojitá proměnná nabude hodnoty z daného intervalu.
+
+Law of Large Numbers::
+S rostoucím počtem sample výsledků stem:[X_i] se jejich aritmetický průměr stem:[\overline{X}] blíží k expected value stem:[\mu].
+
+Central limit theorem::
+S rostoucím počtem sample výsledků stem:[X_i] se jejich distribuce blíží normálnímu rozdělení bez ohledu na jejich původní rozdělení.
+
+== Probability distributions
+
+=== Discrete univariate
+
+Bernoulli::
+Používá se při náhodném pokusu, kde jsou jen dva možné výsledky (třeba hod mincí). Pokusy musí být nezávislé. Výsledek `"1"` má pravděpodobnost stem:[p].
++
+stem:[
+    P(x) = \begin{cases}
+        1 - p & x \ne 1 \\
+        p & x = 1 \\
+    \end{cases}
+]
+
+Binomial::
+Používá se u sekvence Bernoulliho pokusů. Zajímá nás pravděpodobnost toho, že stem:[x] pokusů z stem:[n] bude úspěšných.
++
+stem:[
+    P(x, n, p) = \binom{n}{x} p^x (1-p)^{n-k}
+]
+
+Poisson::
+Když víš, jak často se něco děje -- průměrně stem:[\lambda]-krát za jednotku času -- a zajímá tě, jaká ja pravděpodobnost, že se to stane stem:[k]-krát za stejnou jednotku času. Výskyt jednoho jevu však nesmí ovlivnit pravděpodobnost následujícího výskytu a také se nemohou stát dva jevy najednou.
++
+stem:[
+    P(k, \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}
+]
+
+Geometric::
+Když tě zajímá, jaká je šance, že se něco pokazí stem:[k] krát, než to konečně uspěje u Bernoulliho pokusu.
++
+stem:[
+    P(k, p) = \begin{cases}
+        p (1-p)^k & k = 0, 1, 2, ... \\
+        0 & \text{jinak} \\
+    \end{cases}
+]
+
+Discrete uniform::
+Když jsou všechny jevy stem:[x] z dané množiny stem:[A] stejně pravděpodobné (fair d20).
++
+stem:[
+    P(x) = \begin{cases}
+        \frac{1}{|A|} & x \in A \\
+        0 & \text{jinak} \\
+    \end{cases}
+]
+
+=== Continuous univariate
+
+Continuous uniform::
+Všechny jevy v daném intervalu stem:[(a, b)] (může být otevřený nebo uzavřený) jsou stejně pravděpodobné.
++
+stem:[
+    f(x) = \begin{cases}
+        \frac{1}{b-a} & a \le x \le b \\
+        0 & x < a \lor x > b \\
+    \end{cases}
+]
+
+Exponential::
+Čas mezi jevy v Poissonově procesu.
++
+stem:[
+    f(x, \lambda) = \begin{cases}
+        \lambda e^{-\lambda x} & x \ge 0 \\
+        0 & x < 0 \\
+    \end{cases}
+]
+
+Normal::
+Používá se jako default, když nevíš, jakou má proměnná distribuci. (stem:[\mu] je mean, stem:[\sigma^2] je rozptyl).
++
+stem:[
+    f_\mathcal{N}(x, \mu, \sigma^2) = \frac{1}{\sigma \sqrt{2 \pi}} e^{
+            -\frac
+                {\left(x - \mu \right)^2}
+                {2\sigma^2}
+        }
+]
+
+Standard normal::
+Je fajn, protože má standardní odchylku rovnu jedné, takže člověku stačí si pamatovat, že:
+* 68 % je v intervalu stem:[(-1, 1)],
+* 95 % je v intervalu stem:[(-2, 2)],
+* 99,7 % je v intervalu stem:[(-3, 3)].
++
+stem:[
+    f(x) = f_\mathcal{N}(x, 0, 1) = \frac{1}{\sqrt{2 \pi}} e^{-\frac{x^2}{2}}
+]
+
+Cauchy::
+Poměr dvou spojitých náhodných proměnných s normálním rozdělením. Expected value ani rozptyl na ní nejsou definované.
++
+stem:[
+    f(x) = \frac{1}{
+        \pi \sigma \left\lbrack
+            1 + \left(
+                \frac{x - \mu}{\sigma}
+            \right)^2
+        \right\rbrack
+    }
+]
++
+WARNING: The Hannibal Lecter of probability distributions.
+
+stem:[\chi^2] (Chi-square)::
+Používá se při testování hypotéz. Nechť stem:[Z_1, Z_2, ..., Z_n] jsou nezávislé náhodné proměnné se standardním normálním rozdělením a stem:[X = \sum_{i=1}^n Z_i^2], pak stem:[X] má stem:[\chi^2] rozdělení s stem:[n] stupni volnosti.
++
+stem:[
+    f(x, n) = \begin{cases}
+        {
+            \Large
+            \frac{
+                x^{\frac{n}{2} - 1} e^{-\frac{x}{2}}
+            }{
+                2^\frac{n}{2} \Gamma\left( \frac{k}{2} \right)
+            }
+        }
+        & x > 0 \\
+        0 & \text{jinak} \\
+    \end{cases}
+]
+
+Student's stem:[t]::
+Používá se na odhadování meanu normálně distribuované populace, jejíž rozptyl neznáš (což je skoro vždycky), ale máš z ní samply. Měj samply stem:[X_1, X_2, ..., X_k],
+jejich mean stem:[\overline{E} = \frac{1}{k}\sum_{i=1}^k X_i]
+a jejich rozpyl stem:[S^2 = \frac{1}{k-1} \sum_{i=1}^{k}(X-\overline{X})^2]. Pak stem:[\frac{\overline{X} - \mu}{S / \sqrt{k}}] je náhodná proměnná s stem:[t] rozdělením o stem:[n = k-1] stupních volnosti.
++
+stem:[
+    f(x, n) = \frac{
+        \Gamma (\frac{n+1}{2})
+    }{
+        \sqrt{n \pi} \Gamma(\frac{n}{2})
+    }
+    \left(
+        1 + \frac{x^2}{n}
+    \right)^{-\frac{n+1}{2}}
+]
+
+Fisher-Snedecor stem:[F]::
+Používá se při testování hypotéz souvisejících s rozptylem. Pokud stem:[U] a stem:[V] jsou proměnné s stem:[\chi^2] rozdělením s stem:[d_1], resp. stem:[d_2] stupni volnosti, pak stem:[X = \frac{\sqrt{U / d_1}}{\sqrt{V / d_2}}] má stem:[F] rozdělení.
+
+.Discrete multivariate
+* Multinomial
+
+.Continous multivariate
+* Bivariate continous uniform
+* Multivariate normal
+* Bivariate normal

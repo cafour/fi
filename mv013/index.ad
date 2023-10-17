@@ -1,0 +1,6 @@
+= Statistika
+:toc:
+
+include::links.ad[leveloffset=1]
+include::descriptive.ad[leveloffset=1]
+include::inferential.ad[leveloffset=1]
