@@ -1,0 +1,349 @@
+= Optimalizace
+
+Při SGD vyvstává řada praktických otázek:
+
+--
+* Jak velká má být minibatch?
+* Jak zvolit learning rate?
+* Jak před-zpracovat vstupy?
+* Jak inicializovat váhy?
+* Jak si vlastně vybrat, co má být výstup neuronky?
+* Kdy trénování zastavit?
+* Jak velká by ta neuronka měla být?
+--
+
+.Přehled
+* <<problems>>
+* <<momentum>>
+* <<learning-rate>>
+* <<sigma>>
+* <<initialization>>
+* <<generalization>>
+
+[#problems]
+== Problémy s trénováním
+
+* Mnoho lokálních maxim a minim u malých sítí.
+* Weight space symmetry -- prohození dvou vah nezmění síť, takže se blbě identifikuje, která váha, co dělá.
+** _(Pozn.: Vůbec nevím.)_
+* Ploché regiony (malý gradient, pomalé učení).
+* Sedlové body (kterým směrem mám jít?).
+* Strmé útesy (shit, přeskočil jsem důležitý bod).
+* Vanishing gradient (malý gradient, příliš pomalé učení způsobené např. derivací sigmoidu).
+* Exploding gradient (velký, nestabilní gradient, učení nemusí zkonvergovat).
+* Nepřesný gradient (minibatch je přece jenom aproximace).
+
+.Velikost minibatch
+* Velká minibatch znamená přesnější gradient, ale s méně než lineárním ziskem.
+* Příliš malá minibatch naopak nevyužije všechna jádra procesoru.
+* Pokud chceš všechny samply v minibatch zpracovat paralelně, pak tě limituje i pamět tvého HW.
+* Typicky to bývá mocnina dvou kvůli architektuře GPU.
+* Malá minibatch má vlivem své nepřesnosti regularizační efekt.
+
+[NOTE]
+====
+*Věta*
+
+Mějme NN, kde:
+
+* aktivační funkce stem:[\sigma] je "smooth" ReLU -- stem:[\sigma(\xi) = \log(1 + \exp(\xi))],
+* input vektory stem:[\vec{x_k}] mají velikost 1,
+* pro očekávané výstupy platí stem:[|d_k| \in O(1)],
+* má "dost" hidden neuronů v každé vrstvě,
+* learning rate je konstatní a "dost" malý,
+
+pak gradient descent lineárně konverguje (s velkou pravděpodobností) v globalním minimu s nulovou chybou.
+====
+
+[#momentum]
+== Momentum
+
+Může se stát, že gradient se sice zmenšuje ale neustále mění směr tam a zpátky. Řešením je přidat "hybnost" nebo "paměť", zkrátka započítat předchozí weight update to aktuálního.
+
+[stem]
+++++
+\Delta \vec{w}^{(t)} = -\varepsilon(t) \cdot \sum_{k \in T} \nabla E_k(\vec{w}^{(t)})
++ \textcolor{green}{\alpha \cdot \Delta \vec{w}^{(t-1)}}
+++++
+
+kde stem:[0 < \alpha < 1] je "vliv" hybnosti.
+
+[#learning-rate]
+== Learning rate
+
+Hlavní parametr ovlivnující trénování NN. Pokud nevíš, jakou hodnotou začít:
+
+--
+* podívej se, co funguje jinde, nebo
+* začni něčím blízko 0, třeba 0.001, a postupně mocni dvěma, nebo
+* můžeš navíc sledovat křivky učení pomocí cross-validation, nebo
+* použít některou z metod _adaptive learning rate_.
+--
+
+'''
+
+=== Power scheduling
+
+S přibývajícími iteracemi se zmenšuje.
+
+[stem]
+++++
+\varepsilon(t) = \frac{\varepsilon_0}{(1 + \frac{t}{s})}
+++++
+
+kde stem:[\varepsilon_0] je počáteční learning rate a stem:[s] je počet kroků.
+
+'''
+
+=== Exponential scheduling
+
+S přibývajícími iteracemi se zmenšuje *ještě ryhleji*.
+
+[stem]
+++++
+\varepsilon(t) = \varepsilon_0 \cdot 0.1^{\frac{t}{s}}
+++++
+
+'''
+
+=== Adaptive Gradient (AdaGrad)
+
+Adaptuje learning rate pro každou váhu zvlášť.
+
+[stem]
+++++
+\begin{aligned}
+
+\Delta w_{ji}^{(t)}
+&= \textcolor{green}{-\frac{\eta}{\sqrt{r_{ji}^{(t)} + \delta}}}
+    \cdot \sum_{k \in T} \frac{\partial E_k}{\partial w_{ji}}(\vec{w}^{(t)}) \\
+
+r_{ji}^{(t)}
+&= r_{ji}^{(t - 1)} +
+    \left(
+        \sum_{k \in T} \frac{\partial E_k}{\partial w_{ji}}(\vec{w}^{(t)})
+    \right)^2 \\
+
+\end{aligned}
+++++
+
+--
+* stem:[\eta] -- konstanta vyjadřující vliv learning ratu (typicky 0.01)
+* stem:[\delta] -- bývá okolo 1e-8 a je tam, abys náhodou nedělil nulou
+--
+
+--
+AdaDelta::
+Vylepšení AdaGradu -- nebere v potaz celou historii ale jen "moving window".
+--
+
+'''
+
+=== Root Mean Square Propagation (RMSProp)
+
+Vylepšuje AdaGrad tím, že zahazuje historii, která je příliš vzdálená (exponential decay).
+
+[stem]
+++++
+r_{ji}^{(t)} = \textcolor{green}{\rho} \cdot r_{ji}^{(t - 1)} + \textcolor{green}{(1 - \rho)} \cdot
+    \left(
+        \sum_{k \in T} \frac{\partial E_k}{\partial w_{ji}}(\vec{w}^{(t)})
+    \right)^2
+++++
+
+--
+* stem:[\rho] -- vliv historie vs aktuální weight update
+* Hinton doporučuje stem:[\rho = 0.9] a stem:[\eta = 0.001]
+--
+
+--
+Adam::
+Přibližně RMSProp + momentum.
+--
+
+[#sigma]
+== Volba aktivační funkce
+
+--
+.Požadované vlastnosti
+Diferencovatelnost::
+Jinak by gradient descent nefungoval.
+
+Nelineárnost::
+Lineární (třeba pass-through) vícevrstvé NN jsou ekvivaletní jednovrstvé NN.
++
+NOTE: Unit step function *není* lineární. Ty důkazy dávají smysl.
+
+Monotónnost::
+Kdyby měla aktivační funkce extrémy, error function jich bude mít víc, což nechceme.
+
+"Lineárnost"::
+Lineární funkci nejsnáze napasuješ.
+--
+
+--
+.Některé aktivační funkce
+Hyperbolic tangens (tanh)::
+Konstanta 1.7159 je zvolena tak, aby byla ta funkce na intervalu stem:[\lbrack -1, 1 \rbrack] "lineární".
++
+[stem]
+++++
+\sigma(\xi) = 1.7159 \cdot \tanh \left( \frac{2}{3} \cdot \xi \right)
+++++
+
+Rectified Linear Unit (ReLU)::
+Nejčastěji používaná a doporučovaná aktivační funkce pro feed-forward NN.
++
+[stem]
+++++
+\sigma(\xi) = \max(\xi, 0)
+++++
+
+Leaky ReLU::
+Jako ReLU, ale pro negativní vnitřní potenciál není mrtvá úplně.
+
+ELU -- "Smoothed" ReLU::
++
+[stem]
+++++
+\sigma(\xi) = \begin{cases}
+    \alpha \cdot (\exp(\xi) - 1) & \xi < 0 \\
+    \xi & \xi \ge 0
+\end{cases}
+++++
++
+Pro negativní vnitřní potenciál konverguje k parametru stem:[\alpha]
+
+Scaled ELU (SELU)::
++
+[stem]
+++++
+\sigma(\xi) = \textcolor{green}{\lambda} \cdot \begin{cases}
+    \alpha \cdot (\exp(\xi) - 1) & \xi < 0 \\
+    \xi & \xi \ge 0
+\end{cases}
+++++
++
+Je sebe-normalizující -- výstup vrstvy zachová střední hodnotu 0 a rozptyl 1 pro stem:[\lambda \approx 1.050] a stem:[\alpha \approx 1.673], pokud jsou váhy správně inicializovány a vstupy správně předzpracovány.
+
+Softmax::
+Používá se v output vrstvě při multi-class klasifikaci společně s cross-entropy jako error function.
++
+[stem]
+++++
+\begin{aligned}
+
+y_j &= \sigma_j(\xi_j) = \frac{e^{\xi_j}}{\sum_{i \in Y}{e^\xi_i}} \\
+E(\vec{w}) &= - \frac{1}{p} \sum_{k=1}^p \sum_{j \in Y} d_{kj} \ln(y_j)
+
+\end{aligned}
+++++
+
+--
+
+--
+.Jak vybrat?
+* Default je ReLU.
+* Prý platí SELU > ELU > leakyReLU > ReLU > tanh > logistic
+* U výstupních neuronů záleží na aplikaci:
+** Pro aproximaci funkcí typicky lineární.
+** Pro binarní klasifikaci logistic sigmoid.
+** Pro nebinární klasifikaci softmax.
+--
+
+[#initialization]
+== Inicializace vah
+
+Předpokládejme, že vstupy zpracováváme tak, aby nebyly příliš velké. Velké vstupy totiž mají větší vliv na učení, než ty malé. Navíc mohou způsobit přetečení atd. Proto je standardizujeme tak, aby:
+
+* střední hodnota byla 0
+* rozptyl byl 1
+
+Toto předzpracování bereme v úvahu při inicializaci vah. Inicializuje je tak, aby spadaly do intervalu stem:[\lbrack -w, w \rbrack], kde stem:[w] závisí na počtu vstupů neuronu.
+
+Například u tanh, chceme hodnotu stem:[w] zvolit tak, aby spadala té části tanh, která není příliš lineární (stem:[\lbrack -1, 1\rbrack]) ani saturovaná (mimo stem:[\lbrack -4, 4 \rbrack]). Pro neuron stem:[j] tedy stem:[w] volíme tak, aby směrodatná odchylka stem:[\xi_j] -- stem:[o_j] -- byla blízko hranice, na níž je stem:[\sigma] lineární. Pro náš tanh tak vychází:
+
+[stem]
+++++
+\def\Var{\text{Var}}
+
+\begin{aligned}
+
+y_j &= \sigma(\xi) = 1.7159 \cdot \tanh \left( \frac{2}{3} \cdot \xi \right) \\
+y_j &= \sigma(\xi) \approx \xi \\
+\Var(y_j) &\approx \Var(\xi_j) = \Var\left( \sum_{i=1}^n w_{ji} y_i \right) \\
+    &= \sum_{i=1}^n \Var(w_{ji} y_i) = \sum_{i=1}^n \Var(w_{ji}) \cdot \Var(y_i) = n \Var(W) \cdot \Var(Y) \\
+\Var(W) &= \frac{1}{n} \\
+
+\end{aligned}
+++++
+
+kde stem:[n] je počet neuronů o vrstvu níže. Jelikož váhy taháme z normálního rozdělení z intervalu stem:[\lbrack -w, w \rbrack], kde odchylka je stem:[\frac{w^2}{3}] platí:
+
+[stem]
+++++
+\begin{aligned}
+
+\frac{1}{n} &= \frac{w^2}{3} \\
+w &= \sqrt{\frac{3}{n}} \\
+
+\end{aligned}
+++++
+
+Glorot & Bengio pro tanh::
+Za stem:[w] zvol stem:[-\sqrt{\frac{6}{m + n}}], kde stem:[n] je počet neuronů o vrstvů níže a stem:[m] je počet neuronů v aktuální vrstvě.
+
+Glorot & Bengio s normálním rozdělením (2010)::
+Váhu zvol náhodně podle normálního rozdělení, kde stem:[\mu = 0] a stem:[\sigma = \frac{2}{n + m}]. Vhodné pro pro neurony s pass-through, tanh, logistic, nebo softmax aktivační funkcí.
+
+He (2015)::
+stem:[\mu = 0] a stem:[\sigma = \frac{2}{n}]. Vhodné pro ReLu a leaky ReLU.
+
+LeCun (1990)::
+stem:[\mu = 0] a stem:[\sigma = \frac{1}{n}]. Vhodné pro SELU.
+
+[#generalization]
+== Generalizace a regularizace
+
+Generalizace je schopnost NN srovnat se s novými daty. Data obsahují šum. Formálně:
+
+[stem]
+++++
+d_{kj} = g_j(\vec{x_k}) + \Theta_{kj}
+++++
+
+kde stem:[g_j] je funkce, která generuje "opravdová" data a stem:[\Theta_{kj}] je šum. Neuronka by se měla snažit naučit data, ne šum.
+
+Regularizační metody zlepšují schopnost neuronky generalizovat.
+
+Early stopping::
+Naschvál zastavíme učení dřív, než najde minimum gradientu. Můžeme místo toho rozdělit dataset na
+* training set (třeba 60 %) -- na tom se neuronka učí
+* validation set (třeba 20 %) -- použijeme na zastavení trénování
+* možná i test set (třeba 20 %) -- na porovnání natrénovaných modelů
+
+Ensemble methods::
+Natrénuj víc modelů a nech je hlasovat o výsledku.
+
+Bagging::
+Ensemble metoda, kdy z trénovacího setu uděláme stem:[k] trénovacích setů nahodným výběrem s tím, že vybrané samply vracíme zpátky "do pytle". Pro každý set natrénujeme model. Necháme je hlasovat buď průměrováním nebo hlasováním v závislosti na aplikaci.
+
+Dropout::
+V každém kroku gradient descentu vyber množinu neuronů, které s určitou pravděpodobností vypneš -- nebudou se účastnit forward ani backward průchodu. Je to skoro jako trénovat vícero modelů najednou, které ale sdílí paměť.
+
+Weight decay a L2 regularizace::
+V každém kroku gradient descentu zmenšíme váhy:
++
+[stem]
+++++
+w_{ji}^{(t+1)} = \textcolor{red}{(1 - \zeta)}(w_{ji}^{(t)} + \Delta w_{ji}^{(t)})
+++++
++
+Což je ekvivalentní L2 regularizaci -- gradient descentu s konstantním stem:[\varepsilon] a error function:
++
+[stem]
+++++
+\hat{E}(\vec{w}) = E(\vec{w}) + \textcolor{red}{\frac{2 \zeta}{\varepsilon}{\vec{w} \cdot \vec{w}}}
+++++
++
+NOTE: L2 = squared magnitude stem:[\vec{w}]

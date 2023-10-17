@@ -1,0 +1,195 @@
+= Recurrent Neural Network (RNN)
+
+Architektura, která (na rozdíl od MLP) povoluje cykly. Je to MLP rozšířená minimálně tak, aby byla rekurentní. RNN dovedou zpracovat vstup variabilní délky. Mají "paměť". Jejich hlavní doménou je zpracování textu.
+
+.Přehled
+* <<notation>>
+* <<activity>>
+* <<training>>
+* <<lstm>>
+
+[#notation]
+== Notace
+
+image::./img/rnn.png[]
+
+--
+* stem:[\vec{x} = (x_1, ..., x_M)] -- vektor hodnot stem:[M] input neuronů
+* stem:[\vec{h} = (h_1, ..., h_H)] -- vektor hodnot stem:[H] hidden neuronů
+* stem:[\vec{y} = (y_1, ..., y_N)] -- vektor hodnot stem:[N] output neuronů
+* stem:[U_{ji}] -- váha z inputu stem:[x_i] do hidden stem:[h_j] (dst <- src)
+* stem:[W_{ji}] -- váha z hidden stem:[h_i] do hidden stem:[h_j] (dst <- src)
+* stem:[V_{ji}] -- váha z hidden stem:[h_i] do output stem:[y_j] (dst <- src)
+--
+
+NOTE: Zdá se, že všechno v tomhle předmětu používá link:https://en.wikipedia.org/wiki/X86_assembly_language#Syntax[Intel syntax] dst-src.
+
+[#activity]
+== Aktivita
+
+Výstup z hidden neuronů je pamětí neuronky, která je na začátku inicializována na 0. RNN zpracovává sekvenci vstupů stem:[\vec{x_1}, ... \vec{x_T}] délky stem:[T]. Váhy neuronů jsou sdíleny napříč sekvencí -- na každý prvek stem:[\bold{x}] jsou aplikována ta samá stem:[U]:
+
+[stem]
+++++
+\vec{x}_t = (x_{t1}, ... x_{tM})
+++++
+
+A produkuje sekvenci hiddenů a outputů:
+[stem]
+++++
+\begin{aligned}
+\vec{h}_t &= (h_{t1}, ... h_{tH}) \\
+h_{tk} &= \sigma
+    \left(
+        \sum_{k'=1}^M U_{kk'} \cdot x_{tk'} + \sum_{k'=1}^H W_{kk'} \cdot h_{(t-1)k'}
+    \right) \\
+
+\vec{y_t} &= (y_{t1}, ..., y_{tN}) \\
+y_{tk} &= \sigma
+    \left(
+        \sum_{k'=1}^H V_{kk} \cdot h_{tk'}
+    \right) \\
+\end{aligned}
+++++
+
+Často se pro přehlednost používá maticová notace, kde pro input a hidden posloupnosti platí:
+
+[stem]
+++++
+\begin{aligned}
+
+\bold{x} &= \vec{x}_1, ..., \vec{x}_T \\
+\bold{h} &= \vec{h}_1, ..., \vec{h}_T \\
+\vec{h_t} &= \sigma(U \cdot \vec{x}_t + W \cdot \vec{h}_{t-1}) \\
+
+\end{aligned}
+++++
+
+Pro output sekvenci pak:
+
+[stem]
+++++
+\begin{aligned}
+
+\bold{y} &= \vec{h}_1, ..., \vec{h}_T \\
+\vec{y_t} &= \sigma(V \cdot \vec{h}_t) \\
+
+\end{aligned}
+++++
+
+[#training]
+== Trénink
+
+Trénovací set je množina dvojic -- (vstupní *sekvence*, výstupní *sekvence*).
+
+[stem]
+++++
+\mathcal{T} = \{ (\bold{x}_1, \bold{d}_1), ..., (\bold{x}_p, \bold{d}_p) \}
+++++
+
+NOTE: Ano, to znamená, že stem:[x_{lt1}] je první prvek stem:[t]-ho prvku v stem:[l]-té vstupní sekvenci.
+
+Squared error samplu stem:[(\bold{x}, \bold{d})]:
+
+[stem]
+++++
+E_{(\bold{x}, \bold{d})} = \sum_{t=1}^T \sum_{k=1}^N \frac{1}{2} (y_{tk} - d_{tk})^2
+++++
+
+Gradient descent je podobný. Na začátku jsou všechny váhy inicalizovány poblíž 0 a pak iterativně přepočítávány:
+
+[stem]
+++++
+\begin{aligned}
+
+U_{kk'}^{(l+1)} &= U_{kk'}^{(l)} - \varepsilon(l) \cdot \frac{\partial E_{(x, d)}}{\partial U_{kk'}} \\
+V_{kk'}^{(l+1)} &= V_{kk'}^{(l)} - \varepsilon(l) \cdot \frac{\partial E_{(x, d)}}{\partial V_{kk'}} \\
+W_{kk'}^{(l+1)} &= W_{kk'}^{(l)} - \varepsilon(l) \cdot \frac{\partial E_{(x, d)}}{\partial W_{kk'}} \\
+
+\frac{\partial E_{(x, d)}}{\partial U_{kk'}} &= \sum_{t=1}^T
+    \textcolor{brown}{\frac{\partial E_{(x, d)}}{\partial h_{tk}}}
+    \cdot \sigma'
+    \cdot x_{tk'} \\
+\frac{\partial E_{(x, d)}}{\partial V_{kk'}} &= \sum_{t=1}^T
+    \textcolor{darkgreen}{\frac{\partial E_{(x, d)}}{\partial y_{tk}}}
+    \cdot \sigma'
+    \cdot h_{tk'} \\
+\frac{\partial E_{(x, d)}}{\partial W_{kk'}} &= \sum_{t=1}^T
+    \textcolor{brown}{\frac{\partial E_{(x, d)}}{\partial h_{tk}}}
+    \cdot \sigma'
+    \cdot h_{(t-1)k'} \\
+
+\end{aligned}
+++++
+
+=== Backpropagation
+
+Za předpokladu squared error:
+
+[stem]
+++++
+\begin{aligned}
+\textcolor{darkgreen}{\frac{\partial E_{(x, d)}}{\partial y_{tk}}}
+&= y_{tk} - d_{tk} \\
+
+\textcolor{brown}{\frac{\partial E_{(x, d)}}{\partial h_{tk}}}
+&= \sum_{k'=1}^N
+    \textcolor{darkgreen}{\frac{\partial E_{(x, d)}}{\partial y_{tk'}}}
+    \cdot \sigma'
+    \cdot V_{k'k}
++
+    \sum_{k'=1}^H 
+    \textcolor{brown}{\frac{\partial E_{(x, d)}}{\partial h_{(t+1)k'}}}
+    \cdot \textcolor{red}{\sigma'
+    \cdot W_{k'k}}
+\end{aligned}
+++++
+
+[#lstm]
+== Long Short-Term Memory (LSTM)
+
+RNN popsané výše mají dost problém s vanishing (nebo exploding) gradientem, pokud se stem:[\color{red} \sum_{k'=1}^H \sigma' \cdot W_{k'k}] nepohybuje blízko 1. Napamatují si dost kontextu. LSTM tento problém řeší.
+
+Buňka v klasické RNN bere aktuální prvek sekvence a hidden výstup z minulé iterace a prohání ho skrz *jednu* tanh vrstvu:
+
+image::./img/lstm_rnn.png[]
+
+LSTM je maličko komplikovanější, protože každá "buňka" vlastně obsahuje 4 vrstvy:
+
+image::./img/lstm_lstm.png[]
+
+Podívejme se blíže:
+
+image::./img/lstm_lstm_2.png[]
+
+Logistic sigmoid stem:[\sigma]::
+Aktivační funkce logistic sigmoid -- vždy vrací číslo mezi nulou a jedničkou -- ideální pro pravděpodobnosti.
+
+Čára stem:[\vec{C}_{t-1} \to \vec{C}_t]::
+Stav buňky, do kterého se "vlévají" úpravy.
+
+Operace stem:[\cdot]::
+Matrix product.
+
+Operace stem:[\circ]::
+Component-wise product.
+
+Forget gate stem:[\vec{f}_t = \sigma(W_f \cdot \vec{h}_{t-1} + U_o \cdot \vec{x}_t)]::
+Umožňuje si něco z minulého stavu stem:[\vec{C}_{t-1}] ponechat nebo zapomenout.
+
+Input gate stem:[\vec{i}_t = \sigma(W_i \cdot \vec{h}_{t-1} + U_i \cdot \vec{x}_t)]::
+Rozhoduje, co za informace vůbec chceme modifikovat.
+
+Kandidátní stav stem:[\tilde{C}_t = \tanh(W_C \cdot \vec{h}_{t-1} + U_C \cdot \vec{x}_t)]::
+tanh vrstva z původního RNN vytváří kandidátní stav.
+
+Stav stem:[\vec{C}_t = \vec{f}_t \circ \vec{C}_{t-1} + \vec{i}_t \circ \tilde{C}_t]::
+Nový stav vznikne aplikací input gate a forget gate na kandidátní stav.
+
+Output gate stem:[\vec{o}_t = \sigma(W_o \cdot \vec{h}_{t-1} + U_o \cdot \vec{x}_t)]::
+Rozhoduje, co ze stavu stem:[\vec{C}_t] si záslouží dostat se ven z buňky.
+
+Output stem:[\vec{h}_t = \vec{o}_t \circ tanh(\vec{C}_t)]::
+Použití output gate obohacené o tanh, který hodnoty stavu vměstná do intervalu stem:[\lbrack -1, 1 \rbrack].
+
+NOTE: Obrázky ukradeny z výborného článku link:https://colah.github.io/posts/2015-08-Understanding-LSTMs/[Understanding LSTM Networks], který napsal Christopher Olah.

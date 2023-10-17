@@ -1,0 +1,117 @@
+= Convolutional Neural Networks (CNN)
+
+Konvoluční sítě jsou neuronky specializující se na obrázky. Mají nové typy vrstev: konvoluční a pooling.
+
+image::./img/cnn.png[]
+
+NOTE: By Aphex34 - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=45679374
+
+.Přehled
+* <<layers>>
+* <<notation>>
+* <<training>>
+
+[#layers]
+== Nové vrstvy
+
+Konvoluční vrstva::
+Každý neuron je napojen jen na malý _receptive field_ neuronů o vrstvu níže, který se posouvá o daný stride. Za to však všechny neurony v konvoluční vrstvě sdílí stejné váhy a biasy, což jim umožňuje naučit se nějaký vzor o velikosti receptive field -- říkáme, že taková vrstva je feature mapa. Jelikož takových vzorů se chceme zpravidla naučit více, máme vícero vzájemně nezávislých feature map napojených na stejnou vstupní vrstvu.
++
+Jinak jsou to ale staré dobré neurony s vnitřním potenciálem a aktivační funkcí.
+
+Pooling vrstva::
+Nemají váhy. Slouží ke snížení počtu parametrů. Každý neuron počítá nějakou jednoduchou funkci na svém _receptive field_:
+* max-pooling -- maximum,
+* L2-pooling -- square root of sum of squares,
+* average-pooling -- mean.
+
+[#notation]
+== Notace
+
+* stem:[X] -- množina input neuronů
+* stem:[Y] -- množina output neuronů
+* stem:[Z] -- množina všech neuronů
+* Neurony mají indexy stem:[i], stem:[j], ...
+* stem:[\xi_j] -- vnitřní potenciál neuronu stem:[j] po skončení výpočtu
+* stem:[y_j] -- výstup neuronu stem:[j] po skončení výpočtu
+* stem:[x_0 = 1] -- hodnota formálního jednotkového vstupu (kvůli biasům)
+* stem:[w_{ji}] -- váha spojení *z* neuronu stem:[i] *do* neuronu stem:[j] (dst <- src)
+* stem:[w_{j0} = -b_j] -- bias -- váha z formální jednotky do neuronu stem:[j]
+* stem:[j_{\leftarrow}] -- množina neuronů stem:[i], jenž mají spojení *do* stem:[j] (j <- i)
+* stem:[j^{\rightarrow}] -- množina neuronů stem:[i], do nichž vede spojení *z* stem:[j] (j -> i)
+* stem:[\color{red}\bf \lbrack ji \rbrack] -- množina spojení (dvojic neuronů) sdílících váhu stem:[w_{ji}]
+
+[#training]
+== Trénink
+
+Stochastic gradient descent můžeme mírně upravit a použit i na konvoluční sítě.Zvolme náhodně minibatch stem:[T \sube \{1, ..., p\}] z trénovacího setu stem:[\cal T]. Za error function si volíme _mean squared error_:
+
+[stem]
+++++
+E(\vec{w}) = \textcolor{darkred}{\frac{1}{p}} \sum_{k=1}^p E_k(\vec{w})
+++++
+
+SGD počítá posloupnost vah stem:[\vec{w}^{(0)}, \vec{w}^{(1)}, ...].
+
+1. Inicializujeme stem:[\vec{w}^{(0)}] náhodně na hodnoty v okolí 0.
+2. V kroku stem:[t+1] vypočítáme:
++
+[stem]
+++++
+\begin{aligned}
+
+\vec{w}^{(t+1)} &= \vec{w}^{(t)} + \Delta \vec{w}^{(t)} \\
+\Delta \vec{w}^{(t)} &= -\varepsilon(t) \cdot \textcolor{darkred}{\frac{1}{|T|}} \sum_{k \in T} \nabla E_k(\vec{w}^{(t)}) \\
+
+\end{aligned}
+++++
+
+=== Backpropagation
+
+Pro dense vrstvy platí to samé, co u MLP:
+
+[stem]
+++++
+\frac{\partial E_k}{\partial w_{ji}} = \frac{\partial E_k}{\partial y_j}
+    \cdot \sigma'_j(\xi_j)
+    \cdot y_i
+++++
+
+U konvolučních vrstev nestačí pro každou váhu stem:[w_{ji}] spočítat stem:[\frac{\partial E_k}{\partial w_{ji}}], protože pro každou váhu existuje víc než jeden výstup stem:[y_j]. Tedy:
+
+[stem]
+++++
+\frac{\partial E_k}{\partial w_{ji}} = \sum_{rl \in \lbrack ji \rbrack} \frac{\partial E_k}{\partial y_r}
+    \cdot \sigma'_r(\xi_r)
+    \cdot y_l
+++++
+
+Předpokládejme dále, že error function je squared error. Pokud stem:[j \in Y], platí:
+
+[stem]
+++++
+\frac{\partial E_k}{\partial y_j} = y_j - d_{kj}
+++++
+
+Pokud stem:[j \in Z \setminus Y] a stem:[j^{\rightarrow}] je dense nebo konvoluční vrstva, platí:
+
+[stem]
+++++
+\frac{\partial E_k}{\partial y_j}
+= \sum_{r \in j^{\rightarrow}} \frac{\partial E_k}{\partial y_r}
+        \cdot \sigma'_r(\xi_r)
+        \cdot w_{rj}
+++++
+
+Pokud stem:[j \in Z \setminus Y] a stem:[j^{\rightarrow}] je max-pooling, pak stem:[j^{\rightarrow} = \{ i \}] a platí:
+
+[stem]
+++++
+\frac{\partial E_k}{\partial y_j}
+= \begin{cases}
+    \frac{\partial E_k}{\partial y_i} & \text{pokud } j = \argmax_{r \in i_{\leftarrow}} y_r \\
+    0 & \text{jinak}
+\end{cases}
+++++
+
+NOTE: Max-pooling nemá váhy, takže vzorec výše se zabývá vrstvou *před* max-poolingem, kde pouze neurony, jejichž index (stem:[\argmax]) je index toho maximálního si zkopírují parciální derivaci z max-pooling vrstvy.

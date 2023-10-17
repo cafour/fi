@@ -1,0 +1,89 @@
+= Vizualizace
+
+Je užitečný vizualizovat váhy, nejdůležitější inputy, dopad drobných změn inputů na output.
+
+.Přehled
+* <<filters>>
+* <<input-maximization>>
+* <<saliency-maps>>
+* <<occlusion>>
+* <<lime>>
+
+[#filters]
+== Filtry
+
+Každý filtr má 3 kanály (RGB), které jsou zkombinované do jednoho obrázku.
+
+Filtry první konvoluční vrstvy AlexNetu::
++
+image:./img/alexnet_filters.png[]
+
+[#input-maximization]
+== Maximalizace inputu
+
+Mějme síť, která klasifikuje obrázky tím, že každé třídě obrazků přiřadí pravděpodobnost. Nechť je stem:[y_j(I)] pravděpodobnost, že obrázek stem:[I] patří do třídy stem:[j]. Chceme získat obrázek stem:[I] "typický" pro třídu stem:[j].
+
+Zafixujeme váhy a maximalizujeme:
+
+[stem]
+++++
+y_j(I) - \lambda \Vert I \Vert_2^2
+++++
+
+kde stem:[\lambda \Vert I \Vert_2^2] znamená L2 regularizaci:
+
+[stem]
+++++
+\lambda \Vert I \Vert_2^2 = \lambda \sum_{k=1}^{s} p_k^2
+++++
+
+kde stem:[s] je velikost stem:[I] a stem:[p_1, ..., p_s] jsou pixely stem:[I].
+
+image::./img/maximizing_input.png[]
+
+[#saliency-maps]
+== Saliency maps
+
+Pro fixní output neuron stem:[i] a obrázek stem:[I_0] nás zajímá, které inputy mají největší vliv na stem:[y_i(I_0)]. Hodnotu stem:[y_i(I_0)] aproximujeme lokálně pomocí lineárního členu Taylorova polynomu:
+
+[stem]
+++++
+\begin{aligned}
+
+y_i(I) &\approx y_i(I_0) + w^T (I - I_0) = w^T I + (y_i(I_0) - w^T I_0) \\
+w &= \frac{\partial y_i}{\partial I}(I_0) \\
+
+\end{aligned}
+++++
+
+Ta derivace indikuje, které vstupy stačí změnit nejméně, aby to ovlivnilo stem:[y_i(I_0)] nejvíce.
+
+image::./img/saliency_maps.png[]
+
+SmoothGrad::
+Vytvoř několik zašumělých kopií stem:[I_0] a zprůměruj jejich saliency mapy.
+
+[#occlusion]
+== Occlusion
+
+Systematicky zakrývej části obrázku a sleduj, co se bude dít.
+
+[#lime]
+== Local Interpretable Model-Agnostic Explanations (LIME)
+
+Mějme fixní obrázek stem:[I_0], kde stem:[P_1, ... P_l] jsou jeho superpixely. Uvažme vektory stem:[\vec{x} = (x_1, ..., x_l) \in \{0, 1\}^l] udávající "podobraz" stem:[I\lbrack \vec{x} \rbrack], který vznikne odebráním superpixelů stem:[P_k] z stem:[I_0], kde stem:[x_k = 0].
+
+Zafixujme output neuron stem:[i]. Mějme trénovací set:
+
+[stem]
+++++
+\mathcal{T} = \{ (\vec{x_1}, y_i(I_0\lbrack \vec{x_1} \rbrack)), ... (\vec{x_p}, y_i(I_0\lbrack \vec{x_p} \rbrack)) \}
+++++
+
+kde stem:[\vec{x_h}] jsou náhodné binarní vektory.
+
+Natrénuj lineární model (ADALINE) s váhami stem:[w_1, ... w_l] na stem:[\cal T] minimalizací squared erroru (a regularizace). Tento model aproximuje původní síť -- vrací pravděpodobnost, že vybrané superpixely podle aproximované sítě odpovídají třídě stem:[i].
+
+Hlavně nás však zajímají váhy tohoto lineárního modelu. Čím větší váha, tím důležitější superpixel pro klasifikaci stem:[I_0] jako stem:[i].
+
+image::./img/lime.png[]

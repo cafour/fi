@@ -1,0 +1,187 @@
+= Multilayer Perceptron (MLP)
+
+.Přehled
+* <<notation>>
+* <<activity>>
+* <<proofs>>
+* <<power>>
+
+[#notation]
+== Notace
+
+MLP je feed-forward architektura NN, kde jsou neurony rozděleny do vrstev -- jedné vstupní, jedné výstupní a libovolného počtu skrytých vrstev uprostřed. Input layer má index 0. Každý neuron v i-té vrstvě je napojen na každý neuron v (i + 1)-ní vrstvě.
+
+* stem:[X] -- množina input neuronů
+* stem:[Y] -- množina output neuronů
+* stem:[Z] -- množina všech neuronů
+* Neurony mají indexy stem:[i], stem:[j], ...
+* stem:[\xi_j] -- vnitřní potenciál neuronu stem:[j] po skončení výpočtu
+* stem:[y_j] -- výstup neuronu stem:[j] po skončení výpočtu
+* stem:[x_0 = 1] -- hodnota formálního jednotkového vstupu (kvůli biasům)
+* stem:[w_{ji}] -- váha spojení *z* neuronu stem:[i] *do* neuronu stem:[j] (dst <- src)
+* stem:[w_{j0} = -b_j] -- bias -- váha z formální jednotky do neuronu stem:[j]
+* stem:[j_{\leftarrow}] -- množina neuronů stem:[i], jenž mají spojení *do* stem:[j] (j <- i)
+* stem:[j^{\rightarrow}] -- množina neuronů stem:[i], do nichž vede spojení *z* stem:[j] (j -> i)
+
+[#activity]
+== Aktivita
+
+Pravidlo pro výběr neuronů při výpočtu::
+V i-tému kroku vezmi i-tou vrstvu.
+
+Vnitřní potenciál neuronu stem:[j]::
+stem:[\xi_j = \sum_{i \in j_{\leftarrow}} w_{ji}y_i]
+
+Aktivační funkce neuronu stem:[j]::
+stem:[\sigma_j : \Reals \to \Reals] (třeba logistic sigmoid)
+
+Stav nevstupního neuronu stem:[j]::
+stem:[y_j = \sigma_j(\xi_j)] resp. stem:[y_j(\vec{w}, \vec{x})]
+
+=== Aktivační funkce
+
+Unit step function::
+[stem]
+++++
+\sigma(\xi) =
+\begin{cases}
+    1 & \xi \ge 0; \\
+    0 & \xi < 0.
+\end{cases}
+++++
+
+Logistic sigmoid::
++
+[stem]
+++++
+\sigma(\xi) = \frac{1}{1 + e^{-\lambda \cdot \xi}}
+++++
++
+Kde stem:[\lambda] je _steepness_ parametr.
++
+image:./img/logistic_sigmoid.png[]
+
+Hyperbolic tangens (tanh)::
++
+[stem]
+++++
+\sigma(\xi) = \frac{1 - e^{-\xi}}{1 + e^{-\xi}}
+++++
+
+Rectified Linear Unit (ReLU)::
+[stem]
+++++
+\sigma(\xi) = \max(\xi, 0)
+++++
+
+[#proofs]
+== Důkazy
+
+=== Boolovské funkce
+
+Věta::
+Dvouvrstvý MLP, kde každý neuron má za stem:[\sigma] unit step function, je schopný spočítat libovolnou boolovskou funkci stem:[F : \{0, 1\}^n \to \{0, 1\}].
+
+Důkaz::
+Pro každý vstup stem:[\vec{v} = (v_1, ... v_n) \in \{0, 1\}^n] takový, že stem:[F(\vec{v}) = 1], zkonstruujeme neuron stem:[N_v] jehož výstup bude 1, právě když jeho vstup je stem:[\vec{v}]:
+
+* stem:[w_0 = -\sum_{i = 1}^n v_i]
+* stem:[w_i = \begin{cases} 1 & v_i = 1 \\ -1 & v_1 = 0 \end{cases}]
++
+Všechny neurony stem:[N_v] zapojíme do jednoho neuronu, jenž počítá OR.
+
+'''
+
+=== Podmnožiny vstupního prostoru (3 vrstvy)
+
+Věta::
+*Třívrstvý* MLP, kde každý neuron má za stem:[\sigma] *unit step function*, dovede aproximovat libovolnou "rozumnou" podmnožinu vstupního prostoru.
+
+Důkaz::
+Daná podmnožina se dá obalit hyperkostkami (t.j. čtverci 2D, kostkami ve 3D, ...) -- na to stačí dvě vrstvy (první udává nadroviny, druhá volí, která "strana" nadroviny ohraničuje hyperkostku). Třetí vrstva je pak OR, který spojuje hyperkostky nadefinované v prvních dvou vrstvách.
+
+'''
+
+=== Podmnožiny vstupního prostoru (2 vrstvy)
+
+Věta (Cybenko 1989)::
+*Dvouvrstvý* MLP, kde každý _hidden_ neuron má za stem:[\sigma] nějakou *sigmoidal funcion*, tedy platí:
++
+[stem]
+++++
+\sigma(\xi) =
+\begin{cases}
+    1 & \xi \to \infty \\
+    0 & \xi \to -\infty
+\end{cases}
+++++
++
+a pokud každý _output_ neuron má lineární stem:[\sigma], pak tato síť dovede aproximovat libovolnou "rozumnou" množinu 
+stem:[A \sube \lbrack 0, 1 \rbrack^n] -- tedy pro "většinu" vektorů stem:[\vec{v} \in \lbrack 0, 1 \rbrack^n] platí, že stem:[\vec{v} \in A], právě když výstup sítě stem:[> 0] pro vstup stem:[\vec{v}].
+
+'''
+
+=== Libovolná spojitá funkce (3 vrstvy)
+
+Věta::
+*Třívrstvý* MLP, kde každý output neuron má lineární (pass-through) stem:[\sigma] a ostatní mají za stem:[\sigma] logistic sigmoid, dovede "spočítat" libovolnou funkci stem:[f : \lbrack 0, 1 \rbrack^n \to \lbrack 0, 1 \rbrack]. "Spočítat" zde znamená, že pro každé stem:[\vec{v} \in \lbrack 0, 1 \rbrack^n] platí stem:[|F(\vec{v}) - f(\vec{v})| < \varepsilon], kde stem:[F] je výstup sítě a stem:[\varepsilon] je povolená chyba.
+
+Důkaz::
+image:./img/mlp-any-function.png[]
+
+'''
+
+=== Libovolná spojitá funkce (2 vrstvy)
+
+Věta (Cybenko 1989)::
+To samé co věta výše, ale zvládl to jen se *dvěma* vrstvami.
+
+[#power]
+== Výpočetní síla
+
+Uvažme neuronové sítě, které:
+
+* jsou rekurentní (mají cykly),
+* mají reálné váhy,
+* mají jeden input a jeden output neuron,
+* mají paralelní pravidlo pro výběr neuronů při výpočtu -- všechny neurony se vyhodnotí v každém kroku,
+* mají aktivační funkci stem:[\sigma(\xi) =
+\begin{cases}
+    1 & \xi > 1 ;\\
+    \xi & 0 \ge \xi \ge 1; \\
+    0 & \xi < 0.
+\end{cases}]
+
+Slova stem:[\omega \in \{0, 1\}^+] kódujeme jako reálná čísla následujícím způsobem:
+
+[stem]
+++++
+\delta(\omega) = \frac{1}{2^{|\omega| + 1}} + \sum_{i = 1}^{|\omega|} \frac{\omega(i)}{2^i}
+++++
+
+WARNING: Takže např. z stem:[\omega = 101010] bude stem:[\delta(\omega) = 0.101010\bold{1}]. Všimni si té zaražející jedničky na konci. Jak jinak bys poznal, že to slovo skončilo.
+
+Síť *rozpoznává jazyk* stem:[L \sube \{0, 1\}^+], pokud počítá funkci stem:[F : A \to \Reals], kde stem:[A \sube \Reals], takovou, že:
+
+[stem]
+++++
+\omega \in L \iff ( \delta(\omega) \in A \land F(\delta(\omega)) > 0 )
+++++
+
+[NOTE]
+====
+Rekurentní neuronové sítě s racionálními vahamy jsou *ekvivalentní* Turingovým strojům.
+
+* Pro každý *rekurzivně spočetný* jazyk stem:[L \sube \{0, 1\}^+] existuje taková síť s méně než 1000 neurony, která jej rozpoznává.
+* Problém zastavení je nerozhodnutelný pro takové sítě s alespoň 25 neurony.
+* Existuje "univerzální" NN (stejně jako je "univerzální" TM).
+====
+
+[NOTE]
+====
+Rekurentní neuronové sítě s reálnými vahami jsou *silnější než* Turingovy stroje.
+
+* Pro *každý* jazyk stem:[L \sube \{0, 1\}^+] existuje taková síť s méně než 1000 neurony, která jej rozpoznává.
+====
+
+Prakticky jsou ale takové sítě extrémně velké. Hodnota NN tak spočívá spíš v jejich schopnosti se učit, možnosti generalizace, robustnosti (chyby v inputu je jen tak nerozhodí) a masivní paralelizaci.

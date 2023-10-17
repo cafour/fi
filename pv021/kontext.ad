@@ -1,0 +1,82 @@
+= Kontext
+
+.Přehled
+* <<ml>>
+* <<biology>>
+* <<history>>
+* <<sw>>
+
+[#ml]
+== Machine Learning
+
+[quote, slidy PV021]
+Construction of systems that may learn their functionality from data (and thus do not need to be programmed).
+
+Typicky jde o to vytvořit nějaký matematický model existujících dat, který lze později aplikovat na data čerstvá. Mezi tyto modely patří: decision trees, support vector machines, hidden Markov models, Bayes networks, Neural networks.
+
+[#biology]
+== Biologické neuronové sítě
+
+Lidská neuronová síť má asi 10^11^ neuronů. Každý neuron má asi 10 000 spojení.
+
+.Přibližné fungování nervového systému
+1. Smyslové receptory (např. oči) přijímájí externí stimuly (např. světlo).
+2. Informace je přenášena skrze _peripheral nervous system_ (PNS) do _central nervous system_ (CNS), kde je zpracována.
+3. CNS vyprodukuje výstup, který je přenášen skrze PNS do _efektorů_ (např. svalů).
+
+[#history]
+== Historie
+
+SNARC (1951)::
+Minski a spol. vyrobil 40 neuronů z elektronek, které simulovaly krysu snažící se utéct z bludiště.
+
+Mark I Perceptron (1957)::
+Rosenblatt a spol. vyrobili jednovrstvou neuronku schopnou rozpoznat obraz.
+
+ADALINE (1960)::
+Widrow & Hof.
+
+Perceptrons (1967-82)::
+Minski & Papert. Efektivně zabili NN.
+
+1983 - konec 90. let -- vzkříšení neuronek::
+Výroba čipů specificky pro NN (ASIC, FPGA).
+
+ALVINN (1989)::
+Neuronka, která dovedla řídit auto. Měla 30x32=960 inputů, které odpovídaly výstupu z kamery, 4 hidden neurony a 30 output neuronů, které odpovídaly zatáčení/jízdě rovně.
+
+konec 90. let - 2005::
+Neuronky upozaděny ve prospěch support vector machines (SVM).
+
+2006-teď::
+Neuronky jsou cool. Mají spoustu vrstev a beží na GPU.
+
+2012::
+Google natrénoval NN s 1.7 biliony vah a 9 vrstvami a 16 000 CPU jádry.
+
+2014::
+To samé udělal někdo na třech grafikách.
+
+MNIST::
+Databáze obrázků ručně psaných číslic.
+
+LeNet1 (1998)::
+CNN, co řeší MNIST.
+
+AlexNet (2012)::
+Výherce ILVSCR. Zlepšila classification error z 28 % na 16 %. CNN trénovaná na dvou GPU.
+
+[#sw]
+== SW knihovny
+
+TensorFlow (Google) & Keras::
+Pythoní deklarativní API, které dovede běžet na GPU i v cloudu.
+
+PyTorch (Facebook)::
+Podobné jako TensorFlow ale objektově-orientované.
+
+Theano::
+Mrtvý, akademický dědeček TensorFlow i PyTorche.
+
+MATLAB, R, STATISTICA, Weka, a další matematický balast::
+...umí neuronky taky.

@@ -1,0 +1,39 @@
+= Neuronky
+:page-records: pv021
+:page-math: true
+:page-liquid: true
+
+Pokud toto čtete, zakopli jste o moje neúplné poznámky k předmětu _PV021 Neural Networks_. Snad vám budou k užitku.
+
+Jak to tak často bývá i u neuronek řazení přednášeného učiva sice vyhovuje přednášce, ale je naprd k učení na zkoušku, kde člověk potřebuje spíše stručný, dobře strukturovaný a snáze prohledávatelný přehled. Právě tímhle přehledem se moje poznámky snaží být. Do jaké míry tuto úlohu splňují, je ponecháno jako cvičení čtenáři.
+
+.Přehled
+link:./kontext/[Kontext]::
+Co je to machine learning, jakou má historii, a jak se váže k biologii.
+
+link:./definition/[Formální definice]::
+Co je po formální stránce neuron, jak tvoří sítě, jakou notaci tenhle kurz používá.
+
+link:./mlp/[Multilayer Perceptron]::
+Nejzákladnější architektura NN a její notace. Způsob výpočtu v ní a její výpočetní síla.
+
+link:./trenink/[Trénink]::
+Jak se neuronka učí, co je to hergot backpropagace, co znamenají všechny ty derivace, a jak to aplikovat na MLP.
+
+link:./optimalizace/[Optimalizace]::
+Jak odstranit (nebo alespoň zmínit) některé problémy s tréninkem neuronek.
+
+link:./vizualizace/[Vizualizace]::
+Jak nahlédnout pod pokličku.
+
+link:./cnn/[Convolutional Neural Networks]::
+Jak fungují konvoluční sítě.
+
+link:./rnn/[Recurrent Neural Networks]::
+Jak fungují rekurentní NN. LSTM.
+
+link:./gan/[Generative Adversarial Networks]::
+Jak fungují autoencoders a GAN.
+
+NOTE: Obrázky jsou sprostě ukradeny ze slidů doc. Tomáše Brázdila.
+

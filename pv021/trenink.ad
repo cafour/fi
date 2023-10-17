@@ -1,0 +1,436 @@
+= Trénink
+
+.Přehled
+* <<likelihood>>
+* <<linear-regression>>
+* <<logistic-regression>>
+* <<gradient-descent>>
+* <<error-functions>>
+
+[#likelihood]
+== Likelihood
+
+Ve statistice jsou dva pojmy:
+
+Probability stem:[P], stem:[p]::
+Říká, jaká je pravděpodobnost, že daný jev se v našem modelu stane.
+
+Likelihood stem:[L]::
+Říká, jak dobře náš model (rozdělení pravděpodobnosti náhodné veličiny) sedí na naměřená data.
+
+NOTE: Pravděpodobnost je funkce jevů. Likelihood je funkce parametrů modelu.
+
+NOTE: Likelihood nemusí nutně vracet čísla z intervalu stem:[\lbrack 0, 1 \rbrack].
+
+Jak to souvisí s trénováním neuronek? Neuronka je model, kde váhy neuronů jsou parametry. Při učení neuronek je naším cílem maximalizovat likelihood, jakožto míru toho, že naše síť sedí na "naměřená data", training set stem:[\cal T]. Tomuhle přístupu se říká _maximum likelihood principle_.
+
+Training set stem:[\cal T]::
+je množina stem:[p] samplů, kde stem:[\vec{x} \in \Reals^{|X|}] jsou vstupní vektory a stem:[\vec{d} \in \Reals^{|Y|}] jejich očekáváné výstupy.
++
+[stem]
+++++
+\mathcal{T} = \{(\vec{x}_1, \vec{d}_1), (\vec{x}_2, \vec{d}_2), ..., (\vec{x}_p, \vec{d}_p)\}
+++++
+
+[#linear-regression]
+== Linear regression
+
+[stem]
+++++
+\gdef\bias{\textcolor{red}{b}}
+\gdef\weights{\textcolor{red}{\vec{w}}}
+\gdef\SE{\textcolor{red}{\bar{\sigma}}}
+\gdef\Var{\textcolor{red}{\SE^2}}
+\gdef\params{\weights, \bias, \Var}
+\gdef\dk{\textcolor{green}{d_k}}
+\gdef\expecteds{\textcolor{green}{d_1, ..., d_p}}
+\gdef\input{\textcolor{green}{\vec{x_k}}}
+\gdef\squarederror{\textcolor{purple}{(d_k - b + \vec{w} \cdot \vec{x}_k)^2}}
+++++
+
+Linear regression je metoda, kdy na základě naměřených dat hledáme linární model. Tedy výstup závisí na vstupech (Ano, může být víc než jeden.) lineárně. Uvažme neuron, kde:
+
+* vnitřní potenciál stem:[\xi = \vec{w} \cdot \vec{x} + b = b + \sum_{i=1}^n w_i x_i],
+* aktivační funkce stem:[\sigma(\xi) = \xi] je pass-through,
+* výstup je jedno číslo stem:[y = \sigma(\xi) = \vec{w} \cdot \vec{x} + b],
+* množina stem:[D = \{ (\vec{x}_1, d_1), (\vec{x}_2, d_2), ..., (\vec{x}_p, d_p) \}] je trénovací set.
+
+Předpokládáme, že každý očekávaný výstup byl generován takto:
+
+[stem]
+++++
+\begin{aligned}
+
+d_k &= (\textcolor{red}{\vec{w}} \cdot \textcolor{green}{\vec{x}_k} + \textcolor{red}{b})
+    + \textcolor{purple}{\epsilon_k} \\
+\mathcal{N} \lbrack 0, \textcolor{red}{\bar{\sigma}^2} \rbrack (\textcolor{purple}{\epsilon_k})
+    &= \frac{1}{\textcolor{red}{\bar{\sigma}}\sqrt{2\pi}} \cdot \exp
+        \left(
+            -\frac{(\textcolor{purple}{\epsilon_k} - 0)^2}{2\textcolor{red}{\bar{\sigma}^2}}
+        \right)
+
+\end{aligned}
+++++
+
+kde stem:[\color{greed} \vec{x}] je vstup, stem:[\color{purple}\epsilon_k] je normálně distribuovaný šum se střední hodnotou 0, a stem:[\color{red} \vec{w}], stem:[\color{green} b] a stem:[\color{red} \bar{\sigma}^2] jsou parametry modelu.
+
+NOTE: Směrodatná odchylka stem:[\bar{\sigma}] není aktivační funkce stem:[\sigma].
+
+Dále předpokládáme, že šumy stem:[\color{purple} \epsilon_1, ..., \epsilon_p] byly vygenerovány vzájemně nezávisle.
+
+Naším cílem je najít hodnoty pro červené parametry takové, že maximalizují likelihood:
+
+[stem]
+++++
+\begin{aligned}
+
+L(\params)
+&= p(\expecteds \mid \params) \\
+&= \prod_{k=1}^p \mathcal{N}[\bias + \weights \cdot \input, \Var](\dk) \\ 
+&= \prod_{k=1}^p \frac{1}{\Var \sqrt{2 \pi}} \exp
+    \left(
+        -\frac{\textcolor{purple}{\squarederror}}{2\SE}
+    \right) \\
+
+\end{aligned}
+++++
+
+Kde stem:[p] je hustota pravděpodobnosti, podle které byly očekávané hodnoty stem:[\color{green} d_1, ..., d_k] vygenerovány za předpokladu fixních stem:[\color{red} b, \vec{w}, \vec{\sigma}^2, \color{green} \vec{x}_1, ..., \vec{x}_p].
+
+Všimni si, že je tu podobné normální rozdělení jako u stem:[\color{purple} \varepsilon_k], ale střední hodnotu takovou, aby generovalo stem:[\color{green} d_k], pokud náš model funguje.
+
+NOTE: Bez předpokladu normálnosti a vzájemné nezávislosti šumů by to nešlo.
+
+Věta::
+Parametry stem:[(\bias, \weights)] maximalizují likelihood stem:[L(\bias, \weights, \Var)] pro libovolné stem:[\Var], právě když stem:[(\bias, \weights)] minimalizují squared error stem:[E(\bias, \weights) = \sum_{k=1}^p \squarederror].
+
+NOTE: Maximalizace/minimalizace stem:[(\bias, \weights)] je na odchylce šumu stem:[\Var] je nezávislá. stem:[\Var] je maximální, když stem:[\sigma^2 = \frac{1}{p} \sum_{k=1}^p \squarederror].
+
+Důkaz::
++
+[stem]
+++++
+\begin{aligned}
+
+LL(\params)
+&= \log p(\expecteds \mid \params) \\
+&= \log \prod_{k=1}^p \frac{1}{\Var \sqrt{2 \pi}} \exp
+    \left(
+        -\frac{\textcolor{purple}{\squarederror}}{2\SE}
+    \right) \\
+&= \sum_{k=1}^p \log \frac{1}{\SE \sqrt{2 \pi}}
+    \space + \space
+    \frac{1}{2 \Var} \sum_{k=1}^{p} - \squarederror \\
+
+\end{aligned}
+++++
++
+Jelikož maximalizováním _logistic likelihood_ stem:[LL], maximalizujeme i stem:[L], pak stem:[L] je maximální (nezávisle na volbě stem:[\Var]), pokud stem:[E(\bias, \weights)] je minimální.
+
+[#logistic-regression]
+== Logistic regression
+
+Logistic regression je metoda, kdy na základě naměřených dat hledáme model, kde vztah mezi vstupy a výstupy odpovídá funkci _logistic sigmoid_. Výsledkem je klasifikace (pravděpodobnost) mezi dvěma třídami 0 a 1. Uvažme neuron, kde:
+
+* vnitřní potenciál stem:[\xi = \vec{w} \cdot \vec{x} + b = b + \sum_{i=1}^n w_i x_i],
+* aktivační funkce stem:[\sigma(\xi) = \frac{1}{1 + e^{-\lambda \cdot \xi}}] je logistic sigmoid,
+* výstup je jedno číslo stem:[y = \sigma(\xi)] z intervalu stem:[\lbrack 0, 1 \rbrack],
+* množina stem:[D = \{ (\vec{x}_1, d_1), (\vec{x}_2, d_2), ..., (\vec{x}_p, d_p) \}] je trénovací set.
+
+NOTE: Odds (poměr pravděpodobností) je poměr pravděpodobnosti toho, že jev *nastane*, k pravděpodobnosti toho, že jev *nenastane*. Tedy pokud má jev pravděpodobnost stem:[P], pak odds jsou stem:[\frac{P}{1-P}]. (Čitatel a jmenovatel dají tedy v součtu 1.) Logaritmus odds nazýváme logit.
+
+=== Logistic sigmoid
+
+Proč použít právě logistic sigmoid? Dejme tomu, že opravdová šance, že klasifikovaný objekt patří do třídy 1, je stem:[\hat{y}], pak:
+
+[stem]
+++++
+\text{odds}(\hat{y}) = \frac{\hat{y}}{1 - \hat{y}}
+++++
+
+což připomíná exponenciální funkci:
+
+image::./img/ls_odds.png[]
+
+Když ale na obě strany aplikujeme logaritmus:
+
+[stem]
+++++
+\text{logit}(\hat{y}) = \log{\frac{\hat{y}}{1 - \hat{y}}}
+++++
+
+připomíná spíše lineární funkci:
+
+image::./img/ls_logodds.png[]
+
+Ale... vnitřní potenciál je taky lineární, ne?
+
+[stem]
+++++
+\begin{aligned}
+
+\log{\frac{\hat{y}}{1 - \hat{y}}} &\approx \xi = \vec{w} \cdot \vec{x} \\
+\log{\frac{1 - \hat{y}}{\hat{y}}} &\approx -\vec{w} \cdot \vec{x} \\
+\frac{1 - \hat{y}}{\hat{y}} &\approx e^{-\vec{w} \cdot \vec{x}} \\
+1 - \hat{y} &\approx e^{-\vec{w} \cdot \vec{x}} \cdot \hat{y}\\
+1 &\approx e^{-\vec{w} \cdot \vec{x}} \cdot \hat{y} + \hat{y}\\
+1 &\approx \hat{y}
+    \left(
+        e^{-\vec{w} \cdot \vec{x}} + 1
+    \right) \\
+\hat{y} &\approx \frac{1}{1 + e^{-\vec{w} \cdot \vec{x}}} \\
+
+\end{aligned}
+++++
+
+Takže klasifikaci vstupu jako 0 nebo 1 (stem:[\hat{y}]) aproximujeme pomocí funkce logistic sigmoid, pravděpodobností stem:[y].
+
+=== Minimalizace likelihoodu
+
+Likelihood v případě binární klasifikace si můžeš představit na hodech mincí (se stranami 0 a 1). Nechť je stem:[y] je odhad pravděpodobnosti tvého logistic sigmoid modelu, že spadne 1, a stem:[\mathcal{T} = \{ 1, 1, 0, 0, 1 \}] tvůj dataset. Pak likelihood, že tvůj model vygeneruje právě tenhle data set je:
+
+[stem]
+++++
+L = y \cdot y \cdot (1 - y) \cdot (1 - y) \cdot y
+++++
+
+Když upustíme od příkladu s mincí, pak pro obecnou binarní klasifikaci s datasetem stem:[\cal T]:
+
+[stem]
+++++
+L = \prod_{k=1}^p y_k^{d_k} \cdot (1 - y_k)^{(1 - d_k)}
+++++
+
+Násobení se nám nelíbí, takže stejně jako u linear regression budeme maximalizovat logistic likelihood:
+
+[stem]
+++++
+\begin{aligned}
+
+LL &= \log \prod_{k=1}^p y_k^{d_k} \cdot (1 - y_k)^{(1 - d_k)} \\
+&= \sum_{k=1}^{p} \log
+    \left(
+        y_k^{d_k} \cdot (1 - y_k)^{(1 - d_k)}
+    \right) \\
+&= \sum_{k=1}^{p} d_k \log y_k + (1 - d_k) \log (1-y_k)
+
+\end{aligned}
+++++
+
+Podobně jako u linear regression chceme spíš minimalizovat nějakou error function stem:[E]. V případě logistic regression volíme _binary cross-entropy_:
+
+[stem]
+++++
+E(\vec{w}) = -LL = -\sum_{k=1}^{p} d_k \log y_k + (1 - d_k) \log (1-y_k)
+++++
+
+[#gradient-descent]
+== Gradient descent
+
+Gradient descent je algoritmus, který nám umožňuje najít váhy stem:[\vec{w}] takové, že hodnota error function stem:[E] bude minimální. Jdeme proti směru gradientu (vektoru parciálních derivací stem:[E]). Gradient udává směr, kterým funkce roste nejrychleji:
+
+[stem]
+++++
+\nabla E(\vec{w}) = \left( \frac{\partial E}{\partial w_0}(\vec{w}), ..., \frac{\partial E}{\partial w_n}(\vec{w}) \right)
+++++
+
+Gradient descent funguje iterativně, přižemž v 0-té iteraci jsou váhy stem:[\vec{w}^{(0)}] inicializovány náhodnými čísly blízko 0. Pro následující iterace pak platí:
+
+[stem]
+++++
+\begin{aligned}
+
+\vec{w}^{(t + 1)} &= \vec{w}^{(t)} + \Delta \vec{w}^{(t)} \\
+\Delta \vec{w}^{(t)} &= - \varepsilon \cdot \nabla E (\vec{w}^{(t)})
+
+\end{aligned}
+++++
+
+=== ADALINE
+
+ADALINE je jeden neuron ze 60. let, co dělá lineární regresi. Pokud za stem:[E] zvolíme squared error stem:[E=\frac{1}{2} \sum_{k=1}^{p}(\vec{w} \cdot \vec{x} - d_k)^2]:
+
+[stem]
+++++
+\begin{aligned}
+
+\frac{\partial E}{\partial w_l}
+&= \frac{1}{2} \sum_{k=1}^{p} \frac{\partial}{\partial w_l}
+    \left(
+        \sum_{i=0}^{n} w_i x_{ki} - d_k
+    \right)^2 \\
+&= \frac{1}{2} \sum_{k=1}^{p} 2
+    \left(
+        \sum_{i=0}^{n} w_i x_{ki} - d_k
+    \right)
+    \cdot \frac{\partial}{\partial w_l}
+    \left(
+        \sum_{i=0}^{n} w_i x_{ki} - d_k
+    \right) \\
+&= \textcolor{red}{\frac{1}{2}} \sum_{k=1}^{p} \textcolor{red}{2}
+    \left(
+        \textcolor{green}{\sum_{i=0}^{n} w_i x_{ki}} - d_k
+    \right)
+    \left(
+        \textcolor{blue}{\sum_{i=0}^{n}{\frac{\partial}{\partial w_l} w_i x_{ki}}}
+        -
+        \textcolor{red}{\frac{\partial E}{\partial w_l} d_k}
+    \right) \\
+&= \sum_{k=1}^{p}(\textcolor{green}{\vec{w} \cdot \vec{x_k}} - d_k) \textcolor{blue}{x_{kl}} \\
+
+\nabla E(\vec{w})
+&= \sum_{k=1}^{p} (\vec{w} \cdot \vec{x_k} - d_k) \vec{x_k}
+\end{aligned}
+++++
+
+[NOTE]
+====
+*Věta* (Widrow & Hoff)
+
+Pokud stem:[\varepsilon(t) = \frac{1}{2}], pak posloupnost stem:[\vec{w}^{(0)}], stem:[\vec{w}^{(1)}], ... konverguje ke globálnímu minimum stem:[E].
+====
+
+=== Multilayer Perceptron
+
+U feed-forward sítí jakou je MLP, se pro *výpočet gradientu* používá backpropagation:
+
+[stem]
+++++
+\begin{aligned}
+
+w_{ji}^{(t+1)}
+&= w_{ji}^{(t)} + \Delta w_{ji}^{(t)} \\
+
+\Delta w_{ji}^{(t)}
+&= -\varepsilon(t) \cdot \textcolor{green}{\frac{\partial E}{\partial w_{ji}}(\vec{w}^{(t)})} \\
+
+\textcolor{green}{\frac{\partial E}{\partial w_{ji}}}
+&= \sum_{k=1}^{p} \textcolor{blue}{\frac{\partial E_k}{\partial w_{ji}}} \\
+
+\textcolor{blue}{\frac{\partial E_k}{\partial w_{ji}}}
+&= \textcolor{red}{\frac{\partial E_k}{\partial y_j}}
+    \cdot \textcolor{purple}{\frac{\partial y_j}{\partial \xi_j}}
+    \cdot \textcolor{teal}{\frac{\partial \xi_j}{\partial w_{ji}}} \\
+&= \textcolor{red}{\frac{\partial E_k}{\partial y_j}}
+    \cdot \textcolor{purple}{\sigma'_j(\xi_j)}
+    \cdot \textcolor{teal}{y_i}
+\end{aligned}
+++++
+
+Za předpokladu, že stem:[E] je squared error, pak:
+
+[stem]
+++++
+\large
+\textcolor{red}{\frac{\partial E_k}{\partial y_j}} =
+\begin{cases}
+    y_j - d_{kj} & \text{ pokud } j \in Y ; \\
+    \sum_{r \in j^{\rightarrow}} \textcolor{brown}{\frac{\partial E_k}{\partial y_r}}
+        \cdot \textcolor{dodgerblue}{\frac{\partial y_r}{\partial \xi_r}}
+        \cdot \textcolor{forestgreen}{\frac{\partial \xi_r}{\partial y_j}}
+    = \sum_{r \in j^{\rightarrow}} \textcolor{brown}{\frac{\partial E_k}{\partial y_r}}
+        \cdot \textcolor{dodgerblue}{\sigma'_r(\xi_r)}
+        \cdot \textcolor{forestgreen}{w_{rj}}
+    & \text{ jinak}.
+\end{cases}
+++++
+
+Představ si, že při derivaci stem:[E_k] podle stem:[y_j], kde stem:[j] není výstup, tě zajímají jen členy stem:[y_r], protože jen při vyhodnocení neuronů stem:[r] je hodnota stem:[y_j] potřeba, takže všechno ostatní se zderivuje na konstantu.
+
+NOTE: Uvědom si, že tyhle stem:[\color{red}\frac{\partial E_k}{\partial y_j}] derivace se počítají po vrstvách v obráceném pořadí než, když NN vyhodnocuješ. To znamená, že hodnotu stem:[\color{brown}\frac{\partial E_k}{\partial y_r}] už spočítanou máš, protože jsi ji počítal v minulé vrstvě.
+
+.Algoritmus pro výpočet stem:[\frac{\partial E}{\partial w_{ji}}]
+1. Inicializuj stem:[\varepsilon_{ji} := 0].
+2. forward pass -- vyhodnoť NN pro sample stem:[k] (t.j. stem:[y_j(\vec{w}, \vec{x_k})] pro všechny stem:[j \in Z])
+3. backward pass -- od konce pro každou vrstvu spočítej stem:[\frac{\partial E_k}{\partial y_j}]
+  a. pokud stem:[j \in Y], pak stem:[\frac{\partial E_k}{\partial y_j} = y_j - d_{kj}]
+  b. pokud stem:[j \in Z \setminus Y \cup X ], a stem:[j] je v stem:[l]-té vrstvě, pak
+     stem:[\frac{\partial E_k}{\partial y_j} = \sum_{r \in j^{\rightarrow}} \frac{\partial E_k}{\partial y_j} \cdot \sigma'_r(\xi_r) \cdot w_{rj}]
+4. weight update -- pro všechna stem:[w_{ji}] spočítej
+   stem:[\frac{\partial E_k}{\partial w_{ji}} := \frac{\partial E_k}{\partial y_j} \cdot \sigma'_j(\xi_j) \cdot y_i]
+5. stem:[\varepsilon_{ji} := \varepsilon_{ji} + \frac{\partial E_k}{\partial w_{ji}}]
+6. stem:[\varepsilon_{ji}] obsahuje výslednou hodnotu stem:[\frac{\partial E}{\partial w_{ji}}]
+
+NOTE: Tenhle algoritmus předpokládá za error function squared error a za stem:[\sigma] funkci, která fakt bere za parametr jen vnitřní potenciál jednoho neuronu a ne třeba celé vrstvy, jak to dělá softmax.
+
+NOTE: Co se časové složitosti týče, tak je tenhle algoritmus lineární vzhledem k počtu vrstev NN. Nicméně tohle je jen jedna iterace, časovou složitost minimalizace gradientu nejde odhadnout.
+
+Online Gradient Descent::
+Samply bereš po jednom stem:[k], takže:
++
+[stem]
+++++
+\Delta \vec{w}^{(t)} = - \varepsilon(t) \cdot \nabla E_k(\vec{w}^{(t)})
+++++
+
+Stochastic Gradient Descent (SGD)::
+Sample nebereš po jednom ale po malých randomizovaných várkách -- minibatchích stem:[T]:
++
+[stem]
+++++
+\Delta \vec{w}^{(t)} = - \varepsilon(t) \cdot \sum_{k \in T} \nabla E_k(\vec{w}^{(t)})
+++++
+
+Learning rate stem:[\varepsilon]::
+Hyperparametr stem:[0 < \varepsilon \le 1] ovlivňující rychlost učení. Může záviset na iteraci stem:[t], pak je to funkce stem:[\varepsilon(t)].
+
+Epocha::
+Jeden průchod celým trénovacím setem.
+
+[#error-functions]
+== Error functions
+
+Přehled error functions v tomto kurzu:
+
+Squared error::
++
+[stem]
+++++
+\begin{aligned}
+
+E(\vec{w}) &= \sum_{k=1}^p E_k(\vec{w}) \\
+
+E_k(\vec{w}) &= \frac{1}{2} \sum_{j \in Y}
+    \left(
+        y_j(\vec{w}, \vec{x_k}) - d_{kj}
+    \right)^2 \\
+
+\end{aligned}
+++++
+
+Mean squared error::
++
+[stem]
+++++
+E(\vec{w}) = \textcolor{red}{\frac{1}{p}} \sum_{k=1}^p E_k(\vec{w})
+++++
+
+Binary cross-entropy::
++
+[stem]
+++++
+E(\vec{w}) = -\sum_{k=1}^{p} d_k \log y_k + (1 - d_k) \log (1-y_k)
+++++
+
+(Categorical) cross-entropy::
++
+[stem]
+++++
+E(\vec{w}) = -\frac{1}{p} \sum_{k=1}^p \sum_{j \in Y} d_{kj} \ln(y_j)
+++++
++
+Používá se při multi-class classification (např. číslice v MNISTu). Klasifikační sítě zároveň prakticky vždy mají výstupní vrstvu s aktivační funkcí _softmax_, neboť pak *pro váhy mezi předposlední a poslední, softmax vrstvou* platí:
++
+[stem]
+++++
+\begin{aligned}
+\textcolor{blue}{\frac{\partial E_k}{\partial w_{ji}}}
+&= \textcolor{firebrick}{\frac{\partial E_k}{\partial \xi_j}}
+    \cdot \textcolor{teal}{\frac{\partial \xi_j}{\partial w_{ji}}} \\
+&= \textcolor{firebrick}{(d_{kj} - y_j)}
+    \cdot \textcolor{teal}{y_i}
+\end{aligned}
+++++
++
+NOTE: Pro vysvětlení, jak a proč tohle funguje, čti link:https://towardsdatascience.com/derivative-of-the-softmax-function-and-the-categorical-cross-entropy-loss-ffceefc081d1[*tohle*].
+

@@ -1,0 +1,92 @@
+= Formální definice
+
+.Přehled
+* <<neuron>>
+* <<nn>>
+
+[#neuron]
+== Neuron
+
+Hrubá matematická aproximace biologického neuronu.
+
+image::./img/formal_neuron.png[]
+
+* stem:[x_i] -- inputy
+* stem:[w_i] -- váhy
+* stem:[\xi = w_0 + \sum_{i=1}^n w_i x_i] -- vnitřní potenciál
+* stem:[y] -- výstup
+* stem:[y = \sigma(\xi)] -- aktivační funkce udávající výstup
+* bias -- udává "jak těžké" je pro neuron se aktivovat (čím vyšší číslo, tím těžší je pro neuron vydat nenulový výstup)
+* stem:[x_0] -- pro snažší implementaci se závádí dodatečný vstup, který má vždy hodnotu 1 a váhu rovnu -bias
+
+NOTE: Vnitřní potenciál funguje jako nadrovina (čára při 2D, rovina při 3D, nepředstavitelný mostrum ve vyšších dimenzí), která rozděluje prostor vstupů na část, kde je stem:[\xi < 0] a kde stem:[\xi > 0].
+
+NOTE: Vnitřní potenciál se u některých typů sítí počítá jako vzdálenost od vstupu od vah:
+stem:[\xi = \| \vec{x} - \vec{w} \|]
+
+[NOTE]
+====
+Jedním neuronem neuronem nelze oddělit spočítat XOR (oddělit nuly od jedniček) v:
+
+image::./img/xor.png[]
+
+(Přinejmenším pokud je stem:[\sigma] unit step function a ani jinak si nejsem jistý.)
+====
+
+[#nn]
+== Neuronová síť (NN)
+
+Neuronová síť je množina propojených neuronů, jejíž chování je zakódováno do spojení mezi neurony. Je primitivním modelem biologických neuronových sítí a silně se zaměřuje na oblasti jako: samořídicí auta, hry, finanční trhy, zpracování medicinálních obrazů, zpracování textu, rozpoznání hlasu, atd.
+
+Typ neuronové sítě je dán její architekturou (způsobem zapojení), aktivitou (transformací vstupů na výstupy) a učením (metodou změny vah při trénování).
+
+--
+Architektura::
+Neuron může být input, output nebo hidden. Může být dokonce input i output najednou. Hidden je, právě když není input ani output.
++
+Síť být cyklická -- _recurrent_ -- nebo acyklická -- _feed-forward_.
+
+Stav síťe::
+Vektor výstupů všech neuronů sítě (nejen output).
+
+Stavový prostor sítě::
+Množina všech možných stavů sítě.
+
+Vstup sítě::
+Vektor reálných čísel (prvek stem:[\Reals^n]), kde stem:[n] je počet vstupů.
+
+Vstupní prostor sítě::
+Množina všech vstupů sítě.
+
+Iniciální stav::
+Input neuronům je za výstup (stem:[y]) dán vektor vstupů (stem:[\vec{x}]). Všem ostatním neuronům je výstup (stem:[y]) nastaven na 0.
+
+Výstup sítě::
+Vektor výstupů (stem:[y]) output neuronů. Výstup se v průběhu výpočtu může měnit.
+
+Výpočet::
+Typicky po diskrétních krocích:
++
+1. Zvolí se množina neuronů (vybrané podle pravidla daného architekturou).
+2. Zvoleným neuronům je nastaven výstup -- prostě se vyhodnotí aktivační funkce.
+3. Vrať se ke kroku 1.
++
+Výpočet je _konečný_, pokud se stav sítě dále nemění po konečném množství opakování postupu výše.
+
+Konfigurace::
+Vektor hodnot všech vah.
+
+Vahový prostor::
+Množina všech konfigurací.
+
+Iniciální konfigurace::
+Počáteční hodnoty vah (než začne trénování).
+
+Supervised learning::
+Síť se učí na základě vstupů, pro které *známe* správnou odpověď. Minimalizací chyby (odchylky výstupu od požadovaného výstupu) se hledá "správná" konfigurace.
+
+Unsupervised learning::
+Síť se učí na základě vstupů, pro které *neznáme* správnou odpověď. Cílem je zjistit něco o distribuci vstupů.
+--
+
+NOTE: Mějmě síť s stem:[n] neurony, z toho stem:[k] input a stem:[l] output. Nechť stem:[A \sube \Reals^k] a stem:[B \sube \Reals^l]. Předpokládejme, že výpočet je na každém prvku stem:[A] konečný. Pak řekneme, že ta síť počítá funkci stem:[F : A \to B], pokud pro každý vstup stem:[\vec{x}] platí, že stem:[F(\vec{x}) \in B] je výstupem sítě po té, co výpočet na stem:[\vec{x}] zastaví.

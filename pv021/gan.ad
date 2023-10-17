@@ -1,0 +1,107 @@
+= Generative Adversarial Networks (GAN)
+
+.Přehled
+* <<autoencoders>>
+* <<generator-discriminator>>
+* <<training>>
+
+[#autoencoders]
+== Autoencoders
+
+Nejsou GAN, ale jsou jim vcelku blízké. Jejich cílem je zakódovat input do "nějaké" reprezentace. Takový autoencoder má dvě části:
+
+--
+* stem:[\Phi : \Reals^n \to \Reals^m] -- encoder
+* stem:[\Psi : \Reals^m \to \Reals^n] -- decoder
+--
+
+Hledáme stem:[\Phi] a stem:[\Psi] tak, aby stem:[\Psi \circ \Phi] byla (skoro) identita. Encoder i decoder se dají implementovat pomocí MLP.
+
+Řekneme, že encoder počítá latent representation vstupu stem:[\vec{x}]. 
+
+Používá se unsupervised learning -- nemáme očekávaný vstup, jen samply. Mám trénovací set stem:[\mathcal{T} = \{ \vec{x_1}, ..., \vec{x_p} \}], kde stem:[\vec{x_i} \in \Reals^n]. Minimalizujeme reconstruction error:
+
+[stem]
+++++
+E = \sum_{i=1}^p (\vec{x}_i - \Psi(\Phi(\vec{x}_i)))^2
+++++
+
+--
+.Použití
+Komprese::
+Zmenšení velikosti obrázků velikosti 64x64 pomocí MLP 64-16-64 s aktivační funkcí tanh. Input a output jsou oblasti 8x8 vybrané náhodně.
+
+Snížení dimenzionality::
+Redukce dimenzionality je zobrazení stem:[R : \Reals^x \to \Reals^y], kde stem:[x > y], a platí, že původní sample stem:[\vec{x}] lze "zrekonstruovat" z stem:[R(\vec{x})]. Typicky se nepoužívají autoencodery, ale Principal Component Analysis (PCA).
+
+Pretraining::
+Trénujeme autoencoderový pár stem:[\cal M_\Phi, \cal M_\Psi] vstupními daty stem:[\vec{x}_i] bez očekávaný vstupů -- unsupervised learning. Autoencoder se snaží vyextrahovat z dat to důležité. Nad stem:[\cal M_\Phi] přilepíme stem:[\cal M_\text{top}] a tento nový MLP už trénujeme na olabelovaných datech -- supervised learning.
+--
+
+[#generator-discriminator]
+== Generator a discriminator
+
+Generative adversarial network je unsupervised generative model, který má dvě sítě:
+
+Generator stem:[G : \Reals^k \to \Reals^n]::
+Vezme *náhodný* vstup stem:[\vec{z} \in \Reals^k] z distribuce stem:[p_z] a vrátí stem:[G(z)], které odpovídají pravděpodobnostní distribuci, která nás zajímá (např. se snaží generovat tváře).
+
+Discriminator stem:[D : \Reals^n \to \lbrack 0, 1 \rbrack]::
+Počítá pravděpodobnost, že daný vstup stem:[x \in \Reals^n] *není výstup* z generátoru stem:[G] (např. pravděpodobnost, že na obrázku je opravdová, existující, v reálném světě žijící, totálně nevygenerovaná osoba).
+
+[#training]
+== Trénování
+
+Pro trénování potřebujeme multimnožinu stem:[\mathcal{T} : \{ \vec{x}_1, \vec{x}_2, ..., \vec{x}_p \}], která obsahuje výstupy, jenž se stem:[G] snaží napodobit, a stem:[D] považuje za opravdové.
+
+Pro každý opravdový sample stem:[\vec{x}_i] potřebujeme náhodný šum stem:[\vec{z}_i], máme tedy také multimnožinu stem:[\mathcal{F} : \{ \vec{z}_1, \vec{z}_2, ..., \vec{z}_p \}] z distribuce stem:[p_z]. Při trénování se pak používá error function:
+
+[stem]
+++++
+\large
+
+E_{\cal T, F}(G, D) = -\frac{1}{p} \sum_{i=1}^p \Big( \ln(D(\vec{x}_i)) + \ln (1 - D(G(\vec{z}_i))) \Big)
+++++
+
+Discriminator se snaží minimalizovat stem:[E]. Generator se snaží maximalizovat stem:[E].
+
+[NOTE]
+====
+Všimni si, že je to velice podobný binary cross-entropy:
+
+[stem]
+++++
+-\sum_{k=1}^p \big( d_k \log(y_k) + (1 - d_k) \log(1 - y_k) \big)
+++++
+
+Pokud výstup stem:[d_k=1] znamená, že vstup je opravdový, pak si představ, že u stem:[d_k \cdot D(\vec{x}_i)] by stem:[d_k=1] a u stem:[(d_k - 1) \cdot D(G(\vec{z}_i))] by stem:[d_k=0].
+====
+
+NOTE: Svým způsobem je generator decodérem a vektory stem:[\vec{z}] jsou latentní reprezentace.
+
+Nechť jsou stem:[W_D] váhy stem:[D] a stem:[W_G] váhy stem:[G]. V každé iteraci trénování jsou váhy upraveny takto:
+
+1. Trénuj discriminator stem:[D] po dobu stem:[k] kroků (stem:[k] je hyperparametr).
+  a. Vyrob minibatch stem:[T = \{\vec{x}_1, ..., \vec{x}_m\}] z stem:[\cal T].
+  b. Vyrob minibatch stem:[F = \{\vec{z}_1, ..., \vec{z}_m\}] z distribuce stem:[p_z].
+  c. Gradient descend na stem:[W_D] podle stem:[E]:
++
+[stem]
+++++
+W_D := W_D - \alpha \cdot \nabla_{W_D} E_{T, F}(G,D)
+++++
+
+2. Trénuj generator stem:[G] (proveď jednou).
+  a. Vyrob minibatch stem:[F = \{\vec{z}_1, ..., \vec{z}_m\}] z distribuce stem:[p_z].
+  b. Gradient descend na stem:[W_G]:
++
+[stem]
+++++
+W_G := W_G - \alpha \cdot \nabla_{W_G}
+\left(
+    \frac{1}{m}
+    \sum_{i=1}^m \ln(1 - D(G(\vec{z}_i)))
+\right)
+++++
++
+NOTE: Všimni si, že ta error funkce je podobná té první, ale nezapočítává tam chybu discriminatoru na opravdových samplech, a je znegovaná, protože chceme maximalizovat chybu discriminatoru na fake samplech.
