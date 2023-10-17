@@ -4,7 +4,7 @@
 
 Poznámky z [Fakulty informatiky Masarykovy univerzity](https://www.fi.muni.cz/) v Brně. Nejlíp se na ně kouká na [https://cafour.cz/fi/](https://cafour.cz/fi/).
 
-# Jak přispět
+## Jak přispět
 
 Pokud chceš do poznámek přispět (nebo něco opravit), super! Prosím přečti si [pokyny](contributing.md).
 
