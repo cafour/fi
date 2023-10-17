@@ -9,6 +9,7 @@ Poznámky z [Fakulty informatiky Masarykovy univerzity](https://www.fi.muni.cz/)
 Pokud chceš do poznámek přispět (nebo něco opravit), super! Prosím přečti si [pokyny](contributing.md).
 
 ---
+---
 
 # Notes from FI
 
