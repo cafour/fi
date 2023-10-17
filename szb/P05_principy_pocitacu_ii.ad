@@ -1,0 +1,141 @@
+= Základní principy počítačů II
+:url: ./zakladni-principy-pocitacu-ii/
+:page-group: prg
+:page-order: P05
+
+[NOTE]
+====
+Kombinační a sekvenční logické obvody. Von Neumannova architektura. Principy práce procesoru, přerušení.
+
+_PB150/PB151_
+====
+
+== Elektronické obvody
+
+Elektronické součástky (rezistory, tranzistory, kondenzátory, atd.) propojené vodiči.
+
+=== Kombinační logické obvody
+
+Takové elektronické obvody sestávající se z logických hradel (_logic gate_), kde výstup závisí jen na aktuální kombinaci vstupů. Tedy zejména nemají paměť a dají se popsat pravdivostní tabulkou a výrazy výrokové logiky.
+
+Mezi základní logické obvody patří:
+
+* Invertor (NOT),
+* AND,
+* OR,
+* XOR (sčítačka mod 2),
+* NAND (Shefferova algebra),
+* NOR (Pierceova algebra).
+
+Mezi ty zajímavější patří:
+
+Polosčítačka::
+Dává kromě součtu i přenos z nejvyššího bitu ven.
+
+Úplná sčítačka::
+Dává kromě součtu i přenos nejvyššího a druhého nejvyššího bitu.
+
+Násobička::
+Násobí dvě čísla v doplňkovém kódu. Operandy jsou v 32-bitových registrech, výsledek v 64-bitovém.
+
+=== Sekvenční logické obvody
+
+Takové elektronické obvody sestávající se z logických hradel, kde výstup závisí nejen na aktulní kombinaci vstupů ale i na posloupnosti minulých vstupů.
+
+Klopný obvod RS (reset, set)::
+Stavební prvek sekvenční obvodů. Řízený jedničkami:
++
+image::./img/p05_rs.png[]
++
+Přivedení hodnoty 1 na stem:[R] způsobí vynulování uložené hodnoty. Přivedení hodnoty 1 na stem:[S] nastaví uloženou hodnotu na 1. Pokud ani stem:[R] ani stem:[S] nejsou 1, pak obvod propouští uloženou hodnotu.
++
+[%header%autowidth,cols=3*]
+|===
+| stem:[R] | stem:[S] | stem:[Q_i]
+| 0 | 1 | 1
+| 1 | 0 | 0
+| 0 | 0 | stem:[Q_{i-1}]
+| 1 | 1 | Zakázaný stav
+|===
+
+Klopný obvod D (delay)::
+Klopný obvod RS doplněný o synchronizaci, takže uloženou hodnotu lze změnit jen, pokud je na vstup stem:[T] přiveden impuls. Navíc je vstup stem:[D] přiveden na stem:[S] a stem:[\overline{R}].
+
+Klopný obvod JK::
+Jako RS, ale stav stem:[J = 1, K = 1] není zakázaný, nýbrž invertuje uloženou hodnotu. Je vždy synchronizovaný.
+
+Sériová sčítačka::
+Synchronizovaný obvod užívající klopné obvody k uchování výsledků.
+
+== Von Neumannova architektura
+
+Model digitálního počítače, který se sestává z: operační paměti, aritmeticko-logické jednotky (ALU), řídicí jednotku (CU), a vstupně/vstupních zařízení.
+
+* CU vykonává program uložené ve formě binárních instrukcí v paměti.
+* Místa v paměti jsou označena adresami.
+* Změna pořadí instrukcí je možná díky instrukcím podmíněného a nepodmíněného skoku.
+* Zpracování dat probíhá samočinně.
+
+== Principy práce procesoru
+
+Procesor je synchronní výpočetní a řídicí jednotka. Dá se na něj dívat taky jako na sloučení ALU a CU z Von Neumannovy architektury. Obsahuje:
+
+* _řadič_ -- intepretuje instrukce,
+* _registry_ -- uchovávají operandy a instrukce,
+* _aritmeticko-logické jednotky_ a _jednotky plovoucí čárky_ -- vykonávají aritmetické operace,
+* _cache_ -- malá pamět zrychlující přístup do operační paměti.
+
+Takt procesoru::
+Základní frekvence (rychlost procesoru) -- počet provedených instrukcí za jednotku času.
+
+Strojový cyklus::
+Čas potřebný k zápisu/čtení slova z paměti.
+
+Instrukční cyklus::
+Čas potřebný k výběru a provedení instrukce. Má následující fáze:
+1. zjištění, co za instrukci se má provést,
+2. provedení instrukce,
+3. přerušení.
+
+Mikroinstrukce::
+Každá instrukce se skládá z dílčích mikroinstrukcí.
+
+== Přerušení
+
+Mechanismus pro asynchronní obsluhu událostí, který umožňuje pozastavit vykonávaný proces na základě externí příčiny, uložit si stav, zapamatovat si místo návratu a potom se k procesu znovu vrátit. Např. přerušení od časovače (proces běží dlouho, měl by se vyměnit).
+
+NOTE: Hardware se hlásí, chce se na něco zeptat asi. Software se umí hlásit taky, ale dá se umlčet.
+
+Vnější přerušení::
+Vyvolává je I/O zařízení, které si tak vyžaduje pozornost -- chce obsloužit (přesunout data apod.).
+
+Vnitřní přerušení::
+Vyvolává je sám procesor, pokud dojde k nějaké chybě (dělení nulou, výpadek stránky, přístup na špatné místo v paměti).
+
+Řadič přerušení::
+Speciální obvod, který dokáže určit prioritu jednotlivých přerušení.
+
+Softwarové přerušení::
+Synchronní, je to speciální strojová instrukce, která se používá pro systémová volání, nachází se přímo v programu.
+
+=== Kdy nelze přerušit proces?
+
+- Během provádění instrukce.
+- Pokud je dané přerušení zakázáno (příznak _Interrupt Flag_ (IF) je nastaven na 0).
+- Bezprostředně po zahájení obsluhy předchozího přerušení. Obsluha přerušení může uvnitř sebe povolit další přerušení.
+
+=== Průběh přerušení
+
+*Zařízení:* Přerušuji! (IRQ)
+
+*Řadič přerušení:* _(IF je nastaveno na 1)_ Zaznamenáno. (INTR)
+
+*CPU:* _(Právě vykonalo instrukci)_ Chce mě někdo přerušit? (INTA)
+
+*Řadič přerušení:* Ano, číslo přerušení je *[DATA VYMAZÁNA]*.
+
+*CPU:* Dobře, takže zakazuji další přerušení _(nastaví IF na 0)_, ukládám aktuální stav registrů na zásobník (PUSH) a spouštím obsluhu přerušení *[DATA VYMAZÁNA]*.
+
+*CPU:* _(Provede obsluhu přerušení.)_
+
+*CPU:* Povoluji přerušení _(nastaví IF na 1)_ a obnovuji předchozí stav registrů ze zásobníku. (RET a POP)

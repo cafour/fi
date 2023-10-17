@@ -1,0 +1,241 @@
+= Počítačové sítě II
+:url: ./pocitacove-site-ii/
+:page-group: prg
+:page-order: P14
+
+[NOTE]
+====
+Propojování počítačových sítí. Síťové protokoly, přepínání a směrování, multicast. Zajištěný přenos dat, sestavení a ukončení spojení. Transportní protokoly.
+
+_PB156_
+====
+
+== Propojování počítačových sítí
+
+Malé, lokální (L2) sítě sítě lze propojit pomocí různých typů zařízení.
+
+Topologie::
+Tvar, uspořádání stanic připojených k médiu. Topologii sítě řešíme ve L2/vrstvě přístupu k síti.
+
+Kolizní doména::
+Skupina stanic, kde by v případě součásného vysílání více stanic došlo ke kolizi.
+
+Bridge (můstek)::
+Spojuje dvě části sítě a odděluje provoz dvou podsítí.
+
+Hub (rozbočovač)::
+Umožňuje větvení.
+
+Switch (přepínač)::
+Rozbočovač, který posílá data jen tam, kam patří.
+
+Repeater (opakovač)::
+Přeposílá zesílený signál.
+
+=== Síťové topologie
+
+Bus::
++
+[graphviz]
+....
+graph {
+    graph [rankdir=LR,bgcolor=transparent];
+    node [shape=box];
+    1 -- 2 -- 3 -- 4;
+}
+....
+
+Tree::
++
+[graphviz]
+....
+graph {
+    graph [bgcolor=transparent];
+    node [shape=box];
+
+    1 -- 2,3;
+    2 -- 4,5;
+    3 -- 6,7;
+}
+....
+
+Ring::
++
+[graphviz,layout=circo]
+....
+digraph {
+    graph [bgcolor=transparent];
+    node [shape=box];
+
+    1 -> 2 -> 3 -> 4 -> 1;
+}
+....
+
+Mesh::
+Úplný graf.
++
+[graphviz,layout=circo]
+....
+graph {
+    graph [bgcolor=transparent];
+    node [shape=box];
+
+    1 -- 2,3,4,5;
+    2 -- 3,4,5;
+    3 -- 4,5;
+    4 -- 5;
+}
+....
+
+Star::
+Úplný bipartitní graf stem:[K_{1, n}].
++
+[graphviz,layout=circo]
+....
+graph {
+    graph [bgcolor=transparent];
+    node [shape=box];
+
+    HUB -- 1,2,3,4,5;
+}
+....
+
+
+== Síťové protokoly
+
+Síťový protokol definuje syntax, sémantiku a časování přenášených zpráv posílaných za daným účelem.
+
+[%header]
+|===
+| Rodina | Příklady
+
+| Řízení přístupu k médiu | Aloha, CSMA/CA, CSMA/CD
+| Mapování mezi IP a MAC adresami | ARP, RARP, DHCP
+| Transport datagramů | IPv4, IPv6
+| Podpůrné protokoly pro IP | ICMP (zprávy), ARP, RARP (address resolution), IGMP (multicast)
+| Směrovací protokoly | RIP, EIGRP, EGP, BGP, IStS, OSPF
+| Transportní | UDP, TCP
+| Rezervační | RSVP, YESSIR
+| Aplikační | HTTP, FTP, IMAP4, POP3, SMTP, FTP
+|===
+
+== Přepínání a směrování
+
+Spojované (connection-oriented) sítě::
+Přepínají mezi okruhy -- spojeními udržovanými po dobu komunikace. Např. analogové telefonické sítě.
+
+Nespojované (connectionless) sítě::
+Neudržují žádná spojení. Posílají pakety předem neznámými cestami, jelikož každý uzel se samostatně rozhoduje, kam paket pošle dál. Např. Internet.
+
+== Multicast
+
+Multicast je vysílání jedné zprávy více příjemcům. Používá se třeba při streamu videa a videokonferencích.
+
+IP multicast::
+Implementován pomocí speciálních multicastových IP adres. Omezuje kopírovaní dat, ale je nespolehlivý, těžko se účtuje a omezený TTL.
+
+Multicastové protokoly::
+* _Internet Group Management Protocol_ (IGMP)
+* _Distance Vector Multicast Routing Protocol_ (DVMRD)
+* _Multicast Open Shortest Path First_ (MOSPF)
+* _Protocol-Independent Multicast -- Dense Mode_ (PIM-DM)
+* _Protocol-Independent Multicast -- Sparse Mode_ (PIM-SM)
+* _Core-based trees_ (CBT)
+
+=== Source-based tree
+
+Je přístup k multicastu, kde se aktivita sdružuje u zakládajícího zařízení, které periodicky broadcastuje. Ač větve bez členů jsou ořezány, i tak je zde vysoká režie způsobená záplavou broadcastů. Týká se protokolů: DVMRP, MOSPF, PIM-DM.
+
+[graphviz]
+....
+digraph {
+    graph [bgcolor=transparent];
+    node [shape=box];
+
+    "Zakládající" -> 1,4,6
+    1 -> 2,3;
+    4 -> 5;
+}
+....
+
+=== Core-based Tree
+
+Nejprve je ustanoveno jádro (core) a body setkání (meeting point). Tyto body mohou zájemci o broadcast kontaktovat. Snižuje režii, ale je nutná iniciativa ze strany účastníků a jádro musí být dostupné. Týká se protokolů: CBT, PIM-SM.
+
+[graphviz]
+....
+digraph {
+    graph [bgcolor=transparent];
+    node [shape=box];
+
+    "Jádro" -> "MP-1", "MP-2", "MP-3";
+    "MP-1" -> 1,2,3 -> "MP-1" [style=dotted];
+    "MP-2" -> 4 -> "MP-2" [style=dotted];
+    "MP-3" -> 5,6 -> "MP-3" [style=dotted];
+}
+....
+
+== Zajištění přenosu dat
+
+Pozitivní potvrzování::
+Přijímající hlásí přijetí.
+
+Negativní potvrzování::
+Přijímající hlásí nepřijetí/ztrátu.
+
+=== Automatic Repeat Request (ARQ)
+
+Znovuposlání dat.
+
+Stop and wait ARQ::
+- odesílatel čeká na potvrzení, pokud nastane timeout, pošle znovu
+- pozitivní potvrzování
+- lze posílat jen jeden paket
+
+Go-Back-N ARQ::
+- mechanismus plovoucího okna
+- kumulativní potvrzování
+- neefektivní pro vysoce ztrátové linky
+
+Selective-Repeat ARQ::
+- bufferování out-of-order packetů
+- kumulativní a negativní potvrzování
+
+=== Sestavení a ukončení spojení
+
+Při vzniku spojení dojde k třícestnému handshaku:
+
+1. Klient pošle `SYN` na server (_,,Dobrý den!''_).
+2. Server odpoví `SYN, ACK` (_,,Dobrý den! Děkuji za pozdrav.''_).
+3. Klient odpoví `ACK` (_,,Děkuji za pozdrav.''_).
+
+Analogicky při ukončení:
+
+1. Klient pošle `FIN` na server (_,,Nashle!''_).
+2. Server odpoví `FIN, ACK` (_,,Nashle! Děkuji za pozdrav.''_).
+3. Klient odpoví `ACK` (_,,Děkuji za pozdrav.''_).
+
+== Transportní protokoly
+
+Obecný způsob transportu dat od aplikace k aplikaci. Nemá tušení, co za data transportuje. Hlavními zástupci jsou _User Datagram Protocol_ (UDP) a _Transmission Control Protocol_ (TCP).
+
+=== Srovnání UDP a TCP
+
+[%header,cols="1,2,2"]
+|===
+| Vlastnost | UDP | TCP
+
+| Základní popis | Jednoduchý, nespojovaný a nespolehlivný | Složitý, spojovaný a spolehlivý
+
+| Jednotka přenosu | Datagram | Segment
+
+| Koncept přenosu | Surová data v náhodném pořadí | Iluze proudu bajtů
+
+| Hlavička
+| zdrojový a cílový port, délka dat, checksum
+| zdrojová a cílový port, délka dat, checksum, sekvenční číslo segmentu, naposledy potvrzené číslo segmentu, délka okna, ...
+
+| Použití
+| DNS, TFTP, real-time a multicastové přenosy
+| HTTP, všechno ostatní
+|===

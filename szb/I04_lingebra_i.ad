@@ -1,0 +1,250 @@
+= Lineární algebra I
+:url: ./linearni-algebra-i/
+:page-group: inf
+:page-order: I04
+
+[NOTE]
+====
+Operace s vektory a maticemi, vlastnosti lineárních operací a skalárního součinu, řešení systému lineárních rovnic. Gaussova eliminace, determinant.
+
+_MB101/MB201_
+====
+
+== Vektorový prostor
+
+Vektorový prostor stem:[V] nad polem skalárů stem:[\mathbb{K}] je množina s operacemi stem:[+] a stem:[\cdot], kde stem:[(\forall a, b, c \in V)(\forall x, y \in \mathbb{K})]:
+
+[%header,cols=2*]
+|===
+| Axiom | Formulka
+| Asociativita ke sčítání | stem:[(a + b) + c = a + (b + c)]
+| Komutativita | stem:[a + b = b + a]
+| Neutrální prvek ke sčítání | stem:[(\exists 0 \in V)(a + 0 = a)]
+| Inverzní prvek ke sčítání | stem:[(\exists d \in V)(a + d = 0)]
+| -- | --
+| Distributivita násobení vektoru skalárem vzhledem ke sčítání vektorů | stem:[x \cdot (a + b) = x \cdot a + x \cdot b]
+| Distributivita násobení vektoru skalárem vzhledem ke sčítání skalárů | stem:[(x + y) \cdot a = x \cdot a + y \cdot a]
+| Asociativita k násobení | stem:[(a \cdot b) \cdot c = a \cdot (b \cdot c)]
+| Neutrální prvek k násobení | stem:[(\exists 1 \in \mathbb{K})(1 \cdot a = a)]
+|===
+
+Prvky stem:[V] nazýváme vektory.
+
+WARNING: Z definice výše neplyne nutně, že vektory jsou n-tice.
+
+NOTE: Pole (komutativní těleso, těleso, field) je algebraická struktura, trojice stem:[(\mathcal{T}, +, \cdot)], která je okruh a navíc má násobení inverzní prvek a je komutativní.
+
+NOTE: Okruh (ring) je algebraická struktura, trojice stem:[(\mathcal{R}, +, \cdot)], kde stem:[(\mathcal{R}, +)] je komutativní grupa a stem:[(\mathcal{R}, \cdot)] je pologrupa.
+
+NOTE: Komutativní grupa (Abelova grupa) je algebraická struktura stem:[(\mathcal{G}, *)], která je grupa navíc je operace stem:[*] komutativní.
+
+NOTE: Grupa (group) je algebraická struktura stem:[(\mathcal{G}, *)], která je...
+
+Lineární kombinace::
+Lineární kombinace vektorů je výraz tvaru stem:[a_1 \cdot v_1 + a_2 \cdot v_2 + ... + a_n \cdot v_n], kde stem:[v_i] jsou vektory a stem:[a_i] jsou skaláry.
+
+Lineárně nezávislé vektory::
+Vektory stem:[v_1, v_2, ..., v_n] jsou lineárně nezávislé, jestliže jediná jejich lineární kombinace je ta s nulovými stem:[a_i].
+
+Lineární zobrazení::
+Zobrazení stem:[f] je lineární, pokud stem:[f(a + b) = f(a) + f(b)] a stem:[f(\alpha \cdot a) = \alpha \cdot f(a)], kde stem:[a, b] jsou vektory a stem:[\alpha] je skalár.
+
+=== Skalární součin
+
+Skalární součin na vektorovém prostoru stem:[V] nad stem:[\mathbb{R}] je zobrazení stem:[\langle , \rangle : V \times V \to \mathbb{R}], které je symetrické, lineární a takové, že stem:[\langle v, v \rangle \ge 0] a stem:[\lVert v \rVert^2 = \langle v, v \rangle = 0], právě tehdy když stem:[v = 0].
+
+Ve vektorových prostorech tvaru stem:[\mathbb{R}^n] (n-tice) platí stem:[\langle v, w \rangle = (v_1 \cdot w_1, v_2 \cdot w_2, ..., v_n \cdot w_n)].
+
+Geometricky, jestliže stem:[\langle v, w \rangle = 0], pak vektory stem:[v, w] jsou kolmé (ortogonální). Obecněji, výsledek je délka vektoru, který vznikne promítáním stem:[v] na stem:[w]:
+
+[stem]
+++++
+\langle v, w \rangle = \lVert v \rVert \cdot \lVert w \rVert \cdot \cos \theta
+++++
+
+Pokud stem:[\lVert v \rVert = \lVert w \rVert = 1], pak je skalární součin cosinus úhlu sevřeného mezi stem:[v] a stem:[w].
+
+WARNING: Při stem:[\langle v, v \rangle] vektor stem:[v] nesvírá sám se sebou ,,žádný'' ani ,,nekonečný'' úhel, ale nulový.
+
+=== Vektorový součin
+
+Operace stem:[\times : \mathbb{R}^3 \times \mathbb{R}^3 \to \mathbb{R}^3] ve vektorovém prostoru stem:[\mathbb{R}^3].
+
+[stem]
+++++
+v \times w = (v_2 w_3 - v_3 w_2, v_3 w_1 - v_1 w_3, v_1 w_2 - v_2 w_1)
+++++
+
+Výsledný vektor je kolmý na stem:[v] i stem:[w] a jeho velikost je rovna obsahu rovnoběžníku daného stem:[v] a stem:[w].
+
+== Matice
+
+Matice stem:[A] typu stem:[m \mid n] (někdy taky stem:[m \times n]) nad stem:[\mathbb{K}] je zobrazení stem:[A : \{1, ..., m\} \times \{1, ..., n\} \to \mathbb{K}].
+
+NOTE: Matice je také obdélkové schéma s stem:[m] řádky a stem:[n] sloupci, ale v tomhle kontextu je to spíš to zobrazení.
+
+Řádky matice stem:[A]::
+stem:[(a_{i_1}, a_{i_2}, ..., a_{i_n}) \in \mathbb{K}^n, i \le m] jsou řádky matice stem:[A].
+
+Sloupce matice stem:[A]::
+stem:[(a_{j_1}, a_{j_2}, ..., a_{j_m}) \in \mathbb{K}^m, j \le n] jsou sloupce matice stem:[A].
+
+Diagonály::
+(Hlavní) diagonála je stem:[(a_{1,1}, a_{2,2}, ...)]. Vedlejší diagonála je stem:[(a_{1,n}, a_{2, n-1}, ...)].
+
+Nulová matice::
+Obsahuje samé nuly.
+
+Čtvercová matice::
+Matice tvaru stem:[n \mid n].
+
+Jednotková matice stem:[E]::
+Matice s jedničkami na diagonále. Zobrazení identity.
+
+Opačná matice::
+Matice stem:[-A] taková, že stem:[A + (-A) = 0].
+
+Schodovitá matice::
+Každý řádek má před prvním nenulovým číslem více nul než řádek přechozí. Pokud řádek neobsahuje nenulové číslo, je na konci.
+
+Transponovaná matice stem:[A^T]::
+Řádky a sloupce z stem:[A] má prohozené.
+
+Hodnost (rank)::
+Počet lineárně nezávislých řádků nebo sloupců matice. Ten menší z nich.
+
+=== Sčítání matic
+
+Matice musí mít stejné rozměry. Sčítám skaláry na stejných souřadnicích.
+
+=== Násobení matice maticí
+
+Pro matici stem:[A = (a_{i,j})] typu stem:[m \mid n] a matici stem:[B = (b_{j,k})] typu stem:[n \mid q] na okruhem skaláru stem:[\mathbb{K}] je součin stem:[C = A \cdot B = (c_{i, k})] matice typu stem:[m \mid q], kde
+
+[stem]
+++++
+c_{i_j} = \sum_{j=1}^{n} a_{i,j} \cdot b_{j,k}, \text{ kde } 1 \le i \le m, 1 \le k \le q
+++++
+
+NOTE: Hlavně si pamatuj, že *řádkem* z stem:[A] násobíš *sloupec* z stem:[B]. To pořadí je stejné jako souřadnice prvků matice.
+
+=== Jako systém lineárních rovnic
+
+Matice se dá použít k zápisu systému lineárních rovnic.
+
+1. Přepíš soustavu do tvaru rozšířené matice.
+2. Převeď matici do schodovitého tvaru pomocí elementářních řádkových úprav. Můžeš:
+** Vyměnit dva řádky.
+** Vynásobit řádek nenulovým skalárem.
+** Přičíst řádek k jinému řádku.
+3. Zpětně dopočítej hodnoty proměnných odpovídajích sloupců.
+
+Pokud vyjde např. stem:[0x = 1], soustava rovnic nemá řešení.
+
+Pokud v matici vyjde nulový řádek, má soustava rovnic nekonečně mnoho řešení. Výsledek je parametrizovaný.
+
+== Gaussova eliminace
+
+Metoda úpravy matice pomocí elementárních řádkových operací, kterou lze použít k řešení systému lineárních rovnic, výpočtu hodnosti matice, výpočtu determinantu a nalezení inverzní matice. Cílem je dostat matici do tvaru _row echelon form_.
+
+=== Reduced Row Echelon Form
+
+* Nulové řádky jsou úplně dole.
+* Vedoucí (první nenulové) číslo řádku je vždy napravo od vedoucího čísla řádku předešlého.
+* Na každém řádku je vedoucím číslem 1.
+* Každý sloupec obsahující 1, má 0 všude jinde.
+
+[stem]
+++++
+\begin{bmatrix}
+1 & 0 & a_1 & 0 & b_1 \\
+0 & 1 & a_2 & 0 & b_2 \\
+0 & 0 & 0   & 1 & b_3
+\end{bmatrix}
+++++
+
+NOTE: V _row echelon form_ musí nuly být jen *pod* vedoucím číslem, které nemusí být jedna.
+
+== Determinant
+
+Zobrazení, které přiřadí čtvercové matici stem:[A] skalár stem:[\lvert A \rvert] (někdy stem:[\det A]).
+
+[stem]
+++++
+\lvert A \rvert = \sum_{\sigma \in \Sigma_n} \text{sgn}(\sigma) \cdot a_{1,\sigma(1)} \cdot a_{2,\sigma(2)} \cdot .... \cdot a_{n,\sigma(n)},
+++++
+
+kde
+
+* stem:[\Sigma_n] je množina všech permutací stem:[\{1, ..., n\}] a
+* stem:[sgn(\sigma)] je znaménko permutace stem:[\sigma] dané stem:[(-1)^\text{počet inverzí}], kde
+** inverze permutace je, když pro dva prvky permutace stem:[a, b] platí stem:[a < b], ale stem:[\sigma(a) > \sigma(b)].
+
+=== Vlastnosti determinantu
+
+* Geometricky, determinant je objem rovnoběžnostěnu, který tvoří báze vektorů.
+* Pokud stem:[A] obsahuje nulový řádek, stem:[\det A = 0].
+* Pokud je stem:[A] schodovitá, determinant je součin prvků na diagonále.
+* stem:[\det A = \det A^T]
+* stem:[\det (A \cdot B) = \det A \cdot \det B]
+* Při Gaussově eliminaci:
+** Přičtením jednoho řádku k druhému se determinant nemění.
+** Vynásobením řádku nenulovou konstantou, je determinant vynásoben tou samou konstantou. (Musíme dělit.)
+** Prohození dvou řádků matice změní znaménko determinantu. (Musíme násobit -1.)
+
+=== Laplaceův rozvoj pro výpočet determinantu
+
+1. Vyber z matice řádek nebo sloupec, který obsahuje nejvíc nul.
+2. Pro nenulové prvky vypočítej jejich minor (determinant matice, která neobsahuje řádek a sloupec prvku).
+3. Vynásob minory jejich příslušným prvkem a stem:[sgn(i+j)], kde stem:[i,j] jsou souřadnice prvku.
+4. Všechno to sečti.
+
+Podle řádku stem:[i]:
+
+[stem]
+++++
+\det A = \sum_{j=1}^n (-1)^{i + j} \cdot a_{i,j} \cdot M_{i, j}^A,
+++++
+
+kde stem:[M_{i,j}^A] je minor podle prvku stem:[a_{i,j}].
+
+Příklad::
++
+[stem]
+++++
+A = \begin{pmatrix}
+    \textcolor{blue}{1} & 0 & 0 & \textcolor{red}{2} \\
+    0 & 3 & 4 & 0 \\
+    0 & 5 & 6 & 0 \\
+    7 & 0 & 0 & 8
+\end{pmatrix}
+++++
++
+Volíme řádek 1, tedy počítáme minory stem:[\textcolor{blue}{M_{1,1}^A}] a stem:[\textcolor{red}{M_{1,4}^A}]:
++
+[stem]
+++++
+\color{blue}
+M_{1,1} = \det \begin{pmatrix}
+    3 & 4 & 0 \\
+    5 & 6 & 0 \\
+    0 & 0 & 8
+\end{pmatrix} = ... = 8 \cdot (3 \cdot 6 - 4 \cdot 5) = -16
+++++
++
+[stem]
+++++
+\color{red}
+M_{1,4} = \det \begin{pmatrix}
+    0 & 3 & 4 \\
+    0 & 5 & 6 \\
+    7 & 0 & 0
+\end{pmatrix} = ... = 7 \cdot (3 \cdot 6 - 4 \cdot 5) = -14
+++++
++
+Tedy ve výsledku
++
+[stem]
+++++
+\det A = (-1)^{1+1} \cdot \textcolor{blue}{1 \cdot (-16)} + (-1)^{1+4} \cdot \textcolor{red}{2 \cdot (-14)} = -16 + 28 = 12
+++++

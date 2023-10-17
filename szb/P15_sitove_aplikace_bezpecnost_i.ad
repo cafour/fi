@@ -1,0 +1,190 @@
+= Síťové aplikace a bezpečnost I
+:url: ./sitove-aplikace-a-bezpecnost-i/
+:page-group: prg
+:page-order: P15
+
+[NOTE]
+====
+Základní aplikační protokoly: doručování pošty, přenos souborů, web, jmenná služba. Principy popisu a zajištění kvality služby, použití pro multimédia.
+
+_PB156_
+====
+
+Síťové aplikace používají řadu standardních i proprietárních protokolů k plnění své funkce. Tvoří tak L7/aplikační vrstvu.
+
+== Doručování pošty
+
+[graphviz]
+....
+digraph {
+    bgcolor=transparent;
+    node [shape=box];
+    rankdir=BT;
+
+    {
+        rank=same;
+        local [label="Lokální server"];
+        target [label="Cílový server"];
+    }
+
+    {
+        rank=same;
+        sender [label="Klient -- odesílatel"];
+        receiver [label="Klient -- příjemce"];
+    }
+    sender -> local [label="SMTP"];
+    receiver -> target [label="POP3/IMAP4"];
+    local -> target [label="SMTP"];
+}
+....
+
+Simple Message Transfer Protocol (SMTP)::
+Protokol pro *posílání* pošty. (Nikoliv její přijímání.) Poštu posílá klient na server a servery mezi sebou. Používá port 25. SMTP zpráva má:
+* obálku -- adresu odesílatele, adresu příjemce, ...
+* vlastní zprávu s 
+** hlavičkou -- odesílatel, příjemce, předmět
+** tělem zprávy
+
+Internet Message Access Protocol 4 (IMAP4)::
+Umožňuje přistupovat k poštovní schránce na externím serveru. Schránku lze synchronizovat lokálně, ale pošta na serveru zůstává.
+
+Post Office Protocol 3 (POP3)::
+Protokol pro vyzvedávání pošty ze serveru. Vyzvednutá pošta je uložena permanentně na lokálním stroji, na serveru je obvykle smazána.
+
+== Přenos souborů
+
+File Transfer Protocol (FTP)::
+Přenáší soubory pomocí dvou TCP spojení na portech 20 (datové) a 21 (řídicí).
+
+Secure Copy Protocol (SCP)::
+Umožňuje přenos souborů založený na Secure Shellu (SSH). Používá TCP a port 22.
+
+SSH File Transfer Protocol (SFTP)::
+Přenos a manipulace se soubory založená na SSH. Modernější SCP.
+
+== Web
+
+World Wide Web (WWW) je systém prohlížení propojených dokumentů uložených na Internetu -- síti všech sítí. Dokumenty mohou být statické (prostě soubory na disku) nebo dynamické (server je vytváří při požadavku).
+
+NOTE: Takže zejména stem:[\text{Web} \ne \text{Internet}].
+
+Hypertext Transport Protocol (HTTP)::
+Umožňuje přístup k datům na Webu. Klient pošle požadavek na dokument a WWW server vrátí odpověď. Komunikují spolu pomocí TCP na portu 80 (443 v případě HTTPS). Dnes se používá HTTP/2 (a stále HTTP/1.1) a vyvíjí se HTTP/3.
+
+Uniform Resource Locator::
+Formát identifikátoru dokumentu na Webu.
++
+----
+protocol://user:password@server/file#location
+----
+
+== Jmenná služba
+
+Lidi si neradi pamatují IP adresy. Jmenná služba udržuje zobrazení mezi IP adresami a human-friendly názvy serverů.
+
+Domain Name System (DNS)::
+Překládá doménová jména na IP adresy a obráceně. Jmenný prostor může být plochý (`mujRouterDomaVBrne`) nebo hierarchický (`mujRouter.domaVBrne.cz`).
+
+Domain Name Space::
+Strom, kde kořen je `.`, pak jsou domény prvního řádu (`com`, `cz`, `sk`, ...), a pak je všechno ostatní. Každý uzel má jmenovku (label) a doménové jméno (domain name).
+
+Domain Name::
+Sekvence jmenovek popisující cestu ke kořeni oddělených tečkou.
++
+NOTE: Doménové jméno je třeba `fi.muni.cz.` -- *včetně tečky na konci*.
+
+DNS zóny::
+Domain Name Space je rozdělen do zón. Každou zónu spravuje jeden nebo více serverů. Tyto servery udržují jak záznamy o jménech tak odkazy na DNS servery spravující zóny o úroveň níže.
+
+DNS záznamy::
+* _A_ -- adresa
+* _NS_ -- name server
+* _PTR_ -- ukazatel pro reverse DNS (IP adresa -> doménové jméno)
+* _MX_ -- SMTP servery
+* _CNAME_ -- alias pro jiné doménové jméno
+* ...
+
+DNS resolver::
+Program, jehož úkolem je zjistit IP adresu pro dané doménové jméno pomocí dotazů na DNS servery. Třeba při zjišťování IP adresy pro `fi.muni.cz.`:
++
+1. Zeptá se NS pro `.`. Ten ho odkáže NS pro `cz.`.
+2. Zeptá se NS pro `cz.`. Ten ho odkáže na NS pro `muni.cz.`.
+3. Zeptá se NS pro `muni.cz.`. Ten ho odkáže na A 147.251.48.1.
+
+DNS Security Extensions (DNSSEC)::
+Specifikace pro zabezpečení DNS.
+
+== Kvalita služby (Quality of Service)
+
+Popisuje celkový výkon sítě zejména z perspektivy koncového uživatele. Na QoS záleží hlavně u služeb, co běží v reálném čase (e.g. videohovory).
+
+Ztrátovost paketů (packet loss)::
+Jaká je šance, že se paket cestou ztratí?
+
+Zpoždění (latency)::
+Doba mezi původním odesláním paketu a jeho konečným přijetím.
+
+Rozptyl zpoždění (jitter)::
+Je to zpoždění konstantní nebo ,,skáče''?
+
+Přenosová rychlost (bitrate)::
+Počet úspěšně přenesených bitů za jednoku času (bps).
+
+=== Plánování (Scheduling)
+
+Síťová zařízení mají vstupní a výstupní fronty. Lze naplánovat, v jakém pořadí budou které pakety odbaveny. Tuto funkci plní network scheduler.
+
+Fronta (FIFO)::
+Zvýhodňuje agresivní proudy (ty, co sypou hodně paketů).
+
+Prioritní fronta::
+Pakety jsou rozděleny podle priority. Ty s vyšší prioritou jsou odbaveny přednostně. Pokud je paketů s vysokou prioritou hodně, ty s nízkou mohou vyhladovět (nemusí na ně nikdy dojít).
+
+Vážená prioritní fronta::
+Pakety jsou rozřazeny do front podle priority. Fronty jsou obsluhovány cyklicky a mají váhu -- počet paketů, který z nich může být odbaven během jednoho cyklu (Round Robin).
+
+=== Formování / omezování toků (Traffic Shaping)
+
+Úmyslné omezování počtu a rychlosti procházejících paketů. Snaží se zabránit zahlcení.
+
+Average rate::
+Počet paketů, které chceme zpracovat za jednotku času.
+
+Peak rate::
+Maximální počet paketů, které chceme poslat za jednotku času, když jich dočasně posíláme hodně.
+
+Burst size::
+Maximalní počet paketů, které lze poslat najednou.
+
+Leaky bucket::
+Způsob zajištění požadovaného average rate. Pouští jen daný počet paketů, zbytek si drží ve frontě. Pokud je fronta plná, nové pakety zahazuje.
+
+Token bucket::
+Má kyblíček tokenů. Každý odeslaný paket je třeba zaplatit tokenem. Tokeny se hromadí, když uzel nic neposílá, takže když najednou přijde hromada paketů, pošle je všechny. Umožňuje krátkodobé špičky.
+
+=== Prevence zahlcení (congestion avoidance)
+
+Snaha předejít naplnění front a zahazování paketů.
+
+Random Early Detection (RED)::
+Pokud je fronta alespoň *takhle* plná, začni zahazovat náhodné pakety. Snad těm, co je posílají dojde, že jich mají posílat méně.
+
+Weighted Random Early Detection (WRED)::
+Stejně jako RED, ale oblíbených paketů (těch, co mají vysokou prioritu) zahazuje méně.
+
+=== V Internetu
+
+V Internetu (té jedné konkrétní síti) se uplatňují specifické metody kvality služby.
+
+Integrované služby (Integrated services -- ,,IntServ'')::
+Aplikace nejprve oznámí (např. pomocí RSVP nebo YESSIR), jaké požadavky na kvalitu má. Síť aplikaci buď vyhoví, nebo ji pošle do háje. Pokud jí vyhoví, musí si však uzly sítě pamatovat, jak se k trafficu aplikace mají chovat, což se blbě škáluje.
+
+Rozlišované služby (Differentiated services -- ,,DiffServ'')::
+Aplikace zapíše paketům prioritu do Type of Service (IPv4) nebo TrafficClass (IPv6). Síť si nemusí pamatovat, jak se má k trafficu dané aplikace chovat, jen, co má dělat pro danou prioritu.
+
+=== V multimédiích
+
+Služby jako Voice over IP, videokonference, obsluhování jaderných reaktorů a útoky s drony jsou *neelastické* -- vyžadují určitou kvalitu sítě, aby mohly fungovat spolehlivě.
+
+Komprese::
+Videa jsou velká, proto je žádoucí je před přenosem zmenšit. Snižuje latenci za cenu zvýšených nároků na dékodování multimédia.

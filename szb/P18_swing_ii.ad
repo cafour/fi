@@ -1,0 +1,135 @@
+= Softwarové inženýrství II
+:url: ./softwarove-inzenyrstvi-ii/
+:page-group: prg
+:page-order: P18
+
+[NOTE]
+====
+Testování, verifikace a validace. Provoz, údržba a další vývoj systému. Role jazyka UML v podpoře analýzy a návrhu SW.
+
+_PB007_
+====
+
+WARNING: Obrázky v této otázce kreslené rukou byly sprostě ukradeny Dominice Krejčí z https://github.com/Krejdom/school_notes. Snad jen dočasně.
+
+== Testování
+
+Snaha o automatizovanou kontrolu přítomnosti chyb v kódu. Umí potvrdit přítomnost chyb, nikoli dokázat jejich absenci.
+
+=== Funkční požadavky
+
+Unit testy::
+Testují jednu ,,jednotku'' (většinou funkci) v dané situaci.
+
+Integrační testy::
+Používají více ,,jednotek'' dohromady.
+
+UI testy::
+Otevřou (většinou) browser a interagují se stránkou tak, jak by se (snad) choval uživatel.
+
+=== Nefunkční požadavky
+
+Benchmarky::
+Testy výkonu.
+
+Stress testy::
+Odpovídají na otázku ,,Jak vysokou zátež to asi snese?''
+
+Testování bezpečnosti::
+Známé útoky, password checkery, formální verifikace.
+
+=== Test-driven development (TTD)
+
+Metodika, jenž klade důraz na 100% pokrytí testy a psaní testů před psaním vlastního kódu.
+
+NOTE: Test-driven development stejně jako každý seznam pouček v softwarovém inženýrství jsou spíše link:https://www.youtube.com/watch?v=jl0hMfqNQ-g[doporučení než-li opravdová pravidla].
+
+Poučky::
+* Nejprve napíšeš testy, pak teprve implementaci.
+* Každý řádek kódu testy pokryješ.
+* Regrese (opětovné zavedení chyby) odhalíš.
+
+Fáze testování::
+* Development -- v průběhu vývoje (unit testy, integrační testy, systémové testy)
+* Release -- těsně před zveřejněním
+* User -- za pomoci potenciálních uživatelů
+** Alfa testování -- uživatelé spolupracují s vývojáři při vývoji
+** Beta testování -- SW je napůl venku, uživatelé hlásí chyby 
+** A/B testování -- sběr názorů na variantu A a variantu B
+** Acceptance testování -- zákazníkovo požehnání při převzetí
+
+== Verifikace
+
+[stem]
+____
+Funguje ta věc správně?
+____
+
+Statická::
+Hledáme chyby, aniž bychom spustili kód. Využívá statické analýzy programovacího jazyka.
+
+Dynamická::
+Kontrolujeme, jestli systém dělá, co má, za běhu.
+
+Formální::
+Využívá formalismů -- např. automatů.
+
+== Validace
+
+[quote]
+____
+Je ta věc fakt to, co chci?
+____
+
+Týká se abstraktnějších a hůře testovatelných konceptů jako: moralita, bezpečnost, spolehlivost, ...
+
+== Údržba
+
+Jakmile je systém ,,hotov'' a je nasazen v produkčním prostředí, začíná fáze údržby. Je i nadále třeba opravovat chyby, aktualizovat závislosti třetích stran, spravovat HW, a přidávat nové fíčury.
+
+Refactoring::
+Zlepšení struktury, časové/prostorové složitosti, čitelnosti kódu.
+
+== Unified Modeling Language (UML)
+
+Specifikace diagramů určených pro modelování systému. Využivá grafickou notaci pro vyjádření různých pohledů na systém a dá se zákazníkům ukázat spíš než kód.
+
+Diagram případů užití (use case diagram)::
+Znázornění požadavků na systém a interakce s uživateli. Pohled na systém zvenku, bez implementačních detailů.
++
+image::./img/p18_use_case.png[width=500rem]
+
+Diagram tříd (class diagram)::
+Zobrazuje OOP třídy a vztahy mezi nimi (zejména dedičnost, kompozici a referenci). Pokud toho obsahuje málo, označuje se za _analytický_. Pokud reflektuje ty typy do detailu, je _návrhový_.
++
+image::./img/p18_class.png[width=500rem]
+
+Sekvenční diagram (sequence diagram)::
+Interakce mezi aktéry (uživateli a externími entitami), systémem a vnitřními komponentami systému.
++
+image::./img/p18_sequence.png[width=500rem]
+
+Diagram aktivit (activity diagram)::
+Zachycuje procesy jako posloupnost událostí včetně možných rozvětvení.
++
+image::./img/p18_activity.png[width=500rem]
+
+=== Perpektivy UML
+
+[options="header",cols="2*"]
+|===
+| Perspektiva
+| Diagramy
+
+| Vnější
+| Use case
+
+| Strukturální
+| Class, Package, Object, Component, ...
+
+| Interakční
+| Sequence, Communication, Timing, ...
+
+| Chování
+| Activity, State
+|===

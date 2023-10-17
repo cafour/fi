@@ -1,0 +1,276 @@
+= Statistika
+:url: ./statistika/
+:page-group: inf
+:page-order: I07
+
+[NOTE]
+====
+Popisná statistika, střední hodnota, medián, rozptyl, korelace. Odhady statistik a jejich spolehlivost. Distribuční funkce, rozdělení náhodných veličin a jejich příklady.
+
+_MB103/MB203_
+====
+
+== Popisná statika
+
+Popisuje charakteristiky dané množiny dat.
+
+NOTE: Matematická statistika je aplikací teorie pravděpodobnosti, matalýzy, lingebry, atd. na statistiku.
+
+Statistický soubor stem:[X]::
+Zkoumaná množina objektů.
+
+Statistická jednotka stem:[x_i]::
+Prvek statistického souboru.
+
+Statistický znak::
+Vlastnost statistických jednotek.
+
+Soubor hodnot::
+(Uspořádaná) množina možných hodnot statistického znaku.
+
+Měřítko::
+Porovnává hodnoty.
++
+* nominální -- mezi hodnotami není žádný vztah (např. politické strany).
+* ordinální měřítko -- mezi hodnotami není žádný vztah, ale lze je uspořádat (např. A, B, C, D).
+* intervalové měřítko -- porovnání velikostí, ale ne absolutní hodnota (např. teplota, kde poloha nuly není relevantní).
+* poměrové měřítko -- pevně stanované měřítko i nula (např. délka v cm).
+
+=== Míry polohy
+
+Hodnoty kolem, kterých se výsledky měření zhromažďují. Mají smysl u znaků s poměrovým nebo intervalovým měřítkem.
+
+Střední hodnota (mean / expected value) E(X)::
+Aritmetický průměr souboru hodnot stem:[x_i \in X] vážený jejich pravděpodobností stem:[P(x_i)] (resp. stem:[f(x_i)]) je
++
+[stem]
+++++
+\begin{aligned}
+    E(X) &= \sum_{i=1}^n x_i \cdot P(x_i), \text{pro diskrétní veličinu} \\
+    E(X) &= \int_{-\infty}^{\infty} x \cdot f(x) dx, \text{pro spojitou veličinu}
+\end{aligned}
+++++
++
+Pokud se všech stem:[n] hodnot vyskytuje se stejnou pravděpodobností (či ve stejném počtu), pak
++
+[stem]
+++++
+E(X) = \frac{1}{n} \sum_{i=1}^n x_i.
+++++
+
+stem:[\alpha]-kvantil stem:[Q_\alpha]::
+Dělí statický soubor na stejně velké části.
+
+Medián::
+Prostřední prvek uspořádaného statistického souboru. Kvantil stem:[Q_{0.5}].
++
+[stem]
+++++
+\tilde{x} = \begin{cases}
+    x_{\frac{n+1}{2}} & \text{pro liché }n\\
+    \frac{1}{2} (x_\frac{n}{2} + x_{\frac{n}{2} + 1}) & \text{pro sudé }n
+\end{cases}
+++++
+
+Percentil::
+Výběrový kvantil (stem:[p]-tý kvantil, kde stem:[0 < p < 1]) stem:[Q_p].
+
+Modus::
+Hodnota s největší četností.
+
+=== Míry variability
+
+[quote]
+Jak moc se od sebe prvky liší (nezávisle na konstantním posunutí)?
+
+Rozptyl::
+Střední hodnota kvadrátů odchylek od střední hodnoty.
++
+[stem]
+++++
+\text{var}(X) = E\left((x_i - E(X))^2\right)
+++++
++
+Nebo jinými slovy:
++
+1. Pro každý prvek spočti _odchylku_ -- o kolik se liší od střední hodnoty.
+2. Všechny odchylky dej na druhou.
+3. Spočítej průměr odchylek na druhou.
+
+Směrodatná odchylka::
++
+[stem]
+++++
+S(X) = \sqrt{\text{var}(X)}
+++++
+
+Kovariance veličin stem:[X] a stem:[Y]::
+Měří určitou podobnost mezi stem:[X] a stem:[Y].
++
+[stem]
+++++
+\text{cov}(X, Y) = E((X - E(X)) \cdot (Y - E(Y)))
+++++
++
+Ze vzorce výše plyne
++
+[stem]
+++++
+\begin{aligned}
+    \text{cov}(X, X) &= \text{var}(X) \\
+    \text{cov}(X, Y) &= \text{cov}(Y, X) \\
+    \text{cov}(X, Y) &= E(X \cdot Y) - E(X) \cdot E(Y)
+\end{aligned}
+++++
+
+Korelace::
+Míra podobnosti stem:[\rho_{X, Y}] náhodných veličin stem:[X] a stem:[Y]. Pokud stem:[X = X], pak stem:[\rho_{X, X} = 1]. Pokud jsou stem:[X] a stem:[Y] nezávislé, pak stem:[\rho_{X, Y} = 0].
++
+[stem]
+++++
+\rho_{X, Y} = \frac{\text{cov}(X, Y)}{\sqrt{\text{var}(X)} \cdot \sqrt{\text{var}(Y)}}
+= \frac{E((X - E(X)) \cdot (Y - E(Y)))}{\sqrt{\text{var}(X)} \cdot \sqrt{\text{var}(Y)}}
+++++
+
+== Rozdělení pravděpodobnosti
+
+*Rozdělení* pravděpodobnosti *diskrétní* náhodné veličiny stem:[X] je funkce stem:[P(X)] resp. stem:[P_X], která každé hodnotě popisované touto veličinou přidělí pravděpodobnost.
+
+*Hustota* pravděpodobnosti *spojité* náhodné veličiny stem:[X] je funkce stem:[\rho(X)] resp. stem:[\rho_X], která každé hodnotě popisované touto veličinou přidělí pravděpodobnost.
+
+[NOTE]
+====
+Náhodná veličina je zobrazení stem:[X : \Omega \to E]. Rozdělení pravděpodobnosti je zobrazení stem:[P(X) : E \to \mathbb{R}].
+
+Dejme tomu, že u šestistěnky jsou jednotlivé stěny kostky prvky stem:[\Omega]. Náhodnou veličinou stěn kostky může být třeba počet hran, barva nebo číslo, co je na ní napsané. V případě čísla je stem:[X : \Omega \to \{1, 2, ..., 6\}], takže stem:[P(X) : \{1, 2, ... 6\} \to \mathbb{R}], přičemž u férové kostky platí stem:[P(X)(t) = P_X(t) = \frac{1}{6}], pro stem:[t \in \{1, 2, ..., 6\}].
+====
+
+
+=== Distribuční funkce
+
+[quote]
+Jaké je pravděpodobnost, že to bude nejvýše tahle hodnota?
+
+U diskrétní veličiny stem:[X] je to funkce
+
+[stem]
+++++
+F_X(x) = P(X \le x) = \sum_{t \le x} P_X(t),
+++++
+
+kde stem:[0 \le F_X(x) \le 1].
+
+U spojité veličiny stem:[X] je to funkce
+
+[stem]
+++++
+F_X(x) = P(X \le x) = \int_{-\infty}^{x} \rho_X(t)dt
+++++
+
+Platí stem:[F_X(-\infty) = 0] a stem:[F_X(\infty) = 1].
+
+Distribuční funkci lze použít k výpočtu pravděpodobnosti stem:[P(x_1 < X \le x_2) = F_X(x_2) - F_X(x_1)].
+
+=== U diskrétních veličin
+
+Degenerované rozdělení stem:[D_g(\mu)]::
+Pro veličinu stem:[X], která nabývá jen konstantní hodnoty stem:[\mu].
++
+stem:[
+P_X(t) = \begin{cases}
+    1 & t = \mu \\
+    0 & \text{jinak}
+\end{cases}]
++
+stem:[
+F_X(t) = \begin{cases}
+    1 & t \ge \mu \\
+    0 & t < \mu
+\end{cases}]
+
+Alternativní rozdělení stem:[A(p)]::
+Pro veličinu stem:[X], jejíž výsledek může být jen zdar (1) nebo nezdar (0) s pravděpodobností stem:[p] a stem:[1-p].
++
+stem:[
+P_X(t) = \begin{cases}
+    p & t = 1 \\
+    1-p & t = 0
+\end{cases}]
++
+stem:[
+F_X(t) = \begin{cases}
+    0 & t < 0 \\
+    1 - p & 0 \le t < 1 \\
+    1 & t \ge 1
+\end{cases}]
+
+Binomické rozdělení stem:[Bi(n,p)]::
+Pro veličinu stem:[X] měřící počet zdarů stem:[n] nezávislých pokusů s alternativním rozdělením stem:[A(p)].
++
+stem:[
+P_X(t) = \begin{cases}
+    \binom{n}{t} \cdot p^t \cdot (1 - p)^{n-t} & t \in \{0, 1, ..., n\} \\
+    0 & \text{jinak}
+\end{cases}]
++
+Pro velké stem:[n] konverguje k normálnímu stem:[N(np, np \cdot (1-p))].
+
+Poissonovo rozdělení stem:[Po(\lambda)]::
+Pro veličinu stem:[X] vyjadřující počet výskytů jevů v určitém intervalu (času, délce, ...) parametrizovaném stem:[\lambda], když jevy nastávají nezávisle na sobě.
++
+stem:[
+P_X(t) = \frac{\lambda^x}{x!} \cdot e^{-\lambda}]
+
+=== U spojitých veličin
+
+Rovnoměrné rozdělení stem:[R_S(a, b)]::
+Pro veličiny stem:[X] s konstantní pravděpodobností na intervalu stem:[(a, b)].
++
+stem:[
+\rho_X(t) = \begin{cases}
+    \frac{1}{b-1} & t \in (a,b) \\
+    0 & \text{jinak}
+\end{cases}]
++
+stem:[
+F_X(t) = \begin{cases}
+    0 & t \le a \\
+    \frac{t-a}{b-a} & t \in (a, b) \\
+    1 & t \ge b
+\end{cases}]
+
+Exponenciální rozdělení stem:[ex(\lambda)]::
++
+stem:[
+\rho_X(t) = \begin{cases}
+    \lambda \cdot e^{-\lambda \cdot t} & t > 0 \\
+    0 & t \le 0
+\end{cases}]
++
+stem:[
+F_X(t) = \begin{cases}
+    1 - e^{-\lambda \cdot t} & t > 0 \\
+    0 & t \le 0
+\end{cases}]
+
+Normální rozdělení stem:[N(\mu, \sigma^2)]::
+Pro veličiny stem:[X] jejichž hustota pravděpodobnosti vypadá jako Gaussova křivka parametrizovaná střední hodnotou  stem:[\mu] a rozptylem stem:[\sigma^2].
++
+stem:[\Large\displaystyle \rho_X(t) = \frac{1}{\sqrt{2\pi}} \cdot e^{\frac{(x - \mu)^2}{2\sigma^2}}]
+
+Standardní normální rozdělení stem:[N(0, 1)]::
+stem:[\Large\displaystyle \rho_X(t) = \frac{1}{\sqrt{2\pi}} \cdot e^{-\frac{x^2}{2}}]
++
+stem:[\Large\displaystyle F_X(t) = \int_{-\infty}^{\infty} e^{-\frac{x^2}{2}}]
+
+
+== Odhady
+
+Hodnota (bodový odhad) nebo interval hodnot (intervalový odhad), do kterého veličina s určitou pravděpodobností spadá.
+
+Interval spolehlivosti::
+Intervalový odhad pro veličinu stem:[X] se spolehlivostí stem:[1 - \alpha], kde stem:[\alpha \in [0, 1\]], je dvojice stem:[(T_D, T_H)]. Platí
++
+stem:[P(T_D \le X \le T_H) = 1 - \alpha].
++
+Hodnotě stem:[\alpha] se říká hladina spolehlivosti. Střed intervalu stem:[(T_D, T_H)] nazveme bodovým odhadem.

@@ -1,0 +1,133 @@
+= Programovací jazyky
+:url: ./programovaci-jazyky/
+:page-group: prg
+:page-order: P01
+
+[NOTE]
+====
+Datové a řídicí struktury programovacích jazyků, datové typy. Kompilace, interpretace.
+
+_IB111, PB071, PB161/PB162_
+====
+
+Programovací jazyk je prostředek zápisu algoritmů -- posloupností příkazů, jenž lze provést na počítači.
+
+== Typy programovacích jazyků
+
+Netypovaný::
+Nemá typy. Např.: `bash`, kde je všechno řetězec.
+
+Slabě typované::
+Překladač / runtime přiděluje proměnné typ až při použití. Proměnná navíc mnohdy smí měnit typ. Např.: Python, JavaScript.
+
+Silně typované::
+Striktní pravidla pro deklaraci proměnných včetně typů. Obsahují malé množství implicitních konverzí mezi typy. Např.: C, C#, Haskell.
+
+Imperativní::
+Kladou důraz na přesné instrukce a jejich pořadí.
++
+Z imperativního programovacího paradigmatu vychází objektově orientované programování.
+
+Deklarativní::
+Kladou důraz na popis požadovaného výsledku spíše než na přesný způsob, jak se k němu dobrat.
++
+Deklarativní programovací paradigma se dále dělí na _funkcionální_ (např. Haskell) a _logické_ (např. Prolog).
+
+,,Vyšší''::
+Mají větší míru abstrakce procesoru, paměti, atd. Mají tendenci být agnostické vůči architektuře procesoru. Např.: Python, Java, C#.
+
+,,Nižší''::
+Více se podobají Assembleru. Mají tendenci vyžadovat kompilaci pro specifickou architekturu procesoru. Vývoj bývá náročnější, ale programy efektivnější. Obvykle pracují s pamětí explicitně.
+
+== Řídicí struktury
+
+Řídící struktury ovlivňují pořadí vykonávání příkazů. V jazyce C jde o syntaktické kostrukce:
+
+if a else-if::
+Podmíněný skok.
+
+for::
+Omezený cyklus.
+
+while::
+Potenciálně nekonečný cyklus.
+
+do-while::
+Potenciálně nekonečný cyklus, který se provede alespoň jednou.
+
+switch::
+Syntaktický cukr pro vícero `if-else`ů použitelný v situacích, kdy proměnná nabývá některé z předem určených hodnot.
+
+goto::
+Skok na pojmenované návěští.
+
+== Datové typy
+
+Datový typ určuje, jakých hodnot smí proměnná nabývat, jakým způsobem se má nahlížet na její paměť a jaké operace na ní lze provádět.
+
+Numerické::
+Integer o různých délkách, Float (IEEE-754) o různých délkách, Boolean. Jsou buď se znaménkem (signed) nebo bez znaménka (unsigned).
+
+Znakové::
+Char, Wide char
+
+Ukazatele::
+Obvykle s pojí s datovým typem hodnoty, na kterou ukazují -- např.: `char*` nebo `struct time_t*`. Obecný ukazatel do paměti se v C značí `void*`.
+
+Definované uživatelem::
+Struktury (`struct`), uniony, výčtové typy (`enum`), funkční ukazatele, ...
+
+== Datové struktury
+
+Reprezentují různé způsoby uložení primitivních datových typů v paměti. Liší se svou velikostí, režií i složitostí.
+
+* Pole
+* Spojovaný seznam
+* n-tice
+* Slovník
+* Množina
+* Halda
+* Fronta
+* Prioritní fronta
+* Zásobník
+* Binární vyhledávací strom
+* Červeno-černý strom
+* B-strom
+* ...
+
+== Překlad
+
+Proces převodu programu z programovacího jazyka na strojový kód.
+
+=== Kompilace
+
+Technicky vzato je to synonymum pro "Překlad", ale v zde je míněna pouze ahead-of-time kompilace.
+
+Kompilátor (překladač) je program, který vezme jako vstup kód v daném programovacím jazyce a vyplyvne binární, platformově závislý, spustitelný soubor.
+
+Kompilátor mívá řadu podčástí:
+
+* Lexikální analyzátor (_lexer_)
+* Syntaktický analyzátor (_parser_)
+* Sémantický analyzátor
+* Překladač do mezikódu
+* Optimalizér
+* Generátor kódu
+
+.Typická pipeline (`gcc`)
+1. _Preprocessing_: rozvinutí maker
+2. _Kompilace_: překlad každého vstupního souboru do assembleru
+3. _Sestavení_: překlad z assembleru do strojového kódu
+4. _Linkování_: nahrazení relativních adres absolutními, ,,pospojování'' mezivýsledků jednotlivých vstupních souborů
+
+====
+Příklady::
+C, C++, Haskell (skrze `ghc`), Go
+====
+
+=== Interpretace
+
+Interpret nepřekládá kód v daném programovacím jazyce předem, nýbrž až za běhu a pouze, pokud je to nutné. Díky tomu však může kód být nezávislý na konkrétní procesorové architektuře nebo i operačním systému.
+
+Příklady::
+Python, Haskell (skrze `ghci`), PHP, Ruby, JavaScript

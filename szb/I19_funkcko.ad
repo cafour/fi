@@ -1,0 +1,168 @@
+= Funkcionální programování
+:url: ./funkcionalni-programovani/
+:page-group: inf
+:page-order: I19
+
+[NOTE]
+====
+Funkcionální programovací paradigma (princip výpočtu, redukční krok, redukční strategie a jejich vlastnosti, příklady). Funkce vyšších řádů a jejich využití. Lambda funkce. Schopnost elementárního programování v Haskellu.
+
+_IB015_
+====
+
+Funkcionální programování je příkladem _deklarativního_ programovacího paradigmatu. Klade důraz na to, jak má vypadat výsledek, ne nutně, jak se k němu dobrat krok za krokem.
+
+Funkce::
+Předpis jak z nějakého vstupu udělat výstup. Transformace musí být jednoznačná.
+
+Typ funkce (typová signatura funkce)::
+Udává, s jakými objekty funkce pracuje a jaký má tvar její výsledek.
+
+Skládání funkcí::
+stem:[(f \circ g)(n) = g(f(n))]. Čteme ,,stem:[f] po stem:[g]''.
+
+Funkce vyšších řádů::
+Alespoň jeden argument a nebo výsledek je funkce. Například:
++
+[source, haskell]
+----
+map :: (a -> b) -> [a] -> [b]
+map f [] = []
+map f (x:xs) = f x : map f xs
+
+filter :: (a -> Bool) -> [a] -> [a]
+filter f (x:xs)
+    | f x = x : filter f xs
+    | otherwise = filter f xs
+----
+
+Částečná aplikace::
+Všechny funkce lze považovat za unární funkce, které vrací další funkce. Částečná aplikace je dosazení prvního argumentu za vzniku nové funkce, která má o parametr méně.
+
+== Výpočet
+
+* _Program_ jsou definice funkcí a výraz, jehož výsledek nás zajímá.
+* _Výpočet_ je zjednodušování tohoto výrazu.
+* _Výsledek_ je nezjednodušitelný tvar tohoto výrazu.
+
+Mějme například následující funkce:
+
+[source, haskell]
+----
+square x = x * x
+pyth a b = square a + square b
+----
+
+a výraz
+
+[source, haskell]
+----
+pyth 3 4
+----
+
+Výpočet vypadá takto:
+
+`[.underline]#pyth 3 4#` stem:[\rightsquigarrow]
+`[.underline]#square 3# + square 4` stem:[\rightsquigarrow]
+`3 * 3 + [.underline]#square 4#` stem:[\rightsquigarrow]
+`[.underline]#3 * 3# + 4 * 4` stem:[\rightsquigarrow]
+`9 + [.underline]#4 * 4#` stem:[\rightsquigarrow]
+`[.underline]#9 + 16#` stem:[\rightsquigarrow]
+`25`
+
+=== Redukční strategie
+
+_Redukční krok_ je úprava výrazu, kdy je vybraný podvýraz nahrazen svou definicí. Podvýraz může být jak volání funkce, tak aritmetická/logická/jiná operace. (V Haskellu to jsou stejně taky funkce.)
+
+_Redukční strategie_ je pak způsob výběru podvýrazu, který má být v daném kroku zjednodušen.
+
+Striktní redukční strategie::
+Jde ,,zevnitř''. Nejdřív upraví argumenty a až potom aplikuje funkci.
++
+`square [.underline]#(3 + 5)#` stem:[\rightsquigarrow]
+`[.underline]#square 8#` stem:[\rightsquigarrow]
+`[.underline]#8 * 8#` stem:[\rightsquigarrow]
+`64`
+
+Normální redukční strategie::
+Jde ,,zvenku''. Nejdřív aplikuje funkci a argumenty upravuje, až jsou potřeba.
++
+`[.underline]#square (3 + 5)#` stem:[\rightsquigarrow]
+`[.underline]#(3 + 5)# * (3 + 5)` stem:[\rightsquigarrow]
+`8 * [.underline]#(3 + 5)#` stem:[\rightsquigarrow]
+`[.underline]#8 * 8#` stem:[\rightsquigarrow]
+`64`
+
+Líná redukční strategie::
+Normální redukční strategie, ale pamatuje si výsledky podvýrazů a žádný nevyhodnocuje víc než jednou.
++
+`[.underline]#square (3 + 5)#` stem:[\rightsquigarrow]
+`[.underline]#(3 + 5)# * [.underline]#(3 + 5)#` stem:[\rightsquigarrow]
+`[.underline]#8 * 8#` stem:[\rightsquigarrow]
+`64`
+
+Věta o perpetualitě::
+Jestliže se výraz zacyklí s nějakou redukční strategií, určitě se zacyklí se striktní redukční strategií.
+
+Věta o normalizaci::
+Pokud se výraz nezacyklí s nějakou redukční strategií, určitě se nezacyklí ani s normální redukční strategií.
+
+Churchova-Rosserova věta::
+Pokud výpočet skončí, výsledek nezáleží na zvolené redukční strategii.
+
+== Lambda funkce
+
+Nepojmenovaná funkce, která je defininována přímo v místě použití.
+
+_Lambda abstrakce_ je proces tvorby lambda funkcí. Mějme výraz stem:[M \equiv x + 42]. stem:[M] je tělo funkce, z něhož lambda funkci vyrobíme takto: stem:[\lambda x . M \equiv \lambda x . (x + 42)].
+
+Například v Haskellu:
+
+[source, haskell]
+----
+map (\x -> x + 42) [1, 2, 3, 4, 5]
+----
+
+je ekvivaletní s
+
+[source, haskell]
+----
+map f [1, 2, 3, 4, 5] where
+    f x = x + 42
+----
+
+a vrátí
+
+[source, haskell]
+----
+[43, 44, 45, 46, 47]
+----
+
+== Haskell
+
+Funkcionální programovací jazyk. Používá _normální redukční strategii_, ale zastaví už v _weak head normal form_ (WHNF) -- formě která sice zjednodušit jde, ale nejvnějšnější výraz je konstruktor nebo lambda.
+
+Základní datové typy::
+`Int`, `Float`, `Fractional`, `Char`, `String`, `Bool`.
+
+Deklarace a definice funkce::
++
+[source, haskell]
+----
+one_or_two :: Integer -> Bool
+one_or_two 1 = True
+one_or_two 2 = True
+one_or_two _ = False
+----
+
+Typový kontext::
+Funkce a typy mohou chtít pracovat s libovolnými typy, které splňují nějaké podmínky.
++
+[source, haskell]
+----
+(==) :: Eq a => a -> a -> Bool
+(==) l r = undefined
+----
+
+Referenční transparence::
+Haskell je referenčně transparentní -- výsledek výrazu nezávisí na kontextu, ve kterém se vyhodnocuje. Může mít veldejší efekt, ale ten nesmí ovlivnit výsledek.

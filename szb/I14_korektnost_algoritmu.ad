@@ -1,0 +1,204 @@
+= Korektnost a složitost algoritmu
+:url: ./korektnost-a-slozitost-algoritmu/
+:page-group: inf
+:page-order: I14
+
+[NOTE]
+====
+Parciální a totální korektnost, důkazy korektnosti. Asymptotická složitost, O-notace. Zdůvodnění korektnosti a složitosti základních algoritmů (např. řadicí algoritmy, binární vyhledávání).
+
+_IB002, IB102/IB107_
+====
+
+== Algoritmy
+
+Algoritmus je posloupnost příkazů, kterou je schopen provést Turingův stroj nebo jeho ekvivalent.
+
+Vstupní podmínka::
+Ze všech možných vstupů pro daný algoritmus vymezujeme ty, pro které je algoritmus definován.
+
+Výstupní podmínka::
+Pro každý vstup daného algoritmu splňující vstupní podmínku určuje, jak má vypadat odpovídající výsledek.
+
+Invariant cyklu::
+Invariant cyklu je tvrzení cyklu v algoritmu, které platí před a po vykonání každé jeho iterace.
++
+Přesněji:
++
+[source,python]
+----
+# check invariant holds
+while condition:
+    # check (condition and invariant) holds
+    # do, what must be done
+# check (!condition and invariant) holds
+----
+
+Délka výpočtu::
+Délka výpočtu konkrétního algoritmu na daném vstupu odpovídá počtu elementárních operací, ze kterých se výpočet skládá.
++
+NOTE: Co je elementární operace? Záleží na algoritmu.
+
+== Korektnost
+
+Algoritmus je _parciálně korektní_, pokud pro každý vstup, který splňuje vstupní podmínku a algoritmus na něm skončí, výstup splňuje výstupní podmínku.
+
+Algoritmus je _úplný_ (konvergentní), pokud pro každý vstup, jenž splňuje vstupní podmínku, výpočet skončí.
+
+Algoritmus je _totálně korektní_, právě když je parciálně korektní a úplný.
+
+=== Dokazovaní korektnosti
+
+U iterativního algoritmu::
+Pro každý cyklus algoritmu stanovíme invariant. Začínáme od nejvíce zanořených cyklů. Pro každý invariant dokážeme konečnost cyklu a jeho efekt. Činíme tak ve třech fázích:
+* _inicializace_ -- platnost invariantu před vykonáním cyklu.
+* _iterace_ -- invariant platí před i po každé iteraci,
+* _ukončení_ -- cyklus skončí a platný invariant garantuje požadovaný efekt cyklu.
+
+U rekurzivního algoritmu::
+Pomocí matematické indukce.
+
+== Složitost
+
+[stem]
+++++
+\gdef\O{\mathcal{O}}
+++++
+
+Složitost vyjadřuje náročnost algoritmu na zdroje výpočtu (čas, paměť, počet procesorů, atd.).
+
+Časová složitost algoritmu::
+Funkce stem:[f : \mathbb{N} \to \mathbb{N}] taková, že pro vstup délky stem:[n] daný algoritmus provede výpočet o délce nejvýše stem:[f(n)]. Obvykle vyjadřujeme asymptoticky.
+
+=== Asymptotická notace
+
+Geometricky, asymptota křivky je přímka taková, že její vzdálenost od křivky se limitně blíží 0 v nekonečnu.
+
+NOTE: Podstatné je, že asymptota je od určitého bodu nad nebo pod svojí křivkou a setkává se s ní až v nekonečnu.
+
+stem:[\O(g)] notace::
+Je množina funkcí rostoucích stejně rychle jako stem:[g], nebo *pomaleji*.
++
+[stem]
+++++
+\O(g) = \{f : (\exists c, n_0 \in \mathbb{N}^+)(\forall n \geq n_0)(f(n) \le c \cdot g(n)) \}
+++++
++
+NOTE: Geometricky, jsou to všechny funkce stem:[f], kterou jsou od nějakého bodu *pod* stem:[c \cdot g].
+
+stem:[\Omega(g)] notace::
+Je množina funkcí rostoucích stejně rychle jako stem:[g], nebo *rychleji*.
++
+[stem]
+++++
+\Omega(g) = \{f : (\exists c, n_0 \in \mathbb{N}^+)(\forall n \geq n_0)(f(n) \ge c \cdot g(n)) \}
+++++
++
+NOTE: Geometricky, jsou to všechny funkce stem:[f], kterou jsou od nějakého bodu *nad* stem:[c \cdot g].
+
+stem:[\Theta(g)] notace::
+Je množina funkcí rostoucích stejně rychle jako stem:[g].
++
+[stem]
+++++
+\Theta(g) = \O(g) \cap \Omega(g)
+++++
+
+NOTE: Existuje i stem:[\mathcal{o}] a stem:[\omega], kde je rozdíl v tom, že stem:[n_0 = 0].
+
+Vlastnosti::
+[%header%autowidth,cols=3*]
+|===
+| Vlastnost | Formulka | Poznámka
+
+| Tranzitivita
+| stem:[f \in \Theta(g) \land g \in \Theta(h) \implies f \in \Theta(h)]
+| Stejně pro stem:[\O, \Omega]
+
+| Reflexivita
+| stem:[f \in \Theta(f)]
+| Stejně pro stem:[\O, \Omega]
+
+| Symetrie
+| stem:[f \in \Theta(g) \iff g \in \Theta(f)]
+|
+
+| Transpozice
+| stem:[f \in \O(g) \iff g \in \Omega(f)]
+|
+|===
+
+== Korektnost a složitost základních algoritmů
+
+=== Binární vyhledávání
+
+[source,python]
+----
+def binsearch(x: int, S: List[int]) -> int:
+    f = 0
+    l = len(S) - 1
+    i = (f + l) // 2
+    while f != l:
+        if S[i] == x:
+            return i
+        if x < S[i]:
+            l = i
+        else:
+            f = i
+        i = (f + l) // 2
+    return -1
+----
+
+Invariant::
+Na začátku každé iterace platí, že jestli se stem:[x] nalézá v stem:[S], tak se nalézá mezi pozicemi stem:[f] (first) a stem:[l] (last).
+
+Inicializace::
+Na začátku je stem:[i = \lfloor \frac{f + l}{2} \rfloor], takže tvrzení platí.
+
+Iterace::
+Pokud stem:[x \neq S[i\]] a stem:[x < S[i\]], nachází se stem:[x] mezi pozicemi stem:[f] a stem:[i]. Pokud stem:[x > S[i\]], pak mezi stem:[i] a stem:[l]. Pokud je vrácena hodnota stem:[i], invariant také platí.
+
+Ukončení::
+Cyklus končí buď protože stem:[S[i\] = x], nebo protože stem:[f = l \ne x].
+
+Složitost::
+stem:[\O(log_2(n))]
+
+=== Řadicí algoritmy
+
+[%header,cols=3*]
+|===
+| Algoritmus | Složitost | Poznámka
+
+| Bubble sort
+| stem:[\Theta(n^2)]
+| invariant: rozsah `a[n-i-1:]` je ve finální pozici
+
+| Insert sort
+| stem:[\Theta(n^2)]
+|
+
+| Merge sort
+| stem:[\Theta(n \cdot log_2(n))]
+|
+
+| Quick sort
+| stem:[\Theta(n^2)]
+| očekávaná složitost stem:[\Theta(n \cdot log_2(n))]
+
+| Heap sort
+| stem:[\Theta(n \cdot log_2(n))]
+|
+
+| Counting sort
+| stem:[\Theta(n + k)]
+| hodnoty z intervalu 0..k
+
+| Radix sort
+| stem:[\Theta(d(n + k))]
+| čísla z d číslic, číslicové řazení stem:[\Theta(n)]
+
+| Bucket sort
+| stem:[\Theta(n) + \sum_{n = 0}^{n-1} \O(n_i^2)]
+|
+|===

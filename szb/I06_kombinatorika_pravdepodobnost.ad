@@ -1,0 +1,129 @@
+= Kombinatorika a pravděpodobnost
+:url: ./kombinatorika-a-pravdepodobnost/
+:page-group: inf
+:page-order: I06
+
+[NOTE]
+====
+Elementární kombinatorika (kombinace, permutace, variace), řešení jednoduchých kombinatorických úloh. Pravděpodobnost, podmíněná pravděpodobnost (Bayesova věta).
+
+_MB101/MB201, MB103/MB203_
+====
+
+== Kombinatorika
+
+Zabývá se počítáním prvků v množinách s nějakou strukturou.
+
+=== Variace
+
+Z množiny o stem:[n] prvcích vybírám stem:[k] prvků a záleží mi na pořadí.
+
+[stem]
+++++
+V(k,n) = \frac{n!}{(n-k)!}
+++++
+
+=== Variace s opakováním
+
+Z množiny o stem:[n] prvcích vybírám stem:[k] prvků, záleží mi na jejich pořadí a mohou se opakovat.
+
+[stem]
+++++
+V'(k,n) = n^k
+++++
+
+=== Permutace
+
+Přeházím prvky v množině o stem:[n] prvcích. Je to speciální případ variace, kde stem:[k = n].
+
+[stem]
+++++
+P(n) = n!
+++++
+
+=== Kombinace
+
+Z množiny o stem:[n] prvcích vybírám stem:[k] prvků, ale *nezáleží* mi na jejich pořadí.
+
+[stem]
+++++
+C(k, n) = \binom{n}{k} = \frac{n!}{(n-k)!k!}
+++++
+
+=== Kombinace s opakováním
+
+Z množiny o stem:[n] prvcích vybírám stem:[k] prvků, *nezáleží* mi na jejich pořadí a mohou se opakovat.
+
+[stem]
+++++
+C'(k,n) = \binom{n + k - 1}{k} = \binom{n + k - 1}{n - 1} = \frac{(n + k - 1)!}{(n-1)!k!}
+++++
+
+Princip oddělovačů::
+Vybereme stem:[n - 1] pozic, kam dáme oddělovač. Mějme třeba množinu stem:[\{A, B, C\}], ze které chceme vybrat stem:[k = 10] prvků, pak
++
+stem:[\begin{bmatrix} A & A & A & | & B & B & B & B & B & B & | & C \end{bmatrix}]
++
+kde stem:[|] jsou oddělovače.
+
+== Pravděpodobnost
+
+Zabývá se číselným popisem toho, jaká je šance, že je něco pravda.
+
+Základní prostor stem:[\Omega]::
+Konečná množina možných jevů. Např stem:[\{1, 2, 3, 4, 5, 6\}] pro možné hody šestistěnkou.
+
+Možný výsledek (elementární náhodný jev) stem:[\omega_k]::
+Prvek základního prostoru stem:[\Omega].
+
+Náhodný jev (event) stem:[A]::
+Podmnožina stem:[A \sube \Omega], která nás zajímá. Např. ,,Na šestistěnce padne sudé číslo.''.
+
+Opačný jev stem:[\overline{A}] (nebo stem:[A^C])::
+Jev, který nastane vždy, když stem:[A] nenestane. stem:[\Omega \setminus A]. Např. opačný jev k tomu, že na šestistěnce padne sudé číslo, je ,,Na šestistěnce padne liché číslo.''.
+
+Pravděpodobnost náhodného jevu stem:[A]::
+stem:[P(A) = \frac{|A|}{|\Omega|}].
+
+Náhodná veličina::
+Zobrazení z prostoru elementárních jevů do měřitelného prostoru stem:[E] (třeba stem:[\mathbb{R}]).
++
+stem:[X : \Omega \to \mathbb{E}]
++
+Něco, co se dá u každého možného výsledku změřit.
+
+Princip inkluze a exkluze::
+stem:[P(A \cup B) = P(A) + P(B) - P(A \cap B)]
+
+Podmínky pravděpodobnosti::
+* stem:[\Omega] je konečná množina.
+* Pokud stem:[n \ne m], pak stem:[\omega_n] a stem:[\omega_m] nemohou nastat najednou.
+* Všechny možné výsledky jsou stejně možné.
+
+Pravděpodobností prostor::
+stem:[(\Omega, A, P)], kde
++
+* stem:[P] je nezáporná,
+* stem:[P] je aditivní -- stem:[A \cap B = \emptyset \implies P(A \cup B) = P(A) + P(B)],
+* stem:[P(\Omega) = 1].
+
+Stochastická nezávislost::
+Náhodné jevy stem:[A] a stem:[B] jsou stochasticky nezávislé, pokud stem:[P(A \cap B) = P(A) \cdot P(B)]
+
+Podmíněná pravděpodobnost::
+Pravděpodobnost, že nastane náhodný jev stem:[A], pokud už nastal jev stem:[B], kde stem:[P(B) > 0].
++
+stem:[P(A|B) = \frac{P(A \cap B)}{P(B)}].
++
+Všimni si, že pokud jsou jevy stochasticky nezávislé, pak stem:[P(A|B) = P(A)].
+
+== Bayesova věta
+
+Podmíněná pravděpodobnost souvisí s opačnou podmíněnou pravděpodobností.
+
+[stem]
+++++
+P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)},
+++++
+
+kde stem:[P(B) > 0].

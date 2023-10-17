@@ -1,0 +1,159 @@
+= Složitost
+:url: ./slozitost/
+:page-group: inf
+:page-order: I15
+
+[NOTE]
+====
+Složitost algoritmu versus složitost problému. Složitostní třídy (P, NP, PSPACE) a vztahy mezi nimi, příklady problémů z jednotlivých tříd. Těžkost a úplnost problému v dané třídě, polynomiální redukce problémů, NP-úplné úlohy.
+
+_IB102/IB107_
+====
+
+[stem]
+++++
+\gdef\O{\mathcal{O}}
+\gdef\L{\mathcal{L}}
+\gdef\time{\text{Time}}
+\gdef\space{\text{Space}}
+\gdef\TIME{\textrm{TIME}}
+\gdef\NTIME{\text{NTIME}}
+\gdef\SPACE{\text{SPACE}}
+\gdef\NSPACE{\text{NSPACE}}
+++++
+
+Problém má složitost toho nejlepšího algoritmu, který ho rozhoduje.
+
+Časová složitost deterministického TS M::
+Je funkce stem:[\time_M : \N \to \N], kde stem:[\time_M(n)] je největší počet kroků, které stem:[M] provede, přes všechny vstupy délky stem:[n].
+
+Časová složitost nedeterministického TS stem:[M]::
+Je funkce stem:[\time_M : \N \to \N], kde stem:[\time_M(n)] je délka nejdelší výpočetní cesty stem:[M] přes všechny vstupy délky stem:[n].
+
+Prostorová složitost deterministického TS stem:[M]::
+Je funkce stem:[\space_M : \N \to \N], kde stem:[\space_M(n)] je největší počet políček pásky čtených strojem stem:[M] přes všechny vstupy délky stem:[n].
+
+Prostorová složitost nedeterministického TS stem:[M]::
+Je funkce stem:[\space_M : \N \to \N], kde stem:[\space_M(n)] je největší počet políček pásky čtených strojem stem:[N] přes všechny vstupy délky stem:[n] a pro všechny výpočetní cesty.
+
+== Složitostní třídy
+
+stem:[\TIME(f)]::
+Pro funkci stem:[f : \N \to \N] je
+stem:[\TIME(f) = \{L | \text{existuje DTS $M$, kde } L = \L(M) \land \time_M \in \O(f) \}]
+
+stem:[\NTIME(f)]::
+Pro funkci stem:[f : \N \to \N] je
+stem:[\NTIME(f) = \{L | \text{existuje NTS $M$, kde } L = \L(M) \land \time_M \in \O(f) \}]
+
+stem:[\SPACE(f)]::
+Pro funkci stem:[f : \N \to \N] je
+stem:[\SPACE(f) = \{L | \text{existuje DTS $M$, kde } L = \L(M) \land \space_M \in \O(f) \}]
+
+stem:[\NSPACE(f)]::
+Pro funkci stem:[f : \N \to \N] je
+stem:[\NSPACE(f) = \{L | \text{existuje NTS $M$, kde } L = \L(M) \land \space_M \in \O(f) \}]
+
+P::
+DTS s polynomiálním počtem kroků.
++
+stem:[\bigcup_{k \in \N} \TIME(n^k)]
++
+Příklady:
++
+PATH -- Existuje v daném orientovaném grafu stem:[G] cesta z stem:[s] do stem:[t]?
+
+NP::
+NTS s polynomiálním počtem kroků.
++
+stem:[\bigcup_{k \in \N} \NTIME(n^k)]
++
+Příklad: HAMPATH -- Existuje v daném orientovaném grafu stem:[G] Hamiltonovská cesta z stem:[s] do stem:[t] (projde každým uzlem právě jednou)?
++
+Příklady:
++
+* SAT -- Je daná formule výrokové logiky splnitelná?
+* CLIQUE -- Existuje úplný podgraf s stem:[k] vrcholy?
+* 3SAT -- Je daná výroková formule v KNF s nejvýše třemi literály na klauzuli splnitelná?
+* HAMCYCLE -- Problém obchodního cestujícího, nejkratší kružnice, která prochazí všemi vrcholy.
+* K3COVER -- Obarvitelnost grafu třemi barvami.
+* KNAPSACK -- Najdi kombinaci zboží s nejvyšší hodnotou, která se vleze do váhového limitu.
+
+PSPACE::
+DTS s polynomialním počtem políček na pásce.
++
+stem:[\bigcup_{k \in \N} \SPACE(n^k)]
++
+Příklady:
++
+* TQBF (QSAT) -- Problém splnitelnosti výrokových formulí, kde proměnné jsou na začátku formule kvantifikovány stem:[\forall] nebo stem:[\exists].
+
+NPSPACE::
+NTS s polynomiálním počtem políček na pásce.
++
+stem:[\bigcup_{k \in \N} \NSPACE(n^k)]
+
+EXPTIME::
+DTS s exponenciálním počtem kroků.
++
+stem:[\bigcup_{k \in \N} \TIME(2^{n^k})]
++
+Příklady:
+* Problém zastavení v nejvýše stem:[k] krocích.
+
+NEXPTIME::
+NTS s exponenciálním počtem kroků.
++
+stem:[\bigcup_{k \in \N} \NTIME(2^{n^k})]
+
+L::
+DTS s *logaritmickým* (ne lineárním) *prostorovou složistostí* (ne časovou).
+
+NL::
+NTS s *logaritmickým* (ne lineárním) *prostorovou složistostí* (ne časovou).
+
+NOTE: Ano, je to nekonzistentní a ano, je to na hovno.
+
+=== Inkluze
+
+[stem]
+++++
+\text{L} \sube \text{NL} \sube \text{P} \sube \text{NP} \sube \text{PSPACE} = \text{NSPACE} \sube \text{EXPTIME}
+++++
+
+Platí stem:[\SPACE(f) \sube \TIME(2^{\O(f)})]::
+Přes maximální počet konfigurací DTS. Musí však platit stem:[f \in \Omega(\log(n))]. 
+
+Platí stem:[\NSPACE(f) \sube \NTIME(2^{\O(f)})]::
+Přes maximální počet konfigurací NTS. Musí však platit stem:[f \in \Omega(\log(n))].
+
+Platí stem:[\TIME(f) \sube \SPACE(f)]::
+stem:[\SPACE(f)] určitě uloží stem:[\TIME(f)] konfigurací. Plyne z toho stem:[P \sube \text{PSPACE}].
+
+Platí stem:[\NTIME(f) \sube \NSPACE(f)]::
+stem:[\NSPACE(f)] určitě uloží stem:[\NTIME(f)] konfigurací. Plyne z toho stem:[NP \sube \text{NPSPACE}].
+
+Savitchova věta::
+Platí stem:[\NSPACE(f) \sube \SPACE(f^2)], kde stem:[f \in \Omega(\log(n))]. Simuluje nedeterministické větvení, ale za cenu exponenciálního nárustu času, takže stem:[\NSPACE(f) \in \TIME(2^{\O(f)})].
++
+Plyne z toho stem:[\text{PSPACE} = \text{NPSPACE}], stem:[\text{NL} \sube {P}] a stem:[\text{NSPACE} \sube \text{EXPTIME}].
+
+PLatí stem:[\text{NTIME}(f) \sube \text{SPACE}(f)]::
+Simuluj jednu větevv výpočtu NTS v paměti a backtrackuj. Musí však platit stem:[f \in \Omega(\log(n))].
++
+Plyne z toho stem:[NP \sube \text{PSPACE}].
+
+== Polynomiální redukce
+
+Převod mezi problémy je realizovatelný na DTS v polynomiálním čase.
+
+Nechť stem:[A \sube \Sigma^*] a stem:[B \sube \Phi^*] jsou jazyky. stem:[A] se polynomiálně redukuje na stem:[B], píšeme stem:[A \le_p B], právě když existuje funkce stem:[f : \Sigma^* \to \Phi^*], pro kterou platí stem:[(\forall a \in \Sigma^*)(a \in A \iff f(a) \in B)] a která je totálně vyčíslitelná DTS v polynomiáním čase.
+
+X-težký problém::
+Všechno ve složitostní třídě X se *na něj* redukuje.
+
+X-úplný problém::
+Je X-těžký a navíc patří do X.
++
+NP-úplné: HAMCYCLE, 3SAT, CLIQUE, K3COVER, KNAPSACK, ...
+

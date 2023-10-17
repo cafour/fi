@@ -1,0 +1,55 @@
+= Objektově orientované programování II
+:url: ./objektove-orientovane-programovani-ii/
+:page-group: prg
+:page-order: P03
+
+[NOTE]
+====
+Objektové programování v imperativním jazyce, spolupráce objektů, událostmi řízené programování, výjimky. Realizace uvedených principů OOP v C++ nebo Javě (podle vlastní volby).
+
+_PB161/PB162_
+====
+
+OOP se převážně používá právě v imperativních jazycích. OOP imperativní jazyky obsahují _třídy_ a další koncepty, ale _metody_ uvnitř třídy jsou staré dobré imperativní funkce.
+
+== Spolupráce objektů
+
+Objekty si předávají zprávy. Tyto zprávy jsou převážně implementovány pomocí volání metod. Zprávy jsou také přijímany jako vstupy od uživatele.
+
+== Rozhraní
+
+Specifikuje, jaké proměnné a metody se musí nacházet ve třídě, která toto rozhraní implementuje, aniž by je samo implementovalo. (Pokud nejde o C# 8.)
+
+V Javě se používají klíčová slova `interface` a `implements`. Třída může implementovat vícero rozhraní.
+
+V {cpp} jsou rohraní abstraktní třídy, které nemají žádnou neabstraktní metodu. V {cpp} už stejně multidědičnost je.
+
+== Událostmi řízené programování
+
+Programovací paradigma, kde je pořadí volání dáno událostmi, které vyvolá uživatel: kliknutí myší, stisk tlačítka na klávesnici, atd. Má využítí především v aplikacích s GUI.
+
+Event-driven aplikace obvykle využívají více vláken (pokud nejsou napsány v JavaScriptu).
+
+== Výjimky
+
+Výjimky jsou mechanismem reakce na nestandardní či chybové chování programu.
+
+Program má obvykle možnost výjimku zachytit a svůj stav opravit pomocí konstrukce `try` ... `catch` (až na `StackOverflowException`). Pokud jedna metoda výjimku nezachytí, je vyhozena o úroveň výše. Pokud ji nezachytí ani `main`, program spadne.
+
+S výjimkami je spojená zvýšená režie, proto by se měly používat jen ve skutečně nestandardních a chybových situacích.
+
+=== V Javě
+
+Výjimky tvoří typovou hierarchii vycházející z `java.lang.Exception`, která sama rozšiřuje `java.lang.Throwable`.
+
+Java rozlišuje:
+
+Unchecked exceptions::
+Dědící z `java.lang.RuntimeException` nebo `java.lang.Error`. Nemusí být specifikované v deklaraci metody. Jejich zamýšlené použití je v situacích, ze kterých se program už nevzpamatuje.
+
+Checked exceptions::
+Jsou takové, které nejsou unchecked. Pokud chce metoda vyhodit checked výjimku, musí ji specifikovat v deklaraci metody pomocí `throws`. Překladač se ubezpečuje, že o tyhle výjimky je postaráno.
+
+=== V C++
+
+Základ je v hlavičce `<stdexcept>`. Ač vyhodit pomocí `throw` se dá cokoliv, obvykle to bývá hodnota třídy, co dědí z `std::exception`. Všechny výjimky jsou ,,unchecked''.

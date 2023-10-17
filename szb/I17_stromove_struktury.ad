@@ -1,0 +1,280 @@
+= Datové struktury založené na stromech
+:url: ./datove-struktury-zalozene-na-stromech/
+:page-group: inf
+:page-order: I17
+
+[NOTE]
+====
+Stromové datové struktury (binární vyhledávací stromy, B-stromy, červeno-černé stromy, haldy), související operace a jejich složitost. Typické implementace, příklady použití.
+
+_IB002_
+====
+
+WARNING: Obrázky v této otázce kreslené rukou byly sprostě ukradeny Dominice Krejčí z https://github.com/Krejdom/school_notes. Snad jen dočasně.
+
+[stem]
+++++
+\gdef\O{\mathcal{O}}
+\gdef\ocon{\color{green}\O(1)}
+\gdef\olog{\color{#ccbb02}\O(\log(n))}
+\gdef\olin{\color{orange}\O(n)}
+\gdef\tcon{\color{green}\Theta(1)}
+\gdef\tlog{\color{#ccbb02}\Theta(\log(n))}
+\gdef\tlin{\color{orange}\Theta(n)}
+++++
+
+:ocon: pass:[\(\ocon\)]
+:olog: pass:[\(\olog\)]
+:olin: pass:[\(\olin\)]
+:tcon: pass:[\(\tcon\)]
+:tlog: pass:[\(\tlog\)]
+:tlin: pass:[\(\tlin\)]
+
+Strom je abstraktní datová struktura, o které se dá uvažovat jako o množině uzlů, které mají právě jednoho rodiče a konečný počet dětí. Výjimkou je kořen, který nemá rodiče. Hodnotám v uzlech se říká klíče.
+
+Binární strom::
+Strom, kde každý uzel má nejvýše dvě děti.
+
+Výška uzlu stem:[n]::
+Počet hran nejdelší cesty z stem:[n] do některého z poddaných listů.
+
+== Binární vyhledávací strom (BVS)
+
+Binární strom, kde pro každý uzel stem:[n] platí
+
+--
+* klíče uzlů v jeho *levém* podstromě jsou *menší nebo rovny* klíči uzlu stem:[n],
+* klíče uzlů v jeho *pravém* podstromě jsou *větší* než klíč uzlu stem:[n].
+--
+
+Je teoretickým základem pro složitejší stromové struktury.
+
+Příklad::
++
+[graphviz]
+....
+digraph {
+    bgcolor=transparent;
+    node [shape=circle,fixedsize=true];
+    8 -> 3, 10;
+    3 -> 1, 6;
+    6 -> 4, 7;
+    n0 [label=null];
+    n1 [label=null];
+    10 -> n0, 14;
+    14 -> 13, n1;
+}
+....
+
+Inorder průchod::
++
+[source,python]
+----
+def inorder(node):
+    inorder(node.left)
+    print(node.key)
+    inorder(node.right)
+----
+
+Preorder průchod::
++
+[source,python]
+----
+def preorder(node):
+    print(node.key)
+    preorder(node.left)
+    preorder(node.right)
+----
+
+Postorder průchod::
++
+[source,python]
+----
+def postorder(node):
+    postorder(node.left)
+    postorder(node.right)
+    print(node)
+----
+
+Následník uzlu stem:[n]::
+Je uzel obsahující *nejmenší klíč větší* než `n.key`.
+
+Předchůdce uzlu stem:[n]::
+Je uzel obsahující *největší klíč menší* než `n.key`.
+
+Úplný binární strom::
+Všechna jeho patra, kromě nejnižšího jsou zaplňena. V nejnižším patře jsou listy nasoukané vlevo.
+
+AVL-strom::
+BVS, kde délka nejdelší větve levého a pravého podstromu každého uzlu se liší nejvýše o 1.
+
+=== Implementace
+
+Každý uzel má v paměti vlastní strukturu/objekt a obsahuje:
+
+--
+* klíč (hodnotu),
+* ukazatel na levého syna,
+* ukazatel na pravého syna.
+--
+
+Binární vyhledávání::
+Porovnáváme hodnotu s klíčem a jdeme buď doleva nebo doprava.
+
+Minimum a maximum::
+Jde úplně vlevo pro minimum, úplně vpravo pro maximum.
+
+Následník::
+Pokud má uzel pravý podstrom, následník je jeho minimem. Pokud nemá pravý podstrom, hledáme prvního předka, v jehož levém podstromu se uzel nachází.
+
+Insert::
+Binární vyhledávání, ale na prázdné místo dáme uzel.
+
+Remove::
+Binární vyhledávání, ale nalezený uzel smažeme. Pokud měl děti, najdeme jeho následníka a dosadíme ho za smazaný uzel.
+
+== Halda (heap)
+
+Strom splňující vlastnost haldy, t.j. klíč každého uzllu je větší než klíče jeho dětí. Kořen má největší klíč.
+
+Používá se např. k implementaci prioritní fronty a v heap sortu.
+
+NOTE: Z historických důvodů se slovem ,,halda'' označuje také kus paměti určený pro dynamickou alokaci. V dnešní době tam už souvislost, zdá se, není.
+
+Binární halda::
+Úplný binární strom splňující vlastnost haldy.
+
+Maximová halda::
+Kořen má největší klíč.
+
+Minimová halda::
+Kořen má nejmenší klíč.
+
+Heap sort::
+Vybudujeme haldu (stem:[\O(n)]) a postupně z ní odstraňujeme kořen (stem:[\O(1)]), což vždy následuje oprava haldy (stem:[\O(\log(n))]). Celková složitost je stem:[\O(n \cdot \log(n))].
+
+=== Implementace
+
+Binární haldu lze implementovat pomocí pole:
+
+* Kořen je na indexu 1.
+* Levý syn uzlu stem:[i] je na stem:[2i].
+* Pravý syn uzlu stem:[i] je na stem:[2i + 1].
+
+NOTE: Indexuješ-li od nuly, pak je to stem:[2i - 1] a stem:[2i + 2]
+
+Rodič uzlu stem:[k] se nachází na stem:[\lfloor \frac{k}{2} \rfloor] (při indexování od 1).
+
+== Červeno-černý strom
+
+Binární vyhledávací strom, který ma uzly obarvené červenou nebo černou barvou a splňuje následující podmínky
+
+--
+* kořen je černý,
+* listy neobsahují klíče (obsahují `null`) a jsou černé,
+* pokud je uzel červený, má černého rodiče,
+* pro každý uzel platí, že všechny cesty z něj do listu obsahují stejný počet černých uzlů.
+--
+
+Používá se k výpočtu ranku prvku (počet menších prvků zvýšený o jedna), při implementaci asociativní paměti a AVL-stromů.
+
+Černá výška uzlu stem:[n]::
+Počet černých uzlů na cestě z stem:[n] do některého z poddaných listů stem:[n]. Pokud je stem:[n] černý, nepočítá se.
++
+Každý uzel výšky stem:[h] má černou výšku alespoň stem:[\frac{h}{2}].
++
+Červeno-černý strom s stem:[n] vnitřními uzly má výšku nejvýše stem:[2 \cdot \log_2(n + 1)].
+
+=== Implementace
+
+Jako BVS, ale každý uzel obsahuje kromě klíče a ukazatelů na potomky také barvu a ukazatel na rodiče.
+
+Rotace::
+Používájí se k opravě následků přidávání a odebírání uzlů.
++
+image::./img/i17_rotace.png[width=500rem]
+
+Insert::
+Uzel vložíme do stromu stejně jako do BVS a obarvíme ho červeně. A strom opravíme. Jelikož oprava má konstantní složitost, je složitost stejná jako u BVS, t.j. stem:[\O(\log(n))].
++
+image::./img/i17_oprava.png[width=500rem]
+
+Delete::
+Uzel ostraníme stejně jako u BVS. Navíc, pokud byl červený, tak se nic neděje, ale pokud byl černý a
++
+* měl jednoho syna, tak jeho syn zaujme jeho místo.
+* měl dva syny a jeden z nich je jeho následník, tak jeho místo zaujme syn-následník
+* měl dva syny a ani jeden z nich nebyl jeho následník, následník zaujme jeho místo a stane se otčímem obou synů. U původních dětí se řeší stejná situace jako tady.
++
+Následně opravíme barvy.
+
+== B-strom
+
+B-strom stupně stem:[m] je strom, kde platí
+
+--
+* každý uzel má nejvýše stem:[m] dětí,
+* každý vnitřní uzel (kromě kořene) má alespoň stem:[\lceil \frac{m}{2} \rceil] dětí,
+* kořen má alespoň 2 děti, pokud není listem,
+* vnitřní uzel s stem:[k] dětmi obsahuje stem:[k-1] klíčů,
+* všechny listy mají stejnou hloubku a jejich klíče jsou `null`.
+--
+
+Klíče ve vnitřních uzlech vymezují intervaly, do kterých spadají jejich postromy.
+
+NOTE: V IB002 má B-strom nejméně stem:[t] dětí a nejvýše stem:[2t] dětí. Hodnota stem:[t] je minimální stupeň stromu.
+
+B-strom s stem:[n \ge 1] klíči a minimálním stupněm stem:[t \ge 2] má hloubku nejvýše stem:[h \le \log_t\left( \frac{n+1}{2} \right)].
+
+Využívá se v databázích a je základem B+ stromu.
+
+Plný uzel::
+Má stem:[m] dětí.
+
+=== Implementace
+
+Struktura/objekt reprezentující uzel v paměti obsahuje:
+
+--
+* počet klíčů,
+* klíče v neklesajícím pořadí,
+* ukazatele na děti.
+--
+
+Vyhledávání::
+Analogické binárnímu vyhledávání.
+
+Insert::
+Vyhledáváním najdeme uzel, kam by klíč měl patřit. Pokud je uzel plný, rozdělíme ho na dva. Pokud tím přeplníme rodiče, rozdělíme i rodiče, atd.
+
+Preemptivní dělení::
+Optimalizace přístupu na disk. Pokud při průchodu stromem narazíme na plný uzel, pro jistotu ho rozdělíme.
+
+Delete::
+Mazání probíhá vždy v listu. Pokud mazaný klíč není v listu, nahradíme ho za následníka, přesuneme ho do listu, a pak ho teprve smažeme.
+
+Preemptivní slučování::
+Pokud narazíme na uzel, co má stem:[t-1] uzlů, zvýšíme počet přesunem vhodného klíče na stem:[t].
+
+== Složitost základních operací
+
+[%header,cols="8*"]
+|===
+| Struktura
+| `insert` | `remove` | `search` | `max` | `min` | `next` | `prev`
+
+| Binární vyhledávací strom
+| {olin}  | {olin} | {olin} | {olin} | {olin} | {olin} | {olin}
+
+| Binární maximová halda
+| {olog} | {olog} pro maximum | {olin} | {ocon} | {olin} | {olin} | {olin}
+
+| Červeno-černý strom
+| {olog}  | {olog} | {olog} | {olog} | {olog} | {olog} | {olog}
+
+| B-strom
+| stem:[\color{red}\O(t \cdot \log_t(n))]
+| stem:[\color{red}\O(t \cdot \log_t(n))]
+| stem:[\color{red}\O(t \cdot \log_t(n))]
+| | | |
+|===

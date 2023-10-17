@@ -1,0 +1,158 @@
+= Počítačové sítě I
+:url: ./pocitacove-site-i/
+:page-group: prg
+:page-order: P13
+
+[NOTE]
+====
+Modely vrstev počítačových sítí (ISO/OSI, TCP/IP): funkcionalita a součinnost vrstev, adresace. Fyzická vrstva, signály a jejich kódování, řízení přístupu k médiu.
+
+_PB156_
+====
+
+== ISO/OSI model
+
+_Open Systems Interconnection_ (OSI) je model počítačových sítí vyvinutý Mezinárodní organizací pro normalizaci (_International Organization for Standardization_ (ISO)). Má sedm vrstev:
+
+L1 -- Fyzická vrstva::
+Zajišťuje přenos bitů mezi odesílatelem a příjemcem. Řídí děje v přenosovém médiu. Převádí bity na signály a obráceně.
+
+L2 -- Vrstva datového spoje::
+Zaručuje spolehlivost. Brání zahlcení. Detekuje chyby. Řídí přístup k médiu. Převádí rámce na pakety a obráceně. Adresuje pomocí MAC adres.
+
+L3 -- Síťová vrstva::
+Tvoří a fragmentuje pakety. Směruje pomocí IP adres. Mapuje IP adresy na MAC adresy a obráceně. Monitoruje a propojuje fyzické sítě.
+
+L4 -- Transportní::
+Adresace pomocí portů. Zajišťuje spolehlivost přenosu dat. Poskytuje logický kanál pro přenost dat. Převádí surová data na pakety a obráceně. Quality of Service.
+
+L5 -- Relační vrstva::
+Spravuje relace -- spojení mezi dvěma koncovými účastníky. Řeší synchronizaci.
+
+L6 -- Prezentační::
+Převádí data do jednotného formátu. Řeší šifrování a kompresi.
+
+L7 -- Aplikační::
+Poskytuje rozhraní aplikace uživateli / jiné aplikaci.
+
+== TCP/IP model
+
+Staví na protokolech TCP a IP. Je čtyřvrstvý. Vrstvy definuje spíše volně.
+
+Vrstva přístupu k síti::
+Řeší přístup k lokální síti -- přenos od směrovače k cílovým zařízením nebo dalším směrovačům.
+
+Síťová (internetová) vrstva::
+Přenáší data mezi sítěmi (_inter-_ -> mezi, _net_ -> síť). Užívá protokolu IP.
+
+Transportní vrstva::
+Provádí přenos dat mezi koncovými zařízeními. Užívá UDP pro nespojovanou a TCP pro spojovanou komunikaci.
+
+Aplikační vrstva::
+Vlastní komunikace mezi procesy. Patří sem protokoly jako HTTP, SSH a FTP.
+
+== Adresace
+
+Media Access Control (MAC) adresa::
+Jednoznačný identifikátor síťového zařízení v lokální síti (LAN). Náleží L2/vstvě datového spoje.
+
+Internet Protokol (IP) adresa::
+Jednoznačná identifikace síťového rozhraní ve WAN. Náleží L3/síťové vrstvě.
+
+Dynamic Host Configuration Protocol (DHCP)::
+Dynamicky přiděluje zařízením (MAC adresám) IP adresy.
+
+Address Resolution Protocol (ARP)::
+Překládá MAC adresy na IP adresy.
+
+IPv4::
+* 32 bitů
+* typy adres: unicast, broadcast, multicast
+* classfull adresování: A-E třídy
+** nedosatečná granularita -> subnetting a supernetting
+* classless adresování: adresa a maska sítě
+* příklad: 255.255.255.255
+
+IPv6::
+* 128 bitů
+* typy adres: unicast, multicast, anycast
+* zkracování zápicu: vynechání levých nul, vynechání bloku obsahujícího jen nuly
+* podpora zabezpečení - IPSec (AH + ESP) autentizace i šifrování, správa šifrovacích klíčů
+* nepodporuje fragmentaci, nastane chyba a data se musí rozdělit do více paketů
+* podpora mobility a real-time přenosů
+* příklad: 2001:0db8:85a3:08d3:1319:8a2e:0370:7344
+
+Port::
+Adresa služby (16bitové číslo, 0-65535). Náleží do L4/transportní vrstvy.
+
+== Signály
+
+Binární data jsou na L1/vrstvě datového spoje zakódována jako signály.
+
+Signál::
+Časová funkce reprezentující změny fyzikálních vlastnosti přenosového média
+
+Analogový signál::
+Spojitý v čase, šíří se po vodiči i bezdrátově.
+
+Digitální signál::
+Nespojitý v čase, šíří se pouze po vodiči.
+
+Defekty signálů::
+* slábnutí
+* zkreslení
+* šum
+
+=== Kódování signálů
+
+Převod binárních dat na signál. Problém je synchronizace vysílače a přijímače.
+
+Přímé kódování::
+* 0 je 0 a 1 je 1
+* bez možnosti synchronizace
+
+NRZ kódování (Not return to zero)::
+Pokud je následující bit 1, změní amplitudu.
+
+Manchester kódování::
+Každý bit je kódován dvěma prvky signálu.
+
+Kódování 4B/5B::
+* mapuje čtyři bity na speciální pětibitové vzorky
+* maximálně tři nuly po sobě + NRZ kódování (ošetří 1)
+
+== Řízení přístupu k médiu
+
+Více vysílačů obvykle nemůže vysílat najednou, takže je potřeba je nějak regulovat. Cílem je eliminovat kolize.
+
+=== Neřízený přístup
+
+Aloha::
+* vysílá, kdy chce
+* při kolizi náhodou dobu počká a zkusí to znova
+
+CMSA/CD (carrier sense multiple access with collision detection)::
+* před vysíláním zjistí, jestli je médium volné
+* při kolizi náhodnou dobu počká a zkusí to znova
+* pouze u voděných médií
+
+CMSA/CA (carrier sense multiple access with collision avoidance)::
+* v nevoděných médiích
+* doba čekání se při neúspěšných pokusech exponenciálně zvětšuje
+
+=== Řízený přístup
+Stanice smí vysílat, pouze když získá svolení.
+
+* rezervace
+* vyzývání
+* předávání příznaku (pešek)
+
+=== Multiplexově orientovaný přístup
+
+V médiu se přenáší více signálů naráz.
+
+FDMA (frequency division multiple accross)::
+- různá frekvenční pásma
+
+TDMA (time division multiple access)::
+- několik časových slotů

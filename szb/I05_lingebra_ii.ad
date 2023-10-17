@@ -1,0 +1,225 @@
+= Lineární algebra II
+:url: ./linearni-algebra-ii/
+:page-group: inf
+:page-order: I05
+
+[NOTE]
+====
+Vlastní čísla a vektory, jejich geometrický význam, inverzní matice, vektorové podprostory, vektorové báze. Afinní objekty, afinní transformace.
+
+_MB101/MB201_
+====
+
+== Vektorový prostor
+
+NOTE: Navazuje na I04 -- Lineární algebra I.
+
+Vektorový podprostor::
+Pro vektorový prostor stem:[V] je podmnožina stem:[M \sube V] vektorovým podprostorem, jestliže spolu se zúženými operacemi stem:[+] a stem:[\cdot] je sama vektorovým prostorem. Takže chceme, aby stem:[(\forall a, b \in \mathbb{K})(\forall v, w \in M)(a \cdot v + w \cdot b \in M)].
+
+Generátor podprostoru::
+Podmnožina stem:[M \sube V] je generátor podprostoru
+stem:[\langle M \rangle = \{a_1 \cdot u_1 + a_2 \cdot u_2 + ... + a_k \cdot u_k \mid k \in \mathbb{N}, a_i \in \mathbb{K}, u_j \in M, j = 1 ... k\}].
+
+Báze::
+Podmnožina stem:[M \sube V] se nazývá báze vektorového prostoru stem:[V], jestliže stem:[\langle M \rangle = V] a stem:[M] je lineárně nezávislá.
+
+Dimenze::
+Počet prvků báze. Pokud je konečná, je prostor konečně rozměrný.
+
+Souřadnice vektorů::
+Máme-li bázi stem:[(v_1, v_2, ..., v_n)] konečně rozměrného vektorového prostoru stem:[V], pak můžeme každý vektor jednoznačně vyjádřit jako lineární kombinaci vektorů z báze: stem:[v = a_1 \cdot v_1 + a_2 \cdot v_2 + ... + a_n \cdot v_n]. N-tice stem:[(a_1, a_2, ..., a_n)] jsou souřadnice vektoru stem:[v] ve zvolené bázi.
+
+== Vlastní čísla a vektory
+
+Skaláry stem:[\lambda] vyhovující rovnici stem:[f(u) = \lambda \cdot u] pro nenulový vektor stem:[u \in V] nazýváme _vlastní čísla zobrazení stem:[f]_. Příslušné vektory stem:[u] jsou _vlastní vektory zobrazení stem:[f]_.
+
+Geometricky, vlastní vektor je vektor, jehož směr se po aplikaci transformace, pro níž je vlastní, nemění. Může se však změnit jeho velikost. Vlastní číslo je pak koeficient změny velikosti vlastního vektoru.
+
+Vlastní vektory příslušející různým vlastním číslům jsou _lineárně nezávislé_.
+
+Vlastní prostor stem:[\text{Eigen}(\lambda)]::
+Množina všech vlastních vektorů příslušejících jednomu vlastnímu číslu stem:[\lambda].
+
+Algebraická násobnost vlastního čísla stem:[\lambda]::
+Násobnost stem:[\lambda] jako kořenu charakteristického polynomu.
+
+Geometrická násobnost vlastního čísla stem:[\lambda]::
+Dimenze stem:[\text{Eigen}(\lambda)].
+
+=== Charakteristický polynom
+
+Pro čtvercovou matici stem:[A] dimenze stem:[n] nad stem:[\mathbb{K}] nazýváme polynom stem:[\vert A - \lambda \cdot E \vert \in \mathbb{K}_n[\lambda\]] _charakteristickým polynomem_ matice stem:[A]. Kořeny tohoto polynomu jsou vlastní čísla matice.
+
+Příklad::
++
+[stem]
+++++
+A = \begin{pmatrix}
+    -3 & 2 \\
+    -5 & 4
+\end{pmatrix},
+A - \lambda E = \begin{pmatrix}
+    -3 - \lambda & 2 \\
+    -5           & 4 - \lambda
+\end{pmatrix}
+++++
++
+[stem]
+++++
+| A - \lambda E | = (-3 - \lambda)(4 - \lambda) - (-10) = \lambda^2 - \lambda - 2 = (\lambda - 2)(\lambda + 1)
+++++
++
+Tedy vlastními čísly jsou stem:[\lambda_1 = -1, \lambda_2 = 2].
+
+=== Výpočet vlastního vektoru
+
+Vlastní vektor je výsledkem řešení soustavy lineárních rovnic, kterou získám dosazením příslušného vlastního čísla do rovnice: stem:[A - \lambda \cdot E = \vec{0}]
+
+Příklad::
++
+[stem]
+++++
+A = \begin{pmatrix}
+    -3 & 2 \\
+    -5 & 4
+\end{pmatrix},
+\lambda = 2
+++++
++
+[stem]
+++++
+A \cdot u = \begin{pmatrix}
+    -3 & 2 \\
+    -5 & 4
+\end{pmatrix}
+- 2 \cdot \begin{pmatrix}
+    1 & 0 \\
+    0 & 1
+\end{pmatrix}
+\sim \begin{pmatrix}
+    -3 & 2 \\
+    -5 & 4
+\end{pmatrix}
+\cdot \begin{pmatrix}
+    2 & 0 \\
+    0 & 2
+\end{pmatrix}
+\sim \begin{pmatrix}
+    -5 & 2 \\
+    -5 & 2
+\end{pmatrix}
+++++
++
+[stem]
+++++
+-5x + 2y = 0, x = \frac{2}{5}y, y = \frac{5}{2}x
+++++
++
+Po dosazení stem:[x = 2], je stem:[\binom{2}{5}] vlastní vektor matice stem:[A] příslušející vlastnímu číslu stem:[\lambda = 2].
+
+== Inverzní matice
+
+Matice stem:[A^{-1}] taková, že stem:[A \cdot A^{-1} = A^{-1} \cdot A = E], kde stem:[E] je jednotková matice.
+
+Platí stem:[(A \cdot B)^{-1} = A^{-1} \cdot B^{-1}].
+
+Výpočet inverzní matice::
+Z regulární matice stem:[A] (čtvercové, bez lineárně závislých řádků).
++
+1. Vedle matice stem:[A] připiš jednotkovou matici.
+2. Proveď Gaussovu eliminaci, dokud na místě původní matice není jednotková matice.
+3. Na místě původní jednotkové matice je nyní inverzní matice k stem:[A].
+
+== Afinní prostor
+
+Afinní prostor stem:[\mathcal{A}] je trojice stem:[(A, V, \oplus)], kde stem:[A] je množina bodů, stem:[V] je vektorový prostor (zaměření) a stem:[\oplus] je binární funkce stem:[\oplus : A \times V \to A].
+
+[stem]
+++++
+\begin{aligned}
+    (\exists 0 \in V)(\forall a \in A) &\space (a \oplus 0 = a) \\
+    (\forall a \in A)(\forall v, w \in V) &\space (a \oplus (v + w) = (a \oplus v) \oplus w) \\
+    (\forall a, b \in A)(\exists! v \in V) &\space (a \oplus v = b), \text{značíme } v = b - a = \vec{AB}
+\end{aligned}
+++++
+
+Funkce stem:[\oplus] má nulový prvek, je asociativní a pro každé dva body stem:[a, b \in A] existuje právě jeden vektor stem:[v \in V] takový, že stem:[a + v = b].
+
+Standardní afinní prostor stem:[\mathcal{A}_n]::
+Je afinní prostor stem:[(\mathbb{R}^n, \mathbb{R}^n, +)].
+
+Afinní soustava souřadnic::
+Vznikne zafixováním jednoho bodu -- počátku afinní souřadné soustavy. Od tohoto bodu měříme vzdálenost.
+
+Afinní podprostor::
+Neprázdná podmnožina stem:[\mathcal{Q} \sube \mathcal{A}] afinního prostoru stem:[\mathcal{A}] se zaměřením stem:[V] je afinní podprostor v stem:[\mathcal{A}], pokud stem:[W = \{b - a | a, b \in \mathcal{Q}\} \in V] vektorovým podprostorem a pro libovolné stem:[a \in \mathcal{Q}, v \in W] je stem:[a + v \in \mathcal{Q}].
++
+Afinní podprostory odpovídají množinám řešení systémů stem:[n-k] lineárně nezávislých rovnic v stem:[n] proměnných, kde stem:[n] je dimenze prostoru a stem:[k] je dimenze podprostoru.
++
+Průnik afinních podprostorů je afinní podprostor nebo prázdná množina.
+
+Afinní kombinace bodů::
+Výrazy tvaru stem:[t_0 \cdot a_0 + t_1 \cdot a_1 + ... + t_n \cdot a_n], kde stem:[t_i \in \mathbb{R}, a_i \in \mathcal{A}] a stem:[\sum_{i=0}^n t_i = 1].
+
+=== Afinní transformace
+
+Zobrazení stem:[f : \mathcal{A} \to \mathcal{B}] mezi afinními prostory je _afinní zobrazení_, jestliže mezi jejich zaměřeními existuje lineární zobrazení stem:[\varphi : Z(\mathcal{A}) \to Z(\mathcal{B})] takové, že pro všechny stem:[a \in \mathcal{A}, v \in Z(\mathcal{A})] platí stem:[f(a + v) = f(a) + \varphi(v)].
+
+Afinní zobrazení jsou právě ta, co zachovávají afinní kombinace bodů.
+
+Afinní transformace jsou afinní zobrazení afinního prostoru na sebe samý stem:[t : \mathcal{A} \to \mathcal{A}], která zachovává rovnoběžnost. Každou afinní transformaci lze chápat jako složení lineárních transformací (zvětšení/zmenšení, rotace, zkosení, ...) a posunutí (translace).
+
+Jelikož obyčejné násobení matic zobrazí počátek soustavy souřadnic sám na sebe, používají afinní transformace homogenní souřadnice. Vylezou o dimenzi výš, aby pak mohly tvrdit, že původní afinní prostor je na stem:[(a_1, a_2, ..., a_n, 1)].
+
+Homogenní souřadnice n-dimenzionálního afinního prostoru tedy mají tvar stem:[(a_1, ..., a_2, w)], kde stem:[w \in \mathbb{K}]. Před aplikací zobrazení je vstupnímu bodu dáno stem:[w = 1]. Po aplikaci lze výsledek převést zpět z homogonenních souřadnic takto
+
+[stem]
+++++
+(b_1, b_2, ..., w) \rightsquigarrow \left( \frac{b_1}{w}, \frac{b_2}{w}, ..., \frac{b_n}{w} \right).
+++++
+
+Zvětšení/zmenšení::
++
+[stem]
+++++
+\begin{pmatrix}
+    s_x & 0   & 0 \\
+    0   & s_y & 0 \\
+    0   & 0   & 0
+\end{pmatrix}
+++++
+
+Rotace::
++
+[stem]
+++++
+\begin{pmatrix}
+    \cos \theta & -\sin \theta & 0 \\
+    \sin \theta & \cos \theta  & 0 \\
+    0 & 0 & 1
+\end{pmatrix}
+++++
+
+Posunutí::
++
+[stem]
+++++
+\begin{pmatrix}
+    1 & 0 & t_x \\
+    0 & 0 & t_y \\
+    0 & 0 & 1
+\end{pmatrix}
+++++
+
+== Euklidovský prostor
+
+Standardní bodový euklidovský prostor stem:[\mathcal{E}_n] je afinní prostor stem:[\mathcal{A}], jehož zaměřením je standardní euklidovský prostor stem:[\mathbb{R}^n] se skalárním součinem stem:[\langle x, y \rangle = y^T \cdot x].
+
+NOTE: Zdá se, že ,,standardní euklidovský prostor'' je prostě konečně-rozměrný vektorový prostor stem:[\mathbb{R}^n].
+
+Kartézská souřadná soustava::
+Afinní souradná soustava stem:[(A_0, \underline{u})] s ortonormální bází stem:[\underline{u}].
+
+Vzdálenost bodů stem:[a, b \in \mathcal{E}_n]::
+Velikost vektoru stem:[\lVert b - a \rVert]. Píšeme stem:[\rho(a, b)].

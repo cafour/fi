@@ -1,0 +1,141 @@
+= Logické programování
+:url: ./logicke-programovani/
+:page-group: inf
+:page-order: I20
+
+[NOTE]
+====
+Logické programovací paradigma (princip výpočtu, unifikace, výpočetní stromy, dotazy, volné proměnné). Schopnost elementárního programování v Prologu.
+
+_IB015,IB101_
+====
+
+Logické programování je příkladem _deklarativního_ programovacího paradigmatu. Prográmator popisuje, co má výsledek splňovat, a nikoliv, jak se k němu dopočítat. Má své využití v umělé inteligenci.
+
+== Výpočet
+
+* _Program_ je databáze faktů a _cíl_, který nás zajímá.
+* _Výpočet_ je dokazování cíle pomocí unifikace a SLD rezoluce.
+* _Výsledek_ je true/false/seznam hodnot volných proměnných.
+
+Je to mechanická dedukce nových informací odpovídající logickému dokazování sporem.
+
+=== Zápis
+
+Nejzákladnější jsou _termy_ -- konstanty, proměnné a funkce, jejíž argumenty jsou termy.
+
+Využívá k zápisu Hornovy klauzule -- disjunkce literálů s nejvýše jedním pozitivním literálem, např.: stem:[(P \lor \neg Q \lor \neg R) = \{P, \neg Q, \neg R\}]. Dělí se dále na:
+
+* _fakta_, mající právě jeden pozitivní literál, např. `p.`, `pocasi(prsi).` nebo `rodice(matka, otec).`,
+* _pravidla_, mající právě jeden pozitivní a alespoň jeden negativní literál, např. `stav(mokro) :- pocasi(prsi).`,
+* _cíle_, nemající žádný pozitivní literál, např. `?-stav(prsi).` nebo třeba `?-stav(X).`.
+
+=== Unifikace
+
+Dva termy jsou _unifikovatelné_, pokud jsou stejné, nebo je možné zvolit hodnoty proměnných použitých v unifikovaných termech tak, aby po dosazení hodnot byly termy identické.
+
+Prolog pro unifikaci používá operátor `=`, pro neunifikaci `\=`.
+
+.Algoritmus
+1. Pokud jsou stem:[t_1] a stem:[t_2] konstanty a jsou shodné, unifikují se.
+2. Pokud stem:[t_1] proměnná a stem:[t_2] term, unifikují se, stem:[t_1] je nahrazená hodnotou stem:[t_2].
+3. Pokud stem:[t_1] a stem:[t_2] jsou strukturované termy, unifikují se pokud:
+    * mají stejný funktor,
+    * mají stejnou aritu,
+    * všechny korespondující páry argumentů se unifikují,
+    * všechna nahrazení proměnných z vnořených unifikací jsou kompatibilní (např. nestane se, že by `X` mělo být `a` i `b` naráz).
+4. Jindy se nic neunifikuje.
+
+NOTE: Při dotazu `?- X = otec(X).` by k unifikaci dojít nemělo, neboť po dosazení za `X` nedojde k identitě. Nicméně podle algoritmu výše dojde k `X = otec(X).`. Algoritmus tedy není korektní. Dá se použít `unify_with_occurs_check`, ale z výkonnostních důvodů se to nedělá.
+
+=== SLD rezoluce
+
+Při výpočtu dochází k _Selective Linear Definite_ (SLD) rezoluci, při které vzniká _výpočetní_ strom. Fakta se dosazují v pořadí, v jakém je Prolog přečetl.
+
+.Algoritmus
+1. Do kořenu stromu dej cíl.
+2. Prohledej databázi faktů pro první podcíl v aktuálním vrcholu.
+3. Vytvoř nový vrchol pro další vyhovující položku.
+4. První podcíl nového vrcholu unifikuj s hlavou nalezené položky a na místo prvního podcíle zapiš tělo položky.
+5. Na hranu zapiš unifikační přiřazení/čerstvou proměnnou.
+6. Prázdný list znamená úspěch. Vrať se k 3., pokud chceš další výsledky.
+7. Pokud nenalezneme vyhovující položku, vytvoříme list "fail". Vrať se k 3., pokud chceš další výsledky.
+8. Pokud všechny cesty vedou k prázdnému seznamu nebo fail, skonči.
+
+NOTE: Algoritmus není kvůli problému se sebereferencí (viz poznámka výše) korektní a, jelikož se může zacyklit, tak ani úplný.
+
+.Vlastnosti
+* Strom je procházen do hloubky.
+* Pokud narazí na nekonečnou větev, přeteče mu zásobník.
+* Levorekurzivní pravidla (odkazují na sebe hned v prvním podcíli těla) často vedou k nekonečným větvím.
+* Je to důkaz sporem. Cíl udává negaci toho, co ve skutečnosti chceme, a SLD strom se nám snaží tuhle negaci vyvrátit příklady.
+* Pokud nám ve vrcholu nic nezbude, narazili jsme na spor, protože všechny předpoklady se nám podařilo vyvrátit.
+
+=== Řezy
+
+Hinty Prologu, že tudy cesta nevede.
+
+====
+* Značí se `!` a zapisuje se jako prvek klazule, který vždy uspěje.
+* Pokud na něj Prolog narazí, _upne_ se k větvi vytvořené unifikací s pravidlem obsahujícím `!`. Další fakta ani pravidla pro právě řešený cíl nehledá. Nadřazené cíle (rodiče v SLD stromu) tohle netrápí.
+* Unifikace provedené před nalezením `!` se stávají fixními -- Prolog už se k nim nevrací.
+====
+
+====
+Zelené řezy::
+Takové řezy, které nemění množinu výsledků. Čistě optimalizace.
+
+Červené řezy::
+Kdyby tam nebyly, našly by se i další vyhovující výsledky.
+====
+
+== Prolog
+
+Logický programovací jazyk s ujetou syntaxí, kterou vymysleli Francouzi.
+
+[source, prolog]
+----
+% fakta
+man(heno).
+chytry(heno).
+umi(heno, programovat).
+
+% pravidla
+informatik(X) :- \+ umi(X, prasekdopeciva); umi(X, programovat). % negace a disjunkce
+idealman(X) :- man(X), informatik(X), chytry(X). % konjunkce
+
+% dotaz
+?- idealman(X).
+
+% odpověď
+X = heno ; % protože neumí používat prášek do pečiva
+X = heno. % protože umí programovat
+
+----
+
+Seznamy::
+`[a, b, c]`
++
+[source,prolog]
+----
+[a, b, c] = [H|T].
+H = a, T= [b, c].
+
+?-length([a, b, c], X).
+X = 3.
+
+?-islist([a, b, c]).
+true.
+
+member(X, [X|]).
+member(X, [|T]) :- member(X, T).
+----
+
+Anonymní proměnná::
+Značíme podtržítkem.
+
+Termy::
+* _Atomy_ -- `'pepa_1'`, `pepa`, `'2'`
+* _Čísla_ -- 2, 5
+* _Proměnné_ -- X
+* _Strukturované termy_ (funktory s danou aritou následované sekvencí argumentů -- termů -- v závorkách) -- `pocasi(prsi)`

@@ -1,0 +1,75 @@
+= Bakalářské státnice 2020
+:layout: layouts/question.tsx
+
+Poznámky k bakalářským státnicím v září léta páně 2020. Nejsou kompletní, korektní ani nezaujaté, proto by vás mohly zajímat i následující zdroje:
+
+link:https://www.fi.muni.cz/~xsvabens/skola/statnice-bc.pdf[Poznámky k bakalárskym štátniciam]::
+Autoři: S. Krupa, F. Sonta, M. Strhársky, V. Švábenský
+
+link:https://github.com/Krejdom/school_notes[Notes from courses at FI MUNI]::
+Autoři: D. Krejčí
+
+link:https://drive.google.com/drive/u/0/folders/0Bzy-o_Kqmve_dkY1aW15WVVrYU0[Státnice 2017]::
+Autoři: A. Holík, M. Románek, nejspíš hromada dalších lidí
+
+IB000 Matematické základy informatiky::
+link:https://is.muni.cz/auth/el/fi/podzim2019/IB000/um/UInf-text19.pdf[skripta z podzimu 2019]
+
+MB*0* Matematika::
+link:http://www.math.muni.cz/~naca/ucebnice/e-ucebnice[Matematika drsně a svižně]
+
+IB101 Úvod do logiky::
+link:https://www.fi.muni.cz/~popel/lectures/bak_logika/[stránka předmětu]
+
+MA007 Matematická logika::
+link:https://www.fi.muni.cz/usr/kucera/teaching/logic/logika.pdf[slidy],
+link:https://is.muni.cz/auth/el/fi/podzim2019/MA007/um/sbirka.pdf[sbírka]
+
+IB002 Algoritmy a datové struktury I::
+link:https://is.muni.cz/auth/el/fi/jaro2020/IB002/um/IB002.pdf[slidy z jara 2020],
+link:https://is.muni.cz/auth/el/fi/jaro2019/IB002/um/IB002-2019-slajdy.pdf[slidy z jara 2019],
+link:https://is.muni.cz/auth/el/fi/jaro2018/IB002/um/IB002-slajdy.pdf[slidy z jara 2018]
+
+IB102 Automaty a gramatiky, IB005 Formální jazyky a automaty::
+link:https://www.fi.muni.cz/usr/kretinsky/afj_I.pdf[skripta],
+link:https://www.fi.muni.cz/usr/kretinsky/fja1.html[stránka předmětu]
+
+IB107 Vyčíslitelnost a složitost::
+link:https://is.muni.cz/auth/el/fi/podzim2019/IB107/um/vycislitelnost-pouze_pro_studenty_IB107-nezverejnovat_mimo_muni_cz.pdf[skripta na vyčíslitelnost],
+link:https://is.muni.cz/auth/el/fi/podzim2019/IB107/um/slozitost-pouze_pro_studenty_IB107-nezverejnovat_mimo_muni_cz.pdf[skripta na složitost]
+
+IB111 Základy programování::
+link:https://www.fi.muni.cz/IB111/[stránka předmětu],
+link:https://www.fi.muni.cz/IB111/sbirka/[sbírka]
+
+IB015 Neimperativní programování::
+link:https://is.muni.cz/auth/el/fi/podzim2019/IB015/um/seminars/exercises/student.pdf[sbírka],
+link:http://learnyouahaskell.com/chapters[Learn You a Haskell for Great Good!],
+link:https://is.muni.cz/auth/el/fi/podzim2019/IB015/um/extra/cheatsheet.pdf[cheatsheet]
+
+PB071 Principy nízkoúrovňového programování::
+link:https://www.fi.muni.cz/pb071/[stránka předmětu]
+
+PB161 Programování v jazyce C++::
+link:https://www.fi.muni.cz/pb161/[stránka předmětu]
+
+PB151 Výpočetní systémy::
+link:https://www.fi.muni.cz/usr/brandejs/PB151/brandejs_vypocetni_systemy_beamer.pdf[slidy],
+link:https://www.fi.muni.cz/usr/brandejs/PB151/brandejs_vypocetni_systemy_print.pdf[slidy pro tisk],
+link:https://is.muni.cz/auth/edutools/brandejs/compsyslab[laboratoř]
+
+PV004 UNIX::
+link:https://www.fi.muni.cz/usr/brandejs/PV004/brandejs_unix_beamer.pdf[slidy],
+link:https://www.fi.muni.cz/usr/brandejs/PV004/brandejs_unix_print.pdf[slidy pro tisk],
+link:https://is.muni.cz/auth/edutools/brandejs/pv004lab[laboratoř]
+
+PB152 Operační systémy::
+link:https://is.muni.cz/auth/el/fi/jaro2020/PB152/um/os.notes.pdf[poznámky],
+link:https://is.muni.cz/auth/el/fi/jaro2020/PB152/um/os.slides.pdf[slidy]
+
+PB156 Počítačové sítě::
+link:https://is.muni.cz/auth/el/fi/jaro2019/PB156/um/[slidy]
+
+PB007 Softwarové inženýrství I::
+link:https://is.muni.cz/auth/el/fi/podzim2019/PB007/[podzim 2019]
+

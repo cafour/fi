@@ -1,0 +1,209 @@
+= Formální jazyky II
+:url: ./formalni-jazyky-ii/
+:page-group: inf
+:page-order: I12
+
+[NOTE]
+====
+Bezkontextové jazyky a jejich reprezentace. Varianty zásobníkových automatů (metody akceptování, determinismus a nedeterminismus, rozšířené zásobníkové automaty). Nedeterministická syntaktická analýza. Uzávěrové vlastnosti bezkontextových jazyků.
+
+_IB102/IB005_
+====
+
+[stem]
+++++
+\gdef\ostep#1{\; | \! \overset{#1}{\text{------}} \;}
+\gdef\ustep#1{\; | \! \underset{#1}{\text{------}} \;}
+\gdef\oustep#1#2{\; | \! \overset{#2}{\underset{#1}{\text{------}}} \;}
+\gdef\eps{\varepsilon}
+++++
+
+== Bezkontextové jazyky
+
+Bezkontextové jazyky jsou generovány bezkontextovými gramatikami.
+
+=== Bezkontextová gramatika (CFG)
+
+Gramatika s pravidly tvaru stem:[A \to \alpha], kde stem:[A] je neterminál a stem:[\alpha] je řetězec terminálů a neterminálů nenulové délky. Výjimkou je stem:[S \to \varepsilon], pokud se počáteční neterminál stem:[S] nevyskytuje na pravé straně žádného pravidla.
+
+Nenormovaný neterminál stem:[X]::
+Nelze se z nich dostat na řetěz terminálů. Neexistuje derivace stem:[X \Rightarrow^* w], pro nějaké stem:[w \in \Sigma^*].
+
+Nedosažitelné symbol stem:[X]::
+Nelze se do něj dostat z stem:[S]. Neexistuje derivace stem:[S \Rightarrow^* w X y] pro nějaká stem:[w,y \in \Sigma^*].
+
+Nepoužitelný symbol stem:[X]::
+Neexistuje derivace stem:[S \Rightarrow^* w X y \Rightarrow^* wxy] pro nějaká stem:[w,x,y \in \Sigma^*].
+
+Redukovaná CFG::
+Neobsahuje nenormované neterminály ani nedosažitelné symboly.
+
+CFG stem:[\eps]-pravidel::
+Neobsahuje žádné stem:[\eps]-pravidlo, nebo obsahuje právě pravidlo stem:[S \to \eps] a stem:[S] se nevyskytuje na pravé straně žádného pravidla.
+
+Jednoduché pravidlo::
+stem:[A \to B], kde stem:[A, B \in N].
+
+Necyklická gramatika::
+Neexistuje neterminál stem:[A \in N], který by se po nenulovém počtu kroků přepsal sám na sebe stem:[A \Rightarrow^+ A].
+
+Vlastní CFG::
+Je necyklická CFG bez nepoužitelných symbolů a bez stem:[\eps]-pravidel. Ke každému CFL existuje vlastní CFG.
+
+Chomského normální forma::
+CFG je v Chomského normální formě, právě když je bez stem:[\eps]-pravidel a každé pravidlo je v jednom z tvarů:
++
+* stem:[A \to BC], kde stem:[B,C \in N]
+* stem:[A \to a], kde stem:[A \in N, a \in \Sigma]
+* stem:[S \to \eps]
+
+Levorekurzivní neterminál::
+Neterminál stem:[A] je levorekurzivní, pokud existuje derivace stem:[A \Rightarrow^+ A\beta].
+
+Greibachové normální forma::
+CFG je v Greibachové normální formě, právě když je bez stem:[\eps]-pravidel a každé pravidlo je v jednom z tvarů:
+* stem:[A \to a \alpha], kde stem:[a \in \Sigma, \alpha \in N^*]
+* stem:[S \to \eps]
+
+=== Zásobníkový automat (PDA)
+
+Šestice stem:[M = (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)], kde
+
+* stem:[Q] je neprázdná konečná množina stavů,
+* stem:[\Sigma] je konečná vstupní abeceda,
+* stem:[\Gamma] je konečná zásobníková abeceda,
+* stem:[\delta : Q \times (\Sigma \cup \{\varepsilon\}) \times \Gamma \to \mathcal{P}_\text{Fin}(Q \times \Gamma^*)] je parciální přechodová funkce,
+* stem:[q_0 \in Q] je počáteční stav,
+* stem:[Z_0 \in \Gamma]je počáteční symbol na zásobníku,
+* stem:[F \sube Q] je množina akceptujících stavů.
+
+NOTE: stem:[\mathcal{P}_{Fin}(Q \times \Gamma^*)] značí množinu všech konečných podmnožin stem:[Q \times \Gamma^*].
+
+Konfigurace::
+Stav PDA. stem:[(p, \omega, \alpha) \in Q \times \Sigma^* \times \Gamma^*].
+
+Krok výpočtu::
+stem:[(p, a \omega, Z \alpha) \ustep{M} (q, \omega, \gamma \alpha) \iff \exists (q, \gamma) \in \delta(p, a, Z), \text{kde } a \in \Sigma \cup \{\eps\}]
++
+stem:[\oustep{M}{*}] je tranzitivní uzávěr nad stem:[\ustep{M}].
+
+Jazyk akceptovaný konvovým stavem::
+stem:[L(M) = \{w \in \Sigma^* : (q_0, w, Z_0) \oustep{M}{*} (q_f, \eps, \alpha), q_f \in F, \alpha \in \Gamma^*\}]
+
+Jazyk akceptovaný prázdným zásobníkem::
+stem:[L_e(M) = \{w \in \Sigma* : (q_0, w, Z_0) \oustep{M}{*} (q, \eps, \eps), q \in Q\}]
+
+=== Deterministický zásobníkový automat (DPDA)
+
+Zásobnikový automat stem:[M = (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)] je deterministický, pokud platí:
+
+* Pro všechna stem:[q \in Q] a stem:[Z \in \Gamma] platí, že kdykoliv stem:[\delta(q, \eps, Z) \neq \emptyset], pak stem:[\delta(q, a, Z) = \emptyset] pro všechna stem:[a \in \Sigma].
+** _(Když má stav přechod pod stem:[\eps], pak tam není žádný jiný.)_
+* Pro každé stem:[q \in Q, Z \in \Gamma, a \in \Sigma \cup {\eps}] obsahuje stem:[\delta(q, a, Z)] nejvýše jeden prvek.
+** _(Vždycky je maximálně jedna cesta, kam se dá při daném stavu a písmenech jít.)_
+
+Jazyk je deterministický bezkontextový, pokud existuje DPDA, který ho akceptuje koncovým stavem. Deterministické bezkontextové jazyky jsou podmnožinou bezkontextových jazyků.
+
+=== Rozšířený zásobníkový automat
+
+Šestice stem:[R = (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)] lišící se od PDA jen v typu stem:[\delta]:
+
+* stem:[\delta : Q \times (\Sigma \cup \{\eps\}) \textcolor{red}{\times \Gamma^*} \to \mathcal{P}_\text{Fin}(Q \times \Gamma^*)] je parciální přechodová funkce.
+
+NOTE: Činí rozhodnutí ne na základě vrcholu zásobníku, ale na základě libovolné konečné horní části zásobníku.
+
+Ke každému rozšířenému PDA existuje ekvivalentní PDA.
+
+Krok výpočtu stem:[\ustep{R}]::
+stem:[(p, aw, \gamma_2\alpha) \ustep{R} (q, w, \gamma_2\alpha) \iff \exists (q, \gamma_2) \in \delta(p, a, \gamma_1), \text{kde } a \in \Sigma \cup \{\eps\}]
+
+=== Uzávěrové vlastnosti CFL
+
+[%header,cols="3,2,1*^"]
+|===
+| Operace | Formulka | Uzavřenost
+
+| Sjednocení
+| stem:[L_1 \cup L_2]
+| ✓
+
+| Průnik s regulárním jazykem stem:[L_R]
+| stem:[L \cap L_R]
+| ✓
+
+| Zřetězení
+| stem:[L_1 . L_2]
+| ✓
+
+| Iterace (i pozitivní)
+| stem:[L^*] (i stem:[L^+])
+| ✓
+
+| Průnik
+| stem:[L_1 \cap L_2]
+|
+
+| Doplněk
+| stem:[\overline{L}]
+|
+|===
+
+=== Uzávěrové vlastnosti DCFL
+
+[%header,cols="3,2,^"]
+|===
+| Operace | Formulka | Uzavřenost
+
+| Doplňek
+| stem:[\overline{L}]
+| ✓
+
+| Průnik s regulárním jazykem stem:[L_R]
+| stem:[L \cap L_R]
+| ✓
+
+| Průnik
+| stem:[L_1 \cap L_2]
+|
+
+| Sjednocení
+| stem:[L_1 \cup L_2]
+|
+|===
+
+=== Pumping lemma pro bezkontextové jazyky
+
+Nechť stem:[L] je bezkontextový jazyk. Pak existují stem:[p, q \in \mathbb{N}] (závisející na stem:[L]) taková, že každé slovo stem:[z \in L, |z| > p] lze psát ve tvaru stem:[z = \alpha . \psi . \beta . \omega . \gamma], kde
+
+* stem:[\psi . \omega \ne \varepsilon] (alespoň jedno ze slov stem:[\psi, \omega] je neprázdné),
+* stem:[|\alpha . \beta . \gamma | \le q] a
+* stem:[\alpha . \psi^i . \beta . \omega^i . \gamma \in L] pro všechna stem:[i \in \mathbb{N}].
+
+== Nedeterministická syntaktická analýza
+
+[quote]
+____
+Generuje bezkontextová gramatika dané slovo?
+____
+
+Cílem syntaktické analýzy je vybudovat strom derivací (aplikací pravidel gramatiky), které se musely stát, aby analyzované slovo v gramatice vzniklo.
+
+Shora dolů::
+Od počátečního neterminálu stem:[S] dolů přes levé derivace (rozvíjíme vždy nejlevější neterminál).
++
+1. Mějme dvojici stem:[(w, S)], kde stem:[w] je analyzované slovo.
+2. Pokud prvky dvojice začínají stejným terminálem, odstraníme ho u obou stem:[(a . x, a . \alpha) \ostep{a} (x, \alpha)]
+3. Pokud druhý prvek začíná neterminálem, zkus ho rozvinout podle nějakého jeho pravidla.
+4. Pokud prvky dvojice začínájí různými neterminály, tak tudy cesta nevede.
+5. Pokud dvojice je stem:[(\eps, \eps)], tak je slovo generováno danou gramatikou.
+
+Zdola nahoru::
+Od analyzovaného slova stem:[w] až k počátečnímu neterminálu stem:[S] pomocí rozšířeného PDA.
++
+1. Mějme trojici stem:[(q, w, \bot)], kde stem:[q \in Q] a stem:[\bot \in \Gamma] je nově přidaný počáteční symbol na zásobníku.
+2. Postupně načítám písmena zleva a přidávám je zprava do zásobníku (za stem:[\bot], protože tady píšeme vrchol vlevo).
+3. Když můžu, přepíšu symboly vpravo od stem:[\bot] na nějaký neterminál (v takovém případě čtu stem:[\eps]).
+4. Snažím se vyprázdnit zásobník (dostat se do akceptujícího stavu a načíst celé slovo).
+
+Algoritmus CYK (Cock-Younger-Kasami)::
+Deterministický algoritmus založený na analýze zdola nahoru, který má složitost stem:[\mathcal{O}(|w|^3)].

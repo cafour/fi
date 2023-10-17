@@ -1,0 +1,179 @@
+= Databáze II
+:url: ./databaze-ii/
+:page-group: prg
+:page-order: P10
+
+[NOTE]
+====
+Funkční závislosti, normální formy (1NF, 2NF, 3NF, Boyce-Coddova NF), vztahy mezi normálními formami. Dekompozice relačních schémat, normalizace schématu.
+
+_PB154_
+====
+
+== Funkční závislosti
+
+V relačním schématu stem:[R] řekneme, že stem:[\alpha \to \beta], kde stem:[\alpha \sube R, \beta \sube R], je _funkční závislost_, pokud
+[stem]
+++++
+t_1[\alpha] = t_2[\alpha] \implies t_1[\beta] = t_2[\beta].
+++++
+
+NOTE: stem:[t_1[\alpha\]] jsou ty hodnoty atributů z řádku stem:[t_1], které jsou v množině stem:[\alpha].
+
+Jinak řečeno hodnota množiny atributů stem:[\alpha] jednoznačně určuje hodnotu množiny atributů stem:[\beta]. Atributy v stem:[\beta] tak nějak _závisí_ na atributech z stem:[\alpha].
+
+Funkční závislosti využíváme k testování relace nebo specifikace omezení.
+
+Triviální funkční závislost::
+Pokud stem:[\beta \sube \alpha], pak stem:[\alpha \to \beta] je triviální závislost.
+
+Superklíč relace stem:[R]::
+Superklíč relace stem:[R] je množina atributů stem:[K \sube R] taková, že stem:[K \to R].
+
+Kandidátní klíč relace stem:[R]::
+Kandidátní klíč relace stem:[R] je množina atributů stem:[K \sube R] taková, že stem:[K] je superklíč a pro každé stem:[\alpha \sub K] platí stem:[\alpha \nrightarrow R] (je neredundantní).
+
+=== Armstrongovy axiomy
+
+NOTE: Notace stem:[\alpha\beta] znamená stem:[\alpha \cup \beta].
+
+Reflexivita::
+Pokud stem:[\beta \sube \alpha], pak stem:[\alpha \to \beta].
+
+Rozšíření::
+Pokud stem:[\alpha \to \beta], pak stem:[\gamma\alpha \to \gamma\beta].
+
+Tranzitivita::
+Pokud stem:[\alpha \to \beta] a stem:[\beta \to \gamma], pak stem:[\alpha \to \gamma].
+
+=== Důsledky Armstrongových axiomů
+
+Sjednocení::
+Pokud stem:[\alpha \to \beta] a stem:[\alpha \to \gamma], pak stem:[\alpha \to \beta\gamma].
+
+Rozklad::
+Pokud stem:[\alpha \to \beta\gamma], pak stem:[\alpha \to \beta] a stem:[\alpha \to \gamma].
+
+Pseudotranzitivita::
+Pokud stem:[\alpha \to \beta] a stem:[\gamma\beta \to \delta], pak stem:[\gamma\alpha \to \delta].
+
+== Normalizace
+
+Proces dekompozice a reorganizace relačního schématu tak, aby se s ním lépe pracovalo. Vede k omezení redundance a zlepšení konzistence databáze, ale vede jen k zanadbatelnému navýšení jejího výkonu.
+
+- _1NF_ -- atributy jsou atomické.
+- _2NF_ -- 1NF + neklíčové atributy jsou plně závislé na každém kandidátním klíči.
+- _3NF_ -- 2NF + neklíčové atributy jsou vzájemně nezávislé.
+- _BCNF_ -- 3NF + atributy primárního klíče jsou vzájemně nezávislé.
+
+=== 1. normální forma (1NF)
+
+Schéma stem:[R] je v 1NF, pokud všechny atributy v stem:[R] jsou _atomické_ -- nemají podčásti.
+
+Není v 1NF::
++
+[%autowidth%header]
+|===
+| Adresa
+| Ulice 1, Město, 666 00
+|===
+
+Je v 1NF::
++
+[%header%autowidth]
+|===
+| Ulice | Č.P. | Město | PSČ
+| Ulice | 1 | Město | 666 00
+|===
+
+=== 2. normální forma (2NF)
+
+Schéma stem:[R] je v 2NF, pokud je v 1NF a každý atribut v stem:[R], který není součástí kandidátního klíče, tranzitivně závisí na každém kandidátním klíči plně (nikoliv na žádné jeho ostré podmnožině).
+
+Není v 2NF::
++
+[%header%autowidth]
+|===
+| [.underline]#Autor# | [.underline]#Obraz# | Místnost | Barvy
+|===
++
+Není v 2NF, pokud Místnost závisí na kandidátním klíči plně stem:[\text{Autor}, \text{Obraz} \to \text{Místnost}], ale Barvy pouze částečně stem:[\text{Obraz} \to \text{Barvy}].
+
+=== 3. normální forma (3NF)
+
+Schéma stem:[R] je v 3NF, pokud je v 2NF a každý atribut v stem:[R], který není součástí kandidátního klíče, je netranzitivně závislý právě na všech kandidátních klíčích.
+
+Alternativně, schéma stem:[R] je v 3NF, právě když pro každou funkční závislost stem:[\alpha \to \beta] platí
+
+--
+* stem:[\alpha \to \beta] je triviální, tedy stem:[\beta \sube \alpha], nebo
+* stem:[\alpha] je kandidátní klíč, nebo
+* každý atribut v stem:[\beta \setminus \alpha] je součástí nějakého kandidátního klíče.
+--
+
+[quote]
+____
+Every non-key attribute must provide a fact about the key, the whole key, and nothing but the key, so help me Codd.
+____
+
+Není v 3NF::
++
+[%header%autowidth]
+|===
+| [.underline]#ID# | Student | Jméno
+|===
++
+Není v 3NF, pokud Jméno závisí na ID tranzitivně: stem:[\text{ID} \to \text{Student}], stem:[\text{Student} \to \text{Jméno}].
+
+=== Boyce-Coddova normální forma (BCNF)
+
+Schéma stem:[R] je v BCNF, pokud je v 3NF a každá závislost stem:[\alpha \to \beta], kde stem:[\alpha \sub R, \beta \sub R] splňuje
+--
+* stem:[\alpha \to \beta] je triviální, nebo
+* stem:[\alpha] je superklíč.
+--
+
+BCNF nemusí na rozdíl od ostatních NF zachovávat funkční závislosti.
+
+Není v BCNF::
++
+[%header%autowidth]
+|===
+| [.underline]#Učo# | [.underline]#Ročník# | Jméno | Věk
+|===
++
+stem:[\text{Učo, Ročník} \to \text{Jméno, Věk}]
++
+stem:[\text{Věk} \to \text{Ročník}]
++
+Není v BCNF, neboť v závislosti stem:[\text{Věk} \to \text{Ročník}] Věk není superklíčem.
+
+=== Vztahy mezi normálními formami
+
+[stem]
+++++
+\text{BCNF} \sub \text{3NF} \sub \text{2NF} \sub \text{1NF}
+++++
+
+*Příklad*: _Všechno, co je v BCNF je zároveň v 3NF, 2NF i 1NF. Existují však relace, které nejsou v BCNF, ale jsou v 3NF. Atd._
+
+Vždy existuje převod do 3NF takový, že je bezztrátový a zachová funkční závislosti (který využívá dekompozici).
+
+== Dekompozice relačních schémat
+
+Rozklad na více relačních schémat.
+
+=== Bezztrátová dekompozice
+
+Všechny atributy původního schématu stem:[r] se objeví i v rozkladu na schémata stem:[r_1] a stem:[r_2].
+
+[stem]
+++++
+\begin{gathered}
+r = r_1 \cup r_2 \\
+r = \pi_{A, B}(r) \bowtie \pi_{B, C}(r)
+\end{gathered}
+++++
+
+=== Dekompozice zachovávající funkční závislosti
+Sjednocení všech funkčních závislostí z dekomponovaných schémat dá původní funkční závislosti originálního schématu. Pokud ne, musíme relace při každé modifikaci spojit stem:[\bowtie] a ověrit platnost závislostí.

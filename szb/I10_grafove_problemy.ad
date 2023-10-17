@@ -1,0 +1,161 @@
+= Grafové problémy
+:url: ./grafove-problemy/
+:page-group: inf
+:page-order: I10
+
+[NOTE]
+====
+Ohodnocené grafy, definice nejkratší cesty, minimální kostry grafu, algoritmy pro hledání nejkratších cest (Dijkstrův, Bellman-Fordův algoritmus) a minimálních koster v grafu.
+
+_IB000, IB002_
+====
+
+== Vážený (ohodnocený) graf
+
+Je graf stem:[G] spolu s ohodnocením hran reálnými čísly stem:[w : E(G) \to \mathbb{R}].
+
+Váha podgrafu stem:[H] je součet vah na hranách stem:[H]:
+
+[stem]
+++++
+d_G^w(H) = \sum_{e \in E(P)} w(e)
+++++
+
+== Nejkratší cesta
+
+V neohodnoceném grafu je délka nejkratší cesty z stem:[s] do stem:[t] minimální počet hran na cestě z stem:[s] do stem:[t]. Značíme stem:[\delta(s, t)]. Neexistuje-li cesta, pak stem:[\delta(s, t) = \infty].
+
+Ve váženém grafu je délka nejkratší cesty dána:
+
+[stem]
+++++
+\delta(s, t) = \begin{cases}
+    \min\{d_G^w(P) \mid P \text{ je cesta z } s \text{ do } t\} & \text{když } s \rightsquigarrow t \\
+    \infty & \text{jinak}
+\end{cases}
+++++
+
+Nejkratší cesta je pak každá cesta, která má délku nejkratší cesty.
+
+=== Další pojmy nejkratších cest
+
+Relaxace hrany stem:[(u, v)]::
+Zkrácení vzdálenosti k vrcholu stem:[v] průchodem přes vrchol stem:[u]. Musí platit stem:[u\text{.distance} + w(u, v) < v\text{.distance}]. Hrana stem:[(u, v)] je v takovém případě _napjatá_.
+
+=== Průzkum do šířky
+
+Na neohodnocených grafech dává nejkratší cestu z počatečního vrcholu do všech ostatních.
+
+=== Bellman-Fordův algoritmus
+
+Hledá nejkratší cestu z daného vrcholu do všech ostatních. Funguje i v grafech se zápornými hranami. Pokud najde cyklus záporné délky, vrátí `false`.
+
+Má složitost stem:[\mathcal{O}(V \cdot E)].
+
+[source, python]
+----
+def bellmanford(graph: List[List[Tuple[int, int]]], s: int) \
+        -> Tuple[bool, List[int], List[int]]:
+    # graph is an adjacency list of tuples (dst, weight)
+    distance = [float('inf') for i in range(0, len(graph))]
+    distance[s] = 0
+    parent = [-1 for i in range(0, len(graph))]
+
+    for _ in range(1, len(graph)):
+        for u in range(0, len(graph)):
+            for edge in graph[u]:
+                (v, w) = edge
+                if distance[u] + w < distance[v]:
+                    distance[v] = distance[u] + w
+                    parent[v] = u
+    
+    for u in range(0, len(graph)):
+        for edge in graph[u]:
+            (v, w) = edge
+            if distance[u] + w < distance[v]:
+                return (False, None, None)
+    return (True, distance, parent)
+----
+
+=== Dijkstrův algoritmus
+
+Varianta BFS s prioritní frontou. Funguje na na grafech s nezáporným ohodnocením hran.
+
+Složitost závisí na implementaci prioritní fronty. Je to stem:[\Theta(V)] insertů, stem:[\Theta(V)] hledání nejmenšího prvku, stem:[\Theta(E)] snížení priority.
+
+Implementace níže používá pole (resp. Pythoní `list`), tedy složitost je stem:[\Theta(V^2)], jelikož hledání minima je lineární.
+
+[source, python]
+----
+def dijkstra(graph: List[List[Tuple[int, int]]], s: int) \
+        -> Tuple[List[int], List[int]]:
+    # graph is an adjacency list of tuples (dst, weight)
+    distance = [float('inf') for i in range(0, len(graph))]
+    distance[s] = 0
+    parent = [-1 for i in range(0, len(graph))]
+
+    queue = list(range(0, len(graph)))
+    while len(queue) > 0:
+        u = min(queue, lambda v: distance[v])
+        queue.remove(u)
+        for edge in graph[current]:
+            (v, w) = edge
+            if distance[u] + w < distance[v]:
+                distance[v] = distance[u] + w
+                parent[v] = u
+    return (distance, parent)
+----
+
+V binární haldě by to bylo stem:[\Theta(V \log V + E \log V)] a ve Fibonacciho haldě stem:[\Theta(V \log V + E)].
+
+Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší cesta mezi dvěma konkrétními vrcholy:
+
+* Funkce vrátí výsledek, jakmile je cílový vrchol vytažen z fronty.
+* Můžeme hledat zároveň ze začátku a konce pomocí dvou front a skončit, jakmile se někde potkají.
+* Můžeme přidat _potenciál_ -- dodatečnou heuristickou váhu.
+
+== Minimální kostra grafu (Minimum spanning tree)
+
+Kostra grafu stem:[G] je strom stem:[T] takový, že stem:[V(T) = V(G)].
+
+Minimální kostra má nejmenší možnou váhu stem:[d_G^w(T)].
+
+=== Kruskalův algoritmus
+
+Hladové hledání minimální kostry grafu.
+
+[source, python]
+----
+def kruskal(graph: List[List[Tuple[int, int]]]) -> List[Tuple[int, int]]:
+    # graph is an adjacency list of tuples (dst, weight)
+    # returns a list of edges in the MST
+    # sort all edges by their weight
+    edges = [(w, src, dst) for src in range(0, len(graph)) \
+        for (dst, w) in graph[src]]
+    edges.sort()
+    # initialize the MST to an empty "set"
+    mst = []
+    for e in edges:
+        (w, u, v) = e
+        # if no cycles get created by adding (u, v), add (u, v)
+        if acyclic(graph, edges + [(u, v)]):
+           mst.append((u, v))
+    return F
+----
+
+
+=== Jarníkův (Primův) algoritmus
+
+Je rychlejší než Kruskal, ale funguje jen na souvislých, vážených grafech.
+
+1. Inicializuj strom stem:[T] s libovolným vrcholem stem:[u] a prázdnou množinou hran.
+2. Přidej do stromu jednu hranu. A to takovou, že jeden konec je ve stromě stem:[T] a druhý ne. Pokud je takových hran více, zvol tu s nejmenší vahou.
+3. Opakuj 2. krok, dokud strom není kostra.
+
+=== Borůvkův algoritmus
+
+Je taky rychlejší než Kruskal a funguje i na nesouvislých grafech.
+
+1. Pro každý vrchol inicializuj komponentu souvislosti -- množinu, kde je jen ten vrchol. Je to vlastně les jednoprvkových stromů.
+2. Pro každou komponentu najdi hranu, která vede do jiné komponenty. Pokud je jich víc, vyber tu s nejmenší vahou.
+3. Opakuj 2. krok, dokud jde některé komponenty spojit.

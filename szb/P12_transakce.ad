@@ -1,0 +1,114 @@
+= Transakce a zpracování dotazů
+:url: ./transakce-a-zpracovani-dotazu/
+:page-group: prg
+:page-order: P12
+
+[NOTE]
+====
+Transakční zpracování, jeho vlastnosti. Základní principy vyhodnocování dotazů (náklady na vyhodnocení dotazu, využití indexování a hašování).
+
+_PB154_
+====
+
+Transakce je jednotkou přístupu k databázi -- vyhledávání, změně, vytvoření tabulky, atd.
+
+== ACID
+
+Vlastnosti, které bychom chtěli, aby transakce měly.
+
+Atomičnost::
+Transakce se buď provede celá a nebo vůbec. Nic mezi tím.
+
+Konzistence::
+Provedení transakce zachová databázi v konzistentním stavu, byť to tak nemusí být v jejich průběhu.
+
+Izolovanost::
+Ač transakce mohou běžet paralelně, výsledky musí být stejné, jako kdyby byly provedeny za sebou.
+
+Trvanlivost (_durability_)::
+Jakmile je transakce dokončena, její důsledky budou zachovány, i když systém vypadne.
+
+== Stav transakce
+
+[graphviz]
+....
+digraph {
+    graph [bgcolor=transparent];
+    node [shape=box,style=rounded];
+    "Aktivní" -> "Částečně potvrzená", "Chybující";
+    "Částečně potvrzená" -> "Potvrzená", "Chybující";
+    "Chybující" -> "Zrušená";
+    "Zrušená" -> "Aktivní" [style=dotted];
+}
+....
+
+== Souběžné transakce
+
+Pokud databáze obsluhuje velké množství uživatelů, není žádoucí, aby všichni čekali na někoho, kdo databázi blokuje dlouhými dotazy. Souběžné transakce snižují dobu odezvy a efektivněji využívají procesor a disk.
+
+Schéma pro řízení souběžnosti::
+Mechanismus pro řízení interakcé souběžných transakcí, která zamezují porušení konzistence databáze.
+
+Plány::
+Posloupnost instrukcí souběžných transakcí určující pořadí jejich provedení. Zachovává pořadí operací v transakci a obsahovat všechny operace z těchto transakcí. Úspěšně ukončená transakce provede instrukci _commit_, neúspěšná instrukci _abort_.
+
+Serializovatelnost plánu::
+Plán je serializovatelný, pokud je ekvivalentní sériovému plánu.
+
+Konflikt transakcí::
+Transakce jsou v konfliktu, pokud alespoň jedna z nich zapisuje na místo, kam obě přistupují.
+
+Precedenční graf::
+Slouží k testování serializovatelnosti. Co vrchol, to transakce. Hrana z T1 do T2 značí konflikt transakcí T1 a T2, přičemž T1 přistupuje k datům způsobující konflikt dříve.
+
+Konfliktní serializovatelnost::
+Plán je serializovatelný podle konfliktu, pokud můžeme prohodit nekonfliktní instrukce tak, aby byly transakce provedeny po sobě (sériově).
++
+Plán je konfliktně serializovatelný, pokud je precedenční graf acyklický (O(n^2)). Sériové pořadí získáme topologickým uspořádání.
+
+Pohledová serializovatelnost::
+Plán je pohledově serializovatelný pokud je pohledově ekvivalentní sériovému plánu. Tedy v obou těchto plánech nastává nebo nenastává čtení počáteční hodnoty, poslední zapsání stejné položky a čtení položky, které je výsledkem jiné transakce.
++
+Problém zjistit, jestli je plán pohledově serializovatelný, je NP-úplný, a proto je existence efektivního algoritmu nepravděpodobná. Algoritmy ověřují pouze některé podmínky.
+
+== Vyhodnocování dotazů
+
+[graphviz]
+....
+digraph {
+    bgcolor=transparent;
+    rankdir=LR;
+    node [shape=box];
+
+    query [label="Dotaz"];
+    parse [label="Parsování, překlad",shape=oval];
+    {
+        rank=same;
+        expression [label="Výraz v relační algebře"];
+        optimalization [label="Optimalizace",shape=oval];
+        plan [label="Plán"];
+
+        expression -> optimalization -> plan;
+    }
+    output [label="Výstup dotazu"];
+    eval [label="Vyhodnocení",shape=oval];
+
+    query -> parse -> expression;
+    output -> eval -> plan [dir=back];
+}
+
+....
+
+=== Náklady na vyhodnocení
+
+Lze měřit např. v počtu přístupů k disku, CPU čase, komunikační režii. Náklady závisí mimo jiné i na velikosti bufferu v operační paměti, který šetří náklady na čtení z disku.
+
+=== Indexování
+
+Index je datová struktura, která zrychluje dotazy nad sloupci, pro které je index udržován. Nevýhodou je dodatečná režie a paměťové nároky spojené s údržbou této struktury.
+
+Implementace se liší na základě požadavků. Může to být hashovací tabulka nebo třeba B-strom. Při vytváření indexu se používá merge sort (pokud se data nevejdou do paměti celá).
+
+=== Hashování
+
+Využívá se při spojování relací. Řádky jsou rozděleny do kyblíků podle hodnoty hashovací funkce na spojovaných atributech. Pouze u řádků v těchto kyblících je nutno ověřit, zda se hodnoty atributů skutečně rovnají.

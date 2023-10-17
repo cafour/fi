@@ -1,0 +1,110 @@
+= Softwarové inženýrství I
+:url: ./softwarove-inzenyrstvi-i/
+:page-group: prg
+:page-order: P17
+
+[NOTE]
+====
+Životní cyklus SW a související aktivity. Specifikace požadavků a jejich typy. Strukturované vs. objektově orientované metody analýzy a návrhu.
+
+_PB007_
+====
+
+== Životní cyklus software
+
+1. _Specifikace_ -- hromada požadavků a omezení
+2. _Analýza a návrh_ -- identifikace procesů, objektů, vztahů, (prototypování), ...
+3. _Implementace_ -- programování naspecifikované věci, slepá víra ve finálnost specifikace
+4. _Verifikace a validace_ -- ověření, že to nemá chyby, a ověření, že je to to, co zákazník chtěl
+5. _Údržba_ -- oprava chyb, tech support pro uživatele, přidávání fíčur
+
+== Fáze života software
+
+NOTE: To samé v méně bodech.
+
+1. Iniciální vývoj
+2. Evoluce
+3. Údržba
+4. Phase-out
+
+== Specifikace požadavků
+
+Popis služeb, kterými má software nabízet, a omezení na tyto služby uvalené.
+
+Funkční požadavek::
+Jak by se měl systém v konkrétní situaci chovat.
++
+,,Tadyhle bude obrázek!''
+
+Nefunkční požadavek::
+Požadavek na kvalitu nebo splnění omezení. Obvykle se pojí s konkrétním, či méně konkrétním číslem.
++
+,,Musí to zvládnout milión requestů za minutu!''
+
+Ideální specifikace::
+Specifikace, která je konzistentní, kompletní, přesná, verifikovatelná, reálná.
++
+NOTE: Taková specifikace neexistuje.
+
+.Formy specifikace
+* Běžný jazyk
+* Unified Modeling Language (UML)
+* Automaty
+* ...
+
+== Strukturovaná analýza
+
+* Dívá se na systém jako na množiny funkcí a dat.
+* Rozděluje systém na malé, přesně definované aktivity a určí jejich pořadí.
+* Využívá hierarchické grafické techniky.
+
+.Metody
+* DeMarco: Structured Analysis and System Specification (SASS)
+* Gane Sorson: Logical Modelling (LM) (kontext, ERD, DFD)
+* Yourdon: Modern Structured Analysis (YMSA)
+* Structured System Analysis and Design Methods (SSADM)
+
+== Objektově orientovaná analýza
+
+* Systém je množina interagujících OOP objektů.
+
+.Metody
+* Jim Rumbaugh: Object Modeling Technique (OMT)
+* Kruechten et al: Rational Unified Process (RUP)
+* Booch-Jacobson-Rumbaugh: Unified Process (UP)
+
+=== Unified process:
+
+1. Požadavky
+    * _use case diagram_ -- aktéři, hranice systému, požadavky
+2. Analýza
+    * _diagram tříd_ -- vztahy, dědičnost, polymorfismus
+    * _diagram přehledu interakcí_, _diagram aktivit_ -- realizace případů užití
+3. Design
+    * _diagram tříd_, _diagram komponent_ -- třídy, rozhraní a komponenty
+    * _diagram přehledu interakcí_, _stavový diagram_ -- detailní realizace případů užití
+
+== Přehled diagramů podle analýzy
+
+[options="header",cols=3*]
+|===
+| Modeluje
+| Strukturovaná analýza
+| Objektově orientovaná
+
+| Hranice systému
+| kontextový diagram
+| diagram případů užití
+
+| Funkcionalitu
+| data flow diagram
+| diagramy aktivit a interakcí
+
+| Data
+| ERD
+| diagram tříd a objektů
+
+| Control flow
+| stavový diagram
+| stavový diagram
+|===

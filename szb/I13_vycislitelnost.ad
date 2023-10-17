@@ -1,0 +1,193 @@
+= Vyčíslitelnost
+:url: ./vycislitelnost/
+:page-group: inf
+:page-order: I13
+
+[NOTE]
+====
+Turingův stroj. Problém zastavení. Rozhodnutelnost a částečná rozhodnutelnost, nerozhodnutelnost. Metoda redukce, diagonalizace.
+
+_IB102/IB005+IB107_
+====
+
+// global katex definitions
+[stem]
+++++
+\gdef\tmM{\mathcal{M}}
+\gdef\tmT{\mathcal{T}}
+\gdef\tmF{\mathcal{F}}
+\gdef\Mstep{\underset{\tmM}{\vdash}}
+++++
+
+Vyčíslitelnost se zabývá funkcemi, které je možné _vyčíslit_ -- nějakým způsobem naprogramovat.
+
+== Turingův stroj
+
+Turingův stroj \(TM) je 9-ice stem:[\tmM = (Q, \Sigma, \Gamma, \rhd, \sqcup, \delta, q_0, q_{\text{accept}}, q_{\text{reject}})], kde:
+
+* stem:[Q] je konečná množina _stavů_,
+* stem:[\Sigma] je konečná množina _vstupních symbolů_,
+* stem:[\Gamma] je konečná množina _páskových symbolů_ taková, že stem:[\Sigma \sube \Gamma],
+* stem:[\rhd \in \Gamma \setminus \Sigma] je levá konzová značka,
+* stem:[\sqcup \in \Gamma \setminus \Sigma] je symbol označující prázdné políčko,
+* stem:[\delta : (Q \setminus \{q_{\text{accept}, q_{\text{reject}}}\}) \times \Gamma \to Q \times \Gamma \times \{L, R\}] je totální přechodová funkce,
+* stem:[q_0] je počáteční stav,
+* stem:[q_{\text{accept}}] je akceptující stav,
+* stem:[q_{\text{reject}}] je zamítající stav.
+
+Navíc platí stem:[(\forall q \in Q)(\exists p \in Q)(\delta(q, \rhd) = (p, \rhd, R))]. Jinými slovy, TM nesmí přepsat stem:[\rhd].
+
+=== Konfigurace
+Konfigurace stem:[(q, z, n)] obsahuje stav, obsah pásky a index políčka, nad kterým je hlava:
+
+[stem]
+++++
+(q, z, n) \in Q \times \{y\sqcup^\omega \mid y \in \Gamma^*\} \times \mathbb{N}_0
+++++
+
+Počáteční konfigurace je stem:[(q_0, \rhd w \sqcup^\omega, 0)].
+
+Akceptující konfigurace má tvar stem:[(q_{\text{accept}}, z, n)], kde stem:[z \in \Gamma^*, n \in \mathbb{N}_0]. Podobně, zamítající konfigurace má tvar stem:[(q_{\text{reject}}, z, n)].
+
+=== Krok výpočtu
+
+Krok výpočtu je relace stem:[\Mstep] na konfiguracích TM stem:[\tmM]:
+
+NOTE: stem:[s_b^n(z)] značí upravený stem:[z], kde n-tý symbol je stem:[b].
+
+[stem]
+++++
+(p, z, n) \Mstep \begin{cases}
+    (q, s_b^n(z), n + 1) & \text{pro } \delta(p, z_n) = (q, b, R) \\
+    (q, s_b^n(z), n - 1) & \text{pro } \delta(p, z_n) = (q, b, L).
+\end{cases}
+++++
+
+_Výpočet_ TM stem:[\tmM] na vstupu stem:[w] je posloupnost konfigurací stem:[K_0, K_1, K_2, ...] taková, že stem:[K_0] je počáteční konfigurace pro stem:[w] a pro všechna stem:[i \ge 0] platí stem:[K_i \Mstep K_{i+1}].
+
+Stroj stem:[\tmM] *akceptuje* slovo stem:[w], právě když výpočet stem:[\tmM] na stem:[w] je konečný a poslední konfigurace je akceptující.
+
+Stroj stem:[\tmM] *zamítá* slovo stem:[w], právě když výpočet stem:[\tmM] na stem:[w] je konečný a poslední konfigurace je zamítající.
+
+Stroj stem:[\tmM] *cyklí* slovo stem:[w], právě když výpočet stem:[\tmM] na stem:[w] je nekonečný.
+
+Jazyk akceptovaný stem:[\tmM] je stem:[L(\tmM) = \{w \in \Sigma^* \mid \tmM \text{ akceptuje } w\}].
+
+== Rozhodnutelnost
+
+Jazyk stem:[L \sube \Sigma^*] je:
+
+rekurzivně spočetný::
+právě když stem:[L \in L(\tmM)] pro nějaký stem:[\tmM]. Tedy pokud stem:[w \in L], pak ho stem:[\tmM] akceptuje, jinak zastaví nebo cyklí.
+
+rekurzivní::
+právě když stem:[L \in L(\tmM)] pro nějaký *úplný* stem:[\tmM]. Tedy pokud stem:[w \in L], pak ho stem:[\tmM], jinak zamítá. Nikdy necyklí.
+
+Problém určit, zda řetěz stem:[w] má vlastnost stem:[P], je
+
+rozhodnutelný::
+právě když jazyk všech řetězů s vlastností stem:[P] je rekurzivní.
+
+nerozhodnutelný::
+právě když není rozhodnutelný. Nerozhodnutelný problém může být částečně rozhodnutelný.
+
+částečně rozhodnutelný (semirozhodnutelný)::
+právě když jazyk všech řetězů s vlastností stem:[P] je rekurzivně spočetný.
+
+== Problém zastavení
+
+Je výpočet stem:[\tmM] na stem:[w] konečný?
+
+[stem]
+++++
+\text{HALT} = \{\langle \tmM, w \rangle \mid \tmM \text{ je TM a výpočet na } w \text{ je konečný}\}
+++++
+
+Je částečné rozhodnutelný, neboť, pokud stem:[\tmM] na stem:[w] zastaví, pak lze stem:[\langle \tmM, w \rangle] akceptovat.
+
+Je však nerozhodnutelný. Důkaz se vede sporem: Kdyby HALT rozhodnutelný byl, pak existuje TM stem:[\tmM], který jej rozhoduje. Ale! Představme si TM stem:[\tmT], který interně používá stem:[\tmM] a cyklí, právě když TM na vstupu zastaví, pokud dostane svůj vlastní kód jako vstup:
+
+[stem]
+++++
+\tmT(\langle \tmF \rangle) = \begin{cases}
+    \bot & \text{pokud } \tmM(\langle \tmF, \langle \tmF \rangle \rangle) = 1 \\
+    1 & \text{jinak}
+\end{cases}
+++++
+
+Když stem:[\tmM] předhodíme vstup stem:[\langle \tmT, \langle \tmT \rangle \rangle], nastane problém, protože stem:[\tmM] spustí stem:[\tmT] se vstupem stem:[\langle \tmT \rangle] a stem:[\tmT] má proto zastavit, právě když stem:[\tmT] nezastaví, takže HALT musí být nerozhodnutelný.
+
+== Metoda redukce
+
+Nechť stem:[A \sube \Sigma^*] a stem:[B \sube \Phi^*] jsou jazyky. Redukce jazyka stem:[A] na jazyk stem:[B] je rekurzivní (totálně vyčíslitelná) funkce stem:[f : \Sigma^* \to \Phi^*] taková, že stem:[w \in A \iff f(w) \in B].
+
+Pokud existuje redukce z stem:[A] do stem:[B], jazyk stem:[A] se redukuje na jazyk stem:[b]. Píšeme stem:[A \le_\tmM B].
+
+Pokud je stem:[B] rekurzivní (resp. rekurzivně spočetný), pak i stem:[A] je rekurzivní (resp. rekurzivně spočetný).
+
+NOTE: Představ si, že stem:[B] je rozhodnutelný problém toho, jestli má dané restaurační zařízení v danou hodinu otevřeno či zavřeno, a stem:[A] je problém, zda zrovna _U Valáška_ mají otevřeno. Jelikož stem:[A] je jen speciální případ stem:[B], redukce jen dosadí konstantu "_U Valáška_" za parametr "restaurační zařízení" a tedy je rekurzivní. Tedy lze rozhodnout, zda _U Valáška_ mají otevřeno.
+
+Tuto implikaci lze obměnit: Pokud stem:[A] rekurzivní (resp. rekurzivně spočetný) *není*, pak ani stem:[B] rekurzivní (resp. rekurzivně spočetný) *není*. A tohoto se využívá k důkazu toho, že nějaký problém stem:[P] je nerozhodnutelný. Stačí najít redukci stem:[\text{HALT} \le_\tmM P].
+
+NOTE: Intuitivně se na to dá dívat i tak, že stem:[P] je alespoň tak "těžký" jako HALT.
+
+== Diagonalizace
+
+Původně použita v Cantorově důkazu toho, že reálných čísel je víc než přirozených:
+
+NOTE: Řádky jsou indexy reálných čísel. Sloupce jsou desetinná místa ve dvojkové soustavě.
+
+[cols=7*]
+|===
+| stem:[r_0]
+| *0*
+| 0
+| 0
+| 0
+| 0
+| ...
+
+| stem:[r_1]
+| 1
+| *1*
+| 1
+| 1
+| 1
+| ...
+
+| stem:[r_2]
+| 0
+| 1
+| *0*
+| 1
+| 0
+| ...
+
+| stem:[r_3]
+| 1
+| 1
+| 0
+| *0*
+| 1
+| ...
+
+| stem:[r_4]
+| 0
+| 0
+| 0
+| 1
+| *1*
+| ...
+
+| ...
+|
+|
+|
+|
+|
+|
+|===
+
+Existuje však reálné číslo stem:[z = 0.10110...], které se liší od každého čísla v tabulce, jelikož je to invertovaná diagonála.
+
+V důkazu nerozhodnosti HALTu výše je taky diagonalizace. Jen tam sloupce jsou vstupy, řádky Turingovy stroje a buňky "zastaví/nezastaví".

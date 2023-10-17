@@ -1,0 +1,129 @@
+= Datové modelování
+:url: ./datove-modelovani/
+:page-group: prg
+:page-order: P19
+
+[NOTE]
+====
+Návrh datových struktur, grafické vyjádření, převod do relačního modelu. ER diagram (entity, atributy, vztahy), UML diagram tříd a jejich srovnání.
+
+_PB007_
+====
+
+WARNING: Obrázky v této otázce kreslené rukou byly sprostě ukradeny Dominice Krejčí z https://github.com/Krejdom/school_notes. Snad jen dočasně.
+
+Datová struktura::
+Datové struktury reprezentují způsob uložení dat v paměti. Patří mezi ně např. pole, halda, spojovaný seznam, atd. Toto není jejich otázka.
+
+== Entity-relationship diagram (ERD)
+
+Grafické vyjádření vztahů mezi entitami a jejich atributů.
+
+Entita::
+Pojmenovaná, identifikovatelná skupina atributů. (Představ si Cčkový `struct`.)
+
+Vztah::
+Souvislost mezi dvěma nebo více entitami.
+
+Atribut::
+Vlastnost entity. Nemá další podčásti. (Představ si proměnnou primitivního typu.)
+
+Kardinalita vztahu::
+* stem:[1 : 1] -- one-to-one
+* stem:[1 : n] -- one-to-many
+* stem:[m : n] -- many-to-many
+
+Asociační entita::
+Entita obsahující data příslušící některému ze vztahů.
+
+=== Chenova notace
+
+* entity -> obdélníky
+* atributy -> kolečka
+* vztahy -> hrany
+* kardinalita -> vztah na příslušných koncích hran
+
+image::./img/p19_chen.png[width=500rem]
+
+=== Crow's foot notace
+
+* entity -> tabulky
+* atributy -> řádky v tabulkách
+* vztahy -> hrany
+* kardinalita -> vraní nohy
+
+image::./img/p19_crow.png[width=500rem]
+
+=== V databázích
+
+Tvorba ERD může pomoci při návrhu databází. Celý proces jde přibližně takto:
+
+1. Určení účelu databáze a vytvoření ERD
+2. Převod ERD na databázové schéma.
+    * entitní typy -> tabulky
+    * atributy -> slupce
+    * entity -> řádky
+    * asociační entity -> taky tabulky
+    * určení primárních klíčů
+3. Převod schématu do normální normy (pokud vám to přijde nutné).
+4. (Testování)
+
+== UML Class Diagram (CD)
+
+Class diagram je skoro to samé jako ERD, ale má to jinou nomenklaturu a notaci. Navíc, jak vyplývá z názvu, je diagram tříd zaměřený na OOP.
+
+Class diagram modeluje třídy -- jejich obsah a vztahy mezi nimi.
+
+image::./img/p19_class.png[width=500rem]
+
+Třída::
+Šablona pro množinu objektů sdílející atributy a chování.
+
+Instance::
+Objekt vytvořený na základě třídy.
+
+Dědičnost::
+Hierarchický vztah. Potomek dědí z rodiče.
+
+Asociace::
+Obousměrný vztah.
+
+Agregace::
+Vztah mezi celkem a jeho částí nebo částmi. Závislost mezi třídami, která *není* nezbytná.
++
+Třeba takový adresář agreguje adresy -- může být prázdný a adres v něm může být velké množství.
+
+Kompozice::
+Silnější agregace. Závislost mezi třídami, která *je* nezbytná.
++
+Třeba u dopisové obálky je adresa nezbytná, takže je tu kompozice.
+
+Navigovatelnost::
+Třída může obsahovat cizí klíč nebo se jinak odkazovat na jinou třídu.
+
+=== Výroba
+
+1. Slovní analýza
+2. Analytický (stručný) class diagram
+3. Návrhový (implementační) class diagram
+
+== Srovnání ERD a CD
+
+[options="header",cols="3*"]
+|===
+| Aspekt
+| ERD
+| Class diagram
+
+| Modeluje
+| jen strukturu
+| strukturu a chování (atributy a operace)
+
+| Vztahy
+| jen relace, případně generalizace
+| asociace, agregace, kompozice, závislost, generalizace
+
+| Využití
+| návrh databází
+| objektově orientované programování
+|===

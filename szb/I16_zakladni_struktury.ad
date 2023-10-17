@@ -1,0 +1,125 @@
+= Základní datové struktury
+:url: ./zakladni-datove-struktury/
+:page-group: inf
+:page-order: I16
+
+[NOTE]
+====
+Základní abstraktní datové struktury (seznam, množina, zásobník, fronta), související operace a jejich složitost. Typické implementace, příklady použití.
+
+_IB111, IB002_
+====
+
+[stem]
+++++
+\gdef\O{\mathcal{O}}
+\gdef\ocon{\color{green}\O(1)}
+\gdef\olog{\color{yellow}\O(\log(n))}
+\gdef\olin{\color{orange}\O(n)}
+++++
+
+:ocon: pass:[\(\ocon\)]
+:olog: pass:[\(\olog\)]
+:olin: pass:[\(\olin\)]
+
+Abstraktní datová struktura je matematický model definovaný požadavky, které na něj mají jeho uživatelé (např. okamžitý přístup k nejvetšímu prvku). Neříká, jak přesně se má takový model implementovat.
+
+== Seznam (list)
+
+Seznam je abstraktní datová struktura pro ukládání spočetného množství hodnot tak, že
+
+* prvky mají pevně stanovené pořadí,
+* mohou se v něm nacházet duplicitní prvky.
+
+Interpretace se liší. V C# je seznam pole, které se samo zvětšuje. Spojovaný seznam je ale série buněk pospojovaných pointery, které si drží nějakou hodnotu.
+
+=== Implementace
+
+Dynamicky alokované pole::
+Musíme si pamatovat:
++
+* počet uložených prvků (velikost či délku seznamu),
+* velikost alokovaného pole (kapacitu seznamu).
+
+Jednostranně spojovaný seznam::
+Řetěz záznamů pospojovaných ukazateli v jednom směru. Každý záznam obsahuje hodnotu a ukazatel na následující záznam.
+
+Oboustranně spojovaný seznam::
+Spojovaný seznam, kde záznamy mají ukazatel i na předchozí prvek.
+
+== Množina (set)
+
+Množina je abstraktní datová struktura pro ukládání spočetného množství hodnot tak, že
+
+* každý prvek je obsažen nejvýše jednou.
+
+NOTE: Množina nemá požadavky na pořadí, takže seřazená být může, ale nemusí.
+
+=== Implementace
+
+Hashovací tabulkou::
+Při vhodné hashovací funkci je složitost téměř {ocon}.
+
+Vyhledávacím stromem::
+Vhodné pro seřazené množiny.
+
+== Zásobník (stack)
+
+Zásobník je abstraktní datová struktura pro ukládání spočetného množství hodnot tak, že
+
+* lze prvek vložit pouze na konec,
+* lze odebrat pouze poslední přidaný prvek (vrchol zásobníku) -- Last In - First Out (LIFO).
+
+=== Implementace
+
+Pole::
+První prvek je dno zásobníku. Uchováváme index vrcholu.
+
+Spojovaným seznamem::
+První prvek je vrcholem zásobníku, jelikož odstranit poslední prvek spojovaného seznamu je složitější.
+
+== Fronta (queue)
+
+Fronta je abstraktní datová struktura pro ukládání spočetného množství hodnot tak, že
+
+* lze přidat pouze na jeden konec a odebrat pouze z konce opačného -- First In - First Out (FIFO).
+
+Prioritní fronta::
+Prvky mají navíc prioritu, podle které jsou (stabilně) řazeny. Prvek s vyšší prioritou tak předběhne prvky s nižší prioritou. Obvykle se implementuje binární haldou.
++
+NOTE: Představ si, že už hodinu sedíš u doktora v čekárně a někdo přišel na odběr krve.
+
+=== Implementace
+
+Pole::
+Potřebujeme indexy vstupního a výstupního konce. Problém zvyšování obou indexů do nekonečna lze řešit:
++
+* posouvat prvky o jedno pole zpět při každém vypuštění prvku (neefektivní),
+* posunout prvky až, jakmile dojde místo,
+* cyklit pomocí modulární aritmetiky (je třeba si navíc pamatovat délku fronty).
+
+Spojovaný seznam::
+Jelikož odebírat z konce spojovaného seznamu je složitejší, je začátek seznamu výstup z fronty a konec seznamu vstup do fronty. Každý prvek ve frontě si tak pamatuje, který prvek bude vyhozen po něm.
++
+NOTE: Je to obráceně než v čekárně, kde se při příchodu zeptáš ,,Kdo je tu poslední?''
+
+
+== Složitost základních operací
+
+[%header,cols="9*"]
+|===
+| Struktura
+| `at` | `insert`| `remove`| `search` | `max` | `min` | `next` | `prev`
+
+| Dynamické pole
+| {ocon} | {olin} | {olin} | {olin} | {olin} | {olin} | {ocon} | {ocon}
+
+| Jednostranný seznam
+| {olin} | {ocon} | {ocon} | {olin} | {olin} | {olin} | {ocon} | {olin}
+
+| Oboustranný seznam
+| {olin} | {ocon} | {ocon} | {olin} | {olin} | {olin} | {ocon} | {ocon}
+
+| Množina (hash table)
+| {ocon} | {ocon} | {ocon} | {ocon} | {olin} | {olin} | -- | --
+|===

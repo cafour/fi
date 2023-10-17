@@ -1,0 +1,13 @@
+layout: layouts/question.tsx
+styles: ["question"]
+mergedKeys:
+  styles: noop
+tags: szb
+course: SZB
+home: /fi/szb/
+groups:
+  - name: inf
+    display: Teoretické základy informatiky a matematika
+  - name: prg
+    display: Programové, výpočetní a informační systémy
+showtitle: true

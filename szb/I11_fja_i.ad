@@ -1,0 +1,219 @@
+= Formální jazyky I
+:url: ./formalni-jazyky-i/
+:page-group: inf
+:page-order: I11
+
+[NOTE]
+====
+Chomského hierarchie formálních jazyků. Regulární jazyky, jejich reprezentace a převody mezi nimi. Varianty konečných automatů. Nedeterminismus a determinizace automatů. Uzávěrové vlastnosti regulárních jazyků.
+
+_IB102/IB005_
+====
+
+Formální jazyk stem:[L] je množina slov -- posloupností znaků z konečné abecedy stem:[\Sigma] (taky množina), které vznikly aplikací daných pravidel.
+
+Gramatika stem:[\mathcal{G}]::
+Čtveřice stem:[(N, \Sigma, P, S)], kde
++
+* stem:[N] je neprázdná množina neterminálů,
+* stem:[\Sigma] je konečná množina terminálů (abeceda) taková, že stem:[N \cap \Sigma = \emptyset],
+* (stem:[V = N \cup \Sigma]),
+* stem:[P \sube V^*.N.V^* \times V^*] je konečná množina pravidel,
+* stem:[S \in N] je počáteční neterminál.
++
+Terminály značíme malými písmeny, neterminály velkými. Pravidla zapisujeme stem:[\alpha A \beta \to \gamma].
+
+== Chomského hierarchie jazyků
+
+Definovaná požadavky na tvar pravidel gramatik.
+
+Typ 0 (frázové jazyky)::
+Žádná omezení na pravidla. Pro každý jazyk typu 0 lze sestrojit Turingův stroj, který jej rozhoduje.
+
+Typ 1 (kontextové jazyky)::
+Pravidla mohou levý i pravý kontext (stem:[\alpha] a stem:[\beta]): stem:[\alpha A \beta \to \alpha \gamma \beta], který zachovávají. stem:[|\gamma| \ge 1].
+
+Typ 2 (bezkontexové jazyky)::
+stem:[A \to \alpha, |\alpha| \ge 1] s výjimkou stem:[S \to \varepsilon], pokud stem:[S] není na pravé straně žádného pravidla.
+
+Typ 3 (regulární jazyky)::
+stem:[A \to a] a stem:[A \to aB] nebo ekvivaletně stem:[A \to a] a stem:[A \to Ba]. Výjimkou je stem:[S \to \varepsilon], pokud stem:[S] není na pravé straně žádného pravidla.
+
+== Regulární jazyky
+
+Lze je reprezentovat
+
+* regulární gramatikou,
+* deterministickým konečným automatem (DFA),
+* nedeterministickým konečným automatem (NFA),
+* nedeterministickým konečným automatem s stem:[\varepsilon]-kroky (stem:[\varepsilon]NFA),
+* regulárním přechodovým grafem (RTG),
+* regulárním výrazem (RE).
+
+Lze převádět
+
+[graphviz]
+....
+digraph {
+    bgcolor=transparent;
+    rankdir=RL;
+
+    node [shape=box];
+
+    ENFA [label="εNFA"];
+
+    ENFA -> NFA -> DFA -> RE -> ENFA;
+}
+....
+
+=== Deterministický konečný automat (DFA)
+
+Deterministický konečný automat je pětice stem:[(Q, \Sigma, \delta, q_0, F)], kde
+
+--
+* stem:[Q] je neprázdná konečná množina stavů,
+* stem:[\Sigma] je konečná vstupní abeceda,
+* stem:[\delta : Q \times \Sigma \to Q] je parciální přechodová funkce,
+* stem:[q_0 \in Q] je počáteční stav,
+* stem:[F \sube Q] je množina akceptujících stavů.
+--
+
+Rozšířená přechodová funkce stem:[\hat\delta : Q \times \Sigma^* \to Q]::
+* stem:[\hat\delta(q, \varepsilon) = q] pro každý stav stem:[q \in Q].
+* stem:[\hat\delta(q, wa) = \delta(\hat\delta(q, w), a)], je-li stem:[\hat\delta(q, w)] i stem:[\delta(\hat\delta(q, w), a)] definováno, stem:[\bot] jinak.
+
+Akceptace::
+Slovo stem:[w] je akceptováno automatem stem:[A], právě když stem:[\hat\delta(q_0, w) \in F].
+
+Zamítání::
+Slovo stem:[w] je zamítáno automatem stem:[A], právě když stem:[\hat\delta(q_0, w) \notin F].
+
+Přijímaní::
+Jazyk přijímaný automatem stem:[A] je stem:[L(A) = \{w \in \Sigma^* : \hat\delta(q_0, w) \in F \}].
+
+Ekvivalence::
+Automaty jsou ekvivalentní, pokud přijímají stejný jazyk.
+
+Minimální konečný automat::
+Má nejmenší počet stavů a totální přechodovou funkci.
+
+Převod na minimální konečný automat::
+1. Odstraníme nedosažitelné stavy.
+2. Přidáme ,,peklo'' a svedeme do něj nedefinované přechody.
+3. Rozdělíme stavy na dvě skupiny: koncové a nekoncové.
+4. Do tabulky přechodů označíme, do které skupiny každý přechod vede.
+5. Rozdělíme stavy do nových skupin. Ve stejné skupině budou ty stavy, u nichž se předchozí skupinové značení shoduje.
+6. Bod 4 a 5 opakujeme, dokud lze vytvářet nové skupiny podle značení z předchozí iterace.
+7. Výsledné skupiny tvoří nové stavy.
+
+Převod na kanonický tvar::
+U automatů v kanonickém tvaru můžeme snadno srovnávat, jestli jsou stejné.
++
+1. Totálně uspořádej abecedu stem:[\Sigma = \{a_1, a_2, ..., a_m\}, a_i < a_{i+1}].
+2. Projdi automat do šířky. Následníky vol v abecedním pořadí (podle uspořádání z 1).
+3. Časové známky vrcholů jsou nová číslas stavů.
+
+Převod na regulární výraz::
+1. Přidej nový počáteční a koncový stav.
+2. Odstraň zbytečné (nedosažitelné) uzly.
+3. Uplať následující nahrazení:
+** stem:[\color{green} p \xrightarrow{F} q \xrightarrow{G} r] za stem:[\color{red} p \xrightarrow{F . G} r].
+** stem:[\color{green} p \xrightarrow{F} \overset{\curvearrowright^E}{q} \xrightarrow{G} r] za stem:[\color{red} \xrightarrow{F} p \xrightarrow{F . E^* . G} r].
+** stem:[\color{green} p \xrightarrow{F} q] a stem:[\color{green} p \xrightarrow{G} q] za stem:[\color{red} p \xrightarrow{F + G} q].
+4. Opakuj 3, dokud nemáš jen počáteční a koncový stav.
+
+=== Nedeterministický konečný automat (NFA)
+
+Nedeterministický konečný automat je pětice stem:[A = (Q, \Sigma, \delta, q_0, F)], kde
+
+--
+* stem:[Q] je neprázdná konečná množina stavů,
+* stem:[\Sigma] je konečná vstupní abeceda,
+* stem:[\delta : Q \times \Sigma \to 2^Q] je *totální* přechodová funkce,
+* stem:[q_0 \in Q] je počáteční stav,
+* stem:[F \sube Q] je množina akceptujících stavů.
+--
+
+Rozšířená přechodová funkce stem:[\hat\delta : Q \times \Sigma^* \to 2^Q]::
+* stem:[\hat\delta(q, \varepsilon) = \{q\}],
+* stem:[\hat\delta(q, wa) = \bigcup_{p \in \hat\delta(q, w)} \delta(p, a)].
+
+Převod na deterministický automat::
+1. Nový počáteční stav bude stem:[r_0 = \{q_0\}]. Zkopíruj přechody z stem:[q_0]. stem:[i = 0].
+2. Pro dosud nezpracované stem:[i] a každé stem:[a \in \Sigma], přidej nový stav stem:[r_{i_\text{next}} = \{q \in Q : r_i \xrightarrow{a} q\}]. Zkopíruj přechody.
+3. Dělej 2, dokud automat není deterministický.
++
+DFA může být ve výsledku až exponenciálně větší.
+
+Převod na gramatiku::
+* Pro každý přechod stem:[A \xrightarrow{a} B], kde stem:[B] *není* koncový stav, přidej pravidlo stem:[A \to aB].
+* Pro každý přechod stem:[A \xrightarrow{a} B], kde stem:[B] *je* koncový stav, přidej pravidlo stem:[A \to a].
+* Pokud počáteční stav stem:[S] je zároveň koncový, přidej stem:[S \to \varepsilon].
+
+=== Regulární výrazy
+
+Množiny regulárních výrazů nad abecedou stem:[\Sigma] je
+
+NOTE: To, co je symbol regexu, je podtržené.
+
+* stem:[\underline\varepsilon, \underline\emptyset] a stem:[\underline{a}] pro každé stem:[a \in \Sigma].
+* stem:[\underline{(} E \underline{.} F \underline{)}, \underline{(} E \underline{+} F \underline {)}, \underline{(} E \underline{)^*}], pokud stem:[E] a stem:[F] jsou regulární výrazy.
+* nic jiného není regulární výraz.
+
+Každý regex stem:[E] nad abecedou stem:[\Sigma] popisuje jazyk stem:[L(E)] nad stejnou abecedou:
+
+* stem:[L(\underline\varepsilon) = {\varepsilon}]
+* stem:[L(\underline\emptyset) = \emptyset]
+* stem:[L(\underline{a}) = {a}] pro každé stem:[a \in \Sigma]
+* stem:[L(E \underline{.} F) = L(E).L(F)], kde stem:[E] a stem:[F] jsou regexy
+* stem:[L(E \underline{+} F) = L(E) \cup L(F)], kde stem:[E] a stem:[F] jsou regexy
+* stem:[L(E \underline{^*}) = L(E)^*], kde stem:[E] je regex
+
+=== Regulární přechodový graf
+
+Regulární přechodový graf je pětice stem:[A = (Q, \Sigma, \delta, q_0, F)], kde
+
+--
+* stem:[Q] je neprázdná konečná množina stavů,
+* stem:[\Sigma] je konečná vstupní abeceda,
+* stem:[\delta : Q \times Q \to \text{RE}(\Sigma)] je parciální přechodová funkce,
+* stem:[q_0 \in Q] je počáteční stav,
+* stem:[F \sube Q] je množina akceptujících stavů.
+--
+
+Převod na NFA::
+1. Vytvoříme nový počáteční stav stem:[\color{blue} q'_0] takový, že stem:[\color{blue} q'_0 \xrightarrow{\varepsilon} q_0].
+2. Opakovaně:
+** Ostraníme hrany ohodnocené stem:[\color{red} \emptyset].
+** Nahraď stem:[\color{red} p \xrightarrow{F + G} q] za stem:[\color{blue} p \xrightarrow{F} q] a stem:[\color{blue} p \xrightarrow{G} q].
+** Nahraď stem:[\color{red} p \xrightarrow{F . G} q] za stem:[\color{blue} p \xrightarrow{F} p' \xrightarrow{G} q].
+** Nahraď stem:[\color{red} p \xrightarrow{F^*} q] za
+   stem:[\color{blue} p \xrightarrow{\varepsilon} \overset{\curvearrowright^F}{p''} \xrightarrow{\varepsilon} q].
+
+=== Pumping lemma pro regulární jazyky
+
+Nechť stem:[L] je regulární jazyk. Pak existuje stem:[n \in \mathbb{N}] takové, že libovolné slovo stem:[w \in L], jehož délka je alespoň stem:[n], lze psát ve tvaru stem:[w = x . y . z], kde stem:[| x . y | \le n, y \ne \varepsilon] a stem:[x . y^i . z \in L] pro každé stem:[i \in \mathbb{N}].
+
+=== Myhill-Nerodova věta
+
+Nechť stem:[L] je jazyk nad stem:[\Sigma], pak následující tvrzení jsou ekvivalentní:
+
+* stem:[L] je rozpozntatelný konečným automatem.
+* stem:[L] je sjednoceném některých tříd rozkladu určeného pravou kongruencí na stem:[\Sigma^*] s konečným indexem.
+* Relace stem:[\sim_L] má konečný index.
+
+=== Uzávěrové vlastnosti
+
+[%header]
+|===
+| Operace | Formulka
+| Sjednocení | stem:[L_1 \cup L_2]
+| Průnik | stem:[L_1 \cap L_2]
+| Rozdíl | stem:[L_1 \setminus L_2]
+| Doplňek | stem:[\overline{L}]
+| Zřetězení | stem:[L_1 . L_2]
+| Iterace | stem:[L^*]
+| Pozitivní iterace | stem:[L^+]
+| Mocnění | stem:[L^n]
+| Revers | stem:[L^R]
+|===

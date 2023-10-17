@@ -1,0 +1,119 @@
+= Síťové aplikace a bezpečnost II
+:url: ./sitove-aplikace-a-bezpecnost-ii/
+:page-group: prg
+:page-order: P16
+
+[NOTE]
+====
+Zabezpečení síťové komunikace, autentizace a šifrování, zabezpečení na jednotlivých protokolových vrstvách.
+
+_PB156_
+====
+
+== Zabezpečení síťové komunikace
+
+Množí se případy, kdy má jedna stránky více oddílů, které by měly býti přístupné různým množinám lidí. Je tedy nutné zamezit ostatním lidem, aby se do těchto oddílů dostali navázáním vlastního spojení i útokem zprostřed (man-in-the-middle attack).
+
+Autentizace::
+Ověření totožnosti. Jedinec nebo skupina je tím, za koho se vydává.
++
+(_Authenticate_ -- ověřit pravost, nefalšovanost)
+
+Autorizace::
+Ověření souhlasu s provedením nebo práva k provedení akce. Autentizovaný uživatel má přístup někam.
++
+(_Authorize_ -- dát svolení s)
+
+Účtování (accounting)::
+Sledování využívání služeb uživateli.
+
+Důvěrnost (confidentiality)::
+Pouze příjemce a odesílatel by měli zprávě rozumět. Zajišťuje šifrování.
+
+Integrita::
+Zprávu nesmí jít upravit cestou, aniž by si toho příjemce všiml. Zajištuje hashování a digitální podepisování.
+
+Nepopiratelnost (non-repudiation)::
+Odesílatel nemůže popřít, že zprávu odeslal. Zajištuje digitální podepisování.
+
+=== Implementace autentizace
+
+Obvykle podle toho, co uživatel zná (heslo, pin), vlastní (token, usb klíč, privátní klíč) nebo biometricky (otisk prstu, sken sítnice).
+
+Heslem::
+Heslo (nemusí nutně být čerstvé) je symetricky šifrováno. Uživatel mohl heslo uložit, což dává prostor útoku.
+
+Náhodnými čísly::
+Alice nejprve Boba požádá o náhodné číslo, které posléze symetricky zašifruje. Heslo je tak vždycky čerstvé.
+
+Náhodnými čísly obousmerně::
+Alice pošle Bobovi náhodné číslo, ten ho zašifruje a připojí druhé náhodné číslo, které pro změnu zašifruje Alice a pošle zpět.
+
+Řetězcem důvěryhodných autorit::
+Certifikační autority (CA), kterým implicitně věříme, podepíšou veřejný klíč někomu jinému, a tak se na danou dobu závažou, že daný klíč se skutečně váže k uvedené osobě. No, a ta osoba může udělat to samé pro někoho dalšího, atd.
+
+== Šifrování
+
+Zajišťuje důvernost přenosu.
+
+Symetrická kryptografie::
+Obě strany sdílí jeden klíč, který používají k zašifrování zpráv.
+* Advanced Encryption Standard (AES)
+* Data Encryption Standard (DES)
+
+Asymetrická (public-key) kryptografie::
+Odesílatel používá veřejný klíč protistrany k zašifrování zprávy. Příjemce používá svůj soukromý klíč k dešifrování zprávy. Veřejný a soukromý klíč jsou dvě různá, leč provázaná čísla, jenž byla zvolena tak, aby se soukromý klíč počítal jen ze znalosti toho veřejného fakt blbě.
+* Diffie-Hellman (ano, i když ve výsledku komunikují symetricky)
+* Rivest-Shamir-Adleman (RSA)
+* ElGamal
+
+=== Algoritmus Diffie-Hellman
+
+Asymetrická metoda vytvoření symetrického klíče.
+
+1. Alice a Bob se veřejně dohodnou na prvočíselném modulu stem:[p] a primitivním kořenu stem:[g] tohoto modulu.
+2. Alice si zvolí soukromé náhodné číslo stem:[a], spočítá stem:[A = g^a \pmod{p}] a stem:[A] pošle Bobovi.
+3. Bob si zvolí soukromé náhodné číslo stem:[b], spočítá stem:[B = g^b \pmod{p}] a stem:[B] pošle Alici.
+4. Alice i Bob spočítají společný soukromý klíč stem:[s = B^a = A^b = g^{ab} \pmod{p}].
+
+=== Digitální podpis
+
+Zajišťuje důvěryhodnost (pravost) a integritu zprávy -- znemožňuje její úpravu.
+
+Používá asymetrickou kryptografii, ale obráceně než šifrování. Odesílatel zašifruje hash podepisované zprávy svým *soukromým* (ne veřejným) klíčem, takže ji kdokoli může dešifrovat odesílatelovým *veřejným* klíčem.
+
+V Česku zajišťuje: Česká pošta, První certifikační autorita, eIdentity.
+
+== Zabezpečení v prokolech
+
+=== IPSec
+
+Protokol IPv4 nebyl vyvinut pro bezpečnost. IPSec jsou rozšíření, která se toto snaží napravit. Umožňuje zabezpečit datové toky mezi dvěma uzly bez nutnosti upravovat aplikace.
+
+Authentication Header (AH)::
+Autentizuje odesílatele a zajišťuje integritu l hlavičky, ale ne integritu těla zprávy nebo jeho důvernost.
+
+Encapsulating Security Payload (ESP)::
+Autentizuje odesílatele. Dovede zajistit integritu těla zprávy nebo jeho důvěrnost, ale ne obojí najednou a nezajišťuje ani integritu hlavičky.
+
+Security Associations (SA)::
+Balík algoritmů, které řeší, jak si komunikující strany vykomunikují parametry, aby mohly komunikovat bezpečně pomocí AH a ESP.
+
+IPSec lze použít ve dvou módech:
+
+Transportní mód::
+IPSec hlavička se vloží mezi IP hlavičku a tělo zprávy.
+
+Tunelovací mód::
+IPSec hlavička se vloží před IP hlavičku a vygeneruje se nová IP hlavička.
+
+=== Secure Socket Layer (SSL) a Transport Layer Security (TLS)
+
+Zabezpečují transportní vrstvu za cenu úpravy aplikačních protokolů, proto exituje HTTPS a FTPS. TLS (aktuálně 1.3) je nové SSL. SSL je deprekované. Používá algoritmus Diffie-Hellman k navázání zabezpečené komunikace.
+
+,,Nehodí'' se do OSI modelu, jelikož poskytuje službu -- zabezpečení -- transportní vrstvě, ale aplikace mají tendenci používat TLS jako kdyby to byla transportní vrstva.
+
+=== Pretty Good Privacy (PGP)
+
+Umožňuje zaslat digitálně podepsanou, zašifrovanou poštu a autentizovat jejího odesílatele.
+Mechanismus pro zasílání bezpečné pošty.

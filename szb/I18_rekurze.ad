@@ -1,0 +1,108 @@
+= Rekurzivní algoritmy
+:url: ./rekurzivni-algoritmy/
+:page-group: inf
+:page-order: I18
+
+[NOTE]
+====
+Metoda rozděl a panuj, výhody a nevýhody použití rekurze, odstranění rekurze. Vysvětlení principů a implementace řadících rekurzivních algoritmů. Vztah rekurze a matematické indukce.
+
+_IB002, IB015_
+====
+
+Rekurze nastává, když funkce přímo, či nepřímo ("ob jiné funkce") volá sama sebe. To samé se dá aplikovat i na struktury, které obsahují samy sebe (skrze pointer nebo ekvivalent).
+
+.Výhody rekurze
+* V některých případech čistší a elegantnější kód.
+* Důkazy korektnosti využívají známé metody matematické indukce.
+* Složitost lze zapsat pomocí rekurentní rovnice.
+
+.Nevýhody rekurze
+* Když si člověk nedá pozor, přeteče mu zásobník, což se špatně ladí.
+* Volání funkce má vyšší režii (časovou i paměťovou) než vlastní správa zásobníku.
+* Mentálně náročnější než `for` cyklus.
+
+== Odstranění rekurze
+
+Každý rekurzivní algoritmus lze převést na iterativní. Pokud je rekurze koncová (`tail`), lze ji nahradit `for` cyklem. 
+Není-li koncová, je potřeba použít zásobník.
+
+== Rozděl a panuj
+
+Přístup dělení na problému na menší, ale podobné podproblémy. Kombinací řešení podproblémů získáme řešení celkové. Tento přístup se často implementuje pomocí rekurze.
+
+== Rekurzivní řadící algoritmy
+
+=== Mergesort
+
+Složitost: stem:[\Theta(n \log(n))].
+
+1. Rozděl posloupnost na poloviny. (stem:[\Theta(n)])
+2. Rekurzivně seřaď obě poloviny. (stem:[2 \cdot T(n/2)])
+3. ,,Slij'' obě seřazené posloupnosti do jedné. (stem:[\Theta(n)])
+
+=== Quicksort
+
+Složitost: průměrně stem:[\Theta(n \log(n))]; stem:[\Theta(n^2)], pokud už posloupnost seřazená je.
+
+1. Vyber pivota.
+2. Rozděl posloupnost na dvě časti: menší než pivot a větší než pivot.
+3. Rekurzivně seřad obě části.
+4. Zkombinuj obě části. (Reálně nedělá nic, protože už jsou ve stejném poli.)
+
+== Korektnost rekurzivních algoritmů
+
+Používá se matematická indukce. Rekurze a matematická indukce jsou si podobné. Jen jdou opačným směrem. Matematická indukce začíná u dna a jde do nekonečna, zatímco rekurze začíná na nějaké stem:[n]-té úrovni a klesá na dno.
+
+_Konečnost_ výpočtu plyne z faktu, že podproblémy se zmenšují.
+
+_Správnost_ výsledku (u řadících algoritmů) dokážeme indukcí vzhledem k délce vstupu:
+
+1. Báze -- třeba, že minimum z posloupnosti délky jedna je onen jediný prvek.
+2. Předpoklad -- algoritmus vrací korektní výsledek pro všechny kratší vstupy délky stem:[n].
+3. Krok -- důkaz tvrzení, že algoritmus vrací správný výsledek i pro vstupy délky stem:[n + 1].
+
+== Složitost rekurzivních algoritmů
+
+Složitost zapisujeme pomocí _rekurentní_ rovnice, např.:
+
+[stem]
+++++
+T(n) = \begin{cases}
+    0 + T(\lfloor \frac{n}{2} \rfloor) + T(\lceil \frac{n}{2} \rceil) + 2 & \text{pro } n > 2, \\
+    1 & \text{pro } n = 2, \\
+    0 & \text{pro } n = 1.
+\end{cases}
+++++
+
+A nebo obecně:
+
+[stem]
+++++
+T(n) = \begin{cases}
+    \Theta(1) & \text{pro } n \le c, \\
+    \sum_{i=1}^k T(n_i) + D(n) + C(n) & \text{jinak}.
+\end{cases}
+++++
+
+kde stem:[D(n)] je složitost konstrukce podproblémů o velikostech stem:[n_i] a stem:[C(n)] je složitost kombinace výsledků.
+
+Chceme ale explicitní vyjádření funkce stem:[T(n)], které můžeme získat několika způsoby:
+
+Substituční metoda::
+,,uhodneme'' řešení a ověříme pomocí matematické indukce.
+
+Metoda rekurzivního stromu::
+zkonstruujeme strom, jehož vrcholy vyjadřují složitost jednotlivých rekurzivních volání. Výsledná složitost je pak suma ohodnocení vrcholů stromu, kterou pak použijeme jako odhad pro substituční metodu.
+
+Kuchařková věta (master method)::
+Pokud stem:[T(n)] má tvar stem:[T(n) = a\cdot T(n/b) + f(n)], kde stem:[a \ge 1, b > 1] a stem:[f(n)] je polynomiální funkce, pak platí:
++
+[stem]
+++++
+T(n) = \begin{cases}
+    \Theta(f(n)) & \text{když } a \cdot f(n/b) = c \cdot f(n) \text{ pro konstantu } c < 1, \\
+    \Theta(n^{\log_b a}) & \text{když } a \cdot f(n/b) = d \cdot f(n) \text{ pro konstantu } d > 1, \\
+    \Theta(f(n) \cdot \log_b n) & \text{když } a \cdot f(n/b) = f(n).
+\end{cases}
+++++

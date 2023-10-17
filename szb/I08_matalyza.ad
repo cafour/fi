@@ -1,0 +1,203 @@
+= Matematická analýza
+:url: ./matematicka-analyza/
+:page-group: inf
+:page-order: I08
+
+[NOTE]
+====
+Vlastnosti reálných funkcí, polynomy, spojité funkce a limity, derivace, neurčitý a určitý integrál, geometrický význam. Diferenciální rovnice a jejich význam.
+
+_MB102/MB202, MB103/MB203_
+====
+
+== Reálné funkce
+
+Funkce stem:[f : \mathbb{R} \to \mathbb{R}] je reálná. Každému stem:[x \in D_f] z definičního oboru přidelí nanejvýš jedno stem:[y \in H_f] z oboru hodnot.
+
+Prostá (injektivní) funkce::
+Pro každý prvek oboru hodnot existuje nejvýše jeden prvek definičního oboru, který se na něj zobrazí.
++
+stem:[(\forall x, y \in D_f)(x \ne y \implies f(x) \ne f(y))]
+
+Inverzní funkce stem:[f^{-1}]::
+stem:[f(x) = y \iff f^{-1}(y) = x]
+
+Funkce stem:[f] periodická s periodou stem:[P]::
+stem:[(\forall x \in D_f)(f(x + P) = f(x))]
++
+Patří sem např. sinus, cosinus, tangens a cotangens.
+
+=== Monotonie
+
+Vlastnost popisující směr funkce globálně (stem:[\forall x, y \in D_f]) nebo v daném intervalu.
+
+Rostoucí funkce::
+stem:[x < y \implies f(x) < f(y)]
+
+Klesající funkce::
+stem:[x < y \implies f(x) > f(y)]
+
+Neklesající funkce::
+stem:[x < y \implies f(x) \le f(y)]
+
+Neroustoucí funkce::
+stem:[x < y \implies f(x) \ge f(y)]
+
+Konstantní funkce::
+stem:[x < y \implies f(x) = f(y)]
+
+=== Parita
+
+Funkce je nějakým způsobem symetrická podle 0.
+
+Sudá funkce::
+stem:[(\forall x \in D_f)(f(x) = f(-x))]
+
+Lichá funkce::
+stem:[(\forall x \in D_f)(f(x) = -f(-x))]
+
+=== Omezenost
+
+Shora omezená funkce::
+stem:[(\exists u \in \mathbb{R})(\forall x \in D_f)(u > f(x))]
+
+Zdola omezená funkce::
+stem:[(\exists l \in \mathbb{R})(\forall x \in D_f)(l < f(x))]
+
+=== Spojitost
+
+Funkce stem:[f] je spojitá v bodě stem:[x_0], jestliže je v tomto bodě definována a stem:[\lim\limits_{x \to x_0} f(x) = f(x)].
+
+Každý polynom je spojitou funkcí na celém stem:[\mathbb{R}].
+
+Pro funkce stem:[f, g] spojité v stem:[x_0] platí stem:[f + g] je spojitá a stem:[f \cdot g] je spojitá.
+
+== Polynomy
+
+Polynom je výraz tvaru stem:[p(x) = \sum_{i = 0}^{n} a_i \cdot x^i = a_0 \cdot x^0 + a_1 \cdot x^1 + ... + a_n \cdot x^n], kde
+
+--
+* stem:[n \in \mathbb{N}] je stupeň polynomu,
+* stem:[a_i \in \mathbb{R}] je i-tý koeficient.
+--
+
+== Limita
+
+Limita je hodnota, která sice není v oboru funkce, ale funkce se k ní tak nějak blíží.
+
+Limita posloupnosti::
+Posloupnost stem:[(a_n)_{n=1}^\infty] má limitu stem:[a], jestliže
++
+stem:[(\forall \varepsilon > 0)(\exists n_0 \in \mathbb{N})(\forall n \in \mathbb{N})(n > n_0 \implies |a_n - a| < \varepsilon)]
++
+Tedy hodnoty posloupnosti jsou od určitého bodu vzdáleny méně než libovolné stem:[\varepsilon].
+
+Limita funkce::
+Funkce stem:[f] má v bodě stem:[x_0] limitu stem:[L], jestliže platí
++
+stem:[(\forall \varepsilon > 0)(\exists \delta > 0)(\forall x \in (x_0 - \delta, x_0) \cup (x_0, x_0 + \delta))(|f(x) - L| < \varepsilon)].
++
+Tedy stem:[f] má v stem:[x_0] limitu stem:[L], jestliže se stem:[f(x)] liší od stem:[L] jen velice málo, pokud je stem:[x] fakt blízko stem:[x_0].
++
+Píšeme stem:[\lim\limits_{x \to x_0} f(x) = L].
+
+Limita zprava::
+Uvažuje jen pravé okolí bodu stem:[x_0]. Tedy ve vzorci výše pouze stem:[x \in (x_0, x_0 + \delta)].
+
+Limita zleva::
+Uvažuje jen levé okolí bodu stem:[x_0]. Tedy ve vzorci výše pouze stem:[x \in (x_0 - \delta, x_0)].
+
+== Derivace
+
+[quote]
+____
+Kdyby funkce byla kopec, jak blbě by se na něj lezlo?
+____
+
+Směrnice tečny funkce. Pokud je kladná, funkce roste. Pokud je záporná, funkce klesá.
+
+Funkce stem:[f] má v bodě stem:[x_0] derivaci stem:[a], právě když existuje limita
+
+[stem]
+++++
+\lim\limits_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = a
+++++
+
+Derivace je vlastní (stem:[a \in \mathbb{R}]) nebo nevlastní (stem:[\infty / -\infty]) v závislosti na limitě. Analogicky derivace zprava/zleva.
+
+NOTE: Vzorečky viz kdekoliv jinde.
+
+Určení monotonnosti funkce::
+* stem:[f'(x) > 0 \implies f \text{ je rostoucí}]
+* stem:[f'(x) < 0 \implies f \text{ je klesající}]
+
+Určení lokálních extrémů (maximum/minimum)::
+stem:[f'(x) = 0] nebo neexistuje. Derivace mění při průchodu přes tento bod znaménko.
+
+Určení konvexnosti/konkávnosti::
+* stem:[f''(x) > 0 \implies f \text{ je konvexní}]
+* stem:[f''(x) > 0 \implies f \text{ je konkávní}]
+* Pokud stem:[f''(x) > 0] nebo neexistuje, pak stem:[x] je inflexní bod -- bod mezi konvexou a konkávou.
++
+NOTE: ,,Do konkávy kávu nenaliješ.''
+
+== Integrace
+
+[quote]
+____
+Kdyby funkce byla kopec, kolik hlíny je pod ním? Kolik pod mojí parcelou? Kolik pod... ještě ani nevím, pod jakou parcelou.
+____
+
+Integrál je opak derivace. Geometricky, dává plochu pod křivkou -- obsah, objem nebo větší šílenost.
+
+=== Neurčitý integrál
+
+Primitivní funkce stem:[F] k funkci stem:[f] je na každém intervalu stem:[[a, b\]] určena jednoznačně až na aditivní konstantu (stem:[c]). Výsledkem neurčitého integrálu je tak *množina* primitivních funkcí k stem:[f].
+
+[stem]
+++++
+\begin{gathered}
+    F(x) = \int f(x) dx \\
+    F'(x) = f(x)
+\end{gathered}
+++++
+
+=== Určitý (Newtonův) integrál
+
+Odpovídá ploše pod křivkou vymezenou stem:[f(x)], stem:[x = a], stem:[x = b] a osou x. Může být i záporný. V takovém případě je (alespoň z větší části) pod osou x.
+
+[stem]
+++++
+\int_a^b f(x) dx = [F(x)]_a^b = F(b) - F(a)
+++++
+
+NOTE: stem:[F(x)] ve vzorci výše může být kterákoliv z primitivních funkcí k stem:[f]. Stejně se konstanta stem:[c] vyruší.
+
+== Diferenciální rovnice
+
+Diferenciální rovnice prvního řádu je vztah mezi hodnotou funkce stem:[y] v proměnné stem:[t], její derivací stem:[y'] a samotnou proměnnou stem:[t].
+
+[stem]
+++++
+\begin{gathered}
+    \mathcal{F} : \mathbb{R}^3 \to \mathbb{R} \\
+    \mathcal{F}(y', y, t) = 0
+\end{gathered}
+++++
+
+Řešením diferenciální rovnice je funkce nebo množina funkcí.
+
+=== Použití
+
+Ve fyzice, chemii, ekonomii, strojírenství, atd.
+
+Příklady:
+
+Rovnice kontinuity::
+Vyjadřuje zákon zachování nějaké veličiny.
+
+Rovnice difůze::
+Popisuje pohyb částic rozpouštějících se např. ve vodě.
+
+Telegrafní rovnice::
+Popisují napětí a proud ve vedení v závislosti na vzdálenosti a čase.

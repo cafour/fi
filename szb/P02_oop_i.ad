@@ -1,0 +1,128 @@
+= Objektově orientované programovaní I
+:url: ./objektove-orientovane-programovani-i/
+:page-group: prg
+:page-order: P02
+
+[NOTE]
+====
+Zapouzdření, dědičnost, polymorfizmus. Realizace uvedených principů OOP v C++ nebo Javě (podle vlastní volby).
+
+_PB161/PB162_
+====
+
+Objektově orientované programování (OOP) je snaha modelovat reálný svět pomocí _tříd_ a jejich _instancí_ čili _objektů.
+
+== Zapouzdření
+
+Je princip shlukování dat (proměnných) a funkcionality (funkcí) v jedné jednotce -- _třídě_. Definice třídy udává, které metody a proměnné jsou přístupné zvenku, jsou veřejné.
+
+=== V C++
+
+[source, cpp]
+----
+class Train {
+private:
+    int _weight;
+    int _passengerCount;
+    std::string _name;
+    std::string _destination;
+
+public:
+    const std::string& name() {
+        return _name;
+    }
+
+    void destination(const std::string& destination) {
+        _destination = destination;
+    }
+};
+----
+
+=== V Javě
+
+[source, java]
+----
+public class Train
+{
+    private int weight;
+    private int passengerCount;
+    private String name;
+    private String destination;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setDestination(String dst) {
+        destination = dst;
+    }
+}
+----
+
+== Dědičnost
+
+Princip sdílění proměnných a funkcích mezi třídami. Umožnuje modelovat některé vztahy v reálném světě. Vzniká _hierarchie_ tříd.
+
+=== V C++
+
+[source, cpp]
+----
+struct Vehicle {
+    int passengerCount;
+};
+
+struct Car : public Vehicle {
+    int wheelCount;
+};
+
+struct Truck : public Car {
+    int capacity;
+};
+----
+
+=== V Javě
+
+[source, java]
+----
+class Vehicle
+{
+    int passengerCount;
+}
+
+class Car extends Vehicle
+{
+    int wheelCount;
+}
+
+class Truck extends Car
+{
+    int capacity;
+}
+----
+
+== Polymorfismus
+
+Umožňuje se k objektu chovat jako k jeho nadtřídě nebo rozhraní, které implementuje, zejména přistupovat k proměnným a volat funkce. Objekt má více ,,tvarů''.
+
+Override::
+Nahrazení funkce z nadřazené třídy funkcí novou se stejným názvem.
+
+Overloading::
+Koexistence vícera funkcí se stejným názvem, ale různými parametry.
+
+=== V C++
+
+* Lze overridovat pouze metody označené jako `virtual`.
+* Pokud objekt mažeme skrze pointer na nadtřídu, musí destruktor nadtřídy být `virtual`, aby byl objekt správně zničen.
+
+=== V Javě
+
+* Lze overridovat pouze instanční metody neoznačené jako `final`.
+
+== Abstraktní třídy
+
+Třídy, které nelze instancovat, ale lze z nich dědit.
+
+V Javě je nutno třídu označit jako `abstract` stejně jako každou metodu, kterou musí potomek doimplementovat.
+
+V C++ je abstraktní třída taková, která obsahuje alespoň jednu abstraktní metodu. Abstraktní metody mají místo těla `= 0;`.

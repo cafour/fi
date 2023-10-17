@@ -1,0 +1,105 @@
+= Databáze I
+:url: ./databaze-i/
+:page-group: prg
+:page-order: P09
+
+[NOTE]
+====
+Relační model dat, relační schéma, klíče relačních schémat, relační algebra (projekce, selekce, agregace, přejmenování), spojování relací.
+
+_PB154_
+====
+
+[stem]
+++++
+\gdef\lojoin{\mathbin{⟕}}
+\gdef\rojoin{\mathbin{⟖}}
+\gdef\ojoin{\mathbin{⟗}}
+++++
+
+== Relační model dat
+
+Model dat je sada nástrojů (se svou syntaxí a sémantikou) pro popis dat, vztahů a podmínek, které jsou na data kladeny. Hlavním nástrojem relačního modelu dat je _relace_. Mezi další modely patří _entity-relationship_ (ERD) a _objektový_ (class diagram).
+
+Atribut::
+Definován jménem a doménou (,,sloupec tabulky'').
+
+Doména::
+Množina povolených hodnot atributu.
+
+`NULL`::
+Speciální prázdná hodnota atributu.
+
+Relační schéma::
+Neprázdná uspořádaná n-tice atributů (,,záhlaví tabulky'').
+
+Relace::
+Podmnožina kartézského součinu domén atributů z relačního schématu (,,tabulka'').
+
+Uspořádaná n-tice::
+Prvek relace (,,řádek v tabulce'').
+
+Databáze::
+Soubor relací.
+
+=== Klíče
+
+Superklíč::
+Libovolná podmnožina atributů, které unikátně identifikují každou entitu.
+
+Kandidátní klíč::
+Neredundantní superklíč. Každá část klíče je nezbytná pro unikátní identifikaci.
+
+Primární klíč::
+Zvolený kandidátní klíč.
+
+Cizí klíč::
+Atribut, který nabývá hodnoty primárního klíče jiné relace (nebo může být `NULL`).
+
+== Relační algebra
+
+Selekce stem:[\sigma_\text{podmínka}(\text{relace})]::
+Vybere n-tice (řádky), pro které je splněna _podmínka_.
+
+Projekce stem:[\pi_{A_1, A_2, ..., A_n}(\text{relace})]::
+Vybere sloupce odpovídající atributům stem:[A_1, A_2, ..., A_n] z _relace_. Vrací množinu (bez duplicit).
+
+Přejmenování stem:[\rho_x(\text{relace})] nebo stem:[\rho_{x(A_1, A_2)}(\text{relace})]::
+Umožňuje přistupovat k jedné relaci pod více jmény a přejmenování atributů.
++
+Lze použít k vytvoření konstantní relace: stem:[\rho_{\text{predmety(uco, kod)}}\{(123, \text{PB156}), (456, \text{VB001})\}].
+
+Agregace stem:[_{G_1, G_2, ..., G_m}g_{f_1(A_1), f_2(A_2), ..., f_n(A_n)}(\text{relace})]::
+Aplikuje agregační funkce stem:[f_1, f_2, ... f_n] na atributy stem:[A_1, A_2, ... A_n] a seskupí je podle atributů stem:[G_1, G_2, ..., G_m]. Agregační funkce jsou nejčastěji: Sum, Count, Average, Maximum, Minimum.
+
+=== Spojování relací
+
+Sjednocení stem:[x \cup y]::
+Výsledek obsahuje řádky, které se nachází v stem:[x], nebo v stem:[y].
++
+* Relační schéma se přebírá z první relace -- stem:[x].
+* Relace musí mít stejný počet atributů a stejné domény příslušných atributů.
+
+Rozdíl stem:[x \setminus y]::
+Výsledek obsahuje řádky, které se nachází v stem:[x], ale ne v stem:[y]. Relace musí mít stejný počet atributů a stejné domény příslušných atributů.
+
+Přiřazení stem:[x \leftarrow y]::
+Dá se použít k
+* přidání řádku stem:[E]: stem:[r \to r \cup E],
+* smazání řádku stem:[E]: stem:[r \to r \setminus E],
+* aktualizace záznamů, přidání/odebrání sloupců: stem:[r \to \pi_{E_1, E_2, ..., E_n}(r)].
+
+Kartézský součin stem:[x \times y]::
+Spojí každý řádek z stem:[x] ke každému řádku z stem:[y]. Nové relační schéma vznikne zřetězením schématu stem:[x] a stem:[y]. Pokud mají relační schémata neprázdný průnik, je nutné nejdříve přejmenovat kolidující atributy.
+
+Přirozené vnitřní spojení (_natural join_) stem:[x \bowtie y]::
+Spojí pouze řádky, které mají stejné hodnoty ve společných sloupcích stem:[x] a stem:[y]. Pokud takové sloupce neexistují, chová se jako kartézský součin.
+
+Přirozené vnější spojení (_natural outer join_) stem:[x \ojoin y]::
+Rozšíření přirozeného vnitřního spojení, které neztrácí informace, protože chybějící hodnoty zaplní `NULL`.
+
+Pravé přirozené vnější spojení (_right outer join_) stem:[x \rojoin y]::
+Přirozené spojení, které zachovává všechny řádky z stem:[y] (té vpravo), ale ztrácí neslučitelné řádky z stem:[x].
+
+Levé přirozené vnější spojení (_left outer join_) stem:[x \lojoin y]::
+Přirozené spojení, které zachovává všechny řádky z stem:[x] (té vlevo), ale ztrácí neslučitelné řádky z stem:[y].

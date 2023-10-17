@@ -1,0 +1,327 @@
+= Elementární teorie čísel
+:url: ./elementarni-teorie-cisel/
+:page-group: inf
+:page-order: I02
+
+[NOTE]
+====
+Dělitelnost, Euklidův algoritmus, modulární operace, prvočíselnost a její testování, aplikace teorie čísel (RSA, DSA, lineární a polynomiální kódy).
+
+_MB104/MB204_
+====
+
+[quote, Wikipedie]
+Teorie čísel je odvětví matematiky zabývající se vlastnostmi čísel - zejména celých.
+
+Celá čísla stem:[\mathbb{Z}] jsou množina. Ba co víc je to _obor integrity_ stem:[(\mathbb{Z}, +, \cdot)]. Platí tedy následující tabulka vlastností:
+
+NOTE: V následující tabulce: stem:[(\forall a, b \in \mathbb{Z})]
+
+[options="header", cols=3*]
+|===
+| Vlastnost
+| Sčítání
+| Násobení
+
+| Uzavřenost
+| stem:[a + b \in \mathbb{Z}]
+| stem:[a \cdot b \in \mathbb{Z}]
+
+| Asociativita
+| stem:[a + (b + c) = (a + b) + c]
+| stem:[a \cdot (b \cdot c) = (a \cdot b) \cdot c]
+
+| Komutativita
+| stem:[a + b = b + a]
+| stem:[a \cdot b = b \cdot a]
+
+| Neutrální prvek
+| stem:[a + 0 = a]
+| stem:[a \cdot 1 = a]
+
+| Inverzní prvek
+| stem:[a + (-a) = 0]
+| stem:[(\mathbb{Z}, \cdot)] není grupa, jen monoid
+
+| Distributivita
+2+| stem:[(\forall c \in \mathbb{Z})(a \cdot (b + c) = (a \cdot b) + (a \cdot c))]
+|===
+
+== Dělitelnost
+Dělitelnost je binární relace stem:[\mid] nad celými čísly taková, že platí
+
+[stem]
+++++
+(\forall a \in \mathbb{Z})(\forall b \in \mathbb{Z})(a \mid b \iff (\exists c)(a \cdot c = b)).
+++++
+
+[quote]
+Celé číslo stem:[a] dělí celé číslo stem:[b], právě když existuje celé číslo stem:[c] takové, že stem:[a \cdot c = b].
+
+=== Vlastnosti dělitelnosti
+
+[options="header",cols=2*]
+|===
+| Vlastnost
+| Popis
+
+| Všechno dělí nulu
+| stem:[(\forall a \in \mathbb{Z})(a \mid 0)]
+
+| Všechno dělí samo sebe
+| stem:[(\forall a \in \mathbb{Z})(a \mid a)]
+
+| Tranzitivita
+| stem:[(\forall a \in \mathbb{Z})(\forall b \in \mathbb{Z})(\forall c \in \mathbb{Z})
+    (a \mid b \land b \mid c \implies a \mid c)]
+
+| Bezoutova věta
+| stem:[(\forall a, b \in \mathbb{Z})(\exists m, n \in \mathbb{Z})(a \cdot m + b \cdot n = \text{GCD}(a, b))],
+    což se může zdát neintuivní, než si uvědomíš, že celý čísla můžou být záporný.
+|===
+
+=== Dělitelnostní(TM) pojmy
+
+Největší společný delitěl::
+stem:[\text{GCD}(a, b)] je nejvetší stem:[c \in \mathbb{Z}] takové, že stem:[(c \mid a) \land (c \mid b)]. Zapisuje se taky jako stem:[(a, b)], což vůbec není matoucí.
+
+Nejmenší společný násobek::
+stem:[\text{LCM}(a, b)] je nejmenší stem:[c \in \mathbb{Z}] takové, že stem:[(a \mid c) \land (b \mid c)].
+
+Nesoudělná čísla (coprimes)::
+Celá čísla stem:[a] a stem:[b] jsou _nesoudělná_, právě tehdy když 1 je jejich jediný společný dělitel.
++
+NOTE: 1 je nesoudělná se vším!
+
+Prvočíslo::
+Číslo stem:[p], které je dělitelé pouze číslem 1 a sebou samým. Nebo jinými slovy, stem:[p] není násobkem žádných dvou menších celých čísel různých od 1.
+
+Bezoutovy koeficienty::
+Čísla stem:[m, n] z věty výše. Počítají se jako vedlejší produkt Euklidova algoritmu.
+
+Inverze vzhledem k násobení::
+Číslo stem:[a^{-1}] takové, že stem:[a \cdot a^{-1} \equiv 1 \pmod{m}].
++
+stem:[x \equiv a^{-1} \pmod{n}] lze vyřešit jako Bezoutovu rovnici stem:[ax + ny = 1] pomocí Euklidova algoritmu.
+
+Eulerova funkce stem:[\varphi(n)]::
+Počet čísel nesoudělných s stem:[n] v intervalu stem:[[1, n\]]. Pár zajímavostí:
+* Pokud stem:[n] je prvočíslo, pak stem:[\varphi(n) = n -1].
+* Pokud stem:[n = p^k, k \ge 1], kde stem:[p] je prvočíslo, pak stem:[\varphi(n) = p^{k-1} \cdot (p - 1)].
+* Platí stem:[\varphi(mn) = \varphi(m) \cdot \varphi(n)].
+* Třeba stem:[\varphi(12) = \varphi(2^2 \cdot 3) = \varphi(2^2) \cdot \varphi(3) = (2^1 \cdot (2 - 1)) \cdot 2 = 4].
+
+=== Euklidův algoritmus
+
+Najde nejmenšího společného dělitele (GCD) dvou celých čísel.
+
+[source,python]
+----
+def gcd(a: int, b: int) -> int:
+    # `a` must be greater than `b`
+    a = a mod b
+    if a == 0:
+        return b
+    return gcd(b, a)
+----
+
+Příklad s 133 a 15::
++
+[stem]
+++++
+\begin{aligned}
+    133 &= 8 \cdot 15 + 13 &a = 133, b = 15 \\
+    15 &= 1 \cdot 13 + 2   &a = 15, b = 13 \\
+    13 &= 6 \cdot 2 + 1    &a = 13, b = 2 \\
+    2  &= 2 \cdot 1 + 0    &a = 2, b = 1 \\
+    \text{GCD}(133, 15) &= 1 &a = 1, b = 0 
+\end{aligned}
+++++
+
+== Modulární operace
+
+Líbilo by se nám nějak vyjádřit, že, když dvě celá čísla mají po dělení stejným číslem stem:[n] stejný zbytek, tak jsou si tak nějak "podobná". Téhle relaci se říká _kongruence modulo stem:[n]_.
+
+NOTE: Kongruence je relace ekvivalence vztahující se k nějaké operaci. Ne nutně modulo stem:[n].
+    Hlavní je, aby kongruentní prvky daly ten samý výsledek, když na ně člověk tu operaci použije.
+
+=== Vlastnosti modulární aritmetiky
+
+NOTE: V následující tabulce: stem:[(\forall a,b,c,d \in \mathbb{Z})(\forall m \in \mathbb{Z}^+)]
+
+Pokud stem:[a \equiv b \pmod{m}], pak:
+
+[options="header",cols="1,2"]
+|===
+| Vlastnost
+| Popis
+
+| Komutativita
+| stem:[b \equiv a \pmod{m}]
+
+| Přidání konstanty
+| stem:[a + c \equiv b + c \pmod{m}]
+
+| Přidání násobku stem:[m]
+| stem:[a + cm \equiv b \pmod{m}], stem:[a \equiv b + cm \pmod{m}]
+
+| Násobení konstantou
+| stem:[ac \equiv bc \pmod{m}]
+
+| Násobení modulu konstantou stem:[c > 0]
+| stem:[ac \equiv bc \pmod{mc}]
+
+| Dělení modulu konstantou
+| stem:[(ac \equiv bc \pmod{m} \land d = \text{GCD}(m, c)) \implies a \equiv b \pmod{m/d}]
+
+| Sčítání kongruencí
+| stem:[c \equiv d \pmod{m} \implies a + c \equiv a + d \pmod{m}]
+
+| Násobení kongruencí
+| stem:[c \equiv d \pmod{m} \implies a \cdot c \equiv a \cdot d \pmod{m}]
+
+| Fermatova malá věta
+| stem:[(p \text{ je prvočíslo } \land p \nmid a) \implies a^{p - 1} \equiv 1 \pmod{p}]
+
+| Eulerova věta
+| stem:[\text{GCD}(a, m) = 1 \implies a^{\varphi(m)} \equiv 1 \pmod{m}]
+
+| Rozklad modulu na 2 nesoudělná čísla
+| stem:[(x \equiv a^b \pmod{m \cdot n} \land \text{GCD}(m, n) = 1) \implies (x \equiv a^b \pmod{m} \land x \equiv a^b \pmod{n})]
+|===
+
+=== Modulární (ve smyslu souvislosti s modulem) pojmy
+
+Čínská zbytková věta::
+Pro stem:[a, b, m_1, m_2], kde stem:[\text{GCD}(m_1, m_2) = 1], má soustava kongruencí:
++
+stem:[\begin{aligned}
+    x &\equiv a \pmod{m_1} \\
+    x &\equiv b \pmod{m_2}
+\end{aligned}]
++
+právě jedno řešení v stem:[[0, m_1 \cdot m_2)].
+
+Řád čísla::
+Pro stem:[a \in \mathbb{Z}, m \in \mathbb{N}, \text{GCD}(a,m) = 1] je řád čísla nejmenší stem:[n \in \mathbb{N}] takové, že stem:[a^n \equiv 1 \pmod{m}].
+
+Primitivní kořen::
+Pro stem:[m \in \mathbb{N}] je primitivní kořen číslo stem:[g \in \mathbb{Z}, \text{GCD}(g, m) = 1] takové, že jeho řád je roven stem:[\varphi(m)].
+
+== Testování prvočíselnosti
+
+Pro otestování zda stem:[n \in \mathbb{Z}] je prvočíslo existuje několik přístupů:
+
+1. Postupné dělení čísly z intervalu stem:[[2, n)] (resp. stačí stem:[[2, \sqrt{n})]).
+2. Eratosthenovo síto: Vyrob si seznam čísel stem:[[2, n\]] a postupně z něj odebírej násobky 2, 3, 5, ..., stem:[\sqrt{n}]. To, co ti v seznamu zůstane, jsou prvočísla.
+3. Fermatův test: Pokud Fermatova malá věta platí pro čísla stem:[a] nesoudělná s stem:[p], pak je stem:[p] nejspíš prvočíslo. (Ano, jen nejspíš.)
+
+== Kryptografie
+
+Teorie čísel má své využití zejména v oblasti šifrování a digitálních podpisů.
+
+=== Problém diskretního logaritmu
+Kryptografie mnohdy spoléhá na výpočetní náročnost diskrétního logaritmu.
+
+Pro daný základ stem:[b \in N] a číslo stem:[a \in \N] je diskrétní logaritmus číslo stem:[k \in \N] takové, že stem:[b^k = a], píšeme stem:[\log_b(a) = k].
+
+Kryptografie nepoužívá všechna stem:[\N], ale jen nějakou cyklickou grupu o stem:[p] prvcích, proto stem:[b^k \equiv a \pmod{p}], kde stem:[b] je primitivní kořen stem:[p] a stem:[\text{GCD}(a, m) = 1].
+
+=== Rivest-Shamir-Adleman (RSA)
+
+Asymetrická šifra používájící dva klíče: _veřejný_, který dáš všem, a _soukromý_, který si necháš pro sebe.
+
+Generování klíčů::
+1. Zvol dvě velká, ruzná prvočísla stem:[p] a stem:[q].
+2. stem:[n = p \cdot q].
+3. Spočítej stem:[\varphi(n) = (p-1)(q-1)].
+4. Zvol celé číslo stem:[e] menší než stem:[\varphi(n)] takové, že stem:[\text{GCD}(e, \varphi(n)) = 1].
+5. Nalezni číslo stem:[d] takové, že stem:[d \cdot e \equiv 1 \pmod{\varphi(n)}].
+6. Veřejný klíč je stem:[(n, e)], soukromý klíč je stem:[(n, d)].
+
+Šifrování zprávy::
+1. Měj zprávu stem:[M] a veřejný klíč stem:[(n, e)]. Platí stem:[M < n].
+2. Zašifrovaná zpráva je stem:[C = M^e \pmod{n}].
+
+Dešifrování zprávy::
+1. Měj zašifrovanou zprávu stem:[C] a soukromý klíč stem:[(n, d)].
+2. Původní zpráva je stem:[M = C^d \pmod{m}].
+
+=== ElGamal
+
+Vytvoření klíčů::
+1. Zvol prvočíslo stem:[p].
+2. Spočítej stem:[g] -- primitivní kořen stem:[p].
+3. Zvol soukromý klíč stem:[x].
+4. Spočítej stem:[h = g^x \pmod{p}].
+5. Tvůj veřejný klíč je stem:[(p, g, h)], tvůj soukromý je stem:[x].
+
+
+Šifrování zprávy stem:[M]::
+1. Zvol náhodně stem:[y \in \mathbb{Z}].
+2. Spočítej stem:[C_1 = g^y \pmod{p}].
+3. Spočítej stem:[C_2 = M \cdot h^y \pmod{p}].
+4. Pošli stem:[(C_1, C_2)].
+
+Dešifrování stem:[(C_1, C_2)]::
++
+[stem]
+++++
+\begin{aligned}
+    \frac{C_2}{C_1^x} &\equiv \frac{M \cdot h^y}{{g^{y}}^x} \\
+        &\equiv \frac{M \cdot {g^x}^y}{{g^y}^x} \\
+        &\equiv \frac{M \cdot g^{xy}}{g^{xy}} \\
+        &\equiv M \pmod{p}
+\end{aligned}
+++++
+
+=== Digital Signature Algorithm (DSA)
+
+Standard pro digitální podpisy podobný algoritmu ElGamal.
+
+Podepsání::
+1. Vyrob hash zprávy.
+2. Zašifruj hash svým soukromým klíčem.
+3. Přilož podpis ke zprávě a zprávu pošli.
+
+Ověření::
+1. Vyrob hash zprávy.
+2. Dešifruj přiložený podpis odesílatelovým veřejným klíčem.
+3. Porovnej hashe.
+
+== Kódy
+
+Chyby při přenosu se dějí a úplně zabránit se jim nedá. Přenášená informace se ale dá transformovat _kódem_ tak, že poznáme, že k chybě došlo nebo ji dokonce můžeme opravit. Kódy využívají teorie čísel.
+
+Hammingova vzdálenost::
+Počet bitů, ve kterých se slova (posloupnosti bitů) liší.
+
+stem:[(n, k)]-kód::
+Původní informace má délku stem:[k] bitů. Zakódovaná informace má délku stem:[n] bitů, kde stem:[n > k]. Přidáním stem:[n - k] bitů jsme schopní detekovat a opravovat chyby způsobené přenosem informace.
+
+=== Lineární kódy
+
+Lineární kód je takový kód, kde lineární kombinace dvou kódových slov je opět kódové slovo.
+
+Generující matice::
+Linární kód lze reprezentovat generující maticí stem:[G] o stem:[n] řádcích a stem:[k] sloupcích, která funguje jako báze vektorového podprostoru kódových slov. Pro každé slovo stem:[u] je stem:[v = G \cdot u] kódové slovo.
+
+Matice kontroly parity::
+Matice stem:[H] o stem:[n-k] řádcích a stem:[n] sloupcích, kde pro každé kódové slovo stem:[v] platí stem:[H \cdot v = \vec{0}]. Pokud stem:[G = \binom{P}{I_k}], pak stem:[H = (I_{n-k} \; P)] (stem:[I_x] je matice identity o velikosti stem:[x]).
+
+Syndrom slova stem:[u]::
+Je hodnota stem:[H \cdot u]. Pokud je nenulový, slovo je chybné. Pokud syndrom připočteme ke všem validním kódovým slovům. Výsledná hodnota z nejméně jedničkami odpovídá původní zprávě za předpokladu, že nastalo nejmenší možné množství chyb.
+
+=== Polynomiální kódy
+
+Mějme polynom stem:[p(x) = a_0 + a_1 x + a_2 x^2 + ... + a_{n-k} x^{n-k} \in \mathbb{Z}_2[x\]], kde stem:[a_0 = 1] a stem:[a_{n-k} = 1]. Polynomiální kód generovaný polynomem stem:[p(x)] je lineární stem:[(n, k)]-kód, jehož kódová slova jsou polynomy stupně menšího než stem:[n] dělitelné stem:[p(x)].
+
+NOTE: stem:[\mathbb{Z}_2[x\]] je množina polynomů, kde stem:[a_n \in \{0, 1\}].
+
+Zakódování::
+stem:[v(x) = r(x) + x^{n-k} \cdot m(x)],
++
+kde stem:[r(x)] je zbytek po dělení polynomu stem:[x^{n-k} \cdot m(x)] polynomem stem:[p(x)].
+
+Chybový polynom::
+Pokud stem:[v(x) / p(x) \ne 0], pak zpráva obsahuje chybu a stem:[v(x) \mod p(x)] je chybový polynom.

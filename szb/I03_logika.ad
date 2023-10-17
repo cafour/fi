@@ -1,0 +1,194 @@
+= Logika
+:url: ./logika/
+:page-group: inf
+:page-order: I03
+
+[NOTE]
+====
+Výroková a predikátová logika, operace, kvantifikátory, syntax. Sémantika, pravdivost, splnitelnost, dokazatelnost. Normální formy formulí (konjunktivní a disjunktivní, prenexní, Hornovy klauzule).
+
+_IB000, IB101_
+====
+
+Matematická logika se zabývá zkoumáním a formalizováním filozofické logiky, hlavně těch částí, na kterých matematika stojí.
+
+[stem]
+++++
+\gdef\s#1{\textcolor{green}{#1}}
+\gdef\L{\mathcal{L}}
+\gdef\M{\mathcal{M}}
+++++
+
+== Výroková logika
+
+Zabývá se pravdivostí a dokazatelností tvrzení -- výroků.
+
+=== Syntax
+
+Syntax popisuje, jak tvořit výroky ze znaků abecedy. Abeceda výrokové logiky obsahuje
+
+--
+* spočetně mnoho znaků pro výrokové proměnné: stem:[\s{X_1}, \s{X_2}, \s{X_3}, ...],
+* logické spojky: stem:[\s\neg, \s\land, \s\lor, \s\Rightarrow, \s\Leftrightarrow],
+* závorky: stem:[\s(, \s)].
+--
+
+NOTE: Pro odlišení symbolů abecedy od logických operací, jsou symboly zelené.
+
+Formule je ve výrokové logice
+
+--
+* každá výroková proměnná stem:[\s{X}_i],
+* pro formuli stem:[F]: stem:[\s\neg F],
+* pro formule stem:[F_1] a stem:[F_2]: stem:[\s(F_1 \s\land F_2\s)], stem:[\s(F_1 \s\lor F_2\s)], stem:[\s(F_1 \s\Rightarrow F_2\s)], stem:[\s(F_1 \s\Leftrightarrow F_2\s)].
+--
+
+=== Sémantika
+
+Sémantika popisuje, jaký význam formule mají.
+
+Pravdivostní ohodnocení (valuace) stem:[v]::
+Zobrazení, které každé výrokové proměnné přiřadí hodnotu 0 nebo 1. Lze ji rozšířit na formule intuitivním způsobem.
+
+Pravdivá formule::
+Formule stem:[\varphi] je pravdivá při valuaci stem:[v], pokud stem:[v(\varphi) = 1].
+
+Splnitelná formule::
+Formule stem:[\varphi] je splnitelná, jestliže existuje valuace, při níž je pravdivá.
+
+Tautologie::
+Formule, které je pravdivá při každé valuaci.
+
+Ekvivalentní formule::
+Formule stem:[\varphi, \psi] jsou ekvivalentní, psáno stem:[\varphi \approx \psi], jestliže pro každou valuaci stem:[v] platí stem:[v(\varphi) = v(\psi)].
+
+Splnitelný soubor stem:[T]::
+Soubor stem:[T] obsahující výrokové formule je splnitelný, jestliže existuje valuace stem:[v] taková, že stem:[v(\varphi) = 1] pro každé stem:[\varphi \in T].
+
+Věta o kompaktnosti::
+Soubor formulí stem:[T] je splnitelný, právě když každá konečná část stem:[T] je splnitelná.
+
+Odvozovací systém::
+Konečný soubor pravidel, která umožňují z daného souboru formulí odvodit další formuli.
+
+Lukasiewiczův odvozovací systém::
+Systém pro stem:[\mathcal{L}(\s\Rightarrow, \s\neg)] s axiomy tvaru:
++
+* stem:[\varphi \s{\Rightarrow(} \psi \s\Rightarrow \varphi \s)]
+* stem:[\s( \varphi \s{\Rightarrow(} \psi \s\Rightarrow \xi \s{)) \Rightarrow ((} \varphi \s\Rightarrow \psi \s{)\Rightarrow (} \varphi \s\Rightarrow  \xi \s{))}]
+* stem:[\s{(\neg} \varphi \s{\Rightarrow \neg} \psi \s{) \Rightarrow (} \psi \s\Rightarrow \varphi \s)]
++
+a odvozovacím pravidlem modus ponens: Z stem:[\varphi] a stem:[\varphi \s\Rightarrow \psi] odvoď stem:[\psi].
+
+Důkaz::
+Důkaz formule stem:[\psi] z předpokladů stem:[T] je konečná posloupnost formulí stem:[\varphi_1, \varphi_2, ..., \varphi_k], kde stem:[\varphi_k] je stem:[\psi] a každá formule stem:[\varphi_i], kde stem:[1 \le i \le k], je
++
+* prvek stem:[T], nebo
+* axiom,
+* vznikne aplikací odvozovacího pravidla na dříve odvozené formule.
+
+Dokazatelná formule::
+Formule stem:[\psi] je dokazatelná z předpokladů stem:[T], psáno stem:[T \vdash \psi], jestliže existuje důkaz stem:[\psi] z předpokladů stem:[T].
+
+== Predikátová logika
+
+Zabývá se pravdivostí a dokazetelností vlastností objektů -- predikátů.
+
+=== Syntax
+
+Jazyk (predikátové logiky) je systém predikátových a funkčních symbolů. Každý symbol má danou aritu, což je přirozené číslo.
+
+Abecedu predikátové logiky pro jazyk stem:[\L] tvoří
+
+--
+* spočetně mnoho znaků pro proměnné: stem:[\s{x_1}, \s{x_2}, ...],
+* mimologické symboly, t.j. predikátové a funkční symboly stem:[\L],
+* logické spojky,
+* kvantifikátory: stem:[\s{\forall}, \s{\exists}],
+* závorky a čárka.
+--
+
+Termem jazyka stem:[\L] je slovo stem:[t] nad abecedou predikátové logiky pro stem:[\L] tvaru
+
+--
+* libovolné proměnné,
+* stem:[f\s(t_1\s, ...\s, t_n\s)], kde stem:[t_i] jsou termy, stem:[f] je funkční symbol s aritou stem:[n].
+--
+
+Formule jazyka stem:[\L] je slovo stem:[\varphi] nad abecedou predikátové logiky pro stem:[\L] tvaru:
+
+--
+* stem:[\s{P(}t_1\s{,} ...\s{,} t_n\s)], kde stem:[P] je predikátový symbol jazyka stem:[\L] arity stem:[n] a stem:[t_i] jsou termy jazyka stem:[\L].
+* stem:[\s\neg \psi], kde stem:[\psi] je formule,
+* stem:[\s(\psi_1 \circ \psi_2 \s)], kde stem:[\psi_1, \psi_2] jsou formule a stem:[\circ] je symbol logické spojky,
+* stem:[\s\forall \psi] nebo stem:[\s\exists \psi], kde stem:[\psi] je formule.
+--
+
+=== Sémantika
+
+Realizace stem:[\M] jazyka stem:[\L] je zadána
+--
+* neprázdným souborem stem:[M] -- univerzem (nosičem), jehož prvky jsou individua,
+* přiřazením, které každému stem:[n]-árnímu predikátovém symbolu stem:[P] přiřadí relaci stem:[P_\M \sube M^n],
+* přiřazením, které každému stem:[m]-árnímu funkčnímu symbolu stem:[f] přiřadí funkci stem:[f_\M : M^m \to M].
+--
+
+Ohodnocení::
+Ohodnocení stem:[e] je zobrazení přiřazující proměnným prvky univerza stem:[M].
+
+Realizace termu stem:[t] při ohodnocení stem:[e] v realizaci stem:[\M]::
+Psáno stem:[t^\M[e\]] (případně jen stem:[t[e\]], je-li stem:[\M] jasné z kontextu), definujeme induktivně
++
+* stem:[\s{x}[e\] = e(\s{x})],
+* stem:[\s{f(} t_1 \s{,} t_2 \s{,} ... \s{,} t_n \s) = f_\M(t_1[e\], t_2[e\], ..., t_n[e\])].
+
+Pravdivost formule::
+Formule stem:[\varphi] je pravdivá v realizaci stem:[\M] při ohodnocení stem:[e], jestliže stem:[\M \models \varphi[e\]].
+
+Dokazatelná formule::
+Formule stem:[\varphi] je dokazatelná v teorii stem:[T] (soubor formulí), píšeme stem:[T \vdash \varphi], jestliže existuje důkaz stem:[\varphi] v stem:[T].
+
+== Normální formy
+
+Tvar formulí, které jsou naschvál omezené, protože v některých oblastech je jejich použití efektivnější.
+
+Konjunktivní normální forma::
+Konjunkce klauzulí obsahujících disjunkce.
++
+Příklad: stem:[\neg A \land (B \lor C) \land (D \lor \neg E)]
+
+Disjunktivní normální forma::
+Disjunkce klauzulí obsahujících konjunkce.
++
+Příklad: stem:[(D \land E) \lor (B \land C) \lor \neg A]
+
+Úplná konjunktivní/disjunktivní forma::
+Každá klazule obsahuje všechny proměnné.
+
+Prenexní normální forma::
+Kvantifikátory má pouze na začátku a vnitřek je v KNF (resp. DNF).
++
+1. Eliminuj zbytečné kvantifikátory.
+2. Přejmenuj proměnné tak, aby u každé kvantifikátoru byla jiná.
+3. Eliminuj spojky jiné než stem:[\s\land, \s\lor, \s\neg].
+4. Přesuň negace dovnitř.
+** Zaměň stem:[\s{\neg\forall x} \varphi] za stem:[\s{\exists x \neg} \varphi].
+** Zaměň stem:[\s{\neg(}\varphi_1 \s\land \varphi_2\s)] za stem:[\s{(\neg}\varphi_1 \s\lor \s\neg\varphi_2\s)].
+5. Přesuň kvantifikátory na začátek.
+** Zaměň stem:[\varphi_1 \s\lor \s\exists \s{x} \varphi_2] za stem:[\s\exists \s{x} \s(\varphi_1 \s\lor \varphi_2 \s)].
+** Zaměň stem:[\s\exists \s{x} \varphi_1 \s\lor \varphi_2] za stem:[\s\exists \s{x} \s(\varphi_1 \s\lor \varphi_2 \s)].
+** Analogicky pro stem:[\s\forall] a stem:[\s\land].
+6. Převeď nekvantifikované podformule do KNF (nebo DNF).
++
+Příklad: stem:[\forall x \forall y \exists z \forall w ((P(x,y) \lor \neg Q(z)) \land (R(v, w) \lor R(y, w)))]
+
+Hornovy klauzule::
+Disjunkce literálů s nejvýše jedním pozitivním literálem.
++
+Příklad: stem:[(P \lor \neg Q \lor \neg R)] je stem:[\{P, \neg Q, \neg R\}]
++
+Dělíme je na
++
+* fakta -- max jeden positivní literál,
+* pravidla -- právě jeden pozitivní a alespoň jeden negativní literál, a
+* cíle -- bez pozitivních literálů.

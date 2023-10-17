@@ -1,0 +1,93 @@
+= Plánování procesů
+:url: ./planovani-procesu/
+:page-group: prg
+:page-order: P07
+
+[NOTE]
+====
+Podstata a cíle plánování úloh v operačních systémech. Realizace plánování činnosti procesorů. Uváznutí, podmínky uváznutí a metody ochrany proti uváznutí.
+
+_PB152/PB153_
+====
+
+Cílem plánování úloh je využít co možná nejlépe HW počítače a umožnit více programům běžet najednou.
+
+== Plánování vláken (thread scheduling)
+
+Sheduler (plánovač) je program, který plánuje, kdy které vlákno poběží, a přepíná mezi vlákny a procesy. Je součástí kernelu.
+
+Přepínání vláken::
+Pokud jsou v rámci jednoho procesu, jen registry musí být uloženy a obnoveny.
++
+Pokud jsou ve dvou různých procesech, nesdílí adresní prostor a je třeba vylít _Translation lookaside buffer_ (cache na absolutní adresy v MMU).
+
+Static scheduling::
+Všechno je naplánováno na pět let dopředu. Používá se minimálně. V embedovaných systémech.
+
+Dynamic scheduling::
+Scheduler sice má plán, ale není to neohybná pětiletka. Vlákna vznikají a zanikají a scheduler se přizpůsobuje jejich počtu a prioritám.
+
+Preemptive scheduling::
+Scheduler prostě procesu sebere kontrolu (preemption). Proces tomu nemůže zabránit. V moderních systémech.
+
+Cooperative scheduling::
+Vlákno se musí explicitně vzdát kontroly. Vlákna by tak měla činit, když čekají na dostupnost zdrojů.
+
+=== Obsluha front
+
+Neběžící vlákna jsou umístěna do front. Existuje více strategií, které určují, v jakém pořadí jsou vlákna obsloužena. Snaží se minimalizovat latenci (na interaktivních systémech) nebo maximalizovat propustnost (výpočetní systémy jako render farmy).
+
+First in, first served::
+Standardní FIFO fronta. Vlákno přijde, je spuštěno, doběhne, je spuštěno další.
+
+Earliest deadline first::
+Odhaduje, jak dlouho vlákno poběží a dává přednost těm, co poběží nejkratší dobu.
+
+Prioritní::
+Procesy mají prioritní číslo. Procesy s vyšší prioritou jsou obsluhovány první. Procesy mohou zrát -- jejich priorita se zvyšuje s jejich věkem.
+
+Round robin::
+Přidělí každému vláknu dobu, po kterou poběží a střídá je v kruhu. Řeší problém stárnutí (nepřijití na řadu) v prioritním přístupu.
+
+== Uváznutí (Deadlock)
+
+Vlákna/procesy se zasekly v čekajícím stavu a nemohou postupovat dál. Nemusí nastat jen kvůli čekání na přidělení zdrojů, ale i např. při čekání na paket, který se ztratil.
+
+Dochází k němu jen, pokud nastanou všechny následující podmínky:
+
+--
+1. _Mutual exclusion_ -- zdroj může držet jedno vlákno.
+2. _Hold and wait condition_ -- vlákno už nějaký zdroj má, ale čeká na další.
+3. _Non-preemptibility_ -- zdroje nemohou být vláknu odebrány, ale musí se jich vzdát dobrovolně.
+4. _Circular wait_ -- vlákna na sebe čekají v kruhu (např. A čeká na B, B čeká na A).
+--
+
+Livelock::
+Vlákna/procesy postupují dál, ale nedělají nic užitečného (např. si jen přehazují zdroje).
+
+Hladovění (starvation)::
+Vlákno/proces nemůže pokračovat dál. Zobecňuje deadlock i livelock.
+
+Detekce::
+Pomocí grafu vlastnictví zdrojů a čekání na tyto zdroje. Pokud je v grafu cyklus, nastal deadlock.
+
+Zotavení (recovery)::
+Pokud je zdroj odjímatelný, OS ho může odejmout a restartovat kritickou sekci. Pokud vše ostatní selže, může některé z vláken v cyklu zabít, a tak uvolnit zdroje.
+
+Vyhnutí (avoidance)::
+OS zdroj nepřidělí, pokud může dojít k deadlocku. Bankéřův algoritmus -- znemožní přidělení zdroje, pokud by pak některé z vláken nemohlo dostat předem určené maximální množství zdroje.
++
+Avoidance je nepraktická a nebere v potaz deadlocky nesouvisející se zdroji.
+
+=== Prevence
+
+Útok na některou z podmínek uváznutí.
+
+Spooling::
+Útočí na podmínku _mutual exclusion_. Více vláken může zapisovat, spooler se postará, aby pomalé zařízení (i.e tiskárna) dostala data ve správném pořadí.
+
+Rezervace::
+Útočí na podmínku _hold and wait_. Vlákna musí rezervovat všechny zdroje dopředu.
+
+Ordering::
+Útočí na podmínku _circular wait_. Vlákna jsou seřazena. Cyklus není možný.

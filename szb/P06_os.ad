@@ -1,0 +1,136 @@
+= Operační systémy
+:url: ./operacni-systemy/
+:page-group: prg
+:page-order: P06
+
+[NOTE]
+====
+Architektury operačních systémů, aplikační programovací rozhraní operačních systémů. Periferie, jejich správa, ovladače. Procesy a vlákna, synchronizace procesů a vláken.
+
+_PB152/PB153_
+====
+
+Operační systém (OS) je sada programů, které řídí a spravují prostředky počítače, koordinují spouštění programů a zabraňují chybám způsobených jejich vzájemným ovlivňováním.
+
+== Komponenty OS
+
+Kernel::
+Nejnižší úroveň OS bežící v privilegovaném módu. Spravuje hardware a vynucuje izolaci programů. Poskytuje systémová volání.
+
+Systémové knihovny::
+Vrstva nad Kernelem umožnující komunikaci mezi ním a programy, které v OS běží. Systémová volání a jejich funkce v C, které je obalují.
+
+Systémoví démoni (služby)::
+Programy běžící na pozadí.
+
+Uživatelské rozhraní::
+Dělí se zhruba na _Terminal User Interface_ (TUI) a _Graphical User Interface_. Shell je terminálové rozhraní kernelu.
+
+Systémové utility::
+Programy, které nejsou součástí jádra, ale systém by bez nich nebyl dost dobře použitelný.
+
+== Architektury Kernelu
+
+Monolitický kernel::
+Obsahuje velké množství funkcionality za hranicí pouhé izolace programů: ovladače, souborové systémy, network stack, šifrování dat.
+
+Microkernel::
+Omezuje množství kódu, které běží v privilegovaném módu. Základ (memory protection, obsluha přerušení, scheduling a IPC) běží privilegovaně, ale všechno ostatní (zejména ovladače) běží v userlandu. Je pomalejší než monolit, ale robustnější.
+
+Hybridní kernel::
+Vykuchaný monolit.
+
+Exokernel::
+Menší než microkernel. Určen pro specifické výzkumné účely.
+
+Type 1 Hypervisor::
+Podobný microkernelu a exokernelu, ale místo aplikací provozuje další OS.
+
+Unikernel::
+Kernel obsluhující právě jednu aplikaci. Užitečné pro hypervisor.
+
+== Aplikační programovací rozhraní (API) OS
+
+Kernel poskytuje sadu systémových volání -- _Application Binary Interface_ (ABI). Jelikož systémové volání svou nízkourovňovostí úplně praktické, existuje _Application Programming Interface_ (API) -- sada funkcí v C, které obalují systémová volání.
+
+glibc::
+Standardní knihovna na Linuxech. Implementuje POSIX -- API operačního systému UNIX.
+
+Win32 a msvcrt::
+Ekvivalent glibc na platformě Windows. *Neimplementuje* POSIX.
+
+.System Call Sequence
+1. Připrav argumenty (na zásobník nebo do registrů).
+2. Dej číslo syscallu do příslušného registru.
+3. Přepni do privilegovaného módu (interrupt).
+4. Kernel zavolá správný system call handler.
+
+== Periferie
+
+Všechny součásti počítače kromě procesoru, operační paměti a řadiče.
+
+Ovladače::
+Programy komunikující s periferiemi a zpřístupňující jejich funkcionalitu ostatním programům. Bývají nepřenosné -- závislé jak na OS, tak na zařízení, které ovládají.
+
+Direct Memory Access::
+Zařízení zapisuje přímo do RAM, aniž by data propisovalo CPU.
+
+Grafické ovladače::
+* Komunikují s grafickou kartou (_Graphics Processing Unit_ (GPU)).
+* Umožňují grafickou akceleraci -- berou grafickou práci CPU a dávají ji GPU.
+* Implementují grafická rozhraní jako OpenGL, DirectX, Vulkan, Metal, atd.
+* Implementují výpočetní rozhraní jako je CUDA a OpenCL.
+* Překládají shadery v GLSL/HLSL/SPIR na instrukce specifické pro danou grafickou kartu.
+
+Síťové ovladače::
+* Komunikují se síťovou kartou (_Network Interface Controller_ (NIC)).
+* Šetří CPU práci pomocí _Checksum and TCP offloading_ na NIC.
+* Implementují fronty na odesílané a přijímané pakety.
+
+== Procesy a vlákna
+
+*Procesor má více jáder (a HW vláken).* To mu umožňuje vykonávat více instrukcí najednou.
+
+*OS má procesy.* Proces je spuštěná instance programu.
+
+*Proces má vlákna.* Tato vlákna vytváří a spravuje OS. Kernel rozhoduje, kdy které vlákno na kterém CPU jádře poběží.
+
+Proces::
+Binárka programu, kterou OS nakopíroval do paměti a spustil v ní `main` (dynamická instance statické executable). Má vlastní adresní prostor, čas procesoru a otevřené soubory.
+
+Vytvoření procesu na Linuxech::
+1. _fork_ -- vytvoří identickou kopii volajícího procesu.
+2. _exec_ -- přepíše aktuální proces statickou executable.
+
+Vytvoření procesu na Windows::
++¯\_( ͡° ͜ʖ ͡°)_/¯+
+
+Thread (vlákno)::
+Jednotka výpočtu. Sekvence instrukcí s vlastním zásobníkem. Vlákna jednoho procesu však sdílí adresní prostor. Využíťí vláken umožňuje programu děli práci mezi více jáder.
+
+== Synchronizace
+
+Vlákna na sebe mohou čekat. Představte si situaci, kdy hlavní vlákno čeká na vlákna podřízená, aby zkombinovalo jejich výsledky.
+
+Kritická sekce::
+Sekvence instrukcí, které mohou být vykonány pouze jedním vláknem/procesem najednou. Pokud v kritické sekci už nějaké vlákno je, ostatní musí počkat.
+
+Race condition::
+Nežadoucí chování závislé na načasování vláken, kde pořadí výpočtu není zaručeno.
+
+Mutual exclusion device (mutex)::
+Prostředek synchronizace vláken. Lze ho _zamknout_ (zamknuvší vlákno jako jediné může nakládat se zdrojem) a _odemknout_ (vlákno se vzdává moci nad zdrojem).
+
+Semaphore::
+Mutex, co umožňuje přístup omezenému počtu vláken.
+
+Spinlock::
+Typ mutexu implementující ,,Už tam budem?'' ad infinitum.
++
+`while(!unlock(mutex)) {}`
+
+Suspending mutex::
+Mutex, co, pokud je zdroj obsazen, požádá scheduler, aby vlákno uspal. Procesor může mezitím vykonávat jiná vlákna.
+
+Bariéra::
+Umožnuje synchronizaci většího počtu vláken. Představ si, že paralelizovaný výpočet má vícero fází, a fáze nemůže začít dřív, než předchozí fáze skončí.

@@ -1,0 +1,239 @@
+= SQL
+:url: ./sql/
+:page-group: prg
+:page-order: P11
+
+[NOTE]
+====
+Syntaxe a sémantika příkazů. Příkazy pro dotazování a aktualizaci dat, agregační funkce, triggery a uložené procedury. Příkazy pro definici dat, integritní omezení.
+
+_PB154_
+====
+
+_Structured Query Language_ je jazyk určený pro dotazovaní nad databázemi a jejich správu.
+
+Syntax SQL se snaží přípomínat angličtinu. Příkazy se píší ALL_CAPS, ale jsou case-insensitive, a za příkazy se může ale nemusí psát středník (bodkočiarka).
+
+== Datové typy v SQL
+
+`char(n)`::
+Řetězec fixní délky.
+
+`varchar(n)`::
+Řetězec o maximální délce `n`.
+
+`int`::
+32-bitový int.
+
+`smallint`::
+16-bitový int.
+
+`numeric(p, s)`::
+Čísla v desítkové soustavě o maximálním počtu číslic stem:[p] (precision), z čehož stem:[s] (scale) jich bude napravo od desetinné čárky.
+
+`real`, `double precision`::
+Float s přesností závislou na stroji.
+
+`float(n)`::
+IEEE 754 float s mantissou o alespoň stem:[n] bitech.
+
+`uniqueidentifier`::
+Na SQL serveru je to GUID.
+
+== Dotazovací a aktualizační příkazy
+
+FROM::
+Vybere všechny záznamy z dané relace (případně kartézského součinu daných relací). Odpovídá kartézskému součinu (stem:[\bowtie]) z relační algebry.
+
+SELECT::
+Vybírá sloupce z tabulky. Odpovídá projekci (stem:[\pi]) z relační algebry.
++
+[source,sql]
+----
+SELECT Id FROM Student;
+----
+
+WHERE::
+Filtruje data na základě podmínky. Odpovídá selekci (stem:[\sigma]) z relační algebry.
++
+[source,sql]
+----
+SELECT * FROM Student
+WHERE Uco > 500000;
+----
+
+UPDATE::
+Upraví záznamy dané tabulky (které lze nejprve přefiltrovat).
++
+[source,sql]
+----
+UPDATE Student
+SET FirstName = 'Adolf'
+WHERE LastName = 'Hitler';
+----
+
+DELETE::
+Maže záznamy.
++
+[source,sql]
+----
+DELETE FROM Student
+WHERE MOD(Uco, 42) = 0;
+----
+
+INSERT::
+Vloží záznam do tabulky. Hodnoty musí splňovat omezení uvalená na sloupce.
++
+[source,sql]
+----
+INSERT INTO Student(Uco, FirstName)
+VALUES (666666, 'Satén');
+----
+
+DISTINCT::
+Eliminuje duplicity po příkazu `SELECT`.
++
+[source,sql]
+----
+SELECT DISTINCT FirstName FROM Student;
+----
+
+ALL::
+Ponechává duplicity po příkazu `SELECT`.
+
+ORDER BY::
+Seřadí data podle daného sloupce vzestupně (`ASC`) nebo sestupně (`DESC`).
++
+[source,sql]
+----
+SELECT * FROM Student
+ORDER BY SemesterCount DESC;
+----
+
+GROUP BY::
+Odpovídá agregaci (stem:[g]) z relační algebry. Mezi agregační funkce patří: `COUNT`, `MAX`, `MIN`, `SUM`, `AVG`.
++
+[source,sql]
+----
+SELECT COUNT(Uco), AVG(SemesterCount) FROM Student
+GROUP BY Faculty;
+----
+
+JOIN::
+Rodina příkazů provádějící joiny.
++
+* `NATURAL JOIN`
+* `NATURAL LEFT OUTER JOIN`
+* `NATURAL RIGHT OUTER JOIN`
+* `INNER JOIN`
+* `FULL OUTER JOIN`
++
+[source,sql]
+----
+SELECT Student.Uco, EnrolledCourse.CourseName
+FROM Student
+INNER JOIN EnrolledCourse
+ON Student.Uco = EnrolledCourse.Uco;
+----
+
+AS::
+Přejmenování.
++
+[source,sql]
+----
+SELECT s.FirstName AS Jmeno, e.CourseName AS Predmet
+FROM Student AS s, EnrolledCourse AS e;
+----
+
+HAVING::
+Where pro agregáty.
++
+[source,sql]
+----
+SELECT COUNT(Uco) FROM Student
+GROUP BY Faculty
+HAVING COUNT(Uco) > 10; -- eliminate fsps 
+----
+
+LIKE::
+Regex lite. `%` je libovolný počet znaků a `_` je právě jeden znak.
++
+[source,sql]
+----
+SELECT * FROM Student
+WHERE FirstName LIKE '_damn%';
+----
+
+== Triggery
+
+Příkazy, jenž jsou vykonány automaticky jako při modifikaci databáze (INSERT, DELETE, UPDATE).
+
+Třeba, aby se aktualizovaly kredity při složení zkoušky:
+[source,sql]
+----
+CREATE TRIGGER FixCreditsOnExam
+AFTER UPDATE OF Exam
+BEGIN
+    UPDATE Student
+    SET Credits = (SELECT SUM(CourseCredits) FROM Exam
+                   WHERE Exam.StudentUco = Student.Uco);
+END;
+----
+
+== Uložené procedury
+
+Definované funkce uložené poblíž databáze. Každý databázový SW pro ně má trochu jiný jazyk (např. PL/SQL a Transact-SQL). Umožňují složitejší operace, mohou zlepšit výkon a lze je použít v triggerech.
+
+== Příkazy pro definici dat
+
+CREATE TABLE::
+Vytvoří novou tabulku s danými atributy, které mají uvedené datové typy a integritní omezení.
++
+[source,sql]
+----
+CREATE TABLE Employee (
+    Id uniqueidentifier PRIMARY KEY,
+    FirstName varchar(20),
+    LastName varchar(20) NOT NULL,
+    Age int CHECK(Age >= 0)
+)
+----
+
+DROP TABLE name::
+Smaže celou tabulku `name`.
+
+ALTER TABLE::
+Přidá nebo odebere atribut.
++
+[source,sql]
+----
+ALTER TABLE Employee
+ADD Salary int CHECK(Salary >= 0);
+----
++
+[source,sql]
+----
+ALTER TABLE Employee
+DROP Salary;
+----
+
+== Integritní omezení
+
+Omezení uvalená na data, která zabraňují náhodnému poškození databáze. Třeba věk by asi neměl být záporný.
+
+NOT NULL::
+Atribut nesmí být `NULL`.
+
+UNIQUE (A1, A2, ... AN)::
+Atributy A1, A2, ... AN musí tvořit kandidátní klíč.
+
+CHECK (P)::
+Musí platit predikát P.
++
+[source,sql]
+----
+CHECK(semester in ('fall', 'spring'))
+----
+
+PRIMARY KEY::
+Atributy se stanou primárním klíčem. To stejný jako `UNIQUE`, ale atributy nesmí být `NULL`.

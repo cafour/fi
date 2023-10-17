@@ -1,0 +1,120 @@
+= Práce s pamětí
+:url: ./prace-s-pameti/
+:page-group: prg
+:page-order: P08
+
+[NOTE]
+====
+Paměťová hierarchie. Práce s pamětí, logický a fyzický adresový prostor, správa paměti, virtualizace paměti, segmentace, stránkování.
+
+_PB152/PB153_
+====
+
+== Paměťová hierarchie
+
+Od nejrychlejší, nejdražší a zároveň s nejmenší kapacitou:
+
+--
+1. _Registry_
+2. _Cache_
+3. _Operační paměť_ -- RAM
+4. _Elektronické disky_ -- SSD
+5. _Magnetické disky_ -- HDD
+6. _Optické disky_
+7. _Magnetické pásky_
+--
+
+Redundant Array of Independent Disks (RAID)::
+Více disků organizované tak, že se tváří jako jeden logický disk.
++
+* Level 0: žádná redundance
+* Level 1: zrcadlení
+* Level 2: Hamming code error correction disky
+* Level 3: 1 kontrolní disk parity
+* Level 4: block-level striping
+* Level 5: parita distribuovaná napříč disky
+* Level 6: dvojí parita distruovaná napříč disky
+
+== Práce s pamětí
+
+Data jsou uložena v persistentních a energeticky nezávislých pamětích. Při spuštění procesu, je jeho binárka nahrána do operační paměti. Proces může OS žádat o více paměti (alokace), kterou by pak měl také vracet (dealokace).
+
+Fyzický adresový prostor (reálný)::
+Operační paměť, kterou OS skutečně má. Dán velikostí RAM. RAM akceptuje fyzické adresy.
+
+Logický paměťový prostor (virtuální)::
+Operační paměť, o které OS předstírá, že ji má. Je tak velká jako rozsah procesorového slova (obvykle stem:[2^{32}] nebo stem:[2^{64}]).
+
+Virtualizace paměti::
+Logický adresový prostor je větší než ten fyzický, proto CPU používá segmentaci a/nebo stránkovaní, aby předstíralo, že paměti má dost.
+
+Virtuální adresa::
+Význam se liší podle architektury. Na 80286 a 80386 je to logická adresa (segment, offset). Na x86_64 je to 64-bitová adresa, která je stránkovaná a tedy odpovídá spíše lineární adrese na starších architekturách.
+
+Správa paměti::
+OS spravuje paměť a snaží se tak zajistit:
++
+* logickou organizaci -- kus paměti obsahuje instrukce a nelze do něj zapisovat, jiný RO/RW data, ...
+* izolaci -- procesy nesmí hrabat, kam nemají
+* efektivní využití.
+
+Position-independent code (PIC)::
+Kód, kterému nezáleží na jeho absolutní adrese. Používá se pro sdílené knihovny, které nemohou vědět, kde přesně v paměti se ocitnou. Používal se také k izolaci, pokud CPU nemělo MMU.
+
+=== Segmentace
+
+Paměť je rozdělena na segmenty -- souvislé části paměti, která někde začínají a končí, ale nemusí být stejně velké.
+
+--
+* Přibyla v Intel 80286.
+* Používá logické adresy -- dvojice (selektor, offset), kde selektor je (hlavně) index to segmentovací tabulky.
+* V segmentovací tabulce jsou pak také uloženy informace o tom, jaký má segment typ a přístupová práva.
+* V dnešních procesorech je velice omezená. x86_64 má jen non-executable bit u stránek.
+--
+
+Segmentovací tabulka::
+Obsahuje informace o segmentech:
++
+* Začátek segmentu a jeho velikost.
+* Jestli je uložen v reálné paměti.
+* Jestli je datový, intrukční nebo systémový.
+* Jestli do něj lze zapisovat.
+* ...
+
+Chyba přístupu (segmentation fault)::
+Program se pokusil dostat na adresu, ke které neměl přístup.
+
+=== Stránkování (paging)
+
+Fyzická paměť je rozdělena na rámce (frames) fixní velikosti (obvykle po 4 KiB). Do rámců jsou vkládány stránky.
+
+Přibyla v Intel 80386.
+
+[stem]
+++++
+\textit{ logická adresa } \xrightarrow{\text{segmentace}}
+\textit{ lineární adresa } \xrightarrow{\text{stránkování}}
+\textit{ fyzická adresa }
+++++
+
+Swapping::
+Když dojdou rámce, mohou být stránky přesunuty na disk.
+
+Výpadek stránky (page fault)::
+Program se pokusil dostat na adresu ve stránce, která není v žádném rámci. Taková stránka musí být načtena z disku.
+
+Uvolnění rámce::
+Pokud dojdou rámce, je třeba vybrat oběť -- stránku, kterou přesunout na disk. Používá se:
++
+* Fronta (FIFO) -- stránka, která nejdéle nebyla *přesunutá*,
+* Least Recently Used (LRU) -- stránka, která nejdéle nebyla *navštívená*,
+* Druhá šance -- FIFO, ale stránky alespoň jednou navštívené od posledního obětování jsou vynechány.
+
+Memory Management Unit (MMU)::
+Část CPU, která překládá virtuální adresy na fyzické adresy pomocí _traslation (page) tables_, které spravuje kernel.
+
+Translation Look-aside Buffer (TLB)::
+Součást MMU. Cache na fyzické adresy.
+
+Izolace procesů::
+Výměnou page tables jsou procesy izolovány jeden od druhého. Každý proces má svůj vlastní adresní prostor. Vyžaduje, aby CPU mělo MMU.

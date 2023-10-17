@@ -1,0 +1,145 @@
+= Grafy
+:url: ./grafy/
+:page-group: inf
+:page-order: I09
+
+[NOTE]
+====
+Typy grafů, stromy, stupně vrcholů, orientované grafy, reprezentace grafů. Algoritmy prohledávání grafu do hloubky a do šířky a jejich využití. Komponenty souvislosti.
+
+_IB000, IB002_
+====
+
+Graf je uspořádaná dvojice stem:[(V, E)], kde stem:[V] je množina vrcholů (uzlů, _vertices_) a stem:[E] je množina hran mezi vrcholy (_edges_).
+
+V _neorientovaném_ grafu je stem:[E] množina *dvouprvkových podmnožin* stem:[V]:
+
+[stem]
+++++
+E \sube \binom{V}{2}
+++++
+
+V _orientovaném_ grafu je stem:[E] množina *dvojic* -- relace na stem:[V]:
+
+[stem]
+++++
+E \sube V \times V
+++++
+
+== Grafové pojmy
+
+Stupeň vrcholu::
+U neorientovaných grafů je to počet hran vycházejících z vrcholu. U orientovaných rozlišujeme vstupní a výstupní stupeň.
+
+Souvislost::
+Možnost pohybovat se v neorientovaném grafu po cestách. Ekvivalence těch dvojic vrcholů, kteréžto cestou propojeny jsou.
+
+Slabá souvislost::
+Souvislost na orientovaných grafech, kde zanedbáváme směr hran.
+
+Dosažitelnost směrem ven::
+Existuje vrchol, z nehož se dá dostat do všech ostatních.
+
+Silná souvislost::
+Souvislost na orientovaných grafech, kde musí mezi vrcholy vést cesta tam i zpátky.
+
+Komponenta souvislosti::
+Třídy ekvivalence _souvislosti_, resp. podgrafy indukované těmito třídami. Maximální oblasti grafu, kde se dá dostat všude.
+
+Isomorfismus::
+Bijektivní zobrazení stem:[f : V(G) \to V(H)] takové, že každá dvojice vrcholů stem:[u, v \in V(G)] je spojena hranou v stem:[G], právě tehdy kdy stem:[f(u), f(v)] v stem:[H].
+
+Podgraf grafu stem:[G]::
+Libovolný graf stem:[H] takový, že stem:[V(H) \sube V(G)], stem:[E(H) \sube E(G)] a stem:[E(H)] obsahuje hrany pouze mezi vrcholy z stem:[V(H)]. Píšeme stem:[H \sube G].
+
+Indukovaný podgraf::
+Podgraf stem:[H \sube G] takový, že stem:[E(H)] obsahuje všechny hrany z stem:[G] mezi vrcholy z stem:[V(H)].
+
+Acykličnost::
+Absence kružnic.
+
+== Typy grafů
+
+d-regulární::
+Všechny vrcholy mají stejný stupeň.
+
+Kružnice délky stem:[n]::
+Má stem:[n \ge 3] různých vrcholů spojených v cyklu. Značí se stem:[C_n].
+
+Cesta délky stem:[n \ge 0]::
+Má stem:[n + 1] různých vrcholů spojených "za sebou". Značí se stem:[P_n].
+
+Jednoduchá cesta::
+Cesta, která neobsahuje dva stejné vrcholy.
+
+Úplný graf na stem:[n \ge 1]::
+Má hrany mezi všemi vrcholy. Značí se stem:[K_{n}].
+
+Bipartitní graf::
+Vrcholy lze rozdělit na dvě skupiny, které mají hrany pouze mezi sebou, nikoliv mezi svými členy.
+
+Úplný bipartitní graf na stem:[m \ge 1] a stem:[n \ge 1]::
+Má stem:[m+n] vrcholů ve dvou skupinách. Hranami jsou spojeny všechny dvojice z různých skupin. Značí se stem:[K_{m,n}].
+
+Hvězda s stem:[n \ge 1] rameny::
+Úplný bipartitní graf stem:[K_{1, n}].
+
+Les::
+Acyklický graf. Nemusí být souvislý.
+
+Strom::
+Souvislý, acyklický graf.
+* Pokud má víc než jeden vrchol, pak existuje vrchol se stupněm 1.
+* Strom na stem:[n \ge 1] má přesně stem:[n-1] hran.
+* Mezi každými dvěma vrcholy vede právě jedna cesta.
+* Přidáním jedné nové hrany do stromu vznikne jedna kružnice.
+
+== Reprezentace grafů
+
+* Obrázkem pro lidi
+* Seznamem vrcholů a hran
+* Tabulkou (maticí z/do)
+
+== Průchod grafem
+
+
+
+=== Do hloubky -- Depth-First Search (DFS)
+
+* Prohledání po "slepých uličkách".
+* Dá se jednoduše zapsat rekurzivně, protože používá zásobník.
+* Používá při výpočtu topologického uspořádání uzlů, k nalezení silných komponent, zjištění přítomnosti cyklů, ...
+
+[source, python]
+----
+def dfs(graph: List[List[bool]], stamps: List[int], vertex: int) -> None:
+    if stamps[vertex] == -1:
+        stamps[vertex] = 0
+    stamp = stamps[vertex]
+    for i in range(0, len(graph)):
+        if graph[vertex][i] and stamps[i] != -1:
+            stamps[i] = stamp + 1
+            dfs(graph, stamps, i)
+----
+
+=== Do šířky -- Breadth-First Search (BFS)
+
+* Prohledávání po "vrstvách".
+* Nedá se jednoduše zapsat rekurzivně, protože používá frontu.
+* Používá se při hledání nejkratších cest. Součást Dijkstrova algoritmu.
+* Součást Jarníkova algoritmu na hledání minimální kostry grafu.
+
+[source, python]
+----
+def bfs(graph: List[List[bool]], stamps: List[int], vertex: int) -> None:
+    stamp = 0
+    queue = deque()
+    queue.append(vertex)
+    while len(queue) > 0:
+        current = queue.popleft()
+        stamps[current] = stamp
+        stamp += 1
+        for i in range(0, len(graph)):
+            if graph[current][i] and stamps[i] == -1:
+                queue.append(i)
+----

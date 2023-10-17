@@ -1,0 +1,209 @@
+= Základní principy počítačů I
+:url: ./zakladni-principy-pocitacu-i/
+:page-group: prg
+:page-order: P04
+
+[NOTE]
+====
+Číselné soustavy, vztahy mezi číselnými soustavami, zobrazení čísel v počítači, principy provádění aritmetických operací.
+
+_PB150/PB151_
+====
+
+== Číselné soustavy
+
+Číselná soustava je způsob zápisu čísel.
+
+Nepoziční::
+Hodnota číslice nezávisí na jejím umístění v čísle. Jedničková souststava, římské číslice.
+
+Poziční (polyadické)::
+Hodnota číslice v čísle je stem:[\text{číslice} \cdot \text{báze}^\text{pozice číslice}]. Celé číslo je součtem hodnot číslic:
++
+[stem]
+++++
+69301_{10} = 6 \cdot 10^4 + 9 \cdot 10^3 + 3 \cdot 10^2 + 0 \cdot 10^1 + 1 \cdot 10^0
+++++
+
+[%header,cols=3*]
+|===
+| Soustava
+| Báze
+| Číslice
+
+| Dvojková
+| 2
+| 0, 1
+
+| Osmičková
+| 8
+| 0, 1, 2, 3, 4, 5, 6, 7
+
+| Desítková
+| 10
+| 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+
+| Šestnáctková
+| 16
+| 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f
+|===
+
+=== Vztahy mezi číselnými soustavami
+
+[%header,cols="5*"]
+|===
+| --
+| Z dvojkové
+| Z osmičkové
+| Z desítkové
+| Z šestnáctkové
+
+| *Na dvojkovou*
+| --
+| Nahraď každou osmičkovou číslici 3 bity.
+| Poděl dvojkou se zbytkem. Zbytky tvoří výsledek. První zbytek je nejnižší bit atd.
+| Nahraď každou šestnáctkovou číslici 4 bity.
+
+| *Na osmičkovou*
+| Nahraď každé 3 bity odpovídající osmičkovou číslicí.
+| --
+| Poděl osmičkou se zbytkem. Zbytky tvoří výsledek. První zbytek je číslice nejnižšího řádu atd.
+| Převeď do binární a následně do osmičkové.
+
+| *Na desítkovou*
+| stem:[xyz = x \cdot 2^2 + y \cdot 2^1 + z \cdot 2^0]
+| stem:[xyz = x \cdot 8^2 + y \cdot 8^1 + z \cdot 8^0]
+| --
+| stem:[xyz = x \cdot 16^2 + y \cdot 16^1 + z \cdot 16^0]
+
+| *Na šestnáctkovou*
+| Nahraď každé 4 bity odpovídající šestnáctkovou číslicí.
+| Převeď do binární a následně do hexadecimální.
+| Poděl 16 se zbytkem. Zbytky tvoří výsledek. První výsledek je číslice nejnižšího řádu atd.
+| --
+|===
+
+== Zobrazení čísel v počítači
+
+Bez znaménka::
+Sekvence stem:[n] bitů bez znaménka dokáže vyjádřit čísla stem:[[ 0, 2^n - 1 \]].
+
+Přímý kód::
+Nejvyšší bit v sekvenci stem:[n] bitů značí znaménko. Má dvě nuly a špatně přetéká. Dokáže vyjádřit čísla stem:[[-(2^{n-1} - 1), 2^{n-1} - 1\]].
+
+Inverzní kód::
+Záporné číslo lze získat inverzí čísla kladného. (Znaménkový bit má tím pádem taky.) Má dvě nuly a přetečení funguje. Dokáže vyjádřit čísla stem:[[-(2^{n-1} - 1), 2^{n-1} - 1\]].
+
+Dvojkový doplňkový kód::
+Záporné číslo lze získat inverzí čísla kladného a přičtením 1. Má jen jednu nulu a přetečení funguje. Dokáže vyjádřit čísla stem:[[-2^{n-1}, 2^{n-1} - 1\]].
+
+Binary Coded Decimal (BCD) kód::
+Binární zápis decimálních čísel. Využívá faktu, že to 4 bitů se vlezou číslice 0-9.
+
+Rozvinutý (unpacked) BCD kód::
+Co číslice to bajt.
++
+[%header%autowidth]
+|===
+| 9 | 1 | 8 | 4 | 6
+| F9 | F1 | F8 | F4 | C6
+|===
++
+[%header%autowidth]
+|===
+| -9 | 1 | 8 | 4 | 6
+| F9 | F1 | F8 | F4 | D6
+|===
+
+Zhuštěný (packed) BCD kód::
+Co číslice to nibble (4 bity) kromě první číslice, která v horní části bajtu obsahuje znaménko.
++
+[%header%autowidth]
+|===
+| 9 | 1 | 8 | 4 | 6
+| 9 | 1 | 8 | 4 | C6
+|===
++
+[%header%autowidth]
+|===
+| -9 | 1 | 8 | 4 | 6
+| 9 | 1 | 8 | 4 | D6
+|===
+
+Kód s posunutou nulou::
+Posouvá nulu o nějakou konstantu. Třeba pro 8-bitová čísla je možné stem:[00000000_2] považovat za stem:[-127_{10}] a stem:[11111111_2] za stem:[128_{10}].
+
+=== Reálná čísla (IEEE 754)
+
+IEEE 754 je formát zápisu čísel s desetinnou čárkou.
+
+[%header]
+|===
+| znaménko | exponent | mantissa
+| 1 bit | 8 bitů | 23 bitů
+|===
+
+Mantissa::
+Číslo v přímém kódu, ale číslice nejvyššího řádu je vlevo. Resp. číslice druhého nejvyššího řádu je vlevo, neboť číslice nejvyššího řádu je 1, a proto se vynechává.
+
+Exponent::
+Je v kódu s posunutou nulou. Nejnižší reprezentovatelný exponent je 1. 0 je rezervována pro denormalizované čísla.
+
+Normalizovaná čísla::
+Exponent není 0 ani 255. Mantissa udává desetinnou část za 1.
++
+stem:[\pm 1.\text{mantissa} \cdot 2^\text{exponent}]
+
+Denormalizovaná čísla::
+Čísla okolo nuly, která nelze vyjádřit normalizovaně. Exponent je 0. Mantisa udává desetinnou část za 0.
++
+stem:[\pm 0.\text{mantissa} \cdot 2^{-126}]
+
+Nekonečno::
+Exponent je 255, mantissa je 0, znaménko udává, jestli jde o stem:[\infty] nebo stem:[-\infty].
+
+Not-a-Number (NaN)::
+Nečíselné hodnoty. Exponent je 255, mantissa a znaménko může být cokoliv.
+
+Příklad::
+stem:[12.5_{10} = 1100.1_2 = 1.1001_2 \cdot 2^3 \rightsquigarrow \text{0|1000010|10010000000000000000000}]
+
+=== Vnější kódy
+
+Zobrazení mezi čísly a znaky. Každý znak má svoji ordinální hodnotu.
+
+Jednobajtová kódování::
+Lexikálně uspořadáné zobrazení mezi čísly z rozsahu stem:[[0, 256)] a znaky. Nejstandardnější je 7-bitové ASCII pokrývající potřeby anglické abecedy.
++
+Existuje řada 8-bitových rozšíření ASCII pro českou abecedu. Např. Windows-1250 a IS0 8859-2.
+
+Vícebajtová kódování::
+Znaky za hranicemi ASCII jsou vyjádřeny více bajty. Standardem je Unicode a jeho formát UTF-8.
+
+=== Pořadí bajtů
+
+Procesory a další zařízení se mohou lišit v pořadí bajtů v čísle. Např. pro hexadecimální číslo `4A 3B 2C 1D`.
+
+Little-endian::
+,,Little end first.''
++
+Bajt nejnižšího řádu je na nižší adrese. Tedy pokud adresy stoupají zleva doprava, pak v paměti bude `1D 2C 3B 4A`. Používají procesory z rodiny Intel x86.
+
+Big-endian::
+,,Big end first.''
++
+Bajt nejvyššího řádu je na nižší adrese. Pokud adresy stoupají zleva doprava, pak v paměti bude `4A 3B 2C 1D`.
+
+== Principy provádění aritmetických operací
+
+Sčítání v inverzním kódu::
+U sčítání v inverzním kódu provádíme kruhový přenos. Přenos + nejvyšší řád přičteme k výsledku.
+
+Sčítání v dvojkovém doplňkovém kódu::
+Při sčítání se přenosy se znaménkového bitu ignorují. Přetečení nastává, pokud se nerovná přenos ze znaménkového bitu do znaménkového bitu.
+
+.Sčítání v IEEE 754
+1. denormalizujeme - doplníme jedničku k mantise
+2. srovnáme exponenty
+3. sečteme
+4. zpátky normalizujeme - opět odebereme jedna od mantisy

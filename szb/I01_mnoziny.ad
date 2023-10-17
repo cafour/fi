@@ -1,0 +1,265 @@
+= Množiny, relace a zobrazení
+:url: ./mnoziny-relace-a-zobrazeni/
+:page-group: inf
+:page-order: I01
+
+[NOTE]
+====
+Základní množinové operace. Relace a jejich vlastnosti – ekvivalence a rozklady, uspořádání a uspořádané množiny. Skládání relací, zobrazení (injekce, surjekce, bijekce).
+
+_IB000, MB101/MB201_
+====
+
+Teorie množin je v informatice všude. Dokládá to fakt, že většina informatických definic je tvaru "množina, na níž jsou kladeny specifické požadavky". V MZI se rozlišují dvě: naivní a Zermelova-Fraenkelova teorie množin.
+
+== Naivní teorie množin
+
+Množina je skupina objektů. Tato skupina může obsahovat třeba _nic_, čtyři brambory, nebo třeba nekonečné množství kopečků vanilkové zmrzliny. Množina může dokonce obsahovat další množiny. 
+
+Problém nastává, když si představíte množinu, která obsahuje sama sebe. Taková množina přece není _normální_, takže si dále představíte množinu, dejme tomu stem:[R], všech množin, které _normální_ jsou, tedy neobsahují samy sebe. Je ale stem:[R] _normální_?
+
+Pokud ano, pak stem:[R] musí obsahovat sama sebe, protože má obsahovat všechny _normální_ množiny, a tím pádem stem:[R] _normální_ není.
+
+Jenže pokud stem:[R] _normální_ není, pak by měla obsahovat sama sebe, ale to nemůže, protože stem:[R] smí obsahovat pouze _normální_ množiny, takže stem:[R] _normální_ je.
+
+Tenhle drobný zádrhel se nazývá Russelův paradox.
+
+== Zermelova-Fraenkelova teorie množin
+
+Zermelova-Fraenkelova (ZF) teorie množin řeší Russelův paradox svou specifičtější, axiomatickou definicí.
+
+[options="header",cols="1,1,2"]
+|===
+| Axiom
+| Popis
+| Formulka
+
+| Axiom extenzionality
+| Množiny, které mají stejné prvky, se rovnají.
+| stem:[(\forall a \forall b)(a = b \iff (\forall x)(x \in a \iff x \in b)))]
+
+| Schéma axiomů (omezeného) vyčlenění/vydělení
+| Lze tvořit podmnožiny takových stem:[x], které splňují predikát stem:[P(x)].
+| stem:[(\forall a \exists b \forall x)(x \in b \iff (x \in a \land P(x)))] nebo taky stem:[b = \{x \in a: P(x)\}]
+
+| Axiom prázdné množiny
+| Existuje "nic". (Tenhle axiom je trochu zbytečný, protože plyne z Vyčlenění a neprázdnosti univerza.)
+| stem:[(\exists a \forall x)(x \notin a)]
+
+| Axiom dvojice
+| Když dáš dohromady stem:[\text{rybu}] a stem:[\text{hranolky}], máš množinu stem:[\{\text{ryba}, \text{hranolky}\}].
+| stem:[(\forall x \forall y \exists a \forall z)(z \in c \iff (z = x \lor z = y))]
+
+| Axiom sjednocení (sumy)
+| Množiny se dají "slít do jednoho hrníčku".
+| stem:[(\forall a \exists b \forall x)(x \in b \iff (\exists y)(x \in y \land y \in a))],
+    nebo taky stem:[b = \bigcup a].
+
+| Axiom potenční množiny
+| Z každé množiny dokážeš vyrobit množinu všech jejích podmnožin
+| stem:[(\forall a \exists b \forall x)(x \in b \iff (\forall z)(z \in x \implies z \in a))]
+
+| Schéma axiomu nahrazení
+| Pokud stem:[F(x, y)] je na dané množině zobrazením, tak můžu danou množinu zobrazit.
+| stem:[(\forall a)((\forall x \exists !y)(x \in a \implies F(x, y)) \implies (\exists b \forall z)(z \in b \iff (\exists v)(v \in a \land F(v, z))))]
+
+| Axiom nekonečna
+| Existuje stem:[\mathbb{N}] resp. nekonečná množina obsahující stem:[\emptyset, \{\emptyset\}, \{\emptyset, \{\emptyset\}\}], atd.
+| stem:[(\exists a)(\emptyset \in a \land (\forall x)(x \in a \implies x \cup \{x\} \in a))]
+
+| Axiom regularity (fundovanosti)
+| Když už množina stem:[a] něco obsahuje, tak má alespoň jeden prvek stem:[b], který má s stem:[a] prázdný průnik. Tohle zabraňuje konstrukci množin, které obsahují samy sebe.
+| stem:[(\forall a)(a \ne \emptyset \implies (\exists b \in a)(b \cap a = \emptyset))]
+|===
+
+NOTE: Když se do ZF přidá axiom výběru, vyleze z toho ZFC.
+
+== Základní množinové operace
+
+[options="header", cols="1,3"]
+|===
+| Operace
+| Formulka
+
+| sjednocení
+| stem:[A \cup B = \{x \mid x \in A \lor x \in B\}]
+
+| průnik
+| stem:[A \cap B = \{x \mid x \in A \land x \in B\}]
+
+| rozdíl
+| stem:[A \setminus B = \{x \mid x \in A \land x \notin B\}]
+
+| symetrický rozdíl
+| stem:[A \Delta B = (A \cup B) \setminus (A \cap B)]
+
+| potenční množina
+| stem:[2^A = \{B \mid B \sube A\}]
+
+| kartézský součin
+| stem:[A \times B = \{(a, b) \mid a \in A \land b \in B\}]
+|===
+
+=== Vlastnosti množinových operací
+
+[options="header", cols="1,3"]
+|===
+| Vlastnost
+| Formulka
+
+| Komutativita
+a| * stem:[A \cap B = B \cap A]
+   * stem:[A \cup B = B \cup A]
+
+| Asociativita
+a| * stem:[A \cap (B \cap C) = (A \cap B) \cap C]
+   * stem:[A \cup (B \cup C) = (A \cup B) \cup C]
+
+| Distributivita
+a| * stem:[A \cap (B \cup C) = (A \cap B) \cup (A \cap C)]
+   * stem:[A \cup (B \cap C) = (A \cup B) \cap (A \cup C)]
+|===
+
+== Relace
+
+Binární relace stem:[R] je podmnožinou kartézské součinu dvou množin: stem:[R \sube A \times B].
+
+=== Vlastnosti binarních relací stem:[R \sube A \times A]
+
+[options="header", cols="1,3"]
+|===
+| Vlastnost relace
+| Formulka
+
+| Reflexivní
+| stem:[(\forall a \in A)((a, a) \in R)]
+
+| Ireflexivní
+| stem:[(\forall a \in A)((a, a) \notin R)]
+
+| Symetrická
+| stem:[(\forall a, b \in A)((a, b) \in R \implies (b, a) \in R)]
+
+| Antisymetrická
+| stem:[(\forall a,b \in A)(((a, b) \in R \land (b, a) \in R) \implies a = b)]
+
+| Tranzitivní
+| stem:[(\forall a,b,c \in A)(((a, b) \in R \land (b, c) \in R) \implies (a, c) \in R)]
+
+|===
+
+=== Relační pojmy
+
+[Reflexivní | symetrický | tranzitivní] uzávěr::
+Nejmenší nadmnožina stem:[R] taková, že splňuje vlastnost z názvu.
+
+Předuspořádání (kvaziuspořádání)::
+Reflexivní a tranzitivní binární relace.
+
+Částečné uspořádání na stem:[A]::
+Reflexivní, **anti**symetrická a tranzitivní binární relace na stem:[A].
+
+Lineární (úplné) uspořádání::
+Uspořádání, kde jsou každé dva prvky srovnatelné.
+
+Ekvivalence::
+Reflexivní, symetrická a tranzitivní binární relace.
+
+Rozklad (quotient set)::
+Každá ekvivalence stem:[\sim] "rozkládá" množinu stem:[A], na které je definována, na vzájemně disjunktní podmnožiny -- třídy rozkladu. Píšeme stem:[A / \sim]. Rozklad stem:[R] je pak množina tříd rozkladu. Ke třídě rozkladu se dostaneme skrze _reprezentanta stem:[a]_: stem:[[a\]_R = \{x \mid x \sim a\}]. Pár faktů:
+* stem:[\emptyset \notin R]
+* stem:[\bigcup_{C \in R} = A]
+* Každá ekvivalence jednoznačně určuje rozklad. A obráceně.
+
+Skládání relací::
+Dejme tomu, že stem:[(a, b) \in P], když stem:[a] sedí napravo od stem:[b], a stem:[(c, d) \in D], když stem:[c] sedí pod stem:[d]. Pak stem:[(e, f) \in (D \circ P)] (_D po P_), když stem:[e] sedí vpravo dole pod stem:[f] (a někdo sedí i ve vzniknuvším rohu).
++
+[stem]
+++++
+(e, f) \in (D \circ P) \iff (\exists x)(P(e, x) \land D(x, f))
+++++
+
+=== Pojmy uspořádaných množin
+
+Uspořádaná množina::
+Dvojice stem:[(A, \le)], kde stem:[A] je množina a stem:[\le] je částečné uspořádání na stem:[A].
+
+Minimální prvek::
+Není prvek uspořádané množiny, který by byl menší. Může jich být více. Anglicky _minimal element_.
+
+Maximální prvek::
+Není prvek uspořádané množiny, který by byl větší. Může jich být více. Anglicky _maximal element_.
+
+Nejmenší prvek::
+Prvek uspořádané množiny menší než všechny ostatní. Je nejvýše jeden. Anglicky _least element_ nebo taky _minimum_.
+
+Největší prvek::
+Prvek uspořádané množiny větší než všechny ostatní. Je nejvýše jeden. Anglicky _greatest element_ nebo taky _maximum_.
+
+Horní a dolní závora::
+Mějme uspořádanou množinu stem:[A] a její podmnožinu stem:[B \sube A].
+* Horní závora (_upper bound_) je prvek stem:[u \in A] takový, že stem:[(\forall x \in B)(x \le u)].
+* Dolní závora (_lower bound_) je prvek stem:[l \in A] takový, že stem:[(\forall x \in B)(l \le x)].
+
+Infimum a supremum::
+* Infimum je nejmenší horní závora.
+* Supremum je největší dolní závora.
++
+Představ si množinu stem:[A] jako dálnici. Dálnice (přinejmenším D1) je vlastně taková množina volně spojených, diskrétních panelů. Panely blíže tvému auto u a za tvým autem jsou "menší" než panely, co tě teprve čekají. Množina stem:[B] je pak jako placený úsek dálnice. Infimum by byla doslova závora na začátku tohohle úseku a supremum by pak byla závora na jeho konci.
+
+Řetězec::
+stem:[B \sube A] je řetězec v uspořádání stem:[\le], právě když stem:[(B, \le)] je lineárně uspořádaná množina.
+
+Pokrývá::
+stem:[x \in A] pokrývá stem:[y \in A], právě když stem:[x \ne y], stem:[x \le y] a neexistuje stem:[z \in A] takové, že
+stem:[z \ne x], stem:[z \ne y] a stem:[x \le z \le y].
+
+=== Pojmy zobrazení
+
+Částečné zobrazení (partial map)::
+Je binární relace stem:[F \sube A \times B] taková, že
++
+[stem]
+++++
+(\forall a \in A)(\forall x \in B)(\forall y \in B)(((a, x) \in F \land (a, y) \in F) \implies x = y)
+++++
++
+Tedy každý vzor má nejvýše jeden obraz. Píšeme stem:[F: A \to B] -- zobrazení z stem:[A] do stem:[B]. Taky píšeme stem:[f(a) = b], když stem:[(a, b) \in F].
+
+Definiční obor (domain)::
+stem:[A]
+
+Obor hodnot (codomain)::
+stem:[B]
+
+Vzory::
+Prvky stem:[A].
+
+Obrazy::
+Prvky stem:[B].
+
+Totální zobrazení (total map)::
+Je parciální zobrazení, ale navíc platí stem:[(\forall a \in A)(\exists b \in B)((a, b) \in F)]. (To, že takové stem:[b] bude právě jedno, už zajišťuje definice výše.) Tedy každý vzor má právě jeden obraz.
+
+Injekce::
+Injektivní (prostá) funkce (zobrazení) je funkce taková, že
++
+[stem]
+++++
+(\forall x \in A)(\forall y \in A)(x \ne y \implies f(x) \ne f(y))
+++++
++
+Tedy každý vzor má svůj vlastní obraz.
+
+Surjekce::
+Surjektivní funkce (zobrazení) je taková, že
++
+[stem]
+++++
+(\forall b \in B)(\exists a \in A)(b = f(a))
+++++
++
+Tedy každý obraz má svůj vzor.
+
+Bijekce::
+Je funkce, která je zároveň injektivní i surjektivní (vzájemně jednoznačná).
