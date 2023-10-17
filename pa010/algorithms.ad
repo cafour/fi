@@ -1,0 +1,355 @@
+= Algorithms
+
+== Computational geometry
+
+Bentley-Ottman algorithm::
+Hledá průniky přímky s množinou čar. Čáry seřadíme osy x a procházíme zleva doprava jen ty, které protínají imaginární přímku stem:[l].
+
+Convex set::
+Množina bodu, která obsahuje čáru mezi každými dvěma body.
+
+Convex hulls::
+Pro množinu stem:[S] je to nejmenší konvexní množina obsahující stem:[S].
+
+Gift wrapping algorithm::
+Počítá convex hull. Začne v bodě stem:[p_0], který určitě na convex hullu leží, pak vybere takový bod stem:[p_k], že všechny body jsou napravo od čáry stem:[p_{k-1}p_k]. Opakuje dokud se nevrátí do stem:[p_0]. V nehorším případě má složitost stem:[\mathcal{O}(n^2)].
+
+Graham scan::
+Rozdělí body na dvě množiny podle osy x. Sestaví upper convex hull a lower convex hull a pak je spojí. Každou polovinu sestaví za použití zásobníku. stem:[\mathcal{O}(n \log n)].
+
+Quickhull::
+Quicksort ale convex hull.
+
+Monotone polygon::
+Polygon je monotonní vzhledem k přímce stem:[l], pokud pro každou přímku stem:[l'] kolmou k stem:[l] platí, že její průnik s polygonem je spojitý (protne polygon právě dvakrát).
++
+Y-monotone polygon je monotonní vzhledem k ose y.
+
+Triangulation::
+Pokud je polygon y-monotonní, stačí jít zvrchu dolů (sweep) a přidávat diagonály (v stem:[\mathcal{O}(n)] čase).
++
+Pokud polygon není y-monotonní, musíme ho nejdřív rozsekat na části, které y-monotonní jsou a ty zpracovat (v stem:[\mathcal{O}(n \log n)] čase).
+
+Binary Space Partition (BSP) tree::
+Rekurzivní binarní dělení scény nadrovinou.
+
+Quad tree & KD tree::
+Speciální případy BSP stromů s kolmými nadrovinami. Quad tree dělí na vždy na 4 části. KD strom je vyvážený, protože střídá osy.
+
+== Hierarchical representations
+
+Bounding volume hierarchy (BVH).
+
+Spatial decomposition.
+
+Space partitioning.
+
+Collision detection using BVH.
+
+AABB
+
+stem:[k]-discrete orientation polytope (k-DOP)::
+Zobecněná bounding box pro stem:[k] směrů.
+
+Oriented Bounding Box (OBB)::
+Líp sedí na objekt, ale hůř se staví.
+
+BVH construction.
+
+Separating Axis Theorem (SAT)::
+Dva objekty se neprotínají, pokud existuje přímka, na které se jejich projekce neprotínají.
+
+== Visibility and occlusion
+
+From-point visibility::
+Množina objektů plně nebo částečně viditelných z daného bodu.
+
+From-region visibility::
+Množina objektů plně nebo částečně viditelných z kteréhokoli bodu v daném regionu.
+
+Potentially visible set (PVS)::
+Množina obsahující ty objekty, které jde možná vidět. Varianty:
++
+* Statická -- precomputed paměťově náročný přístup, kdy je scéna rozdělena na buňky a ptáme se "Co jde vidět z dané buňky?"
+* Dynamická -- on-the-fly přístup pro scény, kde se věci hýbou a kdy redukce viditelných objektů závisí na cullingu.
+
+Culling::
+Techniky výběru jen těch objektů a částí objektů, které příspějí do finálního obrazu.
+
+Back-face culling::
+Nerenderuj polygony, které jsou orientované směrem od kamery.
+
+View-frustum culling::
+Zahoď objekty, jejichž bounding volume není v záběru kamery. Dá se akcelerovat scene graphem.
+
+Occlusion culling::
+Zahoď objekty, které jsou zakryté jinými objekty. Jednou z možných implementací je _occlusion horizon_ -- vykreslujeme scénu od objektů nejblíže kamery k těm nejvzdálenějším a pamatujeme si, které oblasti už jsou zakryté.
++
+_Occluder fusion_ je optimalizace, kdy spojíme vícero blízkých objektů do jednoho.
+
+Hierarchical Occlusion Maps (HOM)::
+Hierarchie textur, které popisují, jestli je daná oblast obrazovky už zakrytá nebo ne.
+
+Overlap test::
+Je daný objekt uvnitř kumulativní projekce occluderů? Rekurzivní test na HOM.
++
+1. Pro daný objekt vytvoř screen-space 2D AABB.
+2. Pro aktuální level HOM (začni tím nejvyšším s nejnižším rozlišením):
+** Pokud mají všechny pixely AABB hodnotu 1, vrať `occluded`.
+** Pokud mají všechny pixely AABB hodnotu 0, vrať `not occluded`.
+** Pokud jsi na nejnižší úrovni HOB, vrať `not occluded`.
+** Opakuj 2. pro nižší level HOM.
+
+Depth Estimation Buffer (DEB)::
+Popisuje plochy, *za* kterými už fakt není nic vidět.
+
+Portal culling::
+Rozděl scénu na buňky, mezi kterými jsou portály -- postav graf. V každém frameu:
++
+1. Najdi buňku V, ve které je pozorovatel, a vykresli její PVS.
+2. Cestuj rekurzivně skrze viditelné portály a vykresluj jejich PVS.
++
+image:./img/portal_culling.png[]
+
+Overestimated portals::
+Pro každý portal máme 2D AABB. Overestimated portals jsou takové portály, kde plocha AABB je o dost větší než plocha portálu.
+
+Detail Culling::
+"Pokud něco zabírá jen pár pixelů, tak to tam nemusí být vůbec, ne?"
+
+Level-of-detail rendering::
+Pro složité objekty si předpočítáme jejich zjednodušené verze. V závislosti na vzdálenosti od objektu pak volíme verzi objektu.
+
+== Shadows
+
+Depth perception::
+Stíny napomáhají vnímání hloubky obrazu, vzájemné pozici objektů a jejich velikosti. Kromě stínů pomáhá třeba motion parallax (pohyb krajiny vzhledem k pohybujímu se pozorovateli).
+
+Hard shadows::
+Stíny s ostrými hranami vyzařované bodovými světly.
+
+Soft shadows::
+Stíny s "polostíny" (penumbra) vyzařované plošnými světly.
+
+Planar shadows::
+Historický algoritmus, kdy scénu renderujeme nejprve osvětlenou a poté znovu pro každou plochu, na kterou má dopadat stín. Pro objekty, které hážou stín musíme navíc počítat projection matrix pro každou plochju a renderovat je znova.
++
+Dochází k Z-fightingu. Objekty nemohou házet stín jeden na druhý.
+
+Projective textures::
+Vyrenderuj BW obraz stínícího objektu z perspektivy světla do textury.
++
+Praktické jen pro malé množství, velkých shadow receiverů.
+
+Ray-traced shadows::
+Ten aktuálně nejvíc cool způsob, jak počítat stíny. Z každého(R) pixelu kamery vystřelíš do scény paprsek a sleduješ, do čeho narazíš.
+
+=== Shadow maps
+
+Textura obsahující pouze depth buffer z pohledu světla. Při renderování objektů ve scéně se do téhle textury dívám, porovnávám vzdálenost od světla s hodnotu v shadow mapě. Pokud je vzdálenost větší než hodnota v depth bufferu, pak je fragment ve stínu.
+
+image::./img/shadow_map.png[]
+
+Shadow acne::
+Artefakty způsobené tím, že show mapy jsou nepřesné a objekty stíní samy sebe chuybně, a taky tím, že jeden texel shadow mapy může zabrat velkou část scény. Vypadá to jak zebra. Dají se řešit vykreslováním jen zadních stěn do shadow mapy nebo připočítáním nějakého biasu při porovnávání.
++
+image:./img/shadow_acne.png[]
+
+Peter Panning::
+Když nastavíš bias blbě a stíny ti lítají. Na oblých površích se zmírňuje tím, že bias pronásobíš směrnicí povrchu (dot produkt normály povrchu a light vektoru).
+
+Focus::
+Performace shadow map se dá zlepšit lepším využíváním textury přenastavením near and far planes kamery.
+
+Percentage Closer Filtering::
+Sampluješ víc texelů vedle sebe s bilineární filtrem.
+
+Warping::
+Zhušťování prostoru blízko hráče, aby víc pixelů shadow mapy vyšlo na to, na co se hráč soustředí (_Perspective Shadow Map_).
+
+Cascading::
+Kaskáda vícera shadow map, každá pro jinou vzdálenost od hráče.
+
+=== Shadow volumes
+
+Reprezentují oblasti scény, kterou jsou ve stínu. Pro každý objekt, který hází stín, vyrábím shadow volume. Tedy pro každý jeho polygon extruduju pyramidu se zdrojem světla na vrcholu do nekonečna.
+
+Jak poznáme, že je fragment ve stínu? Počítáme, kolikrát projdeme předními a zadními stěnami shadow volumes.
+
+image::./img/shadow_volume.png[]
+
+Jak shadow volumes konstruovat? Possible silhouette edges. Zajímají nás hrany mezi front-facing a back-facing polygony. Tyhle hrany protahujeme do nekonečna ve vertex shaderu.
+
+Stencil Buffer Algorithm (z-pass)::
++
+1. Vyrenderuj scénu kvůli depth bufferu.
+2. Pro každé světlo:
+** Vyčisti stencil buffer.
+** Vykresli shadow volume -- nejdřív front-faces (+1, pokud z-pass), pak back-faces (-1, pokud z-pass).
+3. Vykresli scénu znova. Osvětli jen pixely, kde stencil buffer je 0.
+4. Pokud máš víc světel, tak blenduj.
+
+Oko ve stínu::
+Pokud je kamera ve stínu, pak `stencil == 0` neznamená nutně, že objekt není ve stínu. Řešeními jsou:
++
+* explicitně testovat, že oko je ve stínu, což je drahé.
+* oříznou shadow volumes o view frustum, což je komplikované.
+* z-fail.
+
+Stencil Buffer Algorithm (z-fail) (Carmack's reverse)::
+Jako z-pass, ale začneš v nekonečnu a míříš k oko. Máš jistotu, že nezačneš ve stínu.
++
+* Vykresli shadow volume -- nejdřív front-faces (*-1, pokud z-fail*), pak back-baces (*+1, pokud z-fail*).
+
+=== Soft shadows
+
+Sampling::
+Vyrenderuješ fakt hodně hard stínů z různých bodů plošného světla a průměruješ výsledek.
+
+Soft Shadow Volumes::
+Při protahování hran počítáš i objem ve stínu.
+
+Percentage Closer Filtering::
+Sampluješ vícero texelů vedle sebe a rozmažeš. Není to moc realistické, ale to obvykle nevadí.
+
+Fake Soft Shadows with Smoothies::
+Vyrenderuješ si "outline" objektů a použiješ je k rozmazání okraje stínů.
+
+Percentage Closer Soft Shadows (PCSS)::
+Shadow mapa, ale navíc při samplovaní odhadneš velikost penumbry z velikosti plochy světla a vzdálenosti od něj.
+
+=== Ambient Occlusion
+
+Snižuje nerealističnost ambientního osvětlení nerealistickými stíny. Výsledek vydává dojem, že se světlo odráží.
+
+Precomputed Ambient Occlusion::
+Okolo každého bodu tě zajímá hemisféra. Na základě toho, kolik samplů z té hemisféry nejde vidět (třeba protože jsou uvnitř objektů).
+
+Screen Space Ambient Occlusion (SSAO)::
+Napodobuješ samplování hemisféry okolo bodů samplovaním depth bufferu okolních fragmentů. Je potřeba nejdřív scénu vyrenderovat do separátního framebufferu (deferred shading).
+
+Horizon Based Ambiend Occlusion (HBAO)::
+Lepší, fyzikálně korektnější aproximace SSAO.
+
+HBAO+::
+Započítáváš i minulý frame.
+
+Voxel Accelerated Ambient Occlusion (VXAO)::
+Místo spolehání na depth buffer pokrývá prostor okolo hráče voxely a cone traceuje je.
+
+== Point Set Registration
+
+Snažíme se najít transformaci mezi dvěma množinami dat (point cloudy, obrázky, whatever). Hodí se to třeba k _image stitchingu_, skenům otisků prstů, detekci ksichtů, motion capture atd.
+
+Model (taky target, reference image/surface)::
+Fixní množina bodů, kterou se snažím napodobit.
+
+Data (taky source, floating image/surface)::
+Množina bodů, kterou transformuji tak, aby byla co nejpodobnější modelu.
+
+Workflow::
+1. Extrahuj point set a případně charakterizuj jeho okolí (feature extraction).
+2. Najdi _Corresponding Point-Sets (PCS)_ -- podmnožiny point-setů, které spolu po indexech souvísí.
+3. Najdi nejlepší transformaci mezi CPS:
++
+[stem]
+++++
+\theta_{\text{best}} = \argmin_{\theta \in T} \frac{1}{M} \sum_{j=1}^{M} | x_j - \theta(y_j) |^2
+++++
++
+kde
++
+* stem:[T] je množina možných transformací,
+* stem:[M] je počet bodů v CPS,
+* stem:[x_j] jsou body z _reference_,
+* stem:[y_j] jsou body ze _source_.
+
+Iterative closest point (ICP) algorithm::
+Minimalizuje rozdíly mezi dvěma point cloudy. Hledá rigidní transformaci (zachovává obsahy a úhly; kombinaci translace a rotace). Původní implementace ICP ale dost závisí na inicializaci bodů.
++
+1. Inicializuj stem:[Y_0 = Y], kde stem:[Y] je source, a stem:[k=0].
+2. Pro každý bod v stem:[Y_k] najdi nejbližší bod v _reference_ stem:[A]: stem:[X_k = C(Y_k, A)].
+3. Spočítej dvojici stem:[(\vec{q}_k, d_k) = Q(Y_0, X_k)], kde stem:[\vec{q}_k] je duální quaternion reprezentující rigidní transformaci, a stem:[d_k] je mean squared error.
+** Všimni si, že abys nenásobil chyby, tak transformuješ stem:[Y_0 = Y] na stem:[X_k].
+4. Transformuj _source_ pomocí stem:[q_k]: stem:[Y_{k+1} = \vec{q}_k(Y_0)].
+5. Opakuj 1-3., dokud stem:[d_{k+1} - d_k] není menší než tolerance.
+
+Hledání nejbližších bodů::
+Pokud je model množina trojúhelníků, dá se použít _Binary Space Partioning (BSP)_ strom.
++
+Pokud je model parametrická nebo implicitní entita, použiješ numerickou optimalizaci.
+
+Hledání rigidní registrace::
+Původní paper používá algoritmus založený na quaternionech. Dá se použít taky _Single Value Decomposition (SVD)_.
+
+=== Image registration
+
+Maximalizujeme _similarity function_:
+
+[stem]
+++++
+\theta_\text{best} = \argmax_{\theta \in T} S(A, \theta(B))
+++++
+
+kde
+
+--
+* stem:[A] je target image,
+* stem:[B] je source image,
+* stem:[T] jsou možné transformace,
+* stem:[S] je similarity function.
+--
+
+Za stem:[B'] označujeme stem:[\theta(B)].
+
+Image rectification::
+Projekce obrazů na stejnou plochu. Hodí se v computer stereo vision.
+
+Registration basis::
+Způsob, jakým provádíme registraci:
+* point-based,
+* surface-based,
+* intensity-based (or voxel-based),
+* hybrid.
+
+Point-based image registration::
+1. Feature extraction -- zajímají nás body salientních struktur (spojení, uzly, extrémy intenzity a lokálních deskriptorů).
+** Měla by být nezávislá na rotaci, translaci, barevném posunu atd., efektivní a kompaktní.
+** Popis různých bodů by se měl lišit.
+2. Feature correspondence -- párujeme body ze _source_ s body z _reference_.
+3. Optimal transformation computation.
+
+Scale Invartiant Feature Transform (SIFT)::
+Lokální deskriptor, který funguje podobně jako vidění primátů.
++
+1. Scale space peak selection -- hledáme potenciální lokace key pointů.
+2. Key point localization -- hledáme x, y, a scale klíčových bodů.
+3. Orientation assignement -- pro každý klíčový bod hledáme optimální rotaci.
+4. Key point descriptor -- vyplivneme vektor, který key point popisuje.
+** Orientation histogram pro každý kvadrant -- velikosti a orientace gradientu v každém bodě.
+
+Intensity-based image registration::
+Zatímco point-based metody hledají konkrétní body, k intensity-based registraci používáme intenzity pixelů (resp. voxelů) celého obrazu. K hledání optimální transformace lze použít gradient descent a neuronové sítě.
+
+Sum of square differences::
+Míra podobnosti obrazů, která se používá, pokud předpokládáme, že obrazy se liší jen v zarovnání a šumu.
++
+[stem]
+++++
+SSD = \frac{1}{n} \sum_i^n | A(i) - B'(i) |^2, \forall i \in A \cup B'
+++++
+
+Normalized Correlation Coefficient::
+Míra podobnosti obrazů, kteá se používá, pokud předpokládáme, že mezi intenzitami obrazů je lineární vztah. Často se počítá Fourierovou transformací.
++
+[stem]
+++++
+\gdef\adiff{\lbrack A(i) - \overline{A} \rbrack}
+\gdef\bdiff{\lbrack B'(i) - \overline{B'} \rbrack}
+
+\begin{gathered}
+NCC = \frac{CC}{\sqrt{\sum_i \adiff^2 \sum_i \bdiff^2}} \\
+CC = \sum_i \adiff \bdiff \\
+\forall i \in A \cap B'
+\end{gathered}
+++++

@@ -1,0 +1,168 @@
+= 2D Images
+
+== Sampling & reconstruction
+
+Sampling::
+Zobrazení ze souvislé *funkce* na diskrétní funkci.
+
+Quantization::
+Zobrazení ze souvislé *proměnné* na diskrétní proměnnou.
+
+Reconstruction::
+Rekonstrukce (skoro) původního souvislého signálu z diskrétních samplů.
+
+Reconstruction filter::
+Funkce (resp. elektronické zařízení) omezující frekvence signálu ve snaze zabránit aliasingu.
++
+Ideálním filtrem by ve frekvenční doméně byl box filter. Jeho inverze je stem:[\text{sinc}(x) = \frac{\sin(\pi x)}{\pi x}].
++
+Pro filtr stem:[f] analyticky:
++
+[stem]
+++++
+I(i, j) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \text{image}(x, y) f(x-i, y-j) dxdy
+++++
++
+Prakticky, ale aproximujeme integrál samply:
++
+[stem]
+++++
+I(i, j) = \frac{\sum_k \text{image}(x_k, y_k) f(x_k, y_k)}{\sum_k f(x_k, y_k)}
+++++
+
+Aliasing::
+Artefakty způsobené rekonstrukcí signálu. Mohou být _spatial_, způsobené samplováním v prostoru, nebo _temporal_, způsobené samplováním v čase.
++
+* Shimmering (buzzing, flickering) -- rapidní změna barvy pixelu způsobená samplovaním textury na velice malé ploše, nebo velice malými trojúhelníky.
+* Stairstepping (the jaggies) -- zubaté lajny; je to obzvlášť otravné u skoro vertikálních nebo horizontálních čar.
+* Moiré patterns -- soustředné křivky vzniknuvší samplováním pravidelných vzorů v pravidelné mřížce.
+* Strobing -- nesprávný pohyb rychle se pohybujících objektů způsobený samplování s nízkou frekvencí.
+
+Antialiasing::
+* Pre-filtering -- odhození vysokých frekvencí low-pass filtrem (třeba gaussian) před samplováním.
+* Post-filtering -- odhození vysokých frekvencí low-pass filtrem po (super)samplování.
+* Supersampling -- více samplů sebraných *uniformě*, což zvyšuje Nyquistovu frekvenci.
+** Weighted supersampling -- dáváme větší důraz na prostřední pixely.
+** Jittered supersampling -- samply nejsou úplně uniformní, ale v nepravidelném vzoru, který ale může být shodný pro každý pixel.
+* Stochastic distribution -- více samplů s *náhodnou* distribucí; kombinuje se se super-samplingem.
+* Adaptive sampling -- začneme s malým množstvím samplů, analyzujeme jejich distribuci, pokud mají vysokou odchylku, seberem samplů víc.
+* Adaptive refinement -- jak weighted supersampling ale váhy se mění na základě lokální důležitosti pixelů (salience).
+** Refinement criteria -- rozdíly v intenzitě pixelů, počet viditelných objektů, trees of computation (???)
+* Alpha-blending -- levný, fake antialiasing.
+
+Fourierova transformace stem:[\cal F]::
+Převádí funkci stem:[f] z prostorové domény na funkci stem:[F] do frekvenční domény:
++
+[stem]
+++++
+\begin{gathered}
+F(\omega) = \mathcal{F}(f)(\omega) = \int_{-\infty}^\infty f(x) \cdot \exp(-i \omega x) dx \\
+f(x) = \mathcal{F}^{-1}(F)(x) = \frac{1}{2\pi} \int_{-\infty}^\infty F(\omega) \cdot \exp(i \omega x) d \omega
+\end{gathered}
+++++
+
+Konvoluce::
+Operátor:
++
+[stem]
+++++
+h(x) = f \otimes g = \int f(x') \cdot g(x - x') dx'
+++++
++
+Věta o konvoluci:
++
+[stem]
+++++
+f \otimes g = \mathcal{F}^{-1}(\mathcal{F}(f) \cdot \mathcal{F}(g))
+++++
++
+Věta o symmetrii:
++
+[stem]
+++++
+f \cdot g = \mathcal{F}^{-1}(\mathcal{F}(f) \otimes \mathcal{F}(g))
+++++
+
+== Textures
+
+Texture::
+A property of a given area. Can be 
+
+Blinn-Phong model::
++
+[stem]
+++++
+I = I_a \rho_a + I_\text{light} (\rho_d \cos \theta + \rho_s \cos^n \alpha)
+++++
+
+Texture mapping::
+** 2D texture space `--parametrization-\->` 3D object space
+** 3D object space `--model transform-\->` 3D world space
+** 3D world space `--viewing transform-\->` 3D camera space
+** 3D camera space `--projection-\->` 2D image space (screen)
+
+Texture interpolation::
+** Bilinear: stem:[f(a,b) = a \cdot (b \cdot f_{11} + (1-b) \cdot f_{10}) + (1-a) \cdot (b \cdot f_{01} + (1-b) \cdot f_{00})]
+** Polynomial
+** Cubic B-spline
+
+Mip-map filtering::
+Máš vícero rozlišení, mezi kterýma interpoluješ v závislosti na vzdálenosti od objektu.
+
+Summed-area table::
+Obsah všeho pod a vlevo od buňky. Na box filtering (průměr).
+
+Elliptical weighted average (EWA)::
+???
+
+Two-part texture mapping::
+Intermediate surface.
+
+Reflection mapping.
+
+Bump mapping.
+
+3D textures.
+
+Noise-based textures.
+
+Light maps.
+
+Modulation textures.
+
+Displacement mapping.
+
+Complex surfaces.
+
+== Image matting
+
+Matting::
+Popředí je extrahováno z obrazu nebo sekvence obrazů.
+
+Keying::
+Oddělování popředí od pozadí.
+
+Luma keying::
+Keying podle luminance.
+
+Choma keying::
+Keying podle barvy.
+
+Difference keying::
+Obecnější chroma keying. Srovnává barvu popředí a pozadí.
+
+== Raster images
+
+Warping::
+Deformace podle nějaké mřížky nebo jiné pomůcky.
+
+Morphing::
+Hledání průměru obrázků.
+
+Image warping with a triangular mesh.
+
+Image warping with a spline network.
+
+Image warping using feature pairs.
+
+Compositing images for metamorphosis, interpolation and warps.

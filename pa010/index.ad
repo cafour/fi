@@ -1,0 +1,44 @@
+= Intermediate Computer Graphics
+:page-records: pa010
+:page-math: true
+:page-liquid: true
+
+Moje poznámky ke kurzu PV010 Intermediate Computer Graphics z podzimu 2020.
+
+.Přehled
+link:./models[3D Modely]::
++
+--
+1. Meshes
+2. Subdivision surfaces
+3. Advanced modeling techniques
+4. Volume data visualization: isosurface reconstruction
+--
+
+link:./images[2D Images]::
++
+--
+[start=5]
+1. Signal sampling and reconstruction
+2. Textures
+3. Image warping & morphing
+4. Image matting
+--
+
+link:./algorithms[Algorithms]::
++
+--
+[start=9]
+1. Computational geometry
+2. Collision detection
+3. Real-time rendering
+4. Shadows
+5. Point set and image registration
+--
+
+
+== Nedohledatelné termíny
+
+Věci, ke kterým se, buď dají dohledat pouze slidy podezřele podobné těm naším, nebo se nedají najít vůbec:
+
+* Regular B-spline subdivision

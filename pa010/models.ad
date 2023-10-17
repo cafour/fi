@@ -1,0 +1,370 @@
+= 3D Models
+
+== Meshes
+
+Manifolds::
+stem:[n]-manifold je prostor, kde okolí každého bodu je homeomorfní s stem:[n]-dimenzionálním Euklidovským prostorem.
++
+Kružnice je 1-manifold. Koule je 2-manifold.
+
+Interior tělesa::
+Body uvnitř tělesa.
++
+Takové body, pro které platí, že otevřená koule (bez "obalu") s dostatečně malým poloměrem obsahuje jen body uvnitř tělesa.
+
+Boundary tělesa::
+Body na hranici tělesa.
++
+Takové body stem:[q], pro které platí, že existuje takový bod stem:[r], že všechny body mezi stem:[q] a stem:[r] (kromě 
+stem:[q], včetně stem:[r]) jsou uvnitř tělesa.
+
+Closure tělesa::
+Body, které nejsou vně tělesa:
++
+[stem]
+++++
+\gdef\interior{\text{interior}}
+\gdef\boundary{\text{boundary}}
+\gdef\closure{\text{closure}}
+
+\closure(T) = \interior(T) \cup \boundary(T)
+++++
+
+Regularized boolean operators::
+Booleanovské operace na tělesech, které eliminují "zbytky", které mohou vzniknout při booleanovských operacích.
++
+[stem]
+++++
+\begin{gathered}
+A \cup^* B = \closure(\interior(A \cup B)) \\
+A \cap^* B = \closure(\interior(A \cap B)) \\
+A \setminus^* B = \closure(\interior(A \setminus B)) \\
+\end{gathered}
+++++
+
+Orientability::
+Dá se konzistentně rozhodnout, na které straně povrchu jsem v každém bodě?
++
+Koule -- ano.
++
+Möbius strip -- ne.
+
+Boundary representation (B-rep)::
+Reprezentace tělesa jako množiny pospojovaných (orientabilních) povrchů, které tvoří boundary.
+
+Topologie::
+Jak jsou povrchy pospojovaný dohromady?
+
+Geometry::
+Kde ty povrchy vlastně jsou v prostoru?
+
+Genus::
+"Kolik donutových děr to má?"
++
+Maximální počet řezů podél uzavřených vzájemně se neprotínajících křivek, které *nerozpojí* těleso.
+
+Euler characteristic (Euler-Poincaré formula)::
+Popisuje topologii nějakého prostoru nezávisle na tom, jak je zohybáný.
++
+[stem]
+++++
+\chi = V - E + F = 2(c - g) + b
+++++
++
+kde
++
+* stem:[V] je počet vertexů,
+* stem:[E] je počet hran,
+* stem:[F] je počet stěn,
+* stem:[c] je počet souvislných komponent,
+* stem:[g] je genus,
+* stem:[b] je počet boundary loops.
++
+video::-9OUyo8NFZg[youtube]
++
+[stem]
+++++
+\begin{gathered}
+E + 1 = V \\
+E' + 1 = F \\
+E = E' \\
+E + 2 = V + F \\
+V - E + F = 2
+\end{gathered}
+++++
+
+Mesh representation::
+* Strom solids -> faces -> edges -> vertices.
+* Triangles (face set) -- list of triangles with redundancy.
+* Indexed triangles -- list of triangles with less redundancy.
+* Winged edge.
+* Half-edges.
+* Corner tables -- tabulka rohů (vertex + trojúhelník).
+
+Isotropic remeshing::
+Uniformizuje trojúhelníky.
++
+1. Spočítej střední hodnotu délky hran (L).
+2. Rozděl každou hranu, která je moc dlouhá (> 4/3 L).
+3. Spoj každou hranu, která je moc krátká (< 4/5 L).
+4. Flipni každou hranu, pokud to přiblíží stupeň vertexů k 6.
+5. Posuň každý vertex směrem k průměru jeho sousedů (centroidu).
+
+== Subdivision
+
+Parametric continuity::
+Popisuje, jak "pěkně" na sebe parametrické křivky navazují:
++
+* stem:[C^0] -- obě křivky jsou spojité.
+* stem:[C^1] -- obě křivky a jejich první derivace jsou spojité.
+* stem:[C^2] -- obě křivky a jejich druhé derivace jsou spojité.
+
+Geometric continuity::
+Křivka nebo povrch může mít stem:[G^n] kontinualitu. Pro segmenty křivky po obou stranách libovolného bodu stem:[P]:
++
+* stem:[G^0] -- křivky se v stem:[P] dotýkají.
+* stem:[G^1] -- křivky se v stem:[P] dotýkají a sdílí v něm tangentu.
+* stem:[G^2] -- křivky se v stem:[P] dotýkají, sdílí v něm tangentu a střed křivosti.
+* ...
++
+Křivka je stem:[G^n] kontinuální, pokud se dá zapsat jako parametrická stem:[C^n] kontinuální křivka.
+
+Typy vertexů::
+* interior,
+* smooth boundary,
+* convex corner,
+* concave corner.
+
+Subdivision scheme (refinement scheme)::
+Postup, podle kterého subdivizi křivky nebo povrchu provádíme. Schéma může být:
++
+* _Approximating_ -- přidá body do hran a existující body posouvá..
+* _Interpolating_ -- přidává nové body, ale prochází původními.
+* _Corner-cutting_ -- "seká rohy".
++
+V případě povrchů je lze také dělit podle toho, jaká primitiva dělí:
++
+* _Primal_ -- dělí faces.
+* _Dual_ -- dělí vertices.
+
+=== Subdivision Curves
+
+Chaikin's corner-cutting method (1974)::
+Pro každý segment stem:[\overline{P_i P_{i+1}}] lomené čáry stem:[P_1, P_2, ..., P_n] nahradí segmentem stem:[\overline{Q_i R_i}], kde:
++
+[stem]
+++++
+\begin{gathered}
+Q_i = \frac{3}{4} P_i + \frac{1}{4} P_{i+1} \\
+R_i = \frac{1}{4} P_i + \frac{3}{4} P_{i+1} \\
+\end{gathered}
+++++
+
+Bézier (De Casteljau) subdivision::
+Bézierovu křivku řádu stem:[n] můžeme rozdělit na dvě Bézierovy křivky řádu stem:[n] v kterémkoli bodě pomocí De Castaljau algoritmu. Není to interpolační schéma, jelikož (až na kraje) zahazuje kontrolní body.
+
+=== Subdivision Surfaces
+
+[%header,cols="4*"]
+|===
+|
+| *Primal -- triangles*
+| *Primal -- quads*
+| *Dual*
+
+| *Aproximating*
+| Loop
+| Catmull-Clark
+.2+| Doo-Sabin, midedge, Dyn-Levin-Liu
+
+| *Interpolating*
+| Butterfly
+| Kobbelt
+|===
+
+Regular B-spline subdivision::
+Podobně jako u Bézier subdivision pro křivky, můžeme složitě spočítat matici, která nám dá nové kontrolní body. Dá se to ale udělat i jednoduššeji:
++
+[stem]
+++++
+\begin{gathered}
+f = \frac{v_1 + v_2 + v_3 + v_4}{4} \\
+e = \frac{v_1 + v_2 + f_1 + f_2}{4} \\
+v = \frac{f_1 + f_2 + f_3 + f_4 + 2(m_1 + m_2 + m_3 + m_4) + 4p}{16}
+\end{gathered}
+++++
++
+kde pro 1 level subdivize musím spočítat 4 nové face pointy stem:[f_1, ..., f_4], 4 nové edge pointy stem:[e_1, ..., e_4] a vertex point stem:[v] uprostřed nich.
++
+image:./img/regular_b-spline.png[]
+
+Catmull-Clark Subdivision::
+Primal subdivision schéma. Generalizace regular B-spline subdivision pro iregulární (nemřížkové) meshe. Generuje stem:[G^2] souvislé limitní povrchy.
++
+1. Pro každý face stem:[i] spočítej stem:[f_i] jako střední hodnota okolních vertexů.
+2. Pro každou edge stem:[i] mezi stem:[v_j, v_k] oddělující faces stem:[l, m] spočítej stem:[e_i = \frac{v_j + v_k + f_l + f_m}{4}].
+3. Pro každý původní vertex stem:[p] spočítej nový vertex stem:[v = \frac{F + 2R + (n-3)p}{n}], kde:
+** stem:[n] je valence vertexu (stupeň uzlu),
+** stem:[F] je průměr nově vytvořených stem:[f_j] sousedících s stem:[p],
+** stem:[R] je průměr midpointů všech hran dotýkajících se stem:[p], kde midpoint je střed oné hrany *ne ten nový edge point*.
+4. Spoj hranou každý nový face point s edge pointy hran, které tvořily ten face.
+5. Spoj hranou každý nový vertex point s edge pointy hran, které vedly do původního vertexu.
+6. Máš nové faces.
++
+image:./img/cc_01.png[]
+image:./img/cc_02.png[]
++
+NOTE: By UserTwoSix - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=99207210, https://commons.wikimedia.org/w/index.php?curid=99207376
+
+Loop Subdivision::
+Primal subdivision schéma pro trojúhelníkové povrchy. Generuje stem:[G^2] souvislé limitní povrchy.
++
+image:./img/loop.png[]
+
+Butterfly Subdivision::
+Primal subdivision schéma pro trojúhelníkové povrchy. Generuje stem:[G^1] souvislé limitní povrchy.
++
+image:./img/butterfly.png[]
++
+"New points on edges, original points remain."
+
+Doo-Sabin Subdivision::
+Duální subdivision schéma pro polygonální povrchy. Generalizuje bi-kvadratické B-spliny. Generuje stem:[G^1] souvislé limitní povrchy.
++
+image:./img/doo-sabin.png[]
++
+"A yellow replaced by 4 reds."
+
+Midedge Subdivision::
+Duální subdivision schéma generující kvadrilaterální mesh.
++
+image:./img/midedge.png[]
+
+Kobbelt Subdivision::
+Primal subdivision schéma generující kvadrilaterální mesh.
++
+image:./img/kobbelt.png[]
+
+== Advanced modeling techniques
+
+Barr's global deformations::
++
+* Scaling: stem:[(X, Y, Z) = (s_x \cdot x, s_y \cdot y, s_z \cdot z)]
+* Tapering (zúžení): stem:[(X, Y, Z) = (r_x \cdot x, r_y \cdot y, z)]
+* Twisting (podél z)
+** stem:[X = x \cdot \cos(f(z)) - x \cdot \sin(f(z))]
+** stem:[Y = x \cdot \sin(f(z)) + y \cdot \cos(f(z))]
+** stem:[Z = z]
+* Bending (podél y) pro _bending range_ stem:[(y_\text{min}, y_\text{max})], _bending rate_ stem:[\frac{1}{k}], _center of the bend_ stem:[y = y_0].
++
+[stem]
+++++
+\begin{gathered}
+    y' = \begin{cases}
+        y_\text{min} & y \le y_\text{min} \\
+        y & y_\text{min} < y < y_\text{max} \\
+        y_\text{max} & y \ge y_\text{max}
+    \end{cases} \\
+    \theta = k \cdot (y' - y_0) \\
+    X = x \\
+    Y = \begin{cases}
+        -\sin \theta(z - 1/k) + y_0 & y_\text{min} \le y \le y_\text{max} \\
+        -\sin \theta(z - 1/k) + y_0 + \cos \theta(y - y_\text{min}) & y < y_\text{min} \\
+        -\sin \theta(z - 1/k) + y_0 + \cos \theta(y - y_\text{max}) & y > y_\text{max}
+    \end{cases} \\
+    Z = \begin{cases}
+        \cos \theta (z - 1/k) + 1/k & y_\text{min} \le y \le y_\text{max} \\
+        \cos \theta (z - 1/k) + 1/k & \sin \theta (y - y_\text{min}) & y < y_\text{min} \\
+        \cos \theta (z - 1/k) + 1/k & \sin \theta (y - y_\text{max}) & y > y_\text{max}
+    \end{cases}
+\end{gathered}
+++++
+
+Free-form Deformation (FFD)::
+Lokální deformace podle mřížky.
++
+1. Umísti objekt, který chceš deformovat do mřížky (kostky či jiného konvexního objemu).
+2. Transformuj "world" souřadnice stem:[x, y, z] na "lokální" souřadnice mřížky stem:[s, t, u].
+3. Modifikuj body mřížky dle libosti.
+4. Transformuj objekt uvnitř mřížky zpět do "world" souřadnic.
+
+Extended Free-form Deformation (EFFD)::
+Rozšíření FFD pro mřížky nesložené z rovnoběžnostěnů.
+
+Axial deformations::
+Fáze I:
++
+--
+1. Měj původní křivku se začátkem a koncem.
+2. Pro každý vertex objektu najdi nejbližší bod křivky.
+3. V každém bodě křivky měj lokální souřadnicový systém (Frenetův rámec).
+--
++
+Fáze II:
++
+--
+1. Deformuj křivku, aplikuj změny.
+--
+
+
+Free-form Deformations with Catmull-Clark Volumes (CCV FFD)::
+Preprocessing fáze:
++
+--
+1. Oblast, kterou chceš deformovat obal mřížkou.
+2. Subdividuj mřížku pomocí Catmull-Clark na stem:[n] kroků.
+3. Každý vertex deformovaného objektu označkuj indexem buňky, ve které se nachází.
+4. Parametrizuj vertex pomocí lokálních souřadnic stem:[u, v, w] buňky, ve které se nachází.
+--
++
+Deformační fáze:
+--
+1. Deformuj původní mřížku.
+2. Subdividuj mřížku pomocí Catmull-Clark na stem:[n] kroků.
+3. Pro každý vertex najdi podle značky jeho novou buňku a deformuj stem:[u, v, w].
+--
+
+Sweep-based FFD::
+Modifikuje mesh přímo, ne skrze mřížku. Na řezy meshem aplikuješ afinní transformace.
+
+Implicit surfaces::
+Objekty definované pomocí reálných funkcí. Normály lze získat gradientem. Dají se použít i v _constructive solid geometry_.
+
+Blobs::
+Meshe popsané součtem Gaussových křivek.
+
+== Volume data rendering -- surface reconstruction
+
+Volume data visuliation::
+Aplikace při zpracování dat z Roentgenu, MRI, pozitronové emisní tomografie. Takže v medicíně, geologii, seismologii,
+meteorologii, matematice.
+
+Formáty dat::
+** Colinear Regular Grid
+** Colinear Irregular Grid
+** Grid with Regular topology
+** Hybrid grid
+** Voxels -- hodnoty uprostřed buněk
+** Cells -- hodnoty v mřížce
+
+Iso-surface reconstruction::
+Výpočet a vykreslení povrchu, kde mají data stejné hodnoty. Mezi metody patří:
+** Non-transparent voxels
+** Iso-lines-based surface -- spojování 2D iso-křivek
+** Marching cubes
+
+Marching cubes::
++
+video::M3iI2l0ltbE[youtube]
+
+Mesh simplification::
+Nový vertex vznikne průměrováním okolí.
+
+Quadric Error Metric (QEM) Simplification::
+Postupně smršťuj hrany (kratší než threshold) od té, která má nejmenší cenu. Cena se odvíjí od kvadratické chyby vzhldem k okolním trojúhelníkům.
+
+Progressive meshes::
+Meshe, na kterých lze provádět operaci *ecol* (edge collapse) a její inverzi *vsplit* (vertex split). Používá _explicit energy metric_ -- součet vzdáleností mezi vertexy + penalta za počet vertexů + energie hran, kdyby to byly pružiny. 
+
+Geomorphs::
+Smooth přechody mezi dvěma progressive meshi.
