@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<svg height="512" width="512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<style type="text/css">
+		<![CDATA[
+			.site{fill:#000;}
+			.edge{stroke:#000;stroke-width:2px;}
+			.circle{stroke:#aaa;stroke-width:2px;fill:none;}
+			]]>
+	</style>
+	<g class="circle">
+		<circle cx="165.694" cy="180.347" r="129.400"/>
+		<circle cx="351.090" cy="282.253" r="84.735"/>
+		<circle cx="170.641" cy="221.750" r="115.529"/>
+		<circle cx="117.915" cy="327.904" r="93.108"/>
+		<circle cx="175.000" cy="412.524" r="90.034"/>
+		<circle cx="302.828" cy="331.315" r="91.837"/>
+		<circle cx="304.499" cy="320.175" r="94.013"/>
+		<circle cx="235.408" cy="131.508" r="108.951"/>
+		<circle cx="309.517" cy="-132.320" r="235.303"/>
+		<circle cx="351.862" cy="181.024" r="80.899"/>
+		<circle cx="398.448" cy="153.000" r="78.232"/>
+	</g>
+	<g class="site">
+		<circle cx="85" cy="415" r="5"/>
+		<circle cx="391" cy="357" r="5"/>
+		<circle cx="265" cy="415" r="5"/>
+		<circle cx="417" cy="229" r="5"/>
+		<circle cx="417" cy="77" r="5"/>
+		<circle cx="286" cy="228" r="5"/>
+		<circle cx="211" cy="330" r="5"/>
+		<circle cx="60" cy="255" r="5"/>
+		<circle cx="162" cy="51" r="5"/>
+		<circle cx="340" cy="101" r="5"/>
+	</g>
+	<g class="edge">
+		<line x1="85" y1="415" x2="265" y2="415"/>
+		<line x1="85" y1="415" x2="211" y2="330"/>
+		<line x1="85" y1="415" x2="60" y2="255"/>
+		<line x1="391" y1="357" x2="265" y2="415"/>
+		<line x1="391" y1="357" x2="417" y2="229"/>
+		<line x1="391" y1="357" x2="286" y2="228"/>
+		<line x1="391" y1="357" x2="211" y2="330"/>
+		<line x1="265" y1="415" x2="211" y2="330"/>
+		<line x1="417" y1="229" x2="417" y2="77"/>
+		<line x1="417" y1="229" x2="286" y2="228"/>
+		<line x1="417" y1="229" x2="340" y2="101"/>
+		<line x1="417" y1="77" x2="162" y2="51"/>
+		<line x1="417" y1="77" x2="340" y2="101"/>
+		<line x1="286" y1="228" x2="211" y2="330"/>
+		<line x1="286" y1="228" x2="60" y2="255"/>
+		<line x1="286" y1="228" x2="162" y2="51"/>
+		<line x1="286" y1="228" x2="340" y2="101"/>
+		<line x1="211" y1="330" x2="60" y2="255"/>
+		<line x1="60" y1="255" x2="162" y2="51"/>
+		<line x1="162" y1="51" x2="340" y2="101"/>
+	</g>
+</svg>

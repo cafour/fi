@@ -1,0 +1,14 @@
+layout: layouts/question.tsx
+styles: ["question"]
+mergedKeys:
+  styles: noop
+tags: szmgr
+course: SZMGR
+home: /fi/szmgr/
+groups:
+  - name: szp
+    display: Společný základ programu
+  - name: vph
+    display: Vývoj počítačových her
+  - name: gd
+    display: Grafický design
