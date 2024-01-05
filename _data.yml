@@ -1,0 +1,5 @@
+layout: layouts/standalone.tsx
+styles: [ essay ]
+metas:
+  lang: cs
+showtitle: true

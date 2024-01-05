@@ -10,7 +10,7 @@ export default ({ title, children, styles, math }: FrontPageData) => {
         <meta charSet="utf-8" />
         <link rel="icon" href="/icons/favicon.png" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-        <title>{title ? `${title} | Cafour` : "Cafour"}</title>
+        <title>{title ? `${title} | FI Notes` : "FI Notes"}</title>
         {(styles ?? []).map((style) => (
           <link href={`/styles/${style}.css`} rel="stylesheet" />
         ))}

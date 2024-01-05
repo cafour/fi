@@ -4,6 +4,8 @@ styles: [ essay ]
 title: FI
 ---
 
+# FI Notes
+
 - [IV003 Algoritmy a Datové Struktury II](./iv003/)
 - [MV013 Statistics for Computer Science](./mv013/)
 - [PA010 Intermediate Computer Graphics](./pa010/)
