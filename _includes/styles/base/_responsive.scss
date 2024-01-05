@@ -1,0 +1,42 @@
+@use "reset";
+@use "config";
+
+@mixin max-mobile {
+    @media screen and (max-width: config.$width-mobile) {
+        @content;
+    }
+}
+
+@mixin max-tablet {
+    @media screen and (max-width: config.$width-tablet) {
+        @content;
+    }
+}
+
+@mixin min-tablet {
+    @media screen and (min-width: config.$width-tablet) {
+        @content;
+    }
+}
+
+@mixin max-desktop {
+    @media screen and (max-width: config.$width-desktop) {
+        @content;
+    }
+}
+
+@mixin min-desktop {
+    @media screen and (min-width: config.$width-desktop) {
+        @content;
+    }
+}
+
+@mixin container {
+    @include min-desktop {
+        width: config.$width-desktop;
+    }
+    width: 100%;
+    max-width: 100vw;
+    margin-left: auto;
+    margin-right: auto;
+}

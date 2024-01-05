@@ -1,0 +1,71 @@
+@use "../base/config";
+@use "../base/responsive";
+@use "asciidoc";
+
+%the-usual {
+    @extend %asciidoc;
+    display: grid;
+    grid-template: 1fr auto 1fr;
+    grid-template-areas: ". main .";
+    min-height: 100vh;
+    background-color: config.$color-desk;
+
+    main {
+        grid-area: main;
+        display: flex;
+        flex-direction: column;
+
+        @include responsive.container;
+    }
+
+    section {
+        margin: 3rem 0;
+        background-color: config.$color-paper;
+        padding: 2rem;
+    }
+
+    h2 {
+        font-size: 3rem;
+        font-weight: 700;
+        color: config.$color-dark;
+        margin: 0;
+        padding-bottom: 2rem;
+    }
+
+    h3 {
+        color: scale-color(config.$color-dark, $lightness: 30%);
+        margin: 0;
+    }
+
+    h4 {
+        font-style: italic;
+        color: scale-color(config.$color-dark, $lightness: 30%);
+    }
+
+    .olist, .ulist, .dlist {
+        padding-left: 1rem;
+
+        ol, ul, dl {
+            padding-left: 1rem;
+        }
+    }
+
+    .links {
+        li {
+            font-family: config.$font-header;
+            font-size: 2rem;
+            padding: 1rem;
+            font-weight: 700;
+            list-style: none;
+
+            a {
+                color: config.$color-desk;
+                text-decoration: none;
+    
+                &:hover {
+                    color: lighten(config.$color-desk, 20%);
+                }
+            }
+        }
+    }
+}

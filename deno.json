@@ -7,9 +7,19 @@
   "compilerOptions": {
     "types": [
       "lume/types.ts"
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "npm:preact",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable",
+      "deno.ns",
+      "deno.unstable"
     ]
   },
   "imports": {
-    "lume/": "https://deno.land/x/lume@v2.0.2/"
+    "lume/": "https://deno.land/x/lume@v2.0.2/",
+    "std/": "https://deno.land/std@0.211.0/"
   }
 }

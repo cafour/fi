@@ -1,0 +1,41 @@
+@use "./base/config";
+@use "./base/responsive";
+@use "./components/the-usual";
+
+html, body {
+    background-color: config.$color-desk;
+}
+
+.essay {
+    @extend %the-usual;
+    background-color: config.$color-desk;
+
+    main {
+        background-color: config.$color-paper;
+        padding: 4rem;
+    }
+
+.dlist dd {
+        font-style: normal;
+    }
+
+    div.listingblock {
+        font-size: 1.5rem;
+        line-height: 1.1;
+    }
+
+    table.tableblock {
+        margin: 2rem;
+        padding-left: 1rem;
+
+        td, th {
+            border: 1px solid config.$color-dark;
+            padding: 0.5rem;
+        }
+
+        th {
+            font-weight: 700;
+            border-bottom: 2px solid config.$color-dark;
+        }
+    }
+}

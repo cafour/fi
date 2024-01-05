@@ -1,0 +1,45 @@
+@use "../base/config";
+
+$color-mt-blue: #6D92DB;
+$color-mt-red: #bb4f4f;
+$color-mt-orange: #FFB600;
+$color-mt-gray: #B6B6B6;
+$color-mt-green: #6DB649;
+
+$color-admonition-caution: adjust-color($color-mt-orange, $lightness: 10%);
+$color-admonition-important: adjust-color($color-mt-green, $lightness: 25%);
+$color-admonition-note: adjust-color($color-mt-blue, $lightness: 25%);
+$color-admonition-tip: adjust-color($color-mt-gray, $lightness: 25%);
+$color-admonition-warning: adjust-color($color-mt-red, $lightness: 25%);
+
+@mixin configure-admonition($kind, $color) {
+    &.#{$kind} {
+        background-color: $color;
+        color: config.mt-shift($color, -4);
+        border: 3px solid config.mt-shift($color, -2);
+        
+        &::before {
+            content: "";
+            display: block;
+            background-image: url('/icons/#{$kind}.png');
+        }
+    }
+}
+
+.admonition {
+    padding-left: 6rem;
+
+    &::before {
+        width: 6rem;
+    }
+    
+    @include configure-admonition(caution, $color-admonition-caution);
+    @include configure-admonition(important, $color-admonition-important);
+    @include configure-admonition(note, $color-admonition-note);
+    @include configure-admonition(tip, $color-admonition-tip);
+    @include configure-admonition(warning, $color-admonition-warning);
+    
+    .amonition-title {
+        display: none;
+    }
+}

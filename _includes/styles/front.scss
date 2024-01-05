@@ -1,0 +1,135 @@
+$font-header: "Cascadia Code", monospace;
+$font-text: "Cascadia Code", sans-serif;
+$font-code: "Cascadia Mono", monospace;
+
+@use "./base/config" with (
+    $font-header: $font-header,
+    $font-text: $font-text,
+    $font-code: $font-code
+);
+@use "./base/responsive";
+@use "./components/asciidoc";
+@use "./components/year";
+@use "./components/job";
+
+@media print {
+    html, body, .page {
+        background-color: config.$color-desk;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.front {
+    @extend %asciidoc;
+
+    background-color: config.$color-desk;
+    min-height: 100vh;
+    display: block;
+    padding: 2rem;
+    color: config.$color-dark;
+    text-align: center;
+
+    header {
+        background-color: config.$color-paper;
+        padding: 2rem;
+        margin: 1rem;
+        display: inline-block;
+
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            line-height: 1;
+        }
+        
+        .name {
+            font-size: 2.4rem;
+            color: config.mt-shift(config.$color-desk, 1);
+            font-weight: 400;
+        }
+        
+        hr {
+            margin: 2rem;
+            border-top: 0.2rem solid config.mt-shift(config.$color-desk, 1);
+        }
+
+        .logo {
+            max-width: 25rem;
+            margin: 2rem;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        div.links {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            @include responsive.max-mobile {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            a {
+                padding: 0 1rem;
+            }
+        }
+    }
+
+    main {
+        @include responsive.container;
+        text-align: center;
+
+        section {
+            text-align: left;
+        }
+
+        h2 {
+            display: block;
+            text-align: center;
+            align-self: stretch;
+            background-color: config.$color-paper;
+            text-transform: uppercase;
+            padding: 1rem;
+            margin: 3rem 0 1rem 0;
+        }
+
+        section.about {
+            background-color: config.$color-paper;
+            text-align: center;
+            padding: 2rem;
+            margin: 1rem auto;
+            width: 80%;
+            display: inline-block;
+        }
+
+        section.year {
+            @extend %year;
+            align-self: stretch;
+        }
+
+        section.jobs {
+            @extend %jobs;
+            align-self: stretch;
+        }
+
+        @media print {
+            .job, .project {
+                break-inside: avoid;
+            }
+        }
+    }
+
+    footer {
+        @include responsive.container;
+        background-color: config.$color-paper;
+        padding: 1rem;
+        margin: 1rem auto;
+        font-size: 1rem;
+        color: config.mt-shift(config.$color-paper, -2);
+        text-align: center;
+    }
+}

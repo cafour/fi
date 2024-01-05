@@ -1,6 +1,6 @@
 ---
 layout: layouts/standalone.tsx
-styles: essay
+styles: [ essay ]
 title: FI
 ---
 

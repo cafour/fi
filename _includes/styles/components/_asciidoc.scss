@@ -1,0 +1,358 @@
+@use "../base/config";
+@use "../base/responsive";
+
+$color-mt-blue: #6D92DB;
+$color-mt-red: #bb4f4f;
+$color-mt-orange: #FFB600;
+$color-mt-gray: #B6B6B6;
+$color-mt-green: #6DB649;
+
+$color-admonition-caution: adjust-color($color-mt-orange, $lightness: 10%);
+$color-admonition-important: adjust-color($color-mt-green, $lightness: 25%);
+$color-admonition-note: adjust-color($color-mt-blue, $lightness: 25%);
+$color-admonition-tip: adjust-color($color-mt-gray, $lightness: 25%);
+$color-admonition-warning: adjust-color($color-mt-red, $lightness: 25%);
+
+@mixin configure-admonition($kind, $color) {
+    &.#{$kind} {
+        background-color: $color;
+        color: config.mt-shift($color, -4);
+        border: 3px solid config.mt-shift($color, -2);
+    }
+}
+
+%asciidoc {
+    font-size: 1.8rem;
+    line-height: 1.5;
+    font-family: config.$font-text;
+
+    .sectionbody {
+        padding-left: 1rem;
+    }
+
+    .quoteblock {
+        background-color: config.mt-shift(config.$color-paper, -1);
+        border: 1px solid config.mt-shift(config.$color-paper, -1);
+        padding: 1rem;
+        position: relative;
+        margin-bottom: 1rem;
+        
+        &::before, &::after {
+            color: config.$color-link;
+            display: inline;
+            font-size: 3rem;
+            padding: 0.5rem;
+            position: absolute;
+        }
+
+        &::before {
+            content: '\201e';
+            bottom: 0;
+            left: 0;
+        }
+
+        &::after {
+            content: '\201c';
+            top: 0;
+            right: 0;
+        }
+
+        blockquote {
+            width: 100%;
+            text-align: justify;
+            font-style: italic;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        li {
+            text-align: left;
+        }
+
+        .attribution {
+            width: 100%;
+            text-align: right;
+        }
+    }
+
+    .videoblock {
+        .content {
+            width: 100%;
+            position: relative;
+            padding-bottom: 56.25%; // height:width = 9:16
+
+            iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    code {
+        font-family: config.$font-code;
+    }
+
+    a {
+        color: config.$color-link;
+        text-decoration: none;
+        
+        &.bare {
+            word-break: break-all;
+        }
+
+        &:hover {
+            color: config.mt-shift(config.$color-link, -1);
+        }
+    }
+    
+    img {
+        max-width: 100%;
+        max-height: 50rem;
+        object-fit: contain;
+    }
+
+    .olist,
+    .ulist,
+    .dlist,
+    .toc,
+    .exampleblock,
+    .openblock {
+
+        > .title,
+        > #toctitle {
+            font-weight: 700;
+            font-size: 2rem;
+            font-style: italic;
+            padding: 2rem 0rem 1rem 0rem;
+        }
+
+        > .title + ol,
+        > .title + ul,
+        > .title + dl {
+            margin-left: 2rem;
+        }
+        
+        ol, ul {
+            padding-left: 2rem;
+        }
+    }
+    
+    > .olist,
+    > .ulist,
+    > .dlist {
+
+        ol,
+        ul,
+        dl {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+    }
+
+    .dlist {
+        dt {
+            padding-top: 1rem;
+            font-weight: 700;
+        }
+
+        dd {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-bottom: 1rem;
+            
+            p {
+                text-align: justify;
+            }
+        }
+    }
+
+    .admonitionblock {
+        width: 100%;
+        margin: 2rem 0rem;
+        padding: 1rem;
+
+        @include configure-admonition(caution, $color-admonition-caution);
+        @include configure-admonition(important, $color-admonition-important);
+        @include configure-admonition(note, $color-admonition-note);
+        @include configure-admonition(tip, $color-admonition-tip);
+        @include configure-admonition(warning, $color-admonition-warning);
+
+        .icon {
+            vertical-align: middle;
+            width: 6rem;
+            padding: 0rem 1rem;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .content {
+            vertical-align: top;
+        }
+    }
+
+    .listingblock {
+        border: 0.1rem solid config.$color-dark;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+
+        .shiki {
+            padding: 1rem;
+            font-size: 1.5rem;
+            line-height: 1.3;
+        }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: config.$font-header;
+        font-weight: 700;
+    }
+
+    h1 {
+        font-size: 4rem;
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 4rem;
+    }
+
+    h2 {
+        font-size: 2.8rem;
+    }
+
+    h3 {
+        font-size: 2.4rem;
+        font-style: italic;
+    }
+
+    h4,
+    h5,
+    h6 {
+        font-size: 2.0rem;
+    }
+
+    .underline {
+        text-decoration: underline;
+    }
+
+    .line-through {
+        text-decoration: line-through;
+    }
+
+    sup {
+        vertical-align: super;
+    }
+
+    sub {
+        vertical-align: sub;
+    }
+
+    div.sect1 {
+        padding-bottom: 1.5rem;
+    }
+
+    div.sect2 {
+        padding-bottom: 1rem;
+    }
+
+    hr {
+        border-top: 0.25rem solid scale-color(config.$color-dark, $lightness: 30%);
+    }
+
+    .paragraph {
+        text-align: justify;
+        hyphens: auto;
+        
+        &.text-center {
+            text-align: center;
+        }
+    }
+    
+    .sectionbody,
+    .sect1,
+    .sect2 {
+        > *:not(:last-child) {
+            margin-bottom: 2rem;
+        }
+    }
+
+    .sect3,
+    .sect4,
+    dd,
+    td.content,
+    .exampleblock > .content,
+    .openblock > .content {
+        &> *:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+
+    .asterism {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 1rem 0rem;
+        font-family: config.$font-code;
+    }
+    
+    .imageblock {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .imageblock > .title,
+    .tableblock > .title {
+        font-size: 1.6rem;
+        font-style: italic;
+    }
+    
+    table.tableblock {
+        margin: 2rem 0rem;
+
+        &.stretch {
+            width: 100%;
+        }
+
+        thead {
+            border-bottom: 0.2rem solid config.$color-dark;
+        }
+        
+        th, td {
+            padding: 0.3rem 0.5rem;
+            
+            &:not(:last-of-type) {
+                border-right: 0.1rem solid config.$color-dark;
+            }
+        }
+        
+        tr:not(:last-of-type) {
+            border-bottom: 0.1rem solid config.$color-dark;
+        }
+    }
+    
+    .exampleblock {
+        background-color: config.mt-shift(config.$color-paper, +1);
+        border: 0.1rem dashed config.$color-dark;
+        padding: 1rem;
+        margin: 1rem 0rem;
+        
+        > .title {
+            padding: 0;
+            padding-bottom: 1rem;
+        }
+    }
+    
+    .small {
+        font-size: 1.0rem;
+    }
+}

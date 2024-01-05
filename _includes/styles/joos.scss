@@ -1,0 +1,183 @@
+$font-header: "Gelasio", serif;
+$font-text: "Lato", sans-serif;
+$font-code: "Cascadia Mono", monospace;
+$color-light: #dfdddd;
+$color-dark: #202020;
+
+@use "./base/config" with ($font-header: $font-header,
+    $font-text: $font-text,
+    $font-code: $font-code);
+@use "./base/responsive";
+@use "./base/utility";
+@use "./components/asciidoc";
+
+html,
+body {
+    background-color: $color-light;
+    color: $color-dark;
+    height: 100%;
+}
+
+.joos {
+    @extend %asciidoc;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+
+    nav,
+    header,
+    footer,
+    main {
+        .container {
+            @include responsive.container;
+        }
+    }
+
+    main {
+        flex-grow: 1;
+    }
+
+    nav {
+        background-color: $color-dark;
+        color: $color-light;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            height: 5rem;
+        }
+
+        .filler {
+            flex-grow: 1;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-family: $font-header;
+            font-size: 3rem;
+            color: $color-light;
+
+            &:hover {
+                color: darken($color-light, 25%);
+            }
+        }
+
+        .links {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            font-size: 1.5rem;
+            line-height: 1.0;
+
+            a {
+                padding: 1.25rem;
+                color: $color-light;
+                border: 1px solid $color-light;
+
+                &:hover {
+                    background-color: $color-light;
+                    color: $color-dark;
+                    outline: 1px solid $color-dark;
+                }
+            }
+        }
+    }
+
+    header {
+        padding-top: 7rem;
+    }
+
+    .search {
+        background-color: $color-dark;
+        color: $color-light;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        width: 30rem;
+
+        input {
+            border: 1px solid $color-light;
+            background-color: $color-light;
+            font-size: 1.5rem;
+            line-height: 1.0;
+            padding: 1rem;
+            font-family: $font-text;
+            flex-grow: 1;
+        }
+
+        a {
+            padding: 1rem;
+            color: $color-light;
+            border: 1px solid $color-light;
+
+            &:hover {
+                background-color: $color-light;
+                color: $color-dark;
+                outline: 1px solid $color-dark;
+            }
+
+            svg {
+                width: 2rem;
+                height: 2rem;
+                display: block;
+            }
+        }
+    }
+
+    footer {
+        font-size: 1.2rem;
+        text-align: center;
+        line-height: 2;
+    }
+
+    .spotlight {
+        background-color: $color-dark;
+        color: $color-light;
+        padding: 2rem;
+        margin: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+
+        > :first-child {
+            width: 100%;
+            font-size: 2rem;
+        }
+    }
+
+    .paper-title {
+        font-size: 3rem;
+        text-align: left;
+        margin: 0px;
+    }
+    
+    .paper-abstract {
+        padding-top: 2rem;
+        
+        h2 {
+            font-size: 2.4rem;
+        }
+    }
+    
+    .paper-download {
+        background-color: #d44848;
+        color: $color-light;
+        padding: 1rem;
+        margin-top: 1rem;
+        display: block;
+        width: max-content;
+
+        &:hover {
+            background-color: lighten(#d44848, 10%);
+            color: $color-light;
+        }
+    }
+}

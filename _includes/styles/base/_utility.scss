@@ -1,0 +1,263 @@
+@use "./config";
+
+$sizes: (
+    "0": "0px",
+    "1": "0.25rem",
+    "2": "0.5rem",
+    "3": "0.75rem",
+    "4": "1rem",
+    "5": "1.25rem",
+    "6": "1.5rem",
+    "7": "1.75rem",
+    "8": "2rem",
+    "9": "2.25rem",
+    "10": "2.5rem",
+    "11": "2.75rem",
+    "12": "3rem",
+    "13": "3.25rem",
+    "14": "3.5rem",
+    "15": "3.75rem",
+    "16": "4rem"
+);
+
+$fractions: (
+    "auto": "auto",
+    "full": "100%",
+    "0p": "0%",
+    "8p": "8.333333%",
+    "10p": "10%",
+    "16p": "16.666667%",
+    "20p": "20%",
+    "25p": "25%",
+    "30p": "30%",
+    "33p": "33.333333%",
+    "40p": "40%",
+    "41p": "41.666667%",
+    "50p": "50%",
+    "58p": "58.333333%",
+    "60p": "60%",
+    "66p": "66.666667%",
+    "70p": "70%",
+    "75p": "75%",
+    "80p": "80%",
+    "83p": "83.333333%",
+    "90p": "90%",
+    "91p": "91.666667%",
+    "100p": "100%"
+);
+
+$colors: (
+    "black": "#000000",
+    "white": "#ffffff",
+    "dark": config.$color-dark,
+    "light": config.$color-light,
+    "transparent": "transparent"
+);
+
+// margin
+@each $size, $measure in $sizes {
+    .m-#{$size} {
+        margin: $measure;
+    }
+    
+    .mt-#{$size} {
+        margin-top: $measure;
+    }
+    
+    .mr-#{$size} {
+        margin-right: $measure;
+    }
+    
+    .mb-#{$size} {
+        margin-bottom: $measure;
+    }
+    
+    .ml-#{$size} {
+        margin-left: $measure;
+    }
+    
+    .mx-#{$size} {
+        margin-left: $measure;
+        margin-right: $measure;
+    }
+    
+    .my-#{$size} {
+        margin-top: $measure;
+        margin-bottom: $measure;
+    }
+}
+
+// padding
+@each $size, $measure in $sizes {
+    .p-#{$size} {
+        padding: $measure;
+    }
+    
+    .pt-#{$size} {
+        padding-top: $measure;
+    }
+    
+    .pr-#{$size} {
+        padding-right: $measure;
+    }
+    
+    .pb-#{$size} {
+        padding-bottom: $measure;
+    }
+    
+    .pl-#{$size} {
+        padding-left: $measure;
+    }
+    
+    .px-#{$size} {
+        padding-left: $measure;
+        padding-right: $measure;
+    }
+    
+    .py-#{$size} {
+        padding-top: $measure;
+        padding-bottom: $measure;
+    }
+}
+
+// percentages
+@each $fraction, $measure in $fractions {
+    .w-#{$fraction} {
+        width: $measure;
+    }
+    
+    .h-#{$fraction} {
+        height: $measure;
+    }
+    
+    .min-w-#{$fraction} {
+        min-width: $measure;
+    }
+    
+    .min-h-#{$fraction} {
+        min-height: $measure;
+    }
+    
+    .max-w-#{$fraction} {
+        max-width: $measure;
+    }
+    
+    .max-h-#{$fraction} {
+        max-height: $measure;
+    }
+}
+
+// background-color
+@each $color, $value in $colors {
+    .bg-#{$color} {
+        background-color: $value;
+    }
+}
+
+// color
+@each $color, $value in $colors {
+    .text-#{$color} {
+        color: $value;
+    }
+}
+
+// border
+@each $size, $measure in $sizes {
+    @each $color, $value in $colors {
+        .b-#{$size}-#{$color} {
+            border: $measure solid $value;
+        }
+        
+        .bt-#{$size}-#{$color} {
+            border-top: $measure solid $value;
+        }
+        
+        .br-#{$size}-#{$color} {
+            border-right: $measure solid $value;
+        }
+        
+        .bb-#{$size}-#{$color} {
+            border-bottom: $measure solid $value;
+        }
+        
+        .bl-#{$size}-#{$color} {
+            border-left: $measure solid $value;
+        }
+        
+        .bx-#{$size}-#{$color} {
+            border-left: $measure solid $value;
+            border-right: $measure solid $value;
+        }
+        
+        .by-#{$size}-#{$color} {
+            border-top: $measure solid $value;
+            border-bottom: $measure solid $value;
+        }
+    }
+}
+
+// font-size
+.text-xs {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+}
+
+.text-sm {
+    font-size: 1.4rem;
+    line-height: 2rem;
+}
+
+.text-base {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+}
+
+.text-lg {
+    font-size: 1.8rem;
+    line-height: 2.8rem;
+}
+
+.text-xl {
+    font-size: 2rem;
+    line-height: 2.8rem;
+}
+
+.text-2xl {
+    font-size: 2.4rem;
+    line-height: 3.2rem;
+}
+
+.text-3xl {
+    font-size: 3rem; /* 30px */
+    line-height: 3.6rem; /* 36px */
+}
+
+.text-4xl {
+    font-size: 3.6rem; /* 36px */
+    line-height: 4rem; /* 40px */
+}
+
+.text-5xl {
+    font-size: 4.8rem;
+    line-height: 1;
+}
+
+.text-6xl {
+    font-size: 6rem; /* 60px */
+    line-height: 1;
+}
+
+.text-7xl {
+    font-size: 7.2rem; /* 72px */
+    line-height: 1;
+}
+
+.text-8xl {
+    font-size: 9.6rem;
+    line-height: 1;
+}
+
+.text-9xl {
+    font-size: 12.8rem;
+    line-height: 1;
+}

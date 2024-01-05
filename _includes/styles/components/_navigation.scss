@@ -1,0 +1,70 @@
+@use "../base/config";
+@use "../base/responsive";
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+
+    .nav-group {
+        width: 100%;
+    }
+
+    .nav-header {
+        height: 10rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-family: config.$font-code;
+        font-size: 4.2rem;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 2rem;
+
+        img {
+            height: 100%;
+            padding: 0.5rem;
+        }
+    }
+
+    .nav-subheader {
+        display: block;
+        font-family: config.$font-header;
+        font-size: 2rem;
+        font-weight: 700;
+        padding-bottom: 1.5rem;
+    }
+
+    .nav-placeholder {
+        color: lighten(config.$color-desk, 20%);
+        text-decoration: line-through;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 3rem;
+
+        li {
+            line-height: 1.6;
+            padding-left: 1rem;
+            position: relative;
+            list-style: none;
+
+            a, span {
+                text-decoration: none;
+                font-family: config.$font-navigation;
+                font-weight: 500;
+                font-size: 1.5rem;
+                display: block;
+                width: 100%;
+                height: 100%;
+                
+                &.active {
+                    color: lighten(config.$color-desk, 20%);
+                }
+            }
+        }
+    }
+}

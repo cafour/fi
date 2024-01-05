@@ -1,0 +1,55 @@
+@use "../base/config";
+@use "project";
+
+%year {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+
+    div.label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-self: stretch;
+        color: config.$color-paper;
+        padding-right: 1rem;
+
+        &::before, &::after {
+            content: "";
+            display: block;
+            border: 0.15rem solid config.$color-paper;
+            align-self: center;
+            flex-grow: 1;
+            background-color: config.$color-paper;
+        }
+
+        strong {
+            flex-grow: 0;
+            font-size: 1.4rem;
+
+            &::before, &::after {
+                content: "";
+                display: block;
+                border: 0.15rem solid config.$color-paper;
+                align-self: center;
+                background-color: config.$color-paper;
+            }
+
+            &::before {
+                margin-bottom: 0.5rem;
+            }
+
+            &::after {
+                margin-top: 0.5rem;
+            }
+        }
+    }
+
+    div.project-list {
+        margin: 1rem 0;
+
+        div.project {
+            @extend %project;
+        }
+    }
+}
