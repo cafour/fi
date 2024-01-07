@@ -103,29 +103,3 @@ Meta::
 
 [.text-center]
 **NEPROPADEJTE PANICE**
-
-[stem]
-++++
-\begin{aligned}
-
-Q_\text{Nika}(t) &= \left( x(t), y(t) \right) \\
-x(t) &= 2 + t \cdot 🧠 \\
-y(t) &= 2 + 🍀 \\
-
-y(t) > x(t) &\Rightarrow 🍀 > 🧠
-\end{aligned}
-++++
-
-
-[stem]
-++++
-\begin{aligned}
-
-t &\in \Reals \\
-🍀 &> 0 \\
-🍀 + t \cdot 🧠 &= 0 \\
-🍀 &= - t \cdot 🧠 \Rightarrow 🍀 . 
-
-
-\end{aligned}
-++++

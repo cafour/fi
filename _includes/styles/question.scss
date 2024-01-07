@@ -116,4 +116,26 @@ html, body {
             margin-bottom: 0;
         }
     }
+    
+    .fortunate-brain {
+        width: 2rem;
+        height: 2rem;
+        position: relative;
+        width: 100%;
+        text-align: center;
+
+        &::before {
+            content: "🧠";
+            position: absolute;
+            inset: 0;
+            font-size: 2rem;
+        }
+        
+        &::after {
+            content: "🍀";
+            position: absolute;
+            inset: 0.25rem;
+            font-size: 1.5rem;
+        }
+    }
 }
