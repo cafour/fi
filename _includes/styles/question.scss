@@ -3,6 +3,7 @@
 @use "./components/navigation";
 @use "./components/asciidoc";
 @use "./components/admonitions";
+@use "./components/button";
 
 html, body {
     background-color: config.$color-desk;
@@ -83,7 +84,7 @@ html, body {
     }
 
     // Based on https://stackoverflow.com/questions/14068103/disable-antialising-when-scaling-images
-    .logo {
+    .logo, .pixelart {
         image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
         image-rendering: -moz-crisp-edges;          /* Firefox                        */
         image-rendering: -o-crisp-edges;            /* Opera                          */
@@ -91,5 +92,28 @@ html, body {
         image-rendering: pixelated;                 /* Universal support since 2021   */
         image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
         -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
+    }
+    
+    .edit-link {
+        align-self: flex-end;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        
+        .icon {
+            width: 3rem;
+            height: 3rem;
+        }
+    }
+    
+    header {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 4rem;
+        
+        h1 {
+            margin-bottom: 0;
+        }
     }
 }

@@ -1,0 +1,26 @@
+@use "../base/config";
+@use "../base/responsive";
+
+.btn {
+    background-color: config.$color-paper;
+    border: 2px solid config.$color-desk;
+    padding: 1rem;
+    position: relative;
+    top: 0;
+
+    &::before {
+        border-bottom: 2px solid config.$color-desk;
+        position: absolute;
+        inset: 0;
+        content: " ";
+    }
+
+    &:hover {
+        background-color: config.mt-shift(config.$color-paper, -1);
+        top: 2px;
+        
+        &::before {
+            border-bottom: none;
+        }
+    }
+}

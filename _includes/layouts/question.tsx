@@ -16,16 +16,8 @@ interface QuestionPageData extends Lume.Data {
   showtitle: boolean;
 }
 
-export default ({
-  title,
-  children,
-  showtitle,
-  course,
-  tags,
-  groups,
-  search,
-  home,
-}: QuestionPageData) => {
+export default ({ title, children, showtitle, course, tags, groups, search, home, page }: QuestionPageData) => {
+  const githubLink = page.src.entry ? `https://github.com/cafour/fi/blob/main${page.src.entry.path}` : null;
   return (
     <>
       <nav class="nav">
@@ -55,8 +47,41 @@ export default ({
   {/each} */}
       </nav>
       <main>
-        {showtitle && <h1>{title}</h1>}
+        <header>
+          {showtitle && <h1>{title}</h1>}
+          {githubLink && (
+            <a class="edit-link btn" href={githubLink} target="_blank">
+              <img class="icon pixelart" src="/icons/edit_really_smol.png" />
+              <span>Editovat</span>
+            </a>
+          )}
+        </header>
+
         {children}
+
+        <footer>
+          {githubLink && (
+            <div class="admonitionblock tip">
+              <p>
+                Vloudila se sem chyba? Něco ti tu chybí? Řekni mi to skrz{" "}
+                <a href="https://github.com/cafour/fi/issues/" target="_blank">
+                  issue na GitHubu
+                </a>{" "}
+                nebo to (ideálně){" "}
+                <a href={githubLink} target="_blank">
+                  uprav
+                </a>{" "}
+                a vytvoř pull request! Pokud nevíš jak na to,{" "}
+                <a
+                  href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request"
+                  target="_blank"
+                >
+                  mrkni sem.
+                </a>
+              </p>
+            </div>
+          )}
+        </footer>
       </main>
     </>
   );
