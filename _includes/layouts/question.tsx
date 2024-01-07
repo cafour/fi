@@ -22,7 +22,7 @@ export default ({ title, children, showtitle, course, tags, groups, search, home
     <>
       <nav class="nav">
         <a href={home} class="nav-header">
-          <img src="/icons/fi.png" class="logo" />
+          <img src="/icons/fi_16.png" class="logo" />
           {course}
         </a>
         {groups.map((g) => (
@@ -51,7 +51,7 @@ export default ({ title, children, showtitle, course, tags, groups, search, home
           {showtitle && <h1>{title}</h1>}
           {githubLink && (
             <a class="edit-link btn" href={githubLink} target="_blank">
-              <img class="icon pixelart" src="/icons/edit_really_smol.png" />
+              <img class="icon pixelart" src="/icons/edit_8.png" />
               <span>Editovat</span>
             </a>
           )}
