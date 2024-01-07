@@ -345,7 +345,7 @@ NOTE: Uvědom si, že tyhle stem:[\color{red}\frac{\partial E_k}{\partial y_j}] 
 3. backward pass -- od konce pro každou vrstvu spočítej stem:[\frac{\partial E_k}{\partial y_j}]
   a. pokud stem:[j \in Y], pak stem:[\frac{\partial E_k}{\partial y_j} = y_j - d_{kj}]
   b. pokud stem:[j \in Z \setminus Y \cup X ], a stem:[j] je v stem:[l]-té vrstvě, pak
-     stem:[\frac{\partial E_k}{\partial y_j} = \sum_{r \in j^{\rightarrow}} \frac{\partial E_k}{\partial y_j} \cdot \sigma'_r(\xi_r) \cdot w_{rj}]
+     stem:[\frac{\partial E_k}{\partial y_j} = \sum_{r \in j^{\rightarrow}} \frac{\partial E_k}{\partial y_r} \cdot \sigma'_r(\xi_r) \cdot w_{rj}]
 4. weight update -- pro všechna stem:[w_{ji}] spočítej
    stem:[\frac{\partial E_k}{\partial w_{ji}} := \frac{\partial E_k}{\partial y_j} \cdot \sigma'_j(\xi_j) \cdot y_i]
 5. stem:[\varepsilon_{ji} := \varepsilon_{ji} + \frac{\partial E_k}{\partial w_{ji}}]
