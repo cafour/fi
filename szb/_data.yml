@@ -4,7 +4,7 @@ mergedKeys:
   styles: noop
 tags: szb
 course: SZB
-home: /fi/szb/
+home: /szb/
 groups:
   - name: inf
     display: Teoretické základy informatiky a matematika

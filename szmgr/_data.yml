@@ -4,7 +4,7 @@ mergedKeys:
   styles: noop
 tags: szmgr
 course: SZMGR
-home: /fi/szmgr/
+home: /szmgr/
 groups:
   - name: szp
     display: Společný základ programu

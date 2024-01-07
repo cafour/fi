@@ -2,7 +2,7 @@
 
 > For English please read below.
 
-Poznámky z [Fakulty informatiky Masarykovy univerzity](https://www.fi.muni.cz/) v Brně. Nejlíp se na ně kouká na [https://cafour.cz/fi/](https://cafour.cz/fi/).
+Poznámky z [Fakulty informatiky Masarykovy univerzity](https://www.fi.muni.cz/) v Brně. Nejlíp se na ně kouká na [https://fi.cafour.cz/](https://fi.cafour.cz/).
 
 ## Jak přispět
 
@@ -13,7 +13,7 @@ Pokud chceš do poznámek přispět (nebo něco opravit), super! Prosím přečt
 
 # Notes from FI
 
-Notes (mostly in Czech) from the [Faculty of Informatics of Masaryk University](https://www.fi.muni.cz/) in Brno. These notes are best available in their rendered form at [https://cafour.cz/fi/](https://cafour.cz/fi/).
+Notes (mostly in Czech) from the [Faculty of Informatics of Masaryk University](https://www.fi.muni.cz/) in Brno. These notes are best available in their rendered form at [https://fi.cafour.cz/](https://fi.cafour.cz/).
 
 ## Contributing
 
