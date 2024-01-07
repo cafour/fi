@@ -37,6 +37,7 @@ export default ({
             <span class="nav-subheader">{g.display}</span>
             <ul>
               {(search.pages(`${tags}`, "order") as QuestionPageData[])
+                .sort((a, b) => (a.order ?? "").localeCompare(b.order ?? ""))
                 .filter((p) => p.group === g.name)
                 .map((p) => (
                   <li>
