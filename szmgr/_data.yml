@@ -10,5 +10,5 @@ groups:
     display: Společný základ programu
   - name: vph
     display: Vývoj počítačových her
-  - name: gd
-    display: Grafický design
+  # - name: gd
+  #   display: Grafický design
