@@ -1,4 +1,4 @@
-layout: layouts/default.tsx
+layout: layouts/standalone.tsx
 styles: [essay]
 metas:
   lang: cs
