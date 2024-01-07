@@ -2,6 +2,7 @@ import lume from "lume/mod.ts";
 import markdown from "lume/plugins/markdown.ts";
 import jsx from "lume/plugins/jsx_preact.ts";
 import sass from "lume/plugins/sass.ts";
+import postcss from "lume/plugins/postcss.ts";
 import transformImages from "lume/plugins/transform_images.ts";
 import picture from "lume/plugins/picture.ts";
 import katex from "./katex.ts";
@@ -11,6 +12,7 @@ import codeHighlight from "./shiki.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import inline from "lume/plugins/inline.ts";
 import admonition from "npm:markdown-it-admonition";
+import pagefind from "lume/plugins/pagefind.ts";
 
 import { AsciidoctorEngine, asciidocLoader } from "./asciidoc.ts";
 
@@ -25,6 +27,7 @@ site
     }))
     .use(jsx())
     .use(sass())
+    .use(postcss())
     .use(metas())
     .use(resolveUrls())
     .use(sitemap({
@@ -79,8 +82,13 @@ site
     .copy([".svg"])
     .copy("fonts")
     .copy("icons")
-    .copy("fi/pv255")
-    .copy("fi/pa216")
-    .copy("fi/pv259");
+    .use(pagefind({
+        indexing: {
+            rootSelector: "main"
+        },
+        ui: {
+            showSubResults: true
+        }
+    }));;
 
 export default site;

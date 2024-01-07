@@ -3,3 +3,4 @@ styles: [ essay ]
 metas:
   lang: cs
 showtitle: true
+indexable: true
