@@ -2,7 +2,7 @@ layout: layouts/question.tsx
 styles: ["question"]
 mergedKeys:
   styles: noop
-tags: szmgr
+tags: [szmgr]
 course: SZMGR
 home: /szmgr/
 groups:

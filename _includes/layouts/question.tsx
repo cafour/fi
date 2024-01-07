@@ -29,7 +29,7 @@ export default ({ title, children, showtitle, course, tags, groups, search, home
           <div class="nav-group">
             <span class="nav-subheader">{g.display}</span>
             <ul>
-              {(search.pages(`${tags}`, "order") as QuestionPageData[])
+              {(search.pages(`${tags.join(" ")}`, "order") as QuestionPageData[])
                 .sort((a, b) => (a.order ?? "").localeCompare(b.order ?? ""))
                 .filter((p) => p.group === g.name)
                 .map((p) => (

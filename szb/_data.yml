@@ -2,7 +2,7 @@ layout: layouts/question.tsx
 styles: ["question"]
 mergedKeys:
   styles: noop
-tags: szb
+tags: [szb]
 course: SZB
 home: /szb/
 groups:
