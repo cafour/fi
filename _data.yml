@@ -1,6 +1,7 @@
-layout: layouts/standalone.tsx
-styles: [ essay ]
+layout: layouts/default.tsx
+styles: [essay]
 metas:
   lang: cs
 showtitle: true
 indexable: true
+tags: [fi]
