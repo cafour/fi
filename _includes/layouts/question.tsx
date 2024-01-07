@@ -30,6 +30,7 @@ export default ({
     <>
       <nav class="nav">
         <a href={home} class="nav-header">
+          <img src="/icons/fi.png" class="logo" />
           {course}
         </a>
         {groups.map((g) => (
