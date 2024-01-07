@@ -1,0 +1,22 @@
+@use "../abstracts" as *;
+
+:root {
+    --font-header: $font-header;
+    --font-text: $font-text;
+    --font-code: $font-code;
+    --font-navigation: $font-navigation;
+
+    --color-paper: $color-paper;
+    --color-desk: $color-desk;
+    --color-dark: $color-dark;
+    --color-light: $color-light;
+    --color-link: $color-link;
+
+    --width-desktop: $width-desktop;
+    --width-tablet: $width-tablet;
+    --width-mobile: $width-mobile;
+}
+
+html[data-theme=dark] {
+    
+}

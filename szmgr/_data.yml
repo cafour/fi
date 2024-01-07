@@ -2,6 +2,10 @@ layout: layouts/question.tsx
 styles: ["question"]
 mergedKeys:
   styles: noop
+
+# layout: layouts/default.tsx
+# useNewStyle: true
+
 tags: [szmgr]
 course: SZMGR
 home: /szmgr/

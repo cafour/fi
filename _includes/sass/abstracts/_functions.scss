@@ -1,0 +1,4 @@
+@function mt-shift($color, $factor: 1) {
+    $mt-value: calc(255 / 7 * $factor);
+    @return adjust-color($color, $red: $mt-value, $green: $mt-value, $blue: $mt-value);
+}
