@@ -13,6 +13,8 @@ import sitemap from "lume/plugins/sitemap.ts";
 import inline from "lume/plugins/inline.ts";
 import admonition from "npm:markdown-it-admonition";
 import pagefind from "lume/plugins/pagefind.ts";
+import { linkInsideHeader } from "lume_markdown_plugins/toc/anchors.ts";
+import toc from "lume_markdown_plugins/toc.ts";
 
 import { AsciidoctorEngine, asciidocLoader } from "./asciidoc.ts";
 
@@ -24,6 +26,13 @@ const site = lume({
 site
     .use(markdown({
         plugins: [admonition]
+    }))
+    .use(toc({
+        tabIndex: false,
+        // anchor: false,
+        anchor: linkInsideHeader({
+            placement: "before"
+        })
     }))
     .use(jsx())
     .use(sass())
@@ -82,6 +91,7 @@ site
     .copy([".svg"])
     .copy("fonts")
     .copy("icons")
+    .ignore("readme.md", "contributing.md")
     .use(pagefind({
         indexing: {
             rootSelector: "main"
