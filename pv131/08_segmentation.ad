@@ -1,0 +1,61 @@
+= 8. Detection, Segmentation, Tracking
+
+[.question]
+Vysvětlete rozdíl mezi detekcí a segmentací objektů.
+
+Detekce objektů::
+Snaha najít a klasifikovat v obrazu objekty.
+
+Segmentace objektů::
+Hledání *oblastí* obrazu, které odpovídají objektům.
+
+[.question]
+Implementujte v Matlabu vlastní funkci realizující hysterézní prahování:
+`[vystup] = function hystThreshold(vstup, nizkyPrah, vysokyPrah)`
+
+[source, matlab]
+----
+% dipimage required
+[vystup] = function hystThreshold(vstup, nizkyPrah, vysokyPrah)
+    low = vstup>nizkyPrah;
+    high = vstup>vysokyPrah;
+    vystup = reconstruction(nizkyPrah, vysokyPrah);
+end
+----
+
+[.question]
+Nadefinujte morfologickou operaci "black top-hat" a uveďte příklad jejího použití.
+
+Black Top-Hat::
+Rozdíl vstupního obrazu a jeho uzavření. Používá se k extrahování černých detailů, srovnání bílého pozadí, atd.
+
+Uzavření::
+Snaha o obnovu po dilataci. Takže eroze po dilataci.
++
+[stem]
+++++
+\phi_B(x) = \epsilon_{\overline B}(\delta_B(x))
+++++
+
+[.question]
+Uveďte příklad alespoň 3 texturových deskriptorů, které lze použít při předzpracování obrazu tak, aby následná
+segmentace byla realizovatelná jen s pomocí standardního globálního prahování.
+
+Barva::
+To dává smysl, ne?
+
+Rosenfeld et al.::
+Textura je "změřena" v okolí daného pixelu a převedena na amplitudu.
+
+Thompson::
+Detekce přechodů mezi texturami. Převádí na problém segmentace podle hran.
+
+[.question]
+Vysvětlete pojem značka (marker) a význam značek například v algoritmu watershed. Uveďte příklad, jak lze značky najít
+pro dotýkající se kávová zrnka.
+
+Marker::
+Pixel nebo malá skupina pixelů, která spadá do oblasti, jejíž segment chceme. V případě watershedu jsou markery místa
+odkud voda stoupá.
+
+U kávových zrnek se markery nejspíš dají najít pomocí prahovaní a eroze.

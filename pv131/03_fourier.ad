@@ -1,0 +1,58 @@
+= 3. 1D Fourier Transform
+
+[.question]
+Mějme funkci stem:[f(x) = 0.4 * sin(2\pi(x-1))]. Určete její amplitudu, frekvenci a fázový posun.
+
+* Amplituda: 0.4, protože sinus
+* Frekvence: 1 Hz, protože sinus má frekvenci stem:[2\pi], ale tady už stem:[2\pi] je
+* Prostorová / časová frekvence: 1 Hz / stem:[m^-1] za předpokladu, že výsledek je v metrech
+* Úhlová frekvence: stem:[2\pi]
+* Posun: 1
+
+[.question]
+Mějme komplexní číslo z = 1 - i. Určete jeho amplitudu a fázi.
+
+* Amplituda: stem:[sqrt(1^2 + (-1)^2) = sqrt(2)]
+* Fáze: stem:[\text{atan2}(y, x) = \text{atan2}(-1, 1) = -0.785]
+
+[.question]
+Formálně nadefinujte 1D diskrétní Fourierovu transformaci a rozhodněte, zda se jedná o lineární operátor. Své tvrzení
+podložte formálním důkazem.
+
+Lineární operátor stem:[f]::
+[stem]
+====
+f(I * J) = f(I) * f(J )
+====
+
+[.question]
+Jaká operace ve frekvenční doméně odpovídá konvoluci v obrazové doméně?
+
+Násobení.
+
+[.question]
+Co je obrazem Gaussiánu (umístěného do počátku souřadné soustavy) ve frekvenční doméně?
+
+Gaussian ale tak nějak menší nebo co.
+
+[source, matlab]
+----
+G = fspecial('gaussian', 21, 5);
+surf(G)
+surf(abs(double(ft(G))))
+----
+
+image::pv131/gaussiansd.jpg[]
+image::pv131/gaussianfd.jpg[]
+
+[.question]
+Kolik bázových funkcí je zapotřebí pro realizaci FT nad 1D diskrétním signálem délky N? Jak dlouhý bude výstupní
+signál ve frekvenční doméně?
+
+1D DFT::
+[stem]
+====
+Phi(omega_x) = sum_(x=0)^(N-1) f(x) * e^(-i(2pi)/N * omega_x * x)
+====
+
+Výstupní signál bude dlouhý stem:[N].

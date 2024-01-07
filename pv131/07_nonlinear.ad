@@ -1,0 +1,51 @@
+= 7. Nonlinear Filtering
+
+[.question]
+Mějme 2D diskrétní obrázek stem:[I] a dva 2D nelineární filtry stem:[A] a stem:[B]. Rozhodněte, zda platí
+stem:[A(B(I))=B(A(I))].
+
+Ne. Představte si za I šachovnici, za A max filtr a za B min filtr. (Viz slide č. 46.)
+
+[.question]
+Mějme 2D diskrétní obrázek stem:[I], 2D nelineární filtr stem:[A] a 2D lineární filtr stem:[B[]. Rozhodněte, zda
+platí stem:[A(B(I))=B(A(I))].
+
+Ne. Představte si zašumelý obrázek, za A median a za B gaussian. (Viz slide č. 47.)
+
+[.question]
+Vysvětlete princip efektivní implementace 1D mediánového filtru pomocí klouzajícího okna.
+
+Viz cvičení 7.
+
+Máme okno s velikostí N, které na začátku seřadíme. Pro každý pixel na pozici I nahradíme jeho intenzitu v okně
+intenzitou pixelu I + N a do výstupního obrazu zapíšeme medián okna.
+
+[.question]
+Zapište difúzní filtraci obrazu formou parciální diferenciální rovnice s počáteční podmínkou a vysvětlete jednotlivé
+členy v této rovnici.
+
+Difúzní filtrování::
+Založeno na myšlence difúze z fyziky.
++
+[stem]
+++++
+\partial_t u = \text{div}(g * \nabla u) = g * \text{div} (\nabla u)
+++++
++
+Pokud g je konstanta, pak se jedná o lineární difúzi.
++
+[stem]
+++++
+\partial_t u = g * \Delta u
+++++
++
+[stem]
+++++
+\frac{\partial u (x, y, t)}{\partial t} = u(x, y, t) \otimes L
+++++
+
+[.question]
+Mějme obraz poškozený impulzním šumem. Rozhodněte, který z dvojice filtrů medián a gaussián je vhodný k potlačení
+tohoto šumu. Své tvrzení zdůvodněte.
+
+Medián je supr na sůl a pepř, protože osamocenou změnu intenzity dopočítá z okolí, zatímco Gaussian ji rozmaže.

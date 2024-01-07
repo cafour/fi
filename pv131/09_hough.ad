@@ -1,0 +1,86 @@
+= 9. Hough and Radon transform
+
+[.question]
+Mějme 2D diskrétní obraz obsahující pouze 4 body představující rohy čtverce s hranou délky 2a umístěného svým středem
+do bodu stem:[[2a, 2a\]] a osově orientovaného. Popište, jak vypadá obsah akumulátoru po aplikaci diskrétní přímkové
+Houghovy transformace. Určete zejména počet a souřadnice význačných bodů.
+
+Houghova transformace::
+Detekuje tvary zadané rovnicí stem:[f(x, a) = 0], kde stem:[x] je pozice a stem:[a] jsou parametry v
+obrázku.
++
+U přímek to funguje zhruba tak, že máme 2D pole, kterému říkáme akumulátor, kde jedna dimenze je stem:[\rho], vzdálenost
+přímky od počátku, a druhá je stem:[\theta], úhel, který svírá osa x s kolmicí od počátku k přímce. Velikost tohohle
+pole určuje počet možných přímek (úhlů a vzdáleností od počátku), které je možné detekovat. Algoritmus samotný probíhá
+takto:
++
+1. Zkvantizuj prostor parametrů (zvol počet stem:[\rho] a stem:[\theta] -- řádků a sloupců akumulátoru).
+2. Inicializuj akumulátor na samé 0.
+3. Pro každý pixel s intenzitou, která nám přijde zajímavá, inkrementuj každou buňku akumulátoru, která odpovídá čáře,
+   tímto bodem prochází.
+4. Najdi lokální maxima v akumulátoru, odpovídají totiž těm přímkám, co hledáš.
+
+***
+
+image::pv131/2a.png[]
+
+Obsah akumulátoru závisí na počtu přímek, které připadají v úvahu. Nicméně, pokud má rozumnou velikost, pak v jeho
+grafu bude 4 oblouků, které odpovídají rohům čtverce a které se protínají v šesti bodech. Souřadnice těchto bodů
+budou stem:[(3a, \pi/2), (a, \pi/2), (3a, 0), (a, 0), (sqrt(2) * 2a, \pi/4), (0, 3\pi/4)]. Odpovídají postupně 4 stranám
+a 2 úhlopříčkám čtverce.
+
+[.question]
+Mějme 2D diskrétní obrázek velikost stem:[M \times N], na který aplikujeme diskrétní přímkovou HT danou rovnicí
+stem:[\rho = x cos \theta + y sin \theta] s následujícím vzorkováním akumulátoru: 1 pixel podle osy stem:[\rho] a
+1 úhlový stupeň ve směru osy stem:[\theta]. Určete, jak závisí velikost akumulátoru na velikosti vstupního obrázku.
+
+Úhlových stupnů je 360, z čehoh 180 jich nepotřebujeme, a proto 180 je tedy i velikost akumulátoru v dimenzi
+stem:[\theta].
+
+Nejzažší bod od počátku, kde lze se přímku detekovat je stem:[[M-1, N-1\]] tedy velikost akumulátoru v dimenzi
+stem:[\rho] je stem:[\sqrt{(M-1)^2 * (N-1)^2}].
+
+[.question]
+Uvažujme, že máme zavedenu diskrétní eliptickou HT. Určete dimenzi akumulátoru.
+
+Pět. Pozice středu (x a y), orientace a dva poloměry.
+
+Existuje link:https://en.wikipedia.org/wiki/Hough_transform#Efficient_ellipse_detection_algorithm[algoritmus],
+kterému stačí jeden.
+
+[.question]
+Uvažujme, že máme zavedenu diskrétní parabolickou HT. Určete dimenzi akumulátoru.
+
+Čtyři. Pozice vrcholu (x a y), orientace a koeficient stem:[a] z stem:[ax^2].
+
+[.question]
+Uveďte základní kroky potřebné při rekonstrukci signálu pomocí filtrované zpětné projekce (filtered backprojection).
+Popište, například pomocí obrázku, co se při jednotlivých krocích děje.
+
+Radonova tranformace::
+Podívá se na obraz pod nějakým úhlem -- skrze nějakou přímku danou směrnicí stem:[a] a odsazením stem:[b] a integruje.
++
+[stem]
+++++
+R_I(a, b) = \int_{-\infty}^{\infty} I(x, ax + b)dx
+++++
++
+Svým způsobem je to zase Fourierka.
+
+Filtered Backprojection::
+Jeden ze způsobů, jak provést inverzní Radonovu transformaci. Dalším je Fourier Slice Theorem.
+
+.Postup
+1. High-pass filtrování
++
+[stem]
+++++
+R_I^\text{filtered}(\rho, \theta) = \text{IFT}_{\upsilon \to \rho}\{|\upsilon| \text{FT}_{\rho' \to \upsilon} \{ R_I(\rho', \theta)\} \}
+++++
++
+2. Zpětná projekce
++
+[stem]
+++++
+I(x, y) = \int_0^\pi R_I^\text{filtered}(x cos \theta + y * sin \theta, \theta) d\theta
+++++

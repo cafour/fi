@@ -1,0 +1,136 @@
+= 10. Description, Classification, Understanding, Evaluation
+:stem: asciimath
+
+[.question]
+Mějme 3-bitový 2D obrázek M=[1 2 1; 2 4 2; 1 2 1]. Spočítejte pro něho odpovídající matici současného výskytu
+(co-occurrence matrix).
+
+Co-occurence matrix::
+Obecně je to matice popisující, kolikrát se prvek odpovídající řádku setkal s prvek odpovídajícím sloupci. V tomhle
+kontextu je to Haralickova fíčura a udává, jak často se v obrazu vedle sebe vyskytují intenzity dané sloupcem a řádkem.
++
+Počítá se nejprve zvlášť pro separační vektory: (1, 0), (0, 1), (1, -1), a (1, 1), kde např. (1, 1) říká, že pixely,
+které nás zajímají budou na budou sousedět buď levým horním nebo pravým dolním (tedy uvažujeme i záporný směr).
++
+Tyhle 4 matice se znormalizují (vydělí počtem hodnot, které jsou v dané matici započítány) a sečtou a to je výsledek.
+
+***
+
+[stem]
+++++
+A = [[1,2,1],
+     [2,4,2],
+     [1,2,1]]
+++++
+
+Představte si, že následující matice jsou 8x8, jelikož 3-bitová čísla odpovídají intervalu stem:[[0, 8)]. Řádky a
+sloupce odpovídající intezitám 0, 5, 6, a 7 jsou vynechány.
+
+_Příklad: stem:[C_{(1, 0)}(1, 2)] říká kolik pixelů s intenzitou 1 sousedí s pixelem s intenzitou 2 na ose x, ve
+kterémkoli směru._
+
+[stem]
+++++
+C_{(1, 0)} = [[0,4,0,0],
+              [4,0,0,2],
+              [0,0,0,0],
+              [0,2,0,0]],
+C_{(0, 1)} = [[0,4,0,0],
+              [4,0,0,2],
+              [0,0,0,0],
+              [0,2,0,0]],
+++++
+
+[stem]
+++++
+C_{(1, 1)} = [[0,0,0,2],
+              [0,2,0,0],
+              [0,0,0,0],
+              [2,0,0,0]],
+C_{(1, -1)} = [[0,0,0,2],
+               [0,2,0,0],
+               [0,0,0,0],
+               [2,0,0,0]]
+++++
+
+Počet "zajímavých dvojic" z stem:[A]:
+
+[stem]
+++++
+\#R_{(1, 0)} = \#R_{(0, 1)} = 4 * 3 = 12
+++++
+
+[stem]
+++++
+\#R_{(1, 1)} = \#R_{(1, -1)} = (2 + 1 + 1) * 2 = 8
+++++
+
+[stem]
+++++
+C = \frac{C_{(1, 0)}}{\#R_{(1, 0)}} + \frac{C_{(0, 1)}}{\#R_{(0, 1)}}
+    + \frac{C_{(1, 1)}}{\#R_{(1, 1)}} + \frac{C_{(1, -1)}}{\#R_{(1, -1)}} = ...
+    = [[0,2/3,0,1/2],
+       [2/3,1/2,0,1/3],
+       [0,0,0,0],
+       [1/2,1/3,0,0]]
+++++
+
+[.question]
+Vysvětlete rozdíl mezi pojmy "image-oriented bounding box" a "object-oriented bounding box".
+
+Bounding box::
+Nejmenší obdélník, který pojme objekt. Šířka a výška bounding boxu se dá použít jako minimální a maximální průměr
+objektu.
+
+Image-oriented bounding box::
+Bounding box orientovaný podél os obrázku.
+
+Object-oriented bounding box::
+Bounding box orientovaný podél os objektu (které je třeba nejdřív spočítat).
+
+[.question]
+Uveďte algoritmus pro výpočet deskriptoru "object-oriented bounding box".
+
+Pomocí Feretova průměru.
+
+1. Spočítat minimální Feretův průměr.
+2. Spočítat Feretův průměr, jenž jen kolmý k 1.
+
+V Matlabu lze použít `measure(...'Feret')`.
+
+Podle slidu 17 prý existuje v matlabu funkce, která vrací trojici (maxFeret, minFeret, feret kolmý k minFeret), ale já
+ji nenašel.
+
+[.question]
+Nadefinujte pojem "kulatost binárního objektu".
+
+[stem]
+++++
+C = \frac{4\pi * A}{P^2}
+++++
+
+.Vysvětlivka
+* C = circularity (kulatost)
+* A = plocha objektu
+* P = poloměr objektu
+
+Výsledkem je hodnota mezi 0 a 1, popisující, jak moc je objekt kulatý.
+
+[.question]
+Nadefinujte Jaccardův index podobnosti dvou binárních objektů a vyhodnoťte ho nad čtvercem se stranou
+"a" a kruhem jemu vepsaným.
+
+[stem]
+++++
+J = \frac{TP}{FP + TN + FN}
+++++
+
+.Vysvětlivka
+* GT = ground truth
+* AR = výsledek algoritmu
+* TP = true positive = stem:[AR \cap GT]
+* FP = false positive = stem:[AR \cap \bar{GT}]
+* TN = true negative = stem:[\bar{AR} \cap \bar{GT}]
+* FN = false negative = stem:[\bar{AR} \cap GT]
+
+Pro čtverec a vepsanou kružnici stem:[J = \frac{\pi * (\frac{a}{2})^2}{a^2} = \frac{\pi}{4}].

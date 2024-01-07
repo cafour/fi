@@ -1,0 +1,30 @@
+= 2. Convolution and Linear Filters
+
+[.question]
+Vysvětlete, co je to konvoluční jádro.
+
+Matice, která se postupně posouvá přes obraz a jejíž hodnoty jsou použity jako váhy přiv váženém součtu příslušných hodnot.
+
+[.question]
+Odvoďte, jakou časovou složitost má konvoluce obrazu I o velikosti K x L s obecným konvolučním jádrem velikosti M x N.
+
+stem:[O(KLMN)]
+
+[.question]
+Uveďte příklad 2D vyhlazovacího filtru, který zachovává průměrnou intenzitu obrazu.
+
+Gaussián.
+
+[.question]
+Co to znamená, že filtr je LSI? Nepřekládejte, ale vysvětlete význam.
+
+LSI := Linear shift invariant
+
+stem:[O(T_(a,b) (f(x, y)))) = T_(a, b) (O(f(x, y)))]
+
+[.question]
+Formálně zapište vlastnost distributivity diskrétní konvoluce vzhledem ke sčítání. Tuto vlastnost dokažte.
+
+[.question]
+Formálně nadefinujte 2D lineární filtr. Uveďte konkrétní příklad takového filtru a formálně dokažte, že vyhovuje Vaší
+definici.

@@ -1,0 +1,463 @@
+= PA213 Advanced Computer Graphics
+:page-layout: layouts/essay.tsx
+:page-math: true
+:page-liquid: true
+
+.Lectures
+1. Introduction
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/Intro.pdf[Slides]
+
+2. Fluid Simulation and Rendering
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/FluidSimulationAndRendering.pdf[Slides]
+
+3. Bounding Volume Hierarchies for Ray Tracing
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/BoundingVolumeHierarchiesforRayTracing.pdf[Slides]
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/BoundingVolumeHierarchiesforRayTracing.mp4[Video]
+
+4. Fractals, L-Systems
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/LSystemsFractals.pdf[Slides]
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/LSystemsFractals.mp4[Video]
+
+5. GPU Acceleration for General Processing
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/Cuda.pdf[Slides]
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/Cuda.mp4[Video]
+
+6. Computational Photography
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/ComputationalPhotograpy.mp4[Video]
+
+7. Terrains
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/Terrains.pdf[Slides]
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/Terrains.mp4[Video]
+
+8. Participating Media in Computer Graphics
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/ParticipatingMedia.pdf[Slides]
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/ParticipatingMedia.mp4[Video]
+
+9. From 2D Sketch to 3D Animated Character via Quadratic Programming
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/2DSketchTo3DCharacter.pdf[Slides]
+** link:https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/2DSketchTo3DCharacter.mp4[Video]
+
+."Ideas"
+* types of BVH creation,
+* Terrain map optimizations through the similar to MIN MAP method (closer with more detial further with less based on multiple different level of detail maps), 
+* 2 types of parallelism,
+* ray-tracing / slicing in volume rendering,
+* Hilbert curve.
+
+== Fluid Simulation and Rendering
+
+Smoothed Particle Hydrodynamic::
++
+* simulate fluid using a set of particles (Lagrange)
+* compute forces using Euler
+* smooth properties of particles into continuous fields
+* on the fields we use momentum and incompressibility
+** stem:[\frac{\partial u}{\partial t} = - (u \cdot \nabla) u - \frac{1}{p} \nabla p + v \nabla^2 u + g]
+** stem:[\nabla \cdot u = 0] (isn't needed because we simulate particles)
+** particles move with the fluid -> stem:[-(u \cdot \nabla) u] is not needed
+** we only need to solve stem:[\frac{\partial u}{\partial t} = - \frac{1}{p} \nabla p + v \nabla^2 u + g]
+** we recall Newton's 2nd law of motion -> stem:[\frac{f_i}{m_i} = - \frac{1}{p(x_i)} \nabla p(x_i) + v \nabla^2 u(x_i) + g]
+
+=== Euler approach
+
+--
+- vector field
+- each fixed point on a grid stores fluid velocity
+- for each point in grid we store:
+-- stem:[u_{i,j}] -- fluid velocity
+-- stem:[p_{i,j}] -- pressure
+-- ...
+--
+
+Incompressible constraint::
+volume of any subregion of the fluid is constant over time
+
+Homogeneous constraint::
+fluid density doesn't change
+
+Navier-Stokes equations::
++
+* velocity -> vector field stem:[u(x, t)]
+* pressure -> scalar field stem:[p(x, t)]
+* partial differential equations define changes in stem:[u] over time
+* stem:[\frac{\partial u}{\partial t} = - (u \cdot \nabla) u - \frac{1}{\rho} \nabla p + v \nabla^2 u + g]
+* incompressibility: stem:[\nabla \cdot u = 0]
+** stem:[p(x, t)] -- pressure scalar field
+** stem:[\rho] -- density of fluid
+** stem:[v] -- viscosity -- resistance to deformation
+** stem:[g(x, t)] -- acceleration vector field, e.g. gravity
+** stem:[\nabla p = \left( \frac{\partial p}{\partial x}, \frac{\partial p}{\partial y}, \frac{\partial p}{\partial z} \right)^ T] -- gradient operator
+** stem:[\nabla \cdot u = ... = \frac{\partial u}{\partial x} + \frac{\partial u}{\partial y} + \frac{\partial u}{\partial z}] -- divergence operator
+** stem:[u \cdot \nabla] -- directional derivative
+** stem:[\nabla^2 u = \frac{\partial^2 u}{\partial^2 x} + \frac{\partial^2 u}{\partial^2 y} + \frac{\partial^2 u}{\partial^2 z}] -- Laplacian
+** custom equations (i.e. temperature, smoke density) can be added
+
+Rendering::
++
+* ray marching -- sample 3d texture along the ray and sum up
+* first render box back faces -- into alpha
+* second render box front faces -- into z
+* extract start points and ray length
+* special case: camera intersects volume -> use near plane instead
+* "banding" artifact: caused by integral number of samples -> weigh values of samples by their distance from the camera
+
+
+=== Lagrange approach
+
+--
+- fluid is a set of particles
+- each particle stem:[P_i] stores:
+-- stem:[m_i] -- mass
+-- stem:[p_i] -- position vector
+-- stem:[u_i] -- velocity vector
+-- stem:[f_i] -- total external force
+--
+
+Newton's equations of motion::
++
+* stem:[\frac{\partial p_i}{\partial t} = u_i]
+* stem:[\frac{\partial u_i}{\partial t} = \frac{f_i}{m_i}]
+
+Ordinary Differential Equation (ODE)::
+a differential equation of one variable (it may contain functions of that variables and its derivatives)
+
+Moving particles::
++
+* using an ODE: stem:[\frac{\partial y}{\partial t} = f(y, t)]
+* solving using Euler: stem:[y(t_0 + \Delta t) = y_0 + \Delta t f(y_0, t_0)]
+* solving using midpoint: stem:[y(t_0 + \Delta t) = y_0 + \Delta t f(y_0 + \frac{\Delta t}{2} f(y_0, t_0), t_0 + \frac{\Delta t}{2})]
+
+External forces::
++
+* gravity: stem:[m_i \cdot g], where typically stem:[g = (0, 0, -10)^T]
+* Lennard-Jones force between particles
+
+=== Height-field surface approximation
+
+- model of fluid surface stem:[h(x, y, t)]
+- change of stem:[h] in time is given by stem:[\frac{\partial^2 h}{\partial t^2} = v^2 \nabla^2 h]
+- stem:[v] is the speed of waves
+- we need an auxilary function to solve discretely
+
+== Bounding Volume Hierarchies (BVH) for Ray Tracing
+
+--
+- BVH reduce ray/scene traversal complexity from stem:[\mathcal{O}(n)] to stem:[\mathcal{O}(\log n)].
+--
+
+BVH construction methods::
++
+- top-down
+- bottom-up
+
+Efficient BVH::
++
+- fast insertion query
+- fast construction / updates
+
+Surface Area Heuristic (SAH)::
++
+- Snažíme se minimalizovat povrchy bounding boxů vnitřních uzlů BVH.
++
+[stem]
+++++
+C(T) = \frac{1}{SA(T)} \left[ c_T \cdot \sum_{N \in \text{inner nodes}} SA(N)
++ c_I \sum_{N \in \text{leaves}} SA(N) \cdot t_N \right]
+++++
++
+Vysvětlivka:
+- stem:[SA(N)] -- surface area of node stem:[N]
+- stem:[T] -- the root of the BVH
+- stem:[C(T)] -- global BVH cost
+- stem:[c_T] -- traversal cost
+- stem:[c_I] -- intersection cost
+- stem:[t_N] -- triangles per leaf
+
+Progressive Hierarchical Refinement (PHR)::
++
+- progressivelly refined cut of existing auxilary BVH (using LBVH)
+
+Parallel Locally Ordered Clustering (PLOC)::
++
+- sort triangles based on Morton codes
+- process the sorted sequence bottom-up
+- merge closest clusters, repeat until only one cluster remains (in parallel)
+
+Extended Morton Codes (EMS)::
++
+- 1st idea: encode object size
+- 2nd idea: variable lengths based on size of scene bbox
+
+Parallel Insertion Based Optimization::
++
+- Search for new positions of all nodes.
+- Resolve conflicts by picking higher cost reduction.
+- Reinsert not conflicting nodes.
+
+T-SAH::
+modified SAH for animations
+
+Ray Classification for BVH Traversal::
++
+- ray space subdivision + precomputed compact candidate lists
+- algorithm for optimized candidate list computation
+
+== Fractals, L-Systems
+
+=== Fractals
+
+--
+- from latin "fractus" -- broken, fractured
+- in nature
+- self-similar
+- Koch line & snowflake
+--
+
+Space filling curves (SFC)::
++
+- fills a unit square / cube / hypercube / ...
+- iterative construction allows arbitrary resolution
+- Z-order curve / _Morton space filling curve_ / Morton code
+-- **maps multidimensional data do one dimension while preserving locality of data points**
+- _Hilbert curve_
+-- hranatá
+-- sometimes more effective than Morton CFC
+- useful in CG data structures (e.g. quadtrees, octrees, BVHs, texture mapping in GPU memory)
+- _Moore curve_
+-- like Hilbert, but loopier
+- _Peano curve_
+-- probably the oldest one
+- _Dragon curve_
+- _Gosper curve / island_
+
+Topological dimension::
++
+- the number of parameters needed to describe a point "inside" the object
+- point -> 0
+- line -> 1 (stem:[t])
+- plane -> 2
+- stem:[\R^3] -> 3
+- ...
+
+Fractal dimension::
++
+- if we divide into N pieces, we need to scale by N to see one piece -> top scale: stem:[s = \frac{1}{N}], t.j. stem:[Ns^1 = 1]
+- in case of squares: stem:[s = \frac{1}{\sqrt{N}}], t.j. stem:[Ns^2 = 1]
+- fractal dimension stem:[D] is stem:[Ns^D = 1] -> stem:[D = \frac{\log N}{\log \frac{1}{S}}]
+- measurement -> box counting method -> how many boxes cover the object?
+
+Lindenmayer system (L-systems)::
++
+- parallel rewriting systems
+- typically model growth of plants
+- Prusinkiewicz, Hanan
+- D0L-system
+- bracketed, open, parametric, context-sensitive, stochastic, combined
+
+Iterated function systems::
++
+* fractal is made by smaller copies of itself
+* contractive -- bring points closer together
+* Sierpinski triangle
+* Menger sponge
+* dvojice stem:[(T, P)], kde stem:[T] je množina transformací a stem:[P] je množina pravděpodobností
+** součet pravděpodobností = 1
+** scale transformations < 1 (contractive)
+
+Fractals in complex plane::
++
+- Mandelbrot set
+- Julia sets
+- ???
+
+Terrain generation by midpoint displacement::
++
+- pseudo-fractal
+- enhanced midpoint displacement
+- ???
+
+== GPU Acceleration for General Processing
+
+Task parallelism::
+- the problem is decomposed into parallel tasks
+- tasks are complex but different
+- they are difficult to synchronize
+- best for a low number of high-performance processors/cores (CPUs)
+
+Data parallelism::
+- on the level of data structures
+- same operation on multiple elements of a data structure
+- best for a high number of lower-performance processors/cores (GPUs)
+
+== Computational Photography
+
+--
+- photography + computation = better pictures
+- combining multiple exposures into one -- elimination of over- and under-exposures
+- relighting using synthetized renders from terrain data
+- dehazing
+- changing depth of field
+- image forensics
+--
+
+Obtaining position and orientation of a camera::
++
+- GeoPose3K - a bunch of images of mountains with known location and orientation
+- for each image they render depth, normals, semantic segmentation
+
+Cross-locate::
++
+* for each image it produces a descriptor
+* it uses these descriptors to find the closest match
+* NN for creating the descriptors based on a database -- silhouette edges, semantic segmentation
+** mostly T-junctions
+
+== Terrains
+
+Tile-based::
+squares and hexagones
+
+Mesh-based::
+regular and iregular (TIN)
+
+Height map::
++ 
+* 2d texture storing elevation
+* cannot store caves and arches
+* given 4 points, the triangulation is ambiguous
+* rendered by indexing and triangle strips
+
+Digital countours::
+control points of spline curves
+
+Voxels::
++
+* 3d grids
+* render cubes, marching cubes, raytracing, raymarching, machine learning
+
+Transitions::
++ 
+* manual or automatic
+* texture splatting -- combines multiple textures by applying an alpha map
+** with tiles -- 16 edge transitions, 16 corner transitions
+
+Real Terrain Data::
++
+* Digital Elevation Models (DEM)
+* ČR: ČUZK
+* World: USGS
+
+Larger outdoor environments::
+require a lot of bandwidth, this is solved by:
++
+* quadtrees (quads), ROAM (triangles) -- pre-defined multiresolution terrain representation
+** distance from camera and geometry -> required fidelity
+** frustum culling -- nodes outside of camera are not rendered at all
+** require processing by the CPU
+* clipmaps
+** almost all happens on GPU
+** terrain as a 2D elevation image -> mipmap pyramid
+** caches a square window of n-by-n samples in each level (centered in the viewer, finer-level -> smaller space)
+** boundaries are too visible -> smooth morphing between levels
+** rendering: break rings into smaller 2D footprint pieces -> reuse in and across levels
+** optimization: viewer height -> coarser levels
+* tesselation: modern alternative/addition to ROAM/Clipmaps
+** used with displacement maps
+
+=== Artifical Terrain Map (Fractal geometry)
+
+Mid-point displacement::
++
+1. Split each line into two segments
+2. Move the new points by random offsets (smaller each iteration)
+3. Repeat (until desired resolution).
++
+Works in 2D by splitting a quad into four segments.
+
+Random faults::
++
+1. Split the plane with a line.
+2. Move one side up, other down.
+3. Repeat (until desired smoothness).
+
+2D Perlin noise::
+by combining multiple noise functions fractally, we get a pretty good terrain
+
+Fractional Brownian Motion::
++ 
+* position of a given object changes in random increments
+* integral of white noise
+* fractional -> memory -> increments are not dependent
+** Hurst exponent, Gain factor
+
+Normals::
++
+* central differences
+* derivates of noise in lattice grid -> normals
+
+== Participating Media in Computer Graphics
+
+light interacts between and below surfaces
+
+Volume rendering::
++
+* 2D pixel -> 3D voxel
+* useful for rendering of atmospheric effects, fluids, translucent solids, biological tissues, medical data, ...
+
+Radiative transfer in volumes::
++
+* can be solved analyticall for homonogenous volumes
+* has to be solved by numerical approximation otherwise
+* back-to-front / front-to-back compositing
+** front-to-back can be terminated early when alpha ~ 1
+
+Raycasting / slicing::
++
+* Raycasting: sampling happens on equidistant points along each ray
+** concentric spherical shells
+** easier to implement, early termination is trivial, more flexible than slicing
+* Slicing: shells are approximated using view-aligned planes
+** better for memory access
+
+Volume rendering pipeline::
++
+1. reconstruction -- turn sets of discrete samples into 3D functions using interpolation / filters
+2. classification -- mapping of data attributes to optical properties (e.g. transparency, color)
+** can happen before or after reconstruction
+3. shading -- make structures more realistic by applying an illumination model
+** gradient vector instead of normals
+4. compositing
+** accumulation -- optical model of radiative transfer (emission + absorption)
+** first hit
+** averaging
+** maximum intensity
+
+Global volume illumination::
++
+* volumetric photon mapping
+** photons are shot from light sources, once a photon interacts with a medium, it is stored in a photon map
+** ray casting and estimation using photon maps
+* interactive approximations
+
+== From 2D Sketch to 3D Animated Character via Quadratic Programming
+
+link:monstermash.zone[MonsterMash]
+
+Non-linear programming::
+solving an optimization problem where some of the constraints are not linear
+
+Quadratic programming::
+non-linear programming with quadratic functions
+
+Sketch-based modeling::
++
+1. draw a sketch
+2. order parts according to depth
+3. part openings are stitched onto the body
+4. ARAP-L: deformation + inflation
+
+ARAP-L(ayered) deformation::
++
+- can have positional constraints
+- joint inflation + deformation
+- produces better results than inflation, then deformation

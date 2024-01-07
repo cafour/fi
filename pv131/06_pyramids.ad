@@ -1,0 +1,67 @@
+= 6. Multi-scale analysis, Pyramids, Wavelets
+
+[.question]
+Vysvětlete princip konstrukce Laplaceovy pyramidy o 4 úrovních.
+
+Pyramida::
+Série postupně downsamplovaných verzí původního obrázku.
+
+Gaussovská pyramida::
+Na obrázky je při downsamplování aplikován Gaussián. Je low-pass filtering (LPF) pyramidou.
+
+Laplaceova pyramida::
+Pyramida map hran. Typicky vzniká aplikací Laplacián na Gaussovskou pyramidu, tedy operace při downsaplovaní je ve
+finále Laplacian of Gaussian (LoG). Je high-pass filtering (HPF) pyramidou.
+
+Reprezentace obrázku pomocí pyramidy::
+HPF pyramida a LPF pyramida se vzájemně doplňují. LPF pyramida se však lépe komprimuje, čehož se využívá při uchovávání
+obrázků. LPF úroveň k se dá zkombinovat s HPF úrovní k+1 a vznikne (skoro) LPF úroveň k+1.
+
+Konstrukce truncated HPF pyramidy o 4 úrovních::
+Originál je na úrovni j, považujme ho za stem:[LPF_j]. Nechť stem:[LPF_{j-1} = \text{downsample}(\text{blur}(LPF_j))]
+a stem:[HPF_{j} = LPF_j - \text{blur}(\text{upsample}(LPF_{j-1}))].
++
+Pyramida o 4 úrovních by se skládala z stem:[HPF_j, HPF_{j-1}, HPF_{j-2}, LPF_{j-3}].
+
+[.question]
+Mějme jednorozměrný diskrétní signál I délky 64. Pro výpočet 1D-DWT bylo použito stem:[j_0=4]. Určete, jaký dlouhý je
+výsledný signál, tj. kolik je dohromady aproximačních a waveletových koeficientů.
+
+[stem]
+++++
+J = 6 \\
+\#D_5 = 32 \\
+\#D_4 = 16 \\
+\#A_4 = 16
+++++
+
+[.question]
+Je dán dvourozměrný diskrétní obraz I o velikosti 256x256 pixelů a na něm provedená 2D-DWT s Haarovou bázovou funkcí
+až do úrovně stem:[j_0=6]. Určete, kolik bude ve výsledném transformovaném obraze aproximačních koeficientů.
+
+[stem]
+++++
+\#A_6 = 64 \times 64
+++++
+
+[.question]
+Je dán dvourozměrný diskrétní obraz I o velikosti 512x512 pixelůa na něm provedená 2D-DWT s Haarovou bázovou funkcí
+až do úrovně, kdy je ve výsledném obraze přítomen jen 1 aproximační koeficient. Určete, kolik bylo třeba provést
+rozkladů na nízkofrekvenčních a vysokofrekvenční složky.
+
+Jelikož nejnižší úroveň je stem:[j_0 = 0] a stem:[J = 9], je třeba 9 rozkladů.
+
+[.question]
+Vynulování aproximačních koeficientů odpovídá eliminaci nejnižších frekvencí v původním obraze. Vytvořte matlabovskou
+funkci, která tímto způsobem realizuje ve čtvercovém obraze detekci hran.
+
+[source, matlab]
+----
+function [O] =  detectEdges(I)
+    [C,S] = wavedec2(double(I), 8, 'haar');
+    C(1:256) = 0;
+    O = dip_image(waverec2(C, S, 'haar'));
+end
+----
+
+Pozn.: Nezdá se mi, že tohle je to, co chtějí. Navíc to funguje jen pro rozlišení 256x256.

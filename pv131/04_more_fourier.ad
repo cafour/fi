@@ -1,0 +1,36 @@
+= 4. 2D/3D Fourier Transform + Filtering in Frequency Domain
+
+[.question]
+Odvoďte časovou složitost 2D DFT pro obraz velikosti M x N.
+
+2D DFT je 1D DFT aplikovaná dvakrát. Pokud složitost vnitřní DFT je stem:[O(N^2)] pak složitost vnější DFT bude
+stem:[O(M^2*N^2)].
+
+[.question]
+Vysvětlete, proč se při zobrazení amplitud ve Fourierově doméně používá logaritmická škála.
+
+Protože je to pak líp vidět.
++
+Největší amplituda zkrátka bývá tak velká, že při lineárním zobrazení nejsou ostatní amplitudy vidět. Jenže ty ostatní
+amplitudy nás zajímají taky, tak to celé dáme sežrat logaritmu, čímž se největší peak zmenší.
+
+[.question]
+Dokažte, že 2D diskrétní Fourierova transformace je separabilní.
+
+[.question]
+Znázorněte 1D frekvenční doménu digitálního signálu délky N. Popište osy a následně nakreslete 1D nízkofrekvenční box
+filtr, který odstraní K nejvyšších frekvencí.
+
+Nakresli krabici s hranou stem:[2 * (N - K)] "položenou" na počátku.
+
+[.question]
+Znázorněte 2D frekvenční doménu digitálního obrazu velikosti N x N. Popište osy a následně nakreslete 2D
+nízkofrekvenční kruhový filtr, který odstraní frekvence vyšší než stem:[w_(threshold) = N/4].
+
+Nakresli válec s poloměrem podstavy N/4 "položený" na počátku.
+
+[.question]
+Znázorněte 2D frekvenční doménu digitálního obrazu velikosti 8 x 8. Určete, který Fourierův koeficient je komplexně
+sdružený s Fourierovým koeficientem na pozici stem:[(w_x, w_y) = (5, 7)].
+
+Ten středově souměrný podle počátku, stem:[(-5, -7)].

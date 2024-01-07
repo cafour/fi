@@ -1,0 +1,46 @@
+= 1. Introduction, Images and Their Properties
+
+[.question]
+Jaký je rozdíl mezi pixelem a voxelem?
+
+Pixel::
+Picture element
+
+Voxel::
+Volume element
+
+[.question]
+Nadefinujte digitální barevný obraz.
+
+Funkce 
+
+[.question]
+Vysvětlete rozdíl mezi izotropním a anizotropním obrazem.
+
+Izotropní obraz::
+Má stejnou vzorkovací frekvenci ve všech dimenzích.
+
+Anizotropní obraz::
+Není izotropní.
+
+[.question]
+Odvoďte vztah, kolik úrovní intenzit má N-bitový šedotónový obraz.
+
+stem:[2^N], protože tolik hodnot narveme do N-bitového čísla bez znaménka.
+
+[.question]
+Vyjmenujte 3 základní druhy šumu, které jsou přítomny v obraze pořízeném běžnou kamerou.
+
+Aditivní šum::
+Převážně Gaussián. Způsoben amplifikací v elektronice.
+
+Impulsní šum::
+Náhodné očernění nebo obělení pixelu. Sůl a pepř.
+
+Poissonůn šum::
+Fotony nebo co.
+
+[.question]
+Jaký je rozsah vlnových délek, které vnímá lidské oko?
+
+[380, 740] nm

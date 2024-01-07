@@ -1,0 +1,94 @@
+= 11. Selected Image Analysis Techniques
+
+[.question]
+Zaveďte vhodnou míru, která bude vyhodnocovat míru podobnosti dvou obrázků stejné velikosti bez vzájemného posunu,
+a to na základě jejich intenzit. Míru formálně nadefinujte a nastavte tak, aby pro naprosto shodné obrázky vracela
+hodnotu "1", naopak pro zcela odlišné obrázky hodnotu "0".
+
+Předpokládejme BÚNO, že intenzita spadá do intervalu stem:[\[0, 1\]], pak pro obrázky A a B:
+
+[stem]
+++++
+R = \frac{\sum_i A[i] * B[i]}{\text{pixelCount}}
+++++
+
+[.question]
+Vysvětlete rozdíl mezi operacemi "konvoluce" a "korelace". Uveďte příklad 2D matice, se kterou operace korelace i
+konvoluce nad libovolným 2D diskrétním obrázkem vrátí totožný výsledek.
+
+Konvoluce::
+Lineární operátor na dvou maticích. (`conv2` v matlabu)
++
+stem:[g(x) = \sum_a f(x - a) * h(a)], (f = obraz, h = konvoluční jádro)
+
+Korelace (Cross-correlation)::
+Míra podobnosti mezi signály. (`xcorr2` v matlabu)
++
+stem:[g(x) = \sum_a f(x + a) * h(a)]
+
+Pokud je matice shodná po převrácení podél osy x i y ("středově souměrná"), pak se výsledek neliší. Jinými slovy filtr
+(resp. jeho kernel) musí být symetrický.
+
+____
+A symmetric kernel is one that is unchanged when the two variables are permuted; it is a kernel function K such that
+K(t, u) = K(u, t).[1]
+____
+
+Nicméně je nutné pamatovat, že kernely se neindexují jako klasické matice, ale mají (0, 0) uprostřed. Nestačí tedy
+matici transponovat.
+
+[1]: https://en.wikipedia.org/wiki/Integral_transform
+
+[.question]
+Vysvětlete princip segmentace obrazu s pomocí metody grafových řezů. Jak se nad 2D diskrétním obrázkem s rozměry 5x5
+pixelů sestrojí počáteční graf (z kolika vrcholů je složen a jak jsou jednotlivé vrcholy pospojovány hranami)?
+
+Grafové řezy jsou přístup k segmentaci, jenž se snaží najít minimum rovnice
+[stem]
+++++
+E_\text{total}(\text{model}) = \alpha * E_\text{internal}(\text{model}) + \beta * E_\text{external}(\text{model, image})
+++++
+pomocí grafů. Další metodou jsou Deformable Models, jenž jsou popsány buď parametricky, a nebo implicitně.
+
+Takže grafové řezy jsou vlastně taková redukce z problému segmentace na problém nejkratší cesty:
+
+* pixely -> uzly
+* 4/8-sousedé -> hrany
+* váhy hran jsou pravděpodobnosti, že dva sousední pixely jsou součástí jednoho objektu
+* nízká váha hrany -> mezi pixely nejspíš prochází hrana objektu
+* váhové funkce bývají založeny na inverzi gradientu, např. G-aussian |\Delta I| nebo MaxIntensity - |\Delta I|
+
+Tenhle převod je dále rozšířen o přidání source a sink uzlu. Vysledkem pak není nejkratší cesta, ale dvě plochy,
+pozadí a popředí. Váhy mezi obrazem a novými uzly jsou dány pravděpodobností, že pixel je součástí pozadí/popředí.
+
+[.question]
+Nakreslete hrubé schéma konvoluční neuronové sítě a popište stručně, k čemu slouží jednotlivé komponenty, resp. jaké
+operace jsou v nich vykonávány.
+
+image::pv131/cnn.png[]
+
+Neuronky mají, podobně jako cibule, zlobři a `.psd` soubory, vrstvy. Pro učení neuronek se používá backpropagation
+alogoritmus s cross-entropy loss, whatever that is.
+
+Fully connected layer::
+* každý neuron ve skryté vrstvě je napojen na každý neuron ve vstupní vrstvě
+* žádná prostorová informace, velké množství parametrů
+* klasická aktivační operace modelovaná podle reálného neuronu
+* používá se k zploštění konvoluční vrstvy a ke klasifikaci
+
+Convolution layer::
+* každý neuron ve skryté vrstvě je napojen pouze na oblast neuronů ve vstupní vrstvě
+* každá podvrstva reprezentuje jeden filtr, jedno konvoluční jádro, které se aplikuje na vstupní obraz
+* pamět je potřeba jednak na váhy jádra a bias pro každý filtr, druhak na vlastní výpočet z aktuálního obrazu
+* stride je délka kroku -- posunu jádra
+
+Max pooling layer::
+* Downsampling pomocí maxima z regionu
+* nelineární operace (filtry lineární jsou, proto nás to zajímá)
+
+ReLU (Rectified Linear Unit) layer::
+* nuluje záporné hodnoty
+* nelinární operace (filtry lineární jsou, proto nás to zajímá
+
+SoftMax layer::
+* pro počítání predikce pravděpobnosti, že obrázek náleží do některé z mutually exlusive kategorií

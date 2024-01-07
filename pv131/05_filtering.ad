@@ -1,0 +1,50 @@
+= 5. Correspondence between Spatial and Frequency Filtering, Sampling Theorem
+
+[.question]
+Zobrazte v Matlabu, jak vypadá Sobelův filtr převedený do frekvenční domény. Vysvětlete, které frekvence jsou
+potlačovány a které naopak zvýrazňovány.
+
+Zelená čerchovaná čára. Potlačeny jsou velmi nízké a velmi vysoké frekvence.
+
+image::pv131/ftsobel.png[]
+
+[source, matlab]
+----
+plot(abs(fft(padarray([1 0 -1]', 20))))
+----
+
+[.question]
+Vysvětlete původ vertikální čáry v levém dolním obrázku na slidu č. 3.
+
+image::pv131/stripesd.jpg[]
+image::pv131/stripefd.jpg[]
+
+Kvůli prvnímu a poslednímu řádku vzniká periodicita.
+
+[.question]
+Formálně nadefinujte 2D ideální nízkofrekvenční filtr s obdélníkovým profilem. Odvoďte i jemu odpovídající filtr v
+prostorové doméně.
+
+Obdélník ve frekvenční doméně nad nízkými frekvencemi, které nás zajímají. V prostorové doméně vypadá jako
+stem:[k * (\text{sinc}(ax)) / (ax)].
+
+[.question]
+Mějte libovolný 2D digitální obraz, který následně poškodíme gaussovským aditivním šumem. Vysvětlete, v čem se liší
+frekvenční spektrum původního a zašuměného obrazu.
+
+Šum bude i ve frekvenční doméně.
+
+[.question]
+Mějme 2D digitální šedotónový obraz velikosti 256x512 pixelů. Rozhodněte, zda je obraz frekvenčně omezený. Pokud ano,
+určete nejvyšší frekvenci v něm obsaženou (v každé ose zvlášť) a uveďte min. vzorkovací frekvenci
+(dle Nyquistova teorému), která navzorkuje obraz tak, aby byl plně rekonstruovatelný. Pokud ne, zdůvodněte proč.
+
+* Maximální frekvence podle osy x: 256
+* Maximální frekvence podly osy y: 512
+
+Nyquistův teorém::
+Band-limited signal should be sampled at a rate of at least twice its highest-frequency component (i.e. the sampling
+frequency should be equal at least to the Nyquist rate). If the band-limited signal is sampled at the Nyquist rate,
+it is possible to reconstruct it exactly.
+
+Podle Nyquistova teorému chceme vzorkovací frekvenci 512 pro osu x a 1024 pro osu y.
