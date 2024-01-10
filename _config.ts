@@ -80,8 +80,6 @@ site
         options: {
             fleqn: true,
             throwOnError: false,
-            errorColor: "#ff0000",
-            globalGroup: true,
             output: "html",
             strict: false
         }
@@ -91,7 +89,7 @@ site
     .copy([".svg"])
     .copy("fonts")
     .copy("icons")
-    .ignore("readme.md", "contributing.md")
+    .ignore("readme.md", "contributing.md", "public")
     .use(pagefind({
         indexing: {
             rootSelector: "main"

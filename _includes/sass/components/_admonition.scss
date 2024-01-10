@@ -1,0 +1,58 @@
+@use "../base/" as *;
+
+@mixin create-admonition($kind) {
+    &.#{$kind} {
+        background-color: var(--color-admonition-#{$kind});
+        border: 3px solid var(--color-admonition-#{$kind}-border);
+
+        &::before {
+            content: "";
+            display: block;
+            background-image: url('/icons/#{$kind}.png');
+        }
+    }
+}
+
+.admonition {
+    padding-left: 6rem;
+
+    &::before {
+        width: 6rem;
+    }
+
+    @include create-admonition(caution);
+    @include create-admonition(important);
+    @include create-admonition(note);
+    @include create-admonition(tip);
+    @include create-admonition(warning);
+
+    .amonition-title {
+        display: none;
+    }
+}
+
+.admonitionblock {
+    width: 100%;
+    margin: 2rem 0rem;
+    padding: 1rem;
+
+    @include create-admonition(caution);
+    @include create-admonition(important);
+    @include create-admonition(note);
+    @include create-admonition(tip);
+    @include create-admonition(warning);
+
+    .icon {
+        vertical-align: middle;
+        width: 6rem;
+        padding: 0rem 1rem;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .content {
+        vertical-align: top;
+    }
+}

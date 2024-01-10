@@ -1,3 +1,5 @@
+@use "./functions" as *;
+
 $font-header: "Space Grotesk", sans-serif;
 $font-navigation: "Bitter", serif;
 $font-text: "Bitter", serif;
@@ -8,3 +10,20 @@ $color-desk: #3a322b;
 $color-dark: #202020;
 $color-light: #efefef;
 $color-link: #924924;
+$color-accent: #ac162c;
+
+$color-mt-blue: #6D92DB;
+$color-mt-red: #bb4f4f;
+$color-mt-orange: #FFB600;
+$color-mt-gray: #B6B6B6;
+$color-mt-green: #6DB649;
+
+$color-admonition-caution: adjust-color($color-mt-orange, $lightness: 10%);
+$color-admonition-important: adjust-color($color-mt-green, $lightness: 25%);
+$color-admonition-note: adjust-color($color-mt-blue, $lightness: 25%);
+$color-admonition-tip: adjust-color($color-mt-gray, $lightness: 25%);
+$color-admonition-warning: adjust-color($color-mt-red, $lightness: 25%);
+
+$width-desktop: 980px;
+$width-tablet: 768px;
+$width-mobile: 560px;

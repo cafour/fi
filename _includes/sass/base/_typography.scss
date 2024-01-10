@@ -1,0 +1,23 @@
+@use "./themes" as *;
+
+html {
+    font-family: var(--font-text);
+}
+
+* {
+    scrollbar-width: thin;
+}
+
+a {
+    color: var(--color-link);
+    text-decoration: none;
+
+    &:not(:disabled):hover {
+        color: var(--color-link-hover);
+        text-decoration: underline;
+    }
+
+    &:disabled {
+        color: var(--color-disabled);
+    }
+}
