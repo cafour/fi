@@ -8,9 +8,11 @@
       "npm:autoprefixer@10.4.16": "npm:autoprefixer@10.4.16_postcss@8.4.32",
       "npm:ico-endec@0.1.6": "npm:ico-endec@0.1.6",
       "npm:katex@0.16.9": "npm:katex@0.16.9",
+      "npm:markdown-it": "npm:markdown-it@14.0.0",
       "npm:markdown-it-admonition": "npm:markdown-it-admonition@1.0.4",
       "npm:markdown-it-attrs@4.1.6": "npm:markdown-it-attrs@4.1.6_markdown-it@14.0.0",
       "npm:markdown-it-deflist@3.0.0": "npm:markdown-it-deflist@3.0.0",
+      "npm:markdown-it-github-alerts": "npm:markdown-it-github-alerts@0.2.0_markdown-it@14.0.0",
       "npm:markdown-it@14.0.0": "npm:markdown-it@14.0.0",
       "npm:pagefind@1.0.4": "npm:pagefind@1.0.4",
       "npm:postcss-import@15.1.0": "npm:postcss-import@15.1.0_postcss@8.4.32",
@@ -441,6 +443,12 @@
         "integrity": "sha512-OxPmQ/keJZwbubjiQWOvKLHwpV2wZ5I3Smc81OjhwbfJsjdRrvD5aLTQxmZzzePeO0kbGzAo3Krk4QLgA8PWLg==",
         "dependencies": {}
       },
+      "markdown-it-github-alerts@0.2.0_markdown-it@14.0.0": {
+        "integrity": "sha512-B9zpYBQBW0EmSMqYKl7k+SgkraN/tfT+ruS3pGDpElfDed/y37QgQIP4q/qW0Qgv07zGqoqFdTnzJiDUWCf2oQ==",
+        "dependencies": {
+          "markdown-it": "markdown-it@14.0.0"
+        }
+      },
       "markdown-it@14.0.0": {
         "integrity": "sha512-seFjF0FIcPt4P9U39Bq1JYblX0KZCjDLFFQPHpL5AzHpqPEKtosxmdq/LTVZnjfH7tjt9BxStm+wXcDBNuYmzw==",
         "dependencies": {
@@ -712,6 +720,9 @@
         "dependencies": {}
       }
     }
+  },
+  "redirects": {
+    "https://deno.land/x/deno_dom/deno-dom-wasm.ts": "https://deno.land/x/deno_dom@v0.1.43/deno-dom-wasm.ts"
   },
   "remote": {
     "https://deno.land/std@0.170.0/_util/asserts.ts": "d0844e9b62510f89ce1f9878b046f6a57bf88f208a10304aab50efcb48365272",

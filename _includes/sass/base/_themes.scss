@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "../abstracts" as *;
 
 :root {
@@ -7,28 +8,22 @@
     --font-navigation: #{$font-navigation};
 }
 
-// NB: light theme is the default (due to the :not)
-html[data-theme=light],
-html:not([data-theme=dark]) {
-    @include theme-light;
+@include in-dark {
+    $color-link: color.adjust($color-link, $lightness: +20%);
+
+    color-scheme: dark;
+
+    --color-text: #{$color-paper};
+    --color-front: #{$color-desk};
+    --color-back: #{$color-dark};
+    --color-accent: #{$color-accent};
 }
 
-html[data-theme=dark] {
-    @include theme-dark;
-}
+@include in-light {
+    color-scheme: light;
 
-@media (prefers-color-scheme: dark) {
-
-    // `data-theme` overrides `prefers-color-scheme`
-    html:not([data-theme=light]) {
-        @include theme-dark;
-    }
-}
-
-@media (prefers-color-scheme: light) {
-
-    // `data-theme` overrides `prefers-color-scheme`
-    html:not([data-theme=dark]) {
-        @include theme-light;
-    }
+    --color-text: #{$color-dark};
+    --color-front: #{$color-paper};
+    --color-back: #{$color-desk};
+    --color-accent: #{$color-accent};
 }

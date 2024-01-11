@@ -1,0 +1,28 @@
+@use "sass:color";
+@use "../abstracts/" as *;
+
+:root {
+    --color-snippet: #{$color-dark};
+}
+
+@include in-light {
+    --color-snippet-border: #{color.adjust($color-dark, $lightness: -10%)};
+}
+
+@include in-dark {
+    --color-snippet-border: #{color.adjust($color-dark, $lightness: +10%)};
+}
+
+code, pre {
+    font-family: var(--font-code);
+}
+
+pre {
+    overflow-x: scroll;
+}
+
+.snippet {
+    padding: 0.5rem;
+    background-color: var(--color-snippet);
+    border: 0.25rem solid var(--color-snippet-border);
+}

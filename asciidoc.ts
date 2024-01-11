@@ -89,8 +89,6 @@ export async function asciidocLoader(filePath: string): Promise<Partial<Asciidoc
         safe: "unsafe",
         attributes: {
             stem: "tex",
-            icons: "@",
-            iconsdir: `/icons`,
             "allow-uri-read": "true",
             "table-caption": "Tabulka",
             "figure-caption": "Obrázek",

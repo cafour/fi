@@ -1,0 +1,66 @@
+@use "sass:color";
+@use "../abstracts/" as *;
+
+@include in-light {
+    --color-quote: #{color.adjust($color-paper, $lightness: -10%)};
+    --color-quote-border: #{color.adjust($color-paper, $lightness: -40%)};
+}
+
+@include in-dark {
+    --color-quote: #{color.adjust($color-paper, $lightness: -50%, $saturation: -50%)};
+    --color-quote-border: #{color.adjust($color-paper, $lightness: -40%, $saturation: -50%)};
+}
+
+// common
+*:not(.quoteblock) > blockquote, .quoteblock
+{
+    background-color: var(--color-quote);
+    border: 0.25rem solid var(--color-quote-border);
+    padding: 1em 2em;
+    position: relative;
+    
+    &::before, &::after {
+        display: inline;
+        font-size: 3rem;
+        padding: 0.5rem;
+        position: absolute;
+    }
+
+    &::before {
+        content: '\201e';
+        bottom: 0;
+        left: 0;
+    }
+
+    &::after {
+        content: '\201c';
+        top: 0;
+        right: 0;
+    }
+}
+
+// asciidoctor-specific
+.quoteblock {
+
+    blockquote {
+        width: 100%;
+        text-align: justify;
+        font-style: italic;
+    }
+
+    li {
+        text-align: left;
+    }
+
+    .attribution {
+        width: 100%;
+        text-align: right;
+    }
+}
+
+
+// markdown-specific
+*:not(.quoteblock) > blockquote {
+    text-align: justify;
+    font-style: italic;
+}

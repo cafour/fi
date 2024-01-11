@@ -2,6 +2,7 @@
   "tasks": {
     "lume": "echo \"import 'lume/cli.ts'\" | deno run --unstable -A -",
     "build": "deno task lume",
+    "debug": "echo \"import 'lume/cli.ts'\" | deno run --inspect-wait --unstable -A -",
     "serve": "deno task lume -s"
   },
   "compilerOptions": {

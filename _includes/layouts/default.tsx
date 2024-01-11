@@ -42,6 +42,8 @@ export default ({ children, search, section }: NotePageData) => (
         </ul>
       </div>
     </nav>
-    <main>{children}</main>
+    <main>
+      <article>{children}</article>
+    </main>
   </>
 );

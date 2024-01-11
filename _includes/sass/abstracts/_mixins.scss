@@ -1,58 +1,37 @@
 @use "sass:color";
 @use "./variables" as *;
 
-@mixin theme-dark {
-    $color-link: color.adjust($color-link, $lightness: +10%);
+@mixin in-light {
+    // NB: light theme is the default (due to the :not)
+    html:not([data-theme=dark]) {
+        @content;
+    }
 
-    color-scheme: dark;
+    // NB: `:not(.\9)` increases selector specificity so that data-them overrides prefers-color-scheme
+    //     which overrides the default (light) theme above
+    html[data-theme=light]:not(.\9):not(.\9) {
+        @content;
+    }
 
-    --color-text: #{$color-paper};
-    --color-link: #{$color-link};
-    --color-link-visited: #{color.adjust($color-link, $lightness: -20%)};
-    --color-link-hover: #{color.adjust($color-link, $lightness: +10%)};
-    --color-link-disabled: #{color.adjust($color-link, $saturation: -20%)};
-
-    --color-front: #{$color-desk};
-    --color-back: #{$color-dark};
-    --color-accent: #{$color-accent};
-
-    --color-admonition-caution: #{$color-admonition-caution};
-    --color-admonition-important: #{$color-admonition-important};
-    --color-admonition-note: #{$color-admonition-note};
-    --color-admonition-tip: #{$color-admonition-tip};
-    --color-admonition-warning: #{$color-admonition-warning};
-
-    --color-admonition-caution-border: #{color.adjust($color-admonition-caution, $lightness: +10%)};
-    --color-admonition-important-border: #{color.adjust($color-admonition-important, $lightness: +10%)};
-    --color-admonition-note-border: #{color.adjust($color-admonition-note, $lightness: +10%)};
-    --color-admonition-tip-border: #{color.adjust($color-admonition-tip, $lightness: +10%)};
-    --color-admonition-warning-border: #{color.adjust($color-admonition-warning, $lightness: +10%)};
+    @media (prefers-color-scheme: light) {
+        // `data-theme` overrides `prefers-color-scheme`
+        html:not([data-theme=dark]):not(.\9) {
+            @content;
+        }
+    }
 }
 
-@mixin theme-light {
-    color-scheme: light;
+@mixin in-dark {
+    html[data-theme=dark]:not(.\9):not(.\9) {
+        @content;
+    }
 
-    --color-link: #{$color-link};
-    --color-link-visited: #{color.adjust($color-link, $lightness: -20%)};
-    --color-link-hover: #{color.adjust($color-link, $lightness: +10%)};
-    --color-link-disabled: #{color.adjust($color-link, $saturation: -20%)};
-
-    --color-text: #{$color-dark};
-    --color-front: #{$color-paper};
-    --color-back: #{$color-desk};
-    --color-accent: #{$color-accent};
-
-    --color-admonition-caution: #{$color-admonition-caution};
-    --color-admonition-important: #{$color-admonition-important};
-    --color-admonition-note: #{$color-admonition-note};
-    --color-admonition-tip: #{$color-admonition-tip};
-    --color-admonition-warning: #{$color-admonition-warning};
-
-    --color-admonition-caution-border: #{color.adjust($color-admonition-caution, $lightness: -10%)};
-    --color-admonition-important-border: #{color.adjust($color-admonition-important, $lightness: -10%)};
-    --color-admonition-note-border: #{color.adjust($color-admonition-note, $lightness: -10%)};
-    --color-admonition-tip-border: #{color.adjust($color-admonition-tip, $lightness: -10%)};
-    --color-admonition-warning-border: #{color.adjust($color-admonition-warning, $lightness: -10%)};
+    @media (prefers-color-scheme: dark) {
+        // `data-theme` overrides `prefers-color-scheme`
+        html:not([data-theme=light]):not(.\9) {
+            @content;
+        }
+    }
 }
 
 @mixin max-mobile {

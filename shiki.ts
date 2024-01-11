@@ -1,5 +1,4 @@
 import { HighlighterOptions, getHighlighter } from "npm:shiki";
-
 import { Node } from "lume/deps/dom.ts";
 import Site from "lume/core/site.ts";
 import { Page } from "lume/core/file.ts";
@@ -25,7 +24,7 @@ export const defaults: Options = {
 
 /** A plugin to syntax-highlight code using the highlight.js library */
 export default async function (userOptions?: Options) {
-    const options = {...defaults, ...userOptions};
+    const options = { ...defaults, ...userOptions };
     const highlighter = await getHighlighter(options.options);
 
     return (site: Site) => {
@@ -40,7 +39,7 @@ export default async function (userOptions?: Options) {
                         return;
                     }
 
-                    const element = node as unknown as HTMLElement;
+                    let element = node as unknown as HTMLElement;
 
                     let lang = "plain";
                     element.classList.forEach(c => {
@@ -49,10 +48,24 @@ export default async function (userOptions?: Options) {
                             lang = result[1];
                         }
                     });
+                    if (lang === "plain") {
+                        return;
+                    }
+
                     try {
-                        element.innerHTML = highlighter.codeToHtml(element.innerText, { lang });
-                    } catch {
-                        // no-op
+                        if (element.parentElement?.tagName === "PRE") {
+                            element = element.parentElement;
+                        }
+
+                        const highlightedCode = highlighter.codeToHtml(element.innerText, { lang });
+                        const wrapper = element.ownerDocument.createElement("div");
+                        wrapper.innerHTML = highlightedCode;
+                        const highlightedElement = wrapper.firstElementChild!;
+                        highlightedElement.classList.add("snippet", `language-${lang}`)
+                        highlightedElement.classList.add(...element.classList);
+                        element.outerHTML = highlightedElement.outerHTML;
+                    } catch (e) {
+                        console.log(`${page.sourcePath}: ${e}`);
                     }
                 });
         }

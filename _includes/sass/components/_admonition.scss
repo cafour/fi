@@ -1,24 +1,59 @@
+@use "sass:color";
+@use "../abstracts/" as *;
 @use "../base/" as *;
 
-@mixin create-admonition($kind) {
-    &.#{$kind} {
+@include in-dark {
+    --color-admonition-caution: #{color.adjust($color-admonition-caution, $lightness: -30%)};
+    --color-admonition-important: #{color.adjust($color-admonition-important, $lightness: -30%)};
+    --color-admonition-note: #{color.adjust($color-admonition-note, $lightness: -40%, $saturation: -30%)};
+    --color-admonition-tip: #{color.adjust($color-admonition-tip, $lightness: -50%)};
+    --color-admonition-warning: #{color.adjust($color-admonition-warning, $lightness: -30%)};
+
+    --color-admonition-caution-border: #{color.adjust($color-admonition-caution, $lightness: -20%)};
+    --color-admonition-important-border: #{color.adjust($color-admonition-important, $lightness: -20%)};
+    --color-admonition-note-border: #{color.adjust($color-admonition-note, $lightness: -30%, $saturation: -30%)};
+    --color-admonition-tip-border: #{color.adjust($color-admonition-tip, $lightness: -40%)};
+    --color-admonition-warning-border: #{color.adjust($color-admonition-warning, $lightness: -20%)};
+}
+
+@include in-light {
+    --color-admonition-caution: #{color.adjust($color-admonition-caution, $lightness: +10%)};
+    --color-admonition-important: #{color.adjust($color-admonition-important, $lightness: +25%)};
+    --color-admonition-note: #{color.adjust($color-admonition-note, $lightness: +25%)};
+    --color-admonition-tip: #{color.adjust($color-admonition-tip, $lightness: +25%)};
+    --color-admonition-warning: #{color.adjust($color-admonition-warning, $lightness: +25%)};
+
+    --color-admonition-caution-border: #{color.adjust($color-admonition-caution, $lightness: -10%)};
+    --color-admonition-important-border: #{color.adjust($color-admonition-important, $lightness: -10%)};
+    --color-admonition-note-border: #{color.adjust($color-admonition-note, $lightness: -10%)};
+    --color-admonition-tip-border: #{color.adjust($color-admonition-tip, $lightness: -10%)};
+    --color-admonition-warning-border: #{color.adjust($color-admonition-warning, $lightness: -10%)};
+}
+
+@mixin create-admonition($kind, $prefix: "") {
+    &.#{$prefix}#{$kind} {
         background-color: var(--color-admonition-#{$kind});
-        border: 3px solid var(--color-admonition-#{$kind}-border);
+        border: 0.25rem solid var(--color-admonition-#{$kind}-border);
 
         &::before {
-            content: "";
+            width: 4rem;
+            position: absolute;
+            top: 0;
+            left: 0;
             display: block;
+            font-size: 4rem;
+            height: 100%;
+            content: ' ';
             background-image: url('/icons/#{$kind}.png');
+            background-size: 2rem;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
         }
     }
 }
 
 .admonition {
-    padding-left: 6rem;
-
-    &::before {
-        width: 6rem;
-    }
+    padding-left: 4rem;
 
     @include create-admonition(caution);
     @include create-admonition(important);
@@ -33,8 +68,8 @@
 
 .admonitionblock {
     width: 100%;
-    margin: 2rem 0rem;
-    padding: 1rem;
+    padding: 1rem 1rem 1rem 4rem;
+    position: relative;
 
     @include create-admonition(caution);
     @include create-admonition(important);
@@ -43,16 +78,30 @@
     @include create-admonition(warning);
 
     .icon {
-        vertical-align: middle;
-        width: 6rem;
-        padding: 0rem 1rem;
-
-        img {
-            width: 100%;
-        }
+        display: none;
     }
 
     .content {
         vertical-align: top;
+    }
+}
+
+.alert {
+    width: 100%;
+    padding: 1rem 1rem 1rem 4rem;
+    position: relative;
+
+    &::before {
+        width: 4rem;
+    }
+
+    @include create-admonition(caution, $prefix: "alert-");
+    @include create-admonition(important, $prefix: "alert-");
+    @include create-admonition(note, $prefix: "alert-");
+    @include create-admonition(tip, $prefix: "alert-");
+    @include create-admonition(warning, $prefix: "alert-");
+    
+    .alert-title {
+        display: none;
     }
 }

@@ -11,12 +11,12 @@ import resolveUrls from "lume/plugins/resolve_urls.ts";
 import codeHighlight from "./shiki.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import inline from "lume/plugins/inline.ts";
-import admonition from "npm:markdown-it-admonition";
 import pagefind from "lume/plugins/pagefind.ts";
 import { linkInsideHeader } from "lume_markdown_plugins/toc/anchors.ts";
 import toc from "lume_markdown_plugins/toc.ts";
 
 import { AsciidoctorEngine, asciidocLoader } from "./asciidoc.ts";
+import { markdownItAlerts } from "./deps.ts";
 
 const site = lume({
     dest: "public/",
@@ -25,7 +25,23 @@ const site = lume({
 
 site
     .use(markdown({
-        plugins: [admonition]
+        plugins: [[markdownItAlerts, {
+            titles: {
+                "tip": "",
+                "note": "",
+                "important": "",
+                "warning": "",
+                "caution": ""
+            },
+            icons: {
+                "tip": " ",
+                "note": " ",
+                "important": " ",
+                "warning": " ",
+                "caution": " "
+            },
+            classPrefix: "alert"
+        }]]
     }))
     .use(toc({
         tabIndex: false,

@@ -1,3 +1,5 @@
+@use "sass:color";
+@use "../abstracts/" as *;
 @use "./themes" as *;
 
 html {
@@ -6,6 +8,63 @@ html {
 
 * {
     scrollbar-width: thin;
+}
+
+@include in-light {
+    --color-link: #{$color-link};
+    --color-link-visited: #{color.adjust($color-link, $lightness: -20%)};
+    --color-link-hover: #{color.adjust($color-link, $lightness: +10%)};
+    --color-link-disabled: #{color.adjust($color-link, $saturation: -20%)};
+}
+
+@include in-dark {
+    --color-link: #{$color-link};
+    --color-link-visited: #{color.adjust($color-link, $lightness: -20%)};
+    --color-link-hover: #{color.adjust($color-link, $lightness: +10%)};
+    --color-link-disabled: #{color.adjust($color-link, $saturation: -20%)};
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-header);
+    font-weight: bold;
+}
+
+h1 {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+}
+
+h2 {
+    padding-top: 3rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 0.125rem solid var(--color-accent);
+    font-size: 2rem;
+}
+
+h3 {
+    padding-top: 3rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+}
+
+h4 {
+    padding-top: 3rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1rem;
 }
 
 a {
@@ -20,4 +79,8 @@ a {
     &:disabled {
         color: var(--color-disabled);
     }
+}
+
+p {
+    text-align: justify;
 }
