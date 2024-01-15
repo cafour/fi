@@ -16,3 +16,28 @@ groups:
     display: Vývoj počítačových her
   # - name: gd
   #   display: Grafický design
+nav:
+  - title: Zpět na seznam předmětů
+    href: /
+  - title: Společný základ programu
+    children:
+      - href: SZP01_algoritmy.ad
+      - href: SZP02_numericke_metody.ad
+      - href: SZP03_statistika.ad
+      - href: SZP04_3d_modelovani.ad
+      - href: SZP05_krivky_a_povrchy.ad
+      - href: SZP06_strojove_uceni.ad
+      - href: SZP07_grafy.ad
+      - href: SZP08_modelovani_a_projekce.ad
+      - href: SZP09_zpracovani_obrazu.ad
+      - href: SZP10_analyza_obrazu.ad
+  - title: Vývoj počítačových her
+    children:
+      - href: VPH01_pokrocila_grafika.ad
+      - href: VPH02_graficke_a_fyzikalni_principy.ad
+      - href: VPH03_herni_design_i.ad
+      - href: VPH04_herni_design_ii.ad
+      - href: VPH05_vyvoj_her.ad
+      - href: VPH06_ai_ve_hrach.ad
+      - href: VPH07_gpu_rendering.ad
+      - href: VPH08_modelovani_3d_postav.ad

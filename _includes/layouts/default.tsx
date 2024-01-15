@@ -1,14 +1,8 @@
 import { Node as TocNode } from "lume_markdown_plugins/toc/mod.ts";
-import Empty from "../../_components/Empty.ts";
 import { Finder } from "../../_plugins/finder.ts";
+import { NavItem } from "../../_components/NavLevel.tsx";
 
 export const layout = "layouts/base.tsx";
-
-interface NavItem {
-  title?: string;
-  href?: string;
-  display?: string;
-}
 
 interface NotePageData extends Lume.Data {
   course?: string;
@@ -19,7 +13,7 @@ interface NotePageData extends Lume.Data {
   finder: Finder;
 }
 
-export default ({ children, search, course, showtitle, title, comp }: NotePageData) => (
+export default ({ children, search, course, showtitle, title, comp, nav, finder }: NotePageData) => (
   <>
     <nav>
       <div class="menu-bar">
@@ -40,22 +34,7 @@ export default ({ children, search, course, showtitle, title, comp }: NotePageDa
           <kbd>Ctrl</kbd>
           <kbd>K</kbd>
         </button>
-        <ul>
-          {(search.pages("doc", "order") as NotePageData[]).map((p) => (
-            <li>
-              <a href={p.url.toString()}>{p.title}</a>
-              {p.toc && p.toc.length > 0 && (
-                <ul>
-                  {p.toc.map((n) => (
-                    <li>
-                      <a href={n.url}>{n.text}</a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
+        <comp.NavLevel items={nav} finder={finder} />
         <div class="sidebar-links">
           <a href="https://github.com/cafour/fi" class="btn" target="_blank">
             <i class="icon icon-github"></i>

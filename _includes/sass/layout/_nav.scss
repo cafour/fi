@@ -1,4 +1,17 @@
+@use "sass:color";
 @use "../abstracts/" as *;
+
+@include in-light {
+    --color-nav-0: #{$color-desk};
+    --color-nav-1: #{color.adjust($color-desk, $lightness: +10%)};
+    --color-nav-2: #{color.adjust($color-desk, $lightness: +20%)};
+}
+
+@include in-dark {
+    --color-nav-0: #{$color-paper};
+    --color-nav-1: #{color.adjust($color-paper, $lightness: -10%)};
+    --color-nav-2: #{color.adjust($color-paper, $lightness: -20%)};
+}
 
 nav {
     overflow: visible;
@@ -36,36 +49,48 @@ nav {
         position: sticky;
         top: 0rem;
         height: 100vh;
-        padding: 1rem;
+        padding: 1.5rem;
         background-color: var(--color-front);
         z-index: 3;
         display: flex;
         flex-direction: column;
+        gap: 1rem;
 
-        ul {
+        .nav-level {
             list-style: none;
-            font-size: 0.75rem;
             padding: 0;
             flex-grow: 1;
             overflow-y: scroll;
 
-            a {
+            a.nav-link {
                 text-decoration: none;
+                line-height: 1.75;
 
                 &:hover {
                     text-decoration: underline;
                 }
             }
 
-            ul {
+            >.nav-item>.nav-level {
                 padding-left: 1rem;
+                font-size: 0.8em;
             }
         }
 
-        // NB: this only applies to the first level
-        >ul>li>a {
-            color: var(--hfg);
+        // the first level
+        >.nav-level>.nav-item>.nav-link {
+            color: var(--color-nav-0);
             font-size: 1rem;
+        }
+
+        // the second level
+        >.nav-level>.nav-item>.nav-level>.nav-item>.nav-link {
+            color: var(--color-nav-1);
+        }
+
+        // the third level
+        >.nav-level>.nav-item>.nav-level>.nav-item>.nav-level>.nav-item>.nav-link {
+            color: var(--color-nav-2);
         }
 
         .sidebar-links {
