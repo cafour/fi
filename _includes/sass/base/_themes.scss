@@ -6,15 +6,20 @@
     --font-text: #{$font-text};
     --font-code: #{$font-code};
     --font-navigation: #{$font-navigation};
+    --color-text-light: #{$color-paper};
+    --color-text-dark: #{$color-dark};
 }
 
 @include in-dark {
-    $color-link: color.adjust($color-link, $lightness: +20%);
-
     color-scheme: dark;
 
     --color-text: #{$color-paper};
+
     --color-front: #{$color-desk};
+    --color-front-border: #{color.adjust($color-desk, $lightness: +10%)};
+    --color-front-hover: #{color.adjust($color-desk, $lightness: +5%)};
+    --color-front-disabled: #{color.adjust($color-desk, $lightness: -20%)};
+
     --color-back: #{$color-dark};
     --color-accent: #{$color-accent};
 }
@@ -22,8 +27,13 @@
 @include in-light {
     color-scheme: light;
 
-    --color-text: #{$color-dark};
+    --color-text: #{$color-desk};
+
     --color-front: #{$color-paper};
+    --color-front-border: #{color.adjust($color-paper, $lightness: -10%)};
+    --color-front-hover: #{color.adjust($color-paper, $lightness: +10%)};
+    --color-front-disabled: #{color.adjust($color-paper, $lightness: -20%)};
+
     --color-back: #{$color-desk};
     --color-accent: #{$color-accent};
 }

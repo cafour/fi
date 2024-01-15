@@ -4,6 +4,7 @@
 
 html {
     font-family: var(--font-text);
+    color: var(--color-text);
 }
 
 * {
@@ -18,17 +19,17 @@ html {
 }
 
 @include in-dark {
-    --color-link: #{$color-link};
-    --color-link-visited: #{color.adjust($color-link, $lightness: -20%)};
-    --color-link-hover: #{color.adjust($color-link, $lightness: +10%)};
-    --color-link-disabled: #{color.adjust($color-link, $saturation: -20%)};
+    --color-link: #{color.adjust($color-link, $lightness: +10%)};
+    --color-link-visited: #{color.adjust($color-link, $lightness: -10%)};
+    --color-link-hover: #{color.adjust($color-link, $lightness: +20%)};
+    --color-link-disabled: #{color.adjust($color-link, $saturation: -10%)};
 }
 
 h1,
 h2,
 h3,
 h4,
-h5,
+h5, 
 h6 {
     font-family: var(--font-header);
     font-weight: bold;
@@ -83,4 +84,24 @@ a {
 
 p {
     text-align: justify;
+}
+
+kbd {
+    font-family: var(--font-code);
+    background-color: var(--color-front);
+    margin: 0 0.1rem;
+    padding: 0 0.25rem;
+    outline: 0.1rem solid var(--color-front-border);
+    border-bottom: 0.1rem solid var(--color-front-border);
+}
+
+.asterism {
+    text-align: center;
+    padding: 1em 0;
+}
+
+dl {
+    dt {
+        font-weight: bold;
+    }
 }

@@ -1,14 +1,25 @@
 import { Node as TocNode } from "lume_markdown_plugins/toc/mod.ts";
+import Empty from "../../_components/Empty.ts";
+import { Finder } from "../../_plugins/finder.ts";
 
 export const layout = "layouts/base.tsx";
 
-interface NotePageData extends Lume.Data {
-  section?: string;
-  priority?: number;
-  toc?: TocNode[];
+interface NavItem {
+  title?: string;
+  href?: string;
+  display?: string;
 }
 
-export default ({ children, search, section }: NotePageData) => (
+interface NotePageData extends Lume.Data {
+  course?: string;
+  priority?: number;
+  toc?: TocNode[];
+  showtitle?: boolean;
+  nav?: NavItem[];
+  finder: Finder;
+}
+
+export default ({ children, search, course, showtitle, title, comp }: NotePageData) => (
   <>
     <nav>
       <div class="menu-bar">
@@ -20,10 +31,15 @@ export default ({ children, search, section }: NotePageData) => (
       <label id="darkness" for="sidebar-toggle"></label>
       <div class="sidebar">
         <a class="logo" href="/">
-          <img src="/icons/fi_16.png" />
-          {section ?? "Poznámky z FI"}
+          {course ?? "Poznámky z FI"}
         </a>
-        <div id="search"></div>
+        {/* <div id="search"></div> */}
+        <button class="btn flex flex-row">
+          <i class="icon icon-search"></i>
+          <span class="grow-1">Search...</span>
+          <kbd>Ctrl</kbd>
+          <kbd>K</kbd>
+        </button>
         <ul>
           {(search.pages("doc", "order") as NotePageData[]).map((p) => (
             <li>
@@ -40,10 +56,20 @@ export default ({ children, search, section }: NotePageData) => (
             </li>
           ))}
         </ul>
+        <div class="sidebar-links">
+          <a href="https://github.com/cafour/fi" class="btn" target="_blank">
+            <i class="icon icon-github"></i>
+          </a>
+          <comp.Empty html={comp.ThemeToggle()} />
+          {/* <div dangerouslySetInnerHTML={{ __html: comp.ThemeToggle() }}></div> */}
+        </div>
       </div>
     </nav>
     <main>
-      <article>{children}</article>
+      <article>
+        {(showtitle === true || showtitle === undefined) && <h1>{title}</h1>}
+        {children}
+      </article>
     </main>
   </>
 );

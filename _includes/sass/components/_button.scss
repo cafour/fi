@@ -1,0 +1,39 @@
+@use "sass:color";
+@use "../abstracts/" as *;
+
+html {
+    --btn-default: var(--color-front);
+    --btn-default-border: var(--color-front-border);
+    --btn-default-hover: var(--color-front-hover);
+    --btn-default-disabled: var(--color-front-disabled);
+}
+
+.btn {
+    background-color: var(--btn-default);
+    border: 0.25rem solid var(--btn-default-border);
+    padding: 0.5rem;
+    position: relative;
+    top: 0;
+    cursor: pointer;
+
+    &::before {
+        border-bottom: 0.25rem solid var(--btn-default-border);
+        position: absolute;
+        inset: 0;
+        content: " ";
+    }
+
+    &:not(:disabled):hover {
+        // background-color: var(--btn-default-hover);
+        top: 0.25rem;
+
+        &::before {
+            border-bottom: none;
+        }
+    }
+    
+    &:disabled {
+        background-color: var(--btn-default-disabled);
+        cursor: not-allowed;
+    }
+}

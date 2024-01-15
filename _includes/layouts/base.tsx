@@ -18,9 +18,12 @@ export default ({ title, children, styles, useNewStyle }: FrontPageData) => {
         {useNewStyle && <link href="/styles/main.css" rel="stylesheet" />}
 
         <link href="/katex.css" rel="stylesheet" />
+        <script type="text/javascript" src="/scripts/main.js" />
       </head>
 
       <body className={styles?.join(" ")}>{children}</body>
     </html>
   );
 };
+
+

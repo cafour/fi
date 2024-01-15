@@ -17,7 +17,7 @@ export const defaults: Options = {
     cssSelector: "pre code",
     languageDetectRe: /\blanguage-([\w-]+)\b/i,
     options: {
-        langs: ["csharp", "js", "ts", "html", "css", "json", "xml", "yaml", "markdown", "bash", "powershell", "haskell", "prolog", "java"],
+        langs: ["csharp", "js", "ts", "html", "css", "json", "xml", "yaml", "markdown", "bash", "powershell", "haskell", "prolog", "java", "matlab"],
         theme: "dark-plus"
     }
 };

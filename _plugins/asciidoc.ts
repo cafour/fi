@@ -1,5 +1,7 @@
 import { Data } from "lume/core/file.ts";
-import { Asciidoctor, asciidoctor, kroki } from "./deps.ts";
+import { default as Asciidoctor } from "npm:@asciidoctor/core@3";
+import * as asciidoctor from "npm:@asciidoctor/core@3";
+import * as kroki from "npm:asciidoctor-kroki";
 import { Engine } from "lume/core/renderer.ts";
 import * as path from "std/path/mod.ts";
 

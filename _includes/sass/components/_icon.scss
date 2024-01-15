@@ -1,0 +1,48 @@
+@use "../abstracts/" as *;
+
+.icon {
+    display: inline-block;
+
+    &,
+    &:hover,
+    &:disabled {
+        &::before {
+            font-style: normal;
+        }
+    }
+
+    &.icon-xl::before {
+        font-size: 2em;
+    }
+
+    &.icon-github::before {
+        // content: url("/icons/github.png");
+        content: "🐙";
+    }
+    
+    &.icon-search::before {
+        content: "🔍";
+    }
+    
+    &.icon-key-ctrl::before {
+        content: "[Ctrl]";
+    }
+    
+    &.icon-key-k::before {
+        content: "[K]";
+    }
+}
+
+@include in-dark {
+    .icon.icon-theme-toggle::before {
+        // content: url("/icons/sun/png");
+        content: "☀️";
+    }
+}
+
+@include in-light {
+    .icon.icon-theme-toggle::before {
+        // content: url("/icons/sun/png");
+        content: "🌘";
+    }
+}

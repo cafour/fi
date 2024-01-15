@@ -264,3 +264,27 @@ $colors: (
     font-size: 12.8rem;
     line-height: 1;
 }
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.grow-0 {
+    flex-grow: 0;
+}
+
+.grow-1 {
+    flex-grow: 1;
+}
+
+.text-center {
+    text-align: center;
+}

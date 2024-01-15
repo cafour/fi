@@ -5,18 +5,21 @@ import sass from "lume/plugins/sass.ts";
 import postcss from "lume/plugins/postcss.ts";
 import transformImages from "lume/plugins/transform_images.ts";
 import picture from "lume/plugins/picture.ts";
-import katex from "./katex.ts";
+import katex from "./_plugins/katex.ts";
 import metas from "lume/plugins/metas.ts";
 import resolveUrls from "lume/plugins/resolve_urls.ts";
-import codeHighlight from "./shiki.ts";
+import codeHighlight from "./_plugins/shiki.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import inline from "lume/plugins/inline.ts";
 import pagefind from "lume/plugins/pagefind.ts";
 import { linkInsideHeader } from "lume_markdown_plugins/toc/anchors.ts";
 import toc from "lume_markdown_plugins/toc.ts";
+import esbuild from "lume/plugins/esbuild.ts";
 
-import { AsciidoctorEngine, asciidocLoader } from "./asciidoc.ts";
-import { markdownItAlerts } from "./deps.ts";
+import { AsciidoctorEngine, asciidocLoader } from "./_plugins/asciidoc.ts";
+import { default as markdownItAlerts } from "npm:markdown-it-github-alerts";
+import modules from "lume/plugins/modules.ts";
+import finder from "./_plugins/finder.ts";
 
 const site = lume({
     dest: "public/",
@@ -24,6 +27,7 @@ const site = lume({
 });
 
 site
+    .ignore("readme.md", "contributing.md", "public", "deps.ts", "_plugins")
     .use(markdown({
         plugins: [[markdownItAlerts, {
             titles: {
@@ -101,11 +105,22 @@ site
         }
     }))
     .use(await codeHighlight())
+    .use(esbuild({
+        options: {
+            bundle: true,
+            format: "iife",
+            minify: false,
+            platform: "browser",
+            target: "esnext",
+            entryPoints: ["./scripts/main.ts"],
+            globalName: "fi"
+        }
+    }))
     .loadPages([".ad"], { loader: asciidocLoader, engine: new AsciidoctorEngine() })
     .copy([".svg"])
     .copy("fonts")
     .copy("icons")
-    .ignore("readme.md", "contributing.md", "public")
+    .use(finder())
     .use(pagefind({
         indexing: {
             rootSelector: "main"
@@ -113,6 +128,6 @@ site
         ui: {
             showSubResults: true
         }
-    }));;
+    }));
 
 export default site;

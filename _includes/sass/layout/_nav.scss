@@ -1,0 +1,149 @@
+@use "../abstracts/" as *;
+
+nav {
+    overflow: visible;
+
+    .logo {
+        font-family: var(--font-header);
+        text-decoration: none;
+        font-size: 2rem;
+        font-weight: 900;
+        padding: 1rem 0 1rem 4rem;
+        color: var(--color-text);
+        display: flex;
+        flex-direction: row;
+        gap: 0.25rem;
+        position: relative;
+        align-self: center;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &::before {
+            content: url("/icons/fi_16.svg");
+            height: 3rem;
+            width: 3rem;
+            display: block;
+            position: absolute;
+            left: 0.5rem;
+            top: 1rem;
+        }
+    }
+
+    .sidebar {
+        width: 20rem;
+        position: sticky;
+        top: 0rem;
+        height: 100vh;
+        padding: 1rem;
+        background-color: var(--color-front);
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+
+        ul {
+            list-style: none;
+            font-size: 0.75rem;
+            padding: 0;
+            flex-grow: 1;
+            overflow-y: scroll;
+
+            a {
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            ul {
+                padding-left: 1rem;
+            }
+        }
+
+        // NB: this only applies to the first level
+        >ul>li>a {
+            color: var(--hfg);
+            font-size: 1rem;
+        }
+
+        .sidebar-links {
+            width: 100%;
+            display: flex;
+            gap: 0.5rem;
+            flex-direction: row;
+            justify-content: center;
+        }
+    }
+
+    #sidebar-toggle,
+    .menu-bar,
+    #darkness {
+        display: none;
+    }
+
+    @include phone {
+        position: absolute;
+        inset: 0 0 0 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translateX(-100%);
+            transition: transform 0.2s ease-in-out;
+            background-color: var(--color-front);
+            overflow-x: hidden;
+        }
+
+        .menu-bar {
+            display: block;
+            inset: 0 0 auto 0;
+            width: 100%;
+            height: 3rem;
+            z-index: 1;
+            position: fixed;
+
+            border-bottom: 0.125rem solid var(--color-front);
+            background-color: var(--color-back);
+
+            label {
+                cursor: pointer;
+
+                svg {
+                    width: 2rem;
+                    height: 2rem;
+                    display: block;
+                    margin: 0.5rem;
+                }
+
+                &:hover svg {
+                    color: var(--color-text);
+                }
+            }
+        }
+
+        #darkness {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            inset: 0 0 0 0;
+            background-color: black;
+            opacity: 50%;
+            z-index: 2;
+        }
+
+        #sidebar-toggle:checked~.sidebar {
+            transform: none;
+        }
+
+        #sidebar-toggle:checked~#darkness {
+            display: block;
+        }
+    }
+}
