@@ -304,7 +304,7 @@ Stejně jako náhodné veličiny popisují jevy, číselné charakteristiky popi
 Střední hodnota / mean / expected value::
 Průměr hodnot veličiny vážený jejich pravděpodobností. Značí se stem:[\overline{X}] nebo stem:[E(X)].
 +
-NOTE: Taky někdy označovaný jako _centrální moment prvního řádu / první centrální moment_. <<moment>>
+NOTE: Taky někdy označovaný jako _obecný moment prvního řádu / první obecný moment_. <<moment>>
 
 stem:[\alpha]-kvantil stem:[Q_\alpha]::
 Dělí statický soubor na stejně velké části.
