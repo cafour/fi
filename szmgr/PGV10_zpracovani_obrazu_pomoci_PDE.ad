@@ -1,0 +1,12 @@
+= Zpracování obrazu pomocí PDE
+:url: ./zpracovani_obrazu_pomoci_PDE/
+:page-group: pgv
+:page-order: PGV10
+
+[NOTE]
+====
+Difúzní filtrování (lineární difuze, nelineární izotropní a nelineární anizotropní difuze). Level set metody (pohyb ve směru normály, pohyb řízený křivostí a pohyb ve vnějším vektorovém poli). Fast marching algoritmus.
+
+_PA166_
+====
+

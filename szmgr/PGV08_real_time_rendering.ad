@@ -1,0 +1,122 @@
+= Vykreslování v reálném čase
+:url: ./real_time_rendering/
+:page-group: pgv
+:page-order: PGV08
+
+[NOTE]
+====
+Ořezávání, techniky založené na viditelnosti, vykreslování s různou úrovní detailů (LOD rendering), vykreslování terénu. Stíny: tvrdé stíny, měkké stíny, techniky vykreslování stínů v prostoru scény a v obrazovém prostoru.
+
+_PA010, PA213_
+====
+
+== Techniky aproximace objektů
+
+3D objekty mohou být definované mnoha miliony polygony či výpočetně náročnými matematickými funkcemi. Pro renderování v reálném čase je tedy žádoucí je zjednodušit a přitom zachovat jejich vzhled -- aproximovat je.
+
+IMPORTANT: Aproximace objektů souvisí s collidery, kterým se částečně věnuje otázka link:../graficke-a-fyzikalni-principy/[Grafické a fyzikální principy].
+
+=== Redukce počtu polygonů
+
+Slučování polygonů (merging) či odstranění polygonů (culling), které nejsou vidět. <<pa010-2021>>
+
+Variational Shape Approximation::
+1. Cluster surface elements (e.g. triangles) into stem:[k] regions.
+** Start with random seed.
+** Apply region growing based on proximity, orientation, etc.
+** Refine seeds (find best representatives) and repeat until regions stabilize.
+2. Fit each region into a proxy (e.g. plane) with minimum error.
+** E.g. by using a weighted average of triangle normals.
++
+image::./img/vph01_vsa.jpg[width=500rem]
+
+Iterative Decimation -- Edge Collapse Simplification::
+. Přiřaď každé hraně cenu (třeba quadratic error metric -- suma vzdáleností bodu od rovin)
+. Zbab se hrany s nejnižší cenou sloučením jejích vrcholů.
+. Opakuj, dokud nemáš požadovaný počet polygonů.
++
+image::./img/vph01_quadratic_error_metric.png[width=300rem]
+
+=== Implicitní reprezentace
+
+Pokud dokážeme model vyjádřit pomocí matematických funkcí, nemusíme ukládat polygonovou síť. Např. koule je definována jako stem:[x^2 + y^2 + z^2 = r^2]. Šetří prostor, plyne z ní však nutnost výpočtu. Ne všechny modely je možné takto vyjádřit jednoduše.
+
+Constructive solid geometry (CSG)::
+Dokáže reprezentovat komplexní objekty jako kombinace primitiv (krychle, koule, válec, ...). Tyto primitiva jsou následně transformována (posun, rotace, škálování) a kombinována (sjednocení, průnik, rozdíl).
++
+Šetří místo, ale je náročnější na výpočetní výkon než polygonová síť.
+
+=== Zjednodušení vzhledu
+
+Nemusíme zjednodušovat jen povrch/objem modelu, ale i související atributy. Můžeme snížit rozlišení textur, či snížit počet barev v paletě. Pokud používáme PBR, můžeme upravit parametry materiálu nebo použít jednodušší model osvětlení.
+
+=== Bounding Volume Hierarchies (BVH)
+
+Hierarchie _bounding volumes_ -- jednoduchých objektů jako jsou kostky, koule, apod. -- které obsahují nějakou část objektu / geometrie scény. Používá se k rychlým průchodům scénou, např. při detekci kolizí, ray tracingu, atd. Svým způsobem jde tím pádem také o aproximaci objektů.
+
+Discrete Oriented Polytopes (DOP)::
+Generaliace bounding boxu. k-DOP je konvexní polytop -- generalizace mnohoúhelníků ve 2D, mnohostěnů ve 3D atd. -- který vzniká průnikem stem:[k] bounding slabů -- prostorů mezi dvě paralelními rovinami daných osou a vzdáleností mezi rovinami. Použitých os může být více než je dimenze prostoru. Např. 3D scéna může mít 13-DOP.
+
+== Techniky renderování stínů
+
+Stíny jsou důležité, jelikož:
+
+--
+* zvyšují věrohodnost scény,
+* jsou indikátorem vzdálenosti objektů od sebe -- hloubky scény,
+* mohou dávat informaci o objektech, které jsou mimo zorné pole kamery nebo ukryté za jinými objekty,
+* popisují tvar objektu, na který jsou promítány.
+--
+
+Hard shadows / "ostré" stíny::
+Rozlišují jen, zda je bod osvětlený nebo ne. Neřeší se, jak moc je osvětlený. Týká se bodových světel.
++
+image:./img/vph01_hard_shadows.png[width=30%]
+image:./img/vph01_hard_shadows_schema.png[width=69%]
+
+Soft shadows / "měkké" stíny::
+Rozlišují i částečně osvětlené oblasti. Týká se světel, která mají plochu.
++
+image:./img/vph01_soft_shadows.png[width=30%]
+image:./img/vph01_soft_shadows_schema.png[width=69%]
+
+Planar shadows::
+Vykreslí objekt ještě jednou projektovaný na danou plochu.
++
+--
+* Použitelné na velké plochy jako je rovná podlaha či stěny.
+* Blinn (1988)
+* Jednoduché a rychlé.
+* Nedá se použít na sebevržené stíny, stíny vržené na jiné objekty, kulaté plochy, atd.
+--
+
+Fake shadows and Projective textures::
+Použitelné pro velice málo velmi velkých dopadových objektů.
++
+1. Vyrenderuj objekt černobíle z pohledu světla a ulož do textury.
+2. Projektuj tuhle texturu na *každý* objekt, na který má dopadat stín.
+
+Shadow maps::
+Renderuje scénu z pohledu světla, ale ukládá si do textury jen hloubku. Při vykreslování scény z pohledu kamery sampleuje texturu a porovnává vzdálenost od světla s hloubkou v textuře. Pokud je větší, je bod ve stínu.
++
+image::./img/vph01_shadow_maps.png[width=500rem]
++
+IMPORTANT: Shadow mapám se důkladně věnuje otázka link:../renderovani-s-vyuzitim-gpu/[Renderování s využitím GPU]
+
+Shadow volumes::
+Počítá stíny ve 3D. Shadow volume explicitně popisuje objem prostoru ve stínu nějakého polygonu.
++
+1. Pro každý shadow caster, vyrob shadow volume.
+2. Pro každý fragment, počítej do kolika objemů paprsek z kamery do fragmentu vstoupí (+1) a z kolika vystoupí (-1). Pokud je výsledek > 0, pak je fragment ve stínu, pokud je 0 tak je osvětlený.
++
+image::./img/vph01_shadow_volumes.png[width=500rem]
++
+Prakticky se používá Stencil Buffer Algorithm, kdy renderujeme pro každý objekt nejprve front faces a pak back faces. Tenhle přístup je problematický, pokud je kamera ve stínu, ale řešitelný pokud obrátíme pořádí objektů -- jdeme od nekonečna ke kameře (Z-fail, Carmack's reverse).
+
+Soft shadows::
+Existuje množství algoritmů. Například shadow mapy s Percentage Closer Filtering (PCF). Jsou ale výpočetně náročnější než hard shadows. 
+
+[bibliography]
+== Zdroje
+
+* [[[pa010-2021,1]]] Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)

@@ -1,0 +1,12 @@
+= Techniky dělení prostoru a scény
+:url: ./deleni_prostoru_a_sceny/
+:page-group: pgv
+:page-order: PGV05
+
+[NOTE]
+====
+Datové struktury (oct-, quad-, BSP-, k-d stromy), jejich konstrukce a údržba, používané heuristiky. Objemem ohraničující tělesa a jejich hierarchie, způsob konstrukce a použití. Detekce kolizí, vykreslování.
+
+_MA017, PA010, PA213_
+====
+

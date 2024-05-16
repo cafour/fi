@@ -1,0 +1,12 @@
+Geometrické algoritmy
+:url: ./geometricke_algoritmy/
+:page-group: pgv
+:page-order: PGV04
+
+[NOTE]
+====
+Konvexní obaly, konstrukce ve 2D a 3D. Voroného diagramy, Delaunayova triangulace, dualita, triangulace, triangulace s omezením. Prostorové vyhledávání (datové struktury, algoritmy).
+
+_MA017, PA093_
+====
+

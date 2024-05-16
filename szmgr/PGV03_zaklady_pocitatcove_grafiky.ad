@@ -1,0 +1,12 @@
+= Základy počítačové grafiky
+:url: ./zaklady_pocitatcove_grafiky/
+:page-group: pgv
+:page-order: PGV03
+
+[NOTE]
+====
+OpenGL blokový diagram, GLSL – vertex a fragment shader. Vytvoření GLSL programu. Základní typy vstupních a výstupních proměnných. Druhy grafických primitiv. Vertex Buffer Objects a Vertex Array Objects. Princip rasterizace, framebuffer. Textury: mapování, filtrování, syntéza.
+
+_PB009, PA010, PV112, PV227_
+====
+

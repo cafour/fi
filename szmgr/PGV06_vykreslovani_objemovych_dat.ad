@@ -1,0 +1,141 @@
+= Vykreslování objemových dat
+:url: ./vykreslovani_objemovych_dat/
+:page-group: pgv
+:page-order: PGV06
+
+[NOTE]
+====
+Rekonstrukce povrchu - kontury, objem, bodový mrak. Algoritmus pochodujících kostek. Přímé vykreslování objemových dat.
+
+_PB009, PA010, PA213_
+====
+
+Voxel::
+Voxel je 3D analogií pixelu -- bod v prostoru, který má určitou hodnotu (např. barvu, intenzitu, ...). Voxelová data mohou být získána (např. pomocí CT, MRI, PET, atd.) nebo být také výsledkem simulace (např. simulace proudění tekutin).
+
+Objemová data::
++
+Objemová data jsou definována nejčastěji jako mřížka voxelů.
++
+Při renderování objemů je třeba vyřešit několik souvisejících problémů s daty:
++
+--
+* Data s neuniformním vzorkem.
+* Chybějící data.
+* Šum a outlieři.
+--
++
+Kromě pozic mohou surová data obsahovat také normály, barvy, apod.
+
+== Bodový mrak (point cloud)
+
+Množina bodů v prostoru, které nemají žádnou strukturu. Nejjednodušší přístup k renderování objemu, kdy se nepokoušíme o žádnou rekonstrukci povrchu. Body však mohou mít různé barvy a průhlednost.
+
+== Rekonstrukce povrchu
+
+Ze získaných dat se snažíme vytvořit mesh. Ten lze vyrenderovat tradičním způsobem.
+
+Marching cubes::
+Rozděluje prostor na mřížku voxelů. V každém voxelu se pak vyhodnocuje, zda je povrch objektu překročen. Pokud ano, je třeba přidat triangle mesh pro daný voxel. <<pa010-2020>> <<marching-cubes>>
++
+.Marching cubes by link:https://commons.wikimedia.org/wiki/File:MarchingCubesEdit.svg[Ryoshoru]
+image::./img/vph01_marching_cubes.svg[width=500rem]
+
+Marching tetrahedra::
+Analogický k marching cubes, ale používá místo krychlí čtyřstěny. Řeší problém s některými nejednoznačnými konfiguracemi v marching cubes, a taky nikdy nebyl patentován (kdežto marching cubes ano). <<marching-tetrahedra>>
+
+Vertex clustering::
+Metoda podobná _iterative decimation_ (viz výše), nejprve vytvoříme clustery bodů, poté pro každý vybereme vhodného reprezentanta (např. průměrem, mediánem, quadric error minimization, atd.), pak už jen zbývá mesh "sešít" např. pomocí triangulace. <<pa010-2020>>
+
+Dual contouring::
+Z voxelů se stanou vrcholy (tedy využíváme dualního grafu). Tyto vrcholy jsou ale posunuty tak, že povrch může obsahovat jak ostré hrany tak zaoblené plochy. <<dual-contouring>>
+
+Delaunay triangulation::
+Vytváří trojúhelníkovou síť, tak že žádný bod se nenáchází ve vepsané kružnici žádného trojúhelníku. Maximalizuje nejmenší úhel trojúhelníků. <<delaunay-triangulation>>
++
+image::./img/vph01_delaunay.svg[width=300]
+
+== Direct volume rendering (přímé renderování objemu)
+
+Nerekonstruujeme povrch, ale mapujeme data na _optické_ vlastnosti jako je barva a průhlednost. Během renderování se pak využívá path tracing, a tyto vlastnosti se akumulují podél jednotlivých paprsků. <<gpugems>>
+
+V realitě tohle chování paprsku popisujeme integrály. V počítačové grafice se ale využívá aproximace pomocí sumy.
+
+.The Process of Volume Rendering <<gpugems>>
+image::./img/vph01_direct_volume_rendering.jpg[width=500rem]
+
+Emmission-absorption model::
+Paprsek vstupuje do objemu, kde je absorbován a emitován. Výsledná barva je pak výsledkem akumulace těchto vlastností. V notaci používáme: <<pa213>>
++
+--
+* stem:[\kappa] je funkce absorpce,
+* stem:[q] je emise.
+--
+
+Optická hloubka / optical depth::
+Bezrozměrná veličina stem:[\tau], která popisuje, jak moc jde "vidět skrz" něco, třeba plyn. Čím větší, tím méně vidíme.
++
+Z jiné perspektivy je to akumulovaná absorpce na paprsku. Optická hloubka mezi dvěma body stem:[s_1] a stem:[s_2] na paprsku je dána jako:
++
+[stem]
+++++
+\tau(s_1, s_2) = \int_{s_1}^{s_2} \kappa(s) ds
+++++
+
+Průhlednost / transparency::
+Průhlednost popisuje, jak dobře vidíme skrz objem. Upadá exponenciálně s růstem optické hloubky.
++
+Průhlednost mezi dvěma body stem:[s_1] a stem:[s_2] na paprsku je dána jako:
++
+[stem]
+++++
+\theta(s_1, s_2) = e^{-\tau(s_1, s_2)}
+++++
+
+Volume rendering integral::
+Intenzitu světla stem:[I] v místě paprsku stem:[s] počítáme pomocí: <<pa213>>
++
+[stem]
+++++
+\begin{aligned}
+
+I(s) &= I(s_0) \cdot \theta(s_0, s) + \int_{s_0}^s q(s') \cdot \theta(s', s) ds' \\
+
+&= I(s_0) \cdot e^{-\tau(s_0, s)} + \int_{s_0}^s q(s') \cdot e^{-\tau(s', s)} ds'
+
+\end{aligned}
+++++
++
+kde:
++
+--
+* stem:[s_0] je místo, kde se paprsek dostal dovnitř nějakého světlo-vyzařujícího objemu,
+* stem:[I(s_0)] je boundary light, tedy světlo na hranici objemu,
+* stem:[q(s')] je emise v bodě stem:[s'].
+--
++
+image::./img/vph01_emission_absorption_model.png[width=500]
+
+Back-to-front::
+Přístup k počítání stem:[I], kdy paprsky vyhodnocujeme od hranice objemu *dále* od kamery směrem *ke kaměře*.
++
+Výhoda je, že nemusíme udržovat proměnnou pro průhlednost. Nevyhoda je, že musíme vyhodnotit všechny voxely v cestě paprsku, protože "přepisují" výsledek.
+
+Front-to-back::
+Přístup k počítání stem:[I], kdy paprsky vyhodnocujeme od hranice objemu *blíže* ke kameře směrem *od kamery*.
++
+Dá se utnout dřív, když víme jistě, že už je výsledek neprůhledný a tedy už se nic nezmění.
+
+Transfer function::
+Funkce stem:[T], která mapuje hodnoty voxelů na barvu a průhlednost. Klasifikuje voxely. <<pa213>>
+
+[bibliography]
+== Zdroje
+
+* [[[pa010-2020,1]]] Sochor: PA010 Intermediate Computer Graphics (podzim 2020)
+* [[[pa213, 2]]] PA213 Advanced Computer Graphics
+* [[[marching-cubes,3]]] link:https://dl.acm.org/doi/10.1145/37402.37422[Marching cubes: A high resolution 3D surface construction algorithm]
+* [[[marching-tetrahedra,4]]] link:https://en.wikipedia.org/wiki/Marching_tetrahedra[Wikipedia: Marching tetrahedra]
+* [[[dual-contouring,5]]] link:https://www.boristhebrave.com/2018/04/15/dual-contouring-tutorial/[Dual Contouring Tutorial]
+* [[[delaunay-triangulation,6]]] link:https://en.wikipedia.org/wiki/Delaunay_triangulation[Wikipedia: Delaunay triangulation]
+* [[[gpugems,7]]] link:https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-39-volume-rendering-techniques[GPU Gems: Volume Rendering Techniques]

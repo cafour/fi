@@ -1,0 +1,162 @@
+= Lokální a globální modely osvětlení
+:url: ./modely_osvetleni/
+:page-group: pgv
+:page-order: PGV07
+
+[NOTE]
+====
+Blinn-Phongův osvětlovací model, BRDF, sledování paprsků, radiosita, fotonové mapy, participující média. Vykreslování založené na fyzikálních modelech (PBR). Osvětlení založené na obrázku (IBL).
+
+_PB009, PV227, PA010, PA213_
+====
+
+Lokální osvětlení (local illumination) / direct lighting::
+Berou v úvahu jen světlo, které dopadá přímo na daný bod/objekt. Neřeší okolní objekty, ani nepřímé osvětlení. Je založený na empirických znalostech o chování světla, spíš než simulaci fyzikálních zákonů.
++
+Patří sem Blinn-Phong, pomineme-li jeho ambientní složku.
+
+Globální osvětlení (global illumination)::
+Řeší nejen přímé osvětlení, ale i odrazy, lomy, průhlednost, stíny, atd.
+
+Ambient illumination::
+Aproximace globálního osvětlení pomocí konstantní ambientní barvy.
+
+Ray tracing::
+Metoda, kdy simulujeme paprsky světla vycházející ze zdroje světla a dopadající na scénu. Používá se jak k lokální tak globální iluminaci. Počítáme však jen to, co vidí kamera, jelikož posíláme paprsky skrze pixely. Pokud se kamera pohne, musíme znovu paprsky zpravidla počítat znovu.
+
+Radiosity (metoda osvětlení)::
+Metoda, kdy scénu rozdělíme na segmenty a simulujeme "přelévání" světla mezi segmenty. Je vypočetně náročné, ale nezávisí na pozici a směru kamery.
+
+== Physically based rendering (PBR)
+
+Physically based rendering (PBR) je způsob renderování, který se snaží co nejvíce aproximovat realitu pomocí fyzikálních modelů světla, stínů, materiálů, očí, atd. <<pv227-2022>> Aproximuje efekty jako absorpci světla nebo jeho rozptyl pod povrchem objektů.
+
+Absorption and scattering / absorpce a rozptyl::
+Materiály mohou světlo buď absorbovat (v takovém případě jsou alespoň částěčně průhledné) nebo odrážet a rozptylovat (objekty jsou matné). Většina materiálů kombinuje oba efekty. Světlo se může rozpylovat i pod povrchem (subsurface scattering).
+
+Reflection / odraz světla::
+V nejjednodušším případě se úhel odrazu rovná úhlu dopadu. V realitě úhel odrazu však záleží na mnoha faktorech jako je i vlnová délka světla. Toto chování popisují Fresnelovy rovnice. Znamená to, že odraz má barvu. V praxi používáme Schlickovu aproximaci:
++
+[stem]
+++++
+F_\text{Schlick}(F_0, L, N) = F_0 + (1 - F_0) \cdot (1 - L \cdot N)^5
+++++
++
+kde:
++
+--
+* stem:[F_0] je Fresnelův odraz při úhlu 0 (dá se dohledat pro daný materiál),
+* stem:[L] je vektor směru světla,
+* stem:[N] je vektor normály povrchu.
+--
++
+.Z určitého úhlu se povrchy, které normálně světlo odráží špatně, jeví jako zrcadla (link:https://commons.wikimedia.org/w/index.php?curid=2138545[tanakawho])
+image::./img/vph01_fresnel.jpg[width=300]
+
+Refraction / lom světla::
+Kovy světlo absorbují, v homogenních materiálech (např. sklo) pokračuje v jiném směru, a v heterogenních materiálech (např. kůži) se světlo rozptýlí a pak absorbuje. Lom světla popisuje Snellův zákon:
++
+[stem]
+++++
+\frac{\sin \alpha_1}{\sin \alpha_2} = \frac{v_1}{v_2} = \frac{n_2}{n_1}
+++++
++
+kde:
++
+* stem:[\alpha_1] je úhel dopadu (angle of incidence),
+* stem:[\alpha_2] je úhel lomu (angle of refraction),
+* stem:[v_1] je rychlost šíření vlnění ve vnějším prostředí,
+* stem:[v_2] je rychlost šíření vlnění v prostředí objektu,
+* stem:[n_1] je index lomu vnějšího prostředí,
+* stem:[n_2] je index lomu prostředí objektu.
++
+image::./img/vph01_snell.svg[width=500rem]
+
+Diffuse lighting::
+Když všechno (neabsorbované) světlo opustí objekt ze stejného místa, kam dopadlo.
++
+image::./img/vph01_diffuse.png[width=500rem]
+
+Subsurface scattering::
+Když neabsorbované světlo opustí objekt z jiného místa, než kam dopadlo.
++
+image::./img/vph01_subsurface_scattering.png[width=500rem]
+
+Microfacets / mikro-plošky::
+Ne všechny objekty jsou ploché. Většina má nerovnosti, které jsou menší než pixel, ale větší než vlnová délka dopadajícího světla, proto je modelujeme nějakou pravděpodobností distribucí (např. Gaussovou).
++
+image::./img/vph01_microfacets.png[width=500rem]
++
+Existuje řada modelů chování microfacet, např. Cook-Torrance, Oren-Nayar, Ashnikmin-Shirley, Normalized Blinn-Phong, atd.
+
+Geometrická atenuace::
+Postupná ztráta "intenzity" paprsku v důsledku geometrie objektu.
++
+* *Shadowing* -- facety zastiňují jiné facety.
+* *Masking* -- facet nejde vidět, protože ho zastiňuje jiný facet.
+* *Interreflection* -- světlo se odráží mezi facety, než je odraženo zpátky ke kameře.
+
+=== Fyzikální věličiny radiometrie
+
+Radiant energy / energie záření (Q)::
+"Energy per one photon."
++
+Jednotka: Joule (J)
+
+Radiant flux, radiant power / zářivý tok (stem:[\Phi])::
+"Energy per second." Bezva na popisování síly světel jako jsou žárovky, plošná světla, atd.
++
+[stem]
+++++
+\Phi = \frac{\partial Q}{\partial t}
+++++
++
+Jednotka: Watt (W) = J/s
+
+Irradiance / ozářenost, ozáření (E)::
+"Flux through area." Světlo dopadající na jednotku plochy. Kvadraticky se zmenšuje s rostoucí vzdáleností od zdroje. Bezva na popis vzdálených zdrojů jako je slunce.
++
+[stem]
+++++
+E = \frac{\partial \Phi}{\partial A}
+++++
++
+Jednotka: Watt per square meter (stem:[\frac{W}{m^2}])
+
+Radiosity / radiozita (radiometrická veličina) (J)::
+Jako irradiance, ale je to světlo _vycházející_ z jednotky plochy.
+
+Radiance / zář (L)::
+"Flux through a cone of directions from an area." a nebo "Flux through an area from a cone of directions." Nezmenšuje se se zvětšující se vzdáleností od zdroje. Tohle měří senzory.
++
+[stem]
+++++
+L = \frac{\partial^2 \Phi}{\partial A_\text{proj} \partial \omega}
+++++
++
+Jednotka: Watt per square meter per steradian (stem:[\frac{W}{m^2 \cdot sr}])
+
+=== Bidirectional Reflectance Distribution Function (BRDF)
+
+Funkce popisující poměr mezi dopajícím a odraženým světlem na povrchu objektu.
+
+[stem]
+++++
+f(\vec{l}, \vec{v}) = \frac{\partial L_o(\vec{v})}{\partial E_i(\vec{l})}
+++++
+
+_Povrch je nasvícen ze směru stem:[\vec{l}] s ozářením stem:[\partial E(\vec{l})]. stem:[\partial(L_o(\vec{v}))] je odražená zář ve směru stem:[\vec{v}]._
+
+[TIP]
+--
+Udává pravděpodobnost, že světlo dopadající na povrch ze směru stem:[\vec{l}] bude odraženo ve směru stem:[\vec{v}].
+
+Z pohledu teorie pravděpodobnosti / statistiky to ale není distribuční funkce ale spíš hustota pravděpodobnosti.
+--
+
+BRDF je řešena pomocí ray tracingu, radiosity, nebo nějakým hybridním řešením.
+
+[bibliography]
+== Zdroje
+
+* [[[pv227-2022, 1]]] link:https://is.muni.cz/auth/el/fi/podzim2022/PV227/[PV227 GPU Rendering (podzim 2022)]

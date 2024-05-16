@@ -1,0 +1,12 @@
+= Metody vizualizace
+:url: ./metody_vizualizace/
+:page-group: pgv
+:page-order: PGV02
+
+[NOTE]
+====
+Vizualizace multidimenzionálních dat – scatterplot matrix, paralelní souřadnice, skládání dimenzí. Vizualizace hierarchických struktur – treemaps, radiální techniky. Základní třídy interakčních technik, techniky používané v prostoru obrazovky, objektu, dat, datových struktur.
+
+_PV251, PA214_
+====
+
