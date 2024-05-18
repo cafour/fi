@@ -5,7 +5,7 @@
 
 [NOTE]
 ====
-Strojové učení a rozpoznávání vzorů: problém klasifikace a regrese, shluková analýza, učení s učitelem a bez učitele. Vícevrstvé neuronové sítě, vícevrstvé perceptrony, ztrátové funkce, zpětná propagace. Hopfieldova síť, konvoluční sítě, rekurentní sítě, samo-organizující mapy.
+Strojové učení a rozpoznávání vzorů: problém klasifikace a regrese, shluková analýza, učení s učitelem a bez učitele. Vícevrstvé neuronové sítě, vícevrstvé perceptrony, ztrátové funkce, zpětná propagace. pass:[<s>Hopfieldova síť, </s>]konvoluční sítě, rekurentní sítěpass:[<s>, samo-organizující mapy</s>].
 
 _PV021_
 ====
@@ -310,6 +310,8 @@ WARNING: V případě, že stem:[E] není squared error, následující výpoče
 
 ====
 
+////
+
 == Hopfieldova síť
 
 Rekurentní neuronová síť s modelem "asociativní" paměti, která modeluje tu lidskou. Je to forma strojového učení bez učitele. <<hopfield>> "Asociativní" znamená, že proces vybavení si informace probíhá na základě její částečné znalosti spíš než hledání v paměti podle adresy.
@@ -384,6 +386,7 @@ w_{ij} = \frac{1}{n} \sum_{\mu=1}^n \epsilon_i^\mu \epsilon_j^\mu
 ++++
 --
 
+////
 
 == Konvoluční sítě
 
@@ -558,6 +561,8 @@ image::./img/szp06_lstm.png[width=100%]
 
 --
 
+////
+
 == Samo-organizující mapy / self-organizing maps (SOM) / Kohonenova síť
 
 Metoda unsupervised learningu určená primárně k vizualizaci vysoce dimenzionálních dat. Využívá se například pro shlukovou analýzu.
@@ -587,6 +592,8 @@ Běh SOM vypadá takto: <<som-tutorial>>
 --
 +
 Po skončení learningu obsahují vahy Kohenenových neuronů informaci o shlucích dat ve vstupu.
+
+////
 
 
 [bibliography]

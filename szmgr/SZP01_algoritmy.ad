@@ -147,6 +147,16 @@ Procházíme věci postupně přes index stem:[i] a pro každou řešíme, jestl
 
 === Hladové (greedy) strategie
 
+[quote]
+____
+Přijde Honza na pracovní pohovor a budoucí šéf se ho ptá: "Co je vaše dobrá schopnost?"
+Honza odpoví: "Umím rychle počítat."
+"Kolik je 1024 na druhou?"
+"MILION STO TISÍC," vyhrkne ze sebe Honza.
+Šéf se chvíli zamyslí a povídá: "Ale to je špatně, výsledek je 1048576!"
+A Honza na to: "No sice špatně, ale sakra rychle!"
+____
+
 Greedy algoritmy nachází řešení globálního problému tak, že volí lokálně optimální řešení. Tahle taktika nemusí vést ke globálně optimálnímu řešení, ale alespoň ho spočítá rychle.
 
 --
