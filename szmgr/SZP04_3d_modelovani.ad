@@ -5,7 +5,7 @@
 
 [NOTE]
 ====
-Mnohoúhelníkové a trojúhelníkové sítě: datové struktury, modelování, pass:[<s>filtrování</s>], změna struktury sítě, **zjednodušování sítě**. Implicitní reprezentace a modelování **(SDF, CSG, B-Rep)**.
+Mnohoúhelníkové a trojúhelníkové sítě: datové struktury, modelování, pass:[<s>filtrování</s>], změna struktury sítě, **zjednodušování sítě**. Implicitní **a parametrické** reprezentace a modelování **(SDF, CSG, B-Rep)**.
 
 _PA010_
 ====
