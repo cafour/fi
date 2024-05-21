@@ -216,10 +216,10 @@ Naše data vypadají takto:
 ```
 Buffer 1:
 
-Vertex 1     Vertex 2           Vertex 1     Vertex 2
-+---+---+---++---+---+---+      +---+---+---++---+---+---+
-| X | Y | Z || X | Y | Z | ...  | R | G | B || R | G | B | ...
-+---+---+---++---+---+---+      +---+---+---++---+---+---+
+Vertex 1     Vertex 2           Vertex n     Vertex 1     Vertex 2
++---+---+---++---+---+---+      +---+---+---++---+---+---++---+---+---+
+| X | Y | Z || X | Y | Z | ...  | X | Y | Z || R | G | B || R | G | B | ...
++---+---+---++---+---+---+      +---+---+---++---+---+---++---+---+---+
 
 Buffer 2:
 
@@ -239,7 +239,7 @@ Pak chceme napojit naši strukturu na VBO takto:
 
 - Binding 1
     - Buffer: &buffer1
-    - Offset: 3 * sizeof(float) * numVertices
+    - Offset: 3 * sizeof(float) * n (number of vertices)
     - Stride: 3 * sizeof(float)
 
 - Binding 2
@@ -386,6 +386,11 @@ Výhodami syntetizovaných textur je:
 - dobrá návaznost na hranách geometrie, pokud syntetizujeme 3D texturu
 - parametrizovatelnost
 
+[NOTE]
+====
+Není na první pohled jasné, co je zamýšleno pod pojmem "syntéza textur". Pravděpodobně jsou myšleny popsané techniky generování textur pomocí shaderů. Jak ale podotknul Honza Byška, syntéza textur z definice popisuje proces vytváření velké textury z malých fragmentů jiných textur (listnatou louku z jednotlivých listů, kamenou dlažbu z kamenů, ...). Pro více informací koukněte na <<synthesis1>> a <<synthesis2>>.
+====
+
 
 [bibliography]
 == Zdroje
@@ -393,3 +398,5 @@ Výhodami syntetizovaných textur je:
 * [[[pv112,1]]] Byška: PV112 Computer Graphics API
 * [[[pb009,2]]] Byška: PB009 Principles of Computer Graphics
 * [[[glsl_tutorial,3]]] https://cgvr.cs.uni-bremen.de/teaching/cg2_07/literatur/glsl_tutorial/index.html
+* [[[synthesis1,4]]] https://en.wikipedia.org/wiki/Texture_synthesis
+* [[[synthesis2,5]]] https://diglib.eg.org:8443/server/api/core/bitstreams/90ad4c13-45b1-4ec0-8ef2-76075b2c73ae/content
