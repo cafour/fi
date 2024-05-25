@@ -18,15 +18,13 @@ Většina obsahu převzata z původní otázky VPH01 Pokročilá počítačová 
 == Bodový mrak (point cloud)
 
 Množina bodů v prostoru, které nemají žádnou strukturu. Nejjednodušší přístup k renderování objemu, kdy se nepokoušíme o žádnou rekonstrukci povrchu. Body však mohou mít různé barvy a průhlednost.
-+
+
 Při renderování bodových mraků je třeba vyřešit několik souvisejících problémů s daty:
-+
---
+
 * Data s neuniformním vzorkem.
 * Chybějící data.
 * Šum a outlieři.
---
-+
+
 Kromě pozic mohou surová data obsahovat také normály, barvy, apod.
 
 === Vykreslování bodových mraků
