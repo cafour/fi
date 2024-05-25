@@ -32,6 +32,7 @@ Kromě pozic mohou surová data obsahovat také normály, barvy, apod.
 Ze získaných dat se snažíme vytvořit mesh. Ten lze vyrenderovat tradičním způsobem.
 
 Před samotnou rekonstrukcí je často potřeba provézt ještě předzpracování:
+
 * Registration - spojení dat z více pohledů dohromady
 * Filtering - odstranění šumu a outlierů
 * Segmentation - rozdělení objektů na jednotlivé části
