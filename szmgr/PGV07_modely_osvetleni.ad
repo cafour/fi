@@ -21,11 +21,118 @@ Globální osvětlení (global illumination)::
 Ambient illumination::
 Aproximace globálního osvětlení pomocí konstantní ambientní barvy.
 
-Ray tracing::
+== Blinn-Phongův osvětlovací model
+
+Blinn-Phongův osvětlovací model je velice jednoduchý model osvětlení, který se skládá ze tří složek: ambientní, difuzní a spekulární. <<pb009-io>>
+
+image::./img/pgv07_phong_overview.png[width=600]
+
+=== Ambientní osvětlení
+
+Ambientní světlo dopadá na celý povrch rovnoměrně nerávisle na jeho pozici a orientaci. Pokud vykreslíme pouze ambient, dostáváme siluetu objektu.
+
+image:./img/pgv07_phong_ambient1.png[width=300]
+image:./img/pgv07_phong_ambient2.png[width=200]
+
+=== Difuzní osvětlení
+
+Difuzní osvětlení je závislé na úhlu stem:[\alpha] mezi normálou povrchu a vektorem ke světlu (ne na pozici kamery). Čím více je objekt kolmý na světlo, tím je v daném bodě jasnější (tím více světla absorbuje).
+
+image::./img/pgv07_phong_diffuse1.png[width=600]
+image:./img/pgv07_phong_diffuse2.png[width=500]
+image:./img/pgv07_phong_diffuse3.png[width=300]
+
+=== Spekulární osvětlení
+
+Spekulární osvětlení vytváří odlesky na povrchu objektu. Je závislé na úhlu stem:[\beta] mezi vektorem ke světlu a vektorem ke kameře.
+
+image::./img/pgv07_phong_specular1.png[width=600]
+image:./img/pgv07_phong_specular2.png[width=500]
+image:./img/pgv07_phong_specular3.png[width=300]
+
+=== Všechno dohromady
+
+Pokud spojíme dohromady ambientní složku a pro každé světlo i difuzní a spekulární složku, dostaneme výslednou barvu pixelu.
+
+stem:[C=A+\sum_{i=1}^{n} (D_i + S_i)]
+
+A pokud dosadíme i konkrétní vzorce dostaneme následující rovnici:
+
+image::./img/pgv07_phong_equation.png[width=600]
+
+Uvedené podmínky jsou v rovnici pro odstranění odlesků na zadní straně objektu.
+
+
+== Bidirectional Reflectance Distribution Function (BRDF)
+
+Funkce popisující poměr mezi dopajícím a odraženým světlem na povrchu objektu.
+
+[stem]
+++++
+f(\vec{l}, \vec{v}) = \frac{\partial L_o(\vec{v})}{\partial E_i(\vec{l})}
+++++
+
+_Povrch je nasvícen ze směru stem:[\vec{l}] s ozářením stem:[\partial E(\vec{l})]. stem:[\partial(L_o(\vec{v}))] je odražená zář ve směru stem:[\vec{v}]._
+
+[TIP]
+--
+Udává pravděpodobnost, že světlo dopadající na povrch ze směru stem:[\vec{l}] bude odraženo ve směru stem:[\vec{v}].
+
+Z pohledu teorie pravděpodobnosti / statistiky to ale není distribuční funkce ale spíš hustota pravděpodobnosti.
+--
+
+BRDF je řešena pomocí ray tracingu, radiosity, nebo nějakým hybridním řešením.
+
+
+== Ray tracing (sledování paprsků)
 Metoda, kdy simulujeme paprsky světla vycházející ze zdroje světla a dopadající na scénu. Používá se jak k lokální tak globální iluminaci. Počítáme však jen to, co vidí kamera, jelikož posíláme paprsky skrze pixely. Pokud se kamera pohne, musíme znovu paprsky zpravidla počítat znovu.
 
-Radiosity (metoda osvětlení)::
-Metoda, kdy scénu rozdělíme na segmenty a simulujeme "přelévání" světla mezi segmenty. Je vypočetně náročné, ale nezávisí na pozici a směru kamery.
+Obecný postup:
+
+1. Vystřelíme paprsek z kamery do scény (_primary ray_).
+2. Detekujeme kolizi s objektem ve scéně.
+3. V daném bodě vystřelíme paprsky ke každému světlu ve scéně (_shadow ray_).
+4. Pro každý paprsek zjistíme, jestli protnul nějaký objekt (stín), nebo ne (spočítáme osvětlení, např. pomocí Blinn-Phonga a připočteme ho k akumulovanému světlu, co už máme).
+5. Z bodu vystřelíme odražený a refraktovaný paprsek (_secondary rays_) a rekurzivně pokračujeme od bodu 2.
+
+image::./img/pgv07_raytracing.png[width=500]
+
+Typicky se pro realističnost hodnoty po prvním odražení zmenšují. Využívá se k tomu tzv. Fresnel-Schlickova aproximace (viz. dál).
+
+Snellův zákon::
+Když světlo přechází z jednoho prostředí do druhého, mění se jeho rychlost a tím i směr. Snellův zákon popisuje, jak se mění úhel světla při průchodu mezi dvěma prostředími.
++
+Index refrakce stem:[n] je poměr rychlosti světla ve vakuu a rychlosti světla v daném prostředí. Pro vzduch je to 1, pro vodu 1.33, pro sklo 1.5, atd.
++
+stem:[frac{\sin \alpha'}{\sin \alpha} = \frac{n_1}{n_2}]
++
+image::./img/pgv07_snell.png[width=300]
+
+== Radiosity (metoda osvětlení)
+Metoda, kdy scénu rozdělíme na malé segmenty plochy a simulujeme "přelévání" světla mezi segmenty. Je vypočetně náročné, ale nezávisí na pozici a směru kamery. Počítáme pouze difuzní osvětlení. Řešíme pomocí soustavy lineárních rovnic iterativně (např. Gauss-Seidel).
+
+stem:[KB = E]
+
+Vytvoříme matici stem:[K], kde stem:[K_{ij}] je množství světla, které se přelilo z segmentu stem:[i] do segmentu stem:[j] (form faktor stem:[K_{ij} = F_{ij}]). Zároveň máme vektor stem:[E], který určuje emitované světlo v každém segmentu. Výsledný vektor stem:[B] je vektor světla v každém segmentu.
+
+Výhodou je, že se dá použít pro scény, kde se pohybuje kamera bez nutnosti přepočítávat. Zároveň funguje pro plošné světelné zdroje. Nevýhodou je obrovská paměťová náročnost a složitost výpočtu. Zároveň vypočítáváme pouze difuzní osvětlení.
+
+image::./img/pgv07_radiosity.png[width=500]
+
+
+== Fotonové mapy
+
+Fotonová mapa je kombinace dvou předchozích metod: ray tracing a radiosity. Nejprve trasujeme fotony od světla (náhodný směr, součet energií by měl odpovídat energii světla) na objekty ve scéně a ukládáme informace o dopadu (_radiosity map_). Poté trasujeme paprsky od kamery, pro každý paprsek hledáme nejbližší foton a podle něj určujeme barvu pixelu.
+
+Narozdíl od Raytracingu a Radiosity dokáže Photon maping simulovat i náročné efekty, jako je color bleed, nebo _caustics_ (efekt, kdy se svělo lomí typicky na hladině vody, nebo ve sklenici a vytváří místa s intenzivnějším a méně intenzivním světlem).
+
+image::./img/pgv07_photonmap.png[width=600]
+
+
+== Participující média
+
+Participující média jsou média, která nejsou zcela průhledná, ale nejsou ani zcela matná. Jsou to např. mlha, kouř, nebo atmosféra. Osvětlení v participujících médiích je založeno na tom, že světlo se rozptyluje a absorbuje. Výsledná barva je tedy kombinací barvy objektu a barvy média.
+
 
 == Physically based rendering (PBR)
 
@@ -89,6 +196,9 @@ image::./img/vph01_microfacets.png[width=500rem]
 +
 Existuje řada modelů chování microfacet, např. Cook-Torrance, Oren-Nayar, Ashnikmin-Shirley, Normalized Blinn-Phong, atd.
 
+Cook-Torrance model::
+Cook-Torrance je osvětlovací model založený na mikrofacetách. Materiál má jeden parametr, který určuje, jak moc je povrch hrubý (stem:[0 \leq m \leq 1]). 
+
 Geometrická atenuace::
 Postupná ztráta "intenzity" paprsku v důsledku geometrie objektu.
 +
@@ -136,27 +246,22 @@ L = \frac{\partial^2 \Phi}{\partial A_\text{proj} \partial \omega}
 +
 Jednotka: Watt per square meter per steradian (stem:[\frac{W}{m^2 \cdot sr}])
 
-=== Bidirectional Reflectance Distribution Function (BRDF)
 
-Funkce popisující poměr mezi dopajícím a odraženým světlem na povrchu objektu.
+== Image-based lighting (IBL)
 
-[stem]
-++++
-f(\vec{l}, \vec{v}) = \frac{\partial L_o(\vec{v})}{\partial E_i(\vec{l})}
-++++
+IBL využívá envitornmentálních textur (HDR CubeMap, ...) pro vyhodnocení světla z každého směru scény.
 
-_Povrch je nasvícen ze směru stem:[\vec{l}] s ozářením stem:[\partial E(\vec{l})]. stem:[\partial(L_o(\vec{v}))] je odražená zář ve směru stem:[\vec{v}]._
+Pro výpočet difuzního osvětlení musíme matematicky spočítat integrál nad celým povrchem sféry (hemisféry) okolo bodu, který chceme osvětlit a pro každý směr světla z envitornmentální textury spočítat osvětlení. V praxi to provedeme výpočtem několika vzorků a jejich průměrem.
 
-[TIP]
---
-Udává pravděpodobnost, že světlo dopadající na povrch ze směru stem:[\vec{l}] bude odraženo ve směru stem:[\vec{v}].
+Pro výpočet spekulárního osvětlení se používá zrcadlový vektor a Fresnelova rovnice. Chování materiálu popisuje Cook-Torrance model materiálu.
 
-Z pohledu teorie pravděpodobnosti / statistiky to ale není distribuční funkce ale spíš hustota pravděpodobnosti.
---
+image::./img/pgv07_ibr.png[width=600]
 
-BRDF je řešena pomocí ray tracingu, radiosity, nebo nějakým hybridním řešením.
+
+
 
 [bibliography]
 == Zdroje
 
 * [[[pv227-2022, 1]]] link:https://is.muni.cz/auth/el/fi/podzim2022/PV227/[PV227 GPU Rendering (podzim 2022)]
+* [[[pb009-io, 2]]] link:https://is.muni.cz/auth/el/fi/jaro2023/PB009/index.qwarp[Interaktivní osnova PB009 by xrosecky]
