@@ -249,6 +249,11 @@ Jednotka: Watt per square meter per steradian (stem:[\frac{W}{m^2 \cdot sr}])
 
 == Image-based lighting (IBL)
 
+[NOTE]
+====
+Tahle část otázky by si možná zasloužila rozšířit, ale bohužel tomu víc nerozumím :D 
+====
+
 IBL využívá envitornmentálních textur (HDR CubeMap, ...) pro vyhodnocení světla z každého směru scény.
 
 Pro výpočet difuzního osvětlení musíme matematicky spočítat integrál nad celým povrchem sféry (hemisféry) okolo bodu, který chceme osvětlit a pro každý směr světla z envitornmentální textury spočítat osvětlení. V praxi to provedeme výpočtem několika vzorků a jejich průměrem.
