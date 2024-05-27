@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1278 465" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g id="Artboard1" transform="matrix(1,0,0,1,-320.299,-285.067)">
+        <rect x="320.299" y="285.067" width="1277.6" height="464.286" style="fill:none;"/>
+        <g transform="matrix(1,0,0,1,95.3635,117.47)">
+            <rect x="264.935" y="251.169" width="342.857" height="342.857" style="fill:rgb(235,235,235);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,523.935,117.47)">
+            <rect x="264.935" y="251.169" width="342.857" height="342.857" style="fill:rgb(235,235,235);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,952.506,117.47)">
+            <rect x="264.935" y="251.169" width="342.857" height="342.857" style="fill:rgb(235,235,235);"/>
+        </g>
+        <g transform="matrix(0.449343,0,0,0.449343,200.883,196.06)">
+            <g transform="matrix(56.5671,0,0,56.5671,730.401,344.675)">
+            </g>
+            <text x="360px" y="344.675px" style="font-family:'IBMPlexSans-Regular', 'IBM Plex Sans';font-size:56.567px;">Lineární difuz<tspan x="699.346px " y="344.675px ">e</tspan></text>
+        </g>
+        <g transform="matrix(0.449343,0,0,0.449343,624.743,196.06)">
+            <g transform="matrix(56.5671,0,0,56.5671,1024.44,344.675)">
+            </g>
+            <text x="360px" y="344.675px" style="font-family:'IBMPlexSans-Regular', 'IBM Plex Sans';font-size:56.567px;">Nelineární iz<tspan x="674.174px " y="344.675px ">o</tspan>tr<tspan x="746.183px " y="344.675px ">o</tspan>pní difuz<tspan x="993.382px " y="344.675px ">e</tspan></text>
+        </g>
+        <g transform="matrix(0.449343,0,0,0.449343,1053.31,196.06)">
+            <g transform="matrix(56.5671,0,0,56.5671,1086.77,344.675)">
+            </g>
+            <text x="360px" y="344.675px" style="font-family:'IBMPlexSans-Regular', 'IBM Plex Sans';font-size:56.567px;">Nelineární aniz<tspan x="736.51px " y="344.675px ">o</tspan>tr<tspan x="808.52px " y="344.675px ">o</tspan>pní difuz<tspan x="1055.72px " y="344.675px ">e</tspan></text>
+        </g>
+        <g transform="matrix(1.55,0,0,1.55,-187.722,-262.584)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(1.55,0,0,1.55,255.769,-262.772)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(0.886667,0,0,0.886667,596.432,103.484)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(2.62667,0,0,2.62667,-165.787,-576.501)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(1.31417,0,0,1.31417,503.135,-156.494)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(2.21333,0,0,2.21333,158.679,-417.079)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(0.415001,0,0,0.415001,923.601,485.681)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(1.55,0,0,1.55,-166.029,-150.996)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(1.55,0,0,1.55,-190.091,-54.8738)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(1.55,0,0,1.55,-82.995,-217.369)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(1.05,0,0,1.44583,983.789,-202.511)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(-0.244515,0.597777,-2.65333,-1.08532,2629.45,891.543)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(3.3409,-1.00053,0.439182,1.46648,-105.257,279.827)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(1.5548,1.52092,-0.617693,0.631453,949.891,-449.53)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(-0.412839,1.01021,-1.45047,-0.592759,2295.79,502.737)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(-0.198731,0.753504,-0.397568,-0.104856,1552.83,285.606)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(1.22162,0.121765,-0.062813,0.630182,1034.44,100.299)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(1.55,0,0,1.55,9.59723,-262.584)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(1.55,0,0,1.55,-76.7404,-54.2936)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+        <g transform="matrix(1.55,0,0,1.55,12.257,-117.961)">
+            <circle cx="400.416" cy="450.649" r="24.935" style="fill:rgb(60,60,60);"/>
+        </g>
+    </g>
+</svg>
