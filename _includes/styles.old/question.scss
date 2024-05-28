@@ -77,6 +77,14 @@ html, body {
         main {
             padding: 0rem;
         }
+
+        .edit-link {
+            display: none !important;
+        }
+
+        footer {
+            display: none;
+        }
     }
     
     ol, ul {

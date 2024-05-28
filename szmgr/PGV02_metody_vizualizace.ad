@@ -20,7 +20,7 @@ Scatterplot matrix zobrazuje scatterplot pro každé dva zaznamenané parametry 
 
 Scatterplot je graf, který zobrazuje hodnoty dvou proměnných v souřadnicovém systému. Na diagonále jsou typicky zobrazeny histogramy jednotlivých proměnných, nebo jejich popis. Ve scatterplot matrixu je každý scatterplot zobrazený dvakrát, pouze překlopený podle hlavní diagonály.
 
-image::./img/pgv02_scatterplot_matrix.png[width=600]
+image::./img/pgv02_scatterplot_matrix.png[width=500]
 
 === Paralelní souřadnice
 
