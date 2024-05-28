@@ -14,6 +14,8 @@ groups:
     display: Společný základ programu
   - name: vph
     display: Vývoj počítačových her
+  - name: pgv
+    display: Počítačová grafika a vizualizace
   # - name: gd
   #   display: Grafický design
 nav:
@@ -41,3 +43,15 @@ nav:
       - href: VPH06_ai_ve_hrach.ad
       - href: VPH07_gpu_rendering.ad
       - href: VPH08_modelovani_3d_postav.ad
+  - title: Počítačová grafika a vizualizace
+    children:
+      - href: PGV01_zaklady_vizualizace.ad
+      - href: PGV02_metody_vizualizace.ad
+      - href: PGV03_zaklady_pocitatcove_grafiky.ad
+      - href: PGV04_geometricke_algoritmy.ad
+      - href: PGV05_deleni_prostoru_a_sceny.ad
+      - href: PGV06_vykreslovani_objemovych_dat.ad
+      - href: PGV07_modely_osvetleni.ad
+      - href: PGV08_real_time_rendering.ad
+      - href: PGV09_minimalizace_energie.ad
+      - href: PGV10_zpracovani_obrazu_pomoci_PDE.ad

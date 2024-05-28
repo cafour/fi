@@ -5,7 +5,7 @@
 
 [NOTE]
 ====
-Implicitní a parametrické reprezentace. Interpolace a aproximace. Cn, Gn spojitost, podmínky spojitosti pro po částech definované funkce. Bézierovy křivky, B-spline křivky, NURBS, Coonsovy křivky a pláty. Povrchy tvořené rekurzivním dělením polygonů.
+Implicitní a parametrické reprezentace. Interpolace a aproximace. Cn, Gn spojitost, podmínky spojitosti pro po částech definované funkce. Bézierovy křivky, B-spline křivky, pass:[<s>NURBS, </s>]Coonsovy pass:[<s>křivky a </s>]pláty. Povrchy tvořené rekurzivním dělením polygonů.
 
 _PB009, PA010_
 ====
@@ -491,6 +491,8 @@ image::./img/szp05_coons_basis.png[width=400]
 +
 NOTE: Něco ohledně tohohle termínu mi hrozně smrdí. Zdá se, že jediní, kdo používají "coons cubic curve" jsme my a ČVUT.
 
+////
+
 Coonsovy křivky / uniformní neracionální B-splajny::
 +
 --
@@ -539,6 +541,8 @@ Kuželosečky pomocí NURBS::
 Vahy umožňují NURBS vyjádřit kuželosečky (kruhy, elipsy, atd.).
 +
 image::./img/szp05_kuzelosecky.png[width=400]
+
+////
 
 == Povrchy
 
