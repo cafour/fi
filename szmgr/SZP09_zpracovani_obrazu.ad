@@ -159,7 +159,7 @@ Kumulativní histogram stem:[\mathbb{H}] bbsahuje množství pixelů s intenzito
 Vyrovnání histogramu / histogram equalization::
 Změna obrazu tak, aby jeho kumulativní histogram měl konkrétní tvar, obvykle aby byl lineární. <<histogram-eq>>
 +
-Typicky k tomu využíváme funkci stem:[f(x) = \text{cumhist}(x) \cdot \frac{a_{\text{max}}}{w \cdot h}], kde stem:[\text{cumhist}] je kumulativní histogram pro barvu v bodě x, step:[a_{\text{max}}] je maximální intenzita a stem:[w \times h] je velikost obrazu.
+Typicky k tomu využíváme funkci stem:[f(x) = \mathbb{H}[x\] \cdot \frac{a_{\text{max}}}{w \cdot h}], kde stem:[\text{cumhist}] je kumulativní histogram pro barvu v bodě x, stem:[a_{\text{max}}] je maximální intenzita a stem:[w \cdot h] je velikost obrazu.
 +
 ====
 
