@@ -824,6 +824,51 @@ Užitečná je především inverzní Radonova transformace, která se použív�
 
 image::./img/szp09_radon.png[width=100%]
 
+Mějme 3D objekt, který chceme "proskenovat" z různých úhlů stem:[\phi]. Pro každý úhel chceme získat 1D projekci objektu stem:[p(s, \phi)]. Tato projekce je dána integrálem funkce stem:[f(x, y)] přes přímku.
+
+Uvažme, že nejprve celý prostor otočíme o úhel stem:[\phi] a potom provedeme jednoduchou projekci všech bodů na této přímce.
+
+image::./img/szp09_radon_space.png[width=500]
+
+[stem]
+++++
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+=
+\begin{pmatrix}
+\cos \phi & -\sin \phi \\
+\sin \phi & \cos \phi
+\end{pmatrix}
+\begin{pmatrix}
+s \\
+u
+\end{pmatrix}
+
+\Rightarrow
+
+\begin{aligned}
+x = s \cos \phi - u \sin \phi \\
+y = s \sin \phi + u \cos \phi
+\end{aligned}
+++++
+
+[stem]
+++++
+\begin{aligned}
+p(s, \phi) &= \mathcal{R} \{ f(s, \phi) \} \\
+&= \int_{-\infty}^{\infty} f(x, y) du \\
+&= \int_{-\infty}^{\infty} f(s \cos \phi - u \sin \phi, s \sin \phi + u \cos \phi) du
+\end{aligned}
+++++
+
+Pokud vezmeme všechny hodnoty z této projekce, získáme tzv. Sinogram:
+
+image::./img/szp09_sinogram.png[width=300]
+
+Inverzní funkce je velice užitečná, ale poměrně složitá, takže doufám, že stačí tato obecná myšlenka.
+
 ---
 
 .Radon vs Hough
