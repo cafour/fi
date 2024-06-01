@@ -791,6 +791,11 @@ Matematicky vzato, k vysoké korelaci vlnky se signálem (vysokému korelačním
 
 == Houghova transformace
 
+[TIP]
+====
+Super link:https://www.youtube.com/watch?v=X1DxCPS1iwA[minutu a půl dlouhé video, co ti řekne úplně všechno].
+====
+
 Integrální transformace, která identifikuje přímky v obraze. V rozšířené podobě hledá libovolné tvary zadané parametricky. <<hough>>
 
 --
@@ -798,6 +803,17 @@ Integrální transformace, která identifikuje přímky v obraze. V rozšířen�
 * Pracuje nad binárním obrazem.
 * Mapuje tvar na bod v parametrickém prostoru.
 --
+
+Houghův prostor::
+Prostor je definován jednoduchou rovnicí stem:[x \cdot \cos (\theta) + y \cdot \sin (\theta) = \rho].
++
+Bod v prostoru obrázku je reprezentován jako křivka v Houghově prostoru. Bod v Houghově prostoru je reprezentován jako přímka v obrázku.
++
+image::./img/szp09_hough_space.png[width=600]
++
+Můžeme promítnout všechny body z obrázku do Houghova prostoru s intenzitou odpovídající intenzitě bodu v obrázku. Pak hledáme body v Houghově prostoru, které mají největší intenzitu. To jsou body, které reprezentují přímky v obrázku.
++
+image::./img/szp09_hough_transform.png[width=600]
 
 
 == Radonova transformace
