@@ -31,13 +31,20 @@ Oblast informatiky zabývající se manipulací s obrazy pomocí počítače. Ob
 * rozpoznávání textu -- _optical character recognition_ (OCR).
 --
 
+Klasifikace transformací::
+- Neměnící geometrii obrazu
+    * Bodové
+    * Lokální
+    * Globální
+- Geometrické
+
 == Bodové transformace
 
 Transformace hodnot pixelů *nezávisle* na jejich okolí. Nemění velikost obrazu.
 
 === Homogenní
 
-Bodové transformace, které *nezávisí* na pozici pixelu v obraze. Je definována pomocí _převodní funkce_. Patří sem třeba:
+Bodové transformace, které *nezávisí* na pozici pixelu v obraze. Je definována pomocí _převodní funkce_ stem:[I'(u, v) \leftarrow f(I(u,v))]. Patří sem třeba:
 
 --
 * úprava jasu,
@@ -46,6 +53,18 @@ Bodové transformace, které *nezávisí* na pozici pixelu v obraze. Je definov�
 * gama korekce,
 * globální prahování.
 --
+
+==== Lineární transformace
+Převodní funkce je lineární, definována, jako stem:[f(a) = ka + q].
+
+- Identita: stem:[k = 1, q = 0]
+- Inverze intenzit (negativ): stem:[k = -1, q = a_{max}]
+- Zvýšení jasu: stem:[k = 1, q > 0]
+- Snížení jasu: stem:[k = 1, q < 0]
+- Zvýšení kontrastu: stem:[k > 1, q = 0]
+- Snížení kontrastu: stem:[0 < k < 1, q = 0]
+- Lineární roztažení: viz dále
+- (Percentilové roztažení: viz dále)
 
 Negativ::
 Inverze hodnot pixelů. Nejvyšší hodnota se změní na nejnižší a naopak.
@@ -66,6 +85,11 @@ f(x) = \frac{a_\text{max} - a_\text{min}}{a_\text{high}-a_\text{low}} \cdot (x -
 ++++
 +
 kde stem:[a_\text{low}] je nejnižší hodnota a stem:[a_\text{high}] nejvyšší hodnota v obraze. Obvykle stem:[a_\text{min} = 0] a stem:[a_\text{max} = 255].
++
+Alternativně lze použít *percentilové roztažení*, které převede stem:[p] procent nejnižších a nejvyšších hodnot na stem:[a_\text{min}] a stem:[a_\text{max}] (tedy "uřízne" extrémy). není striktně řečeno lineární.
+
+==== Nelineární transformace
+Převod nelze vyjádřit v lineárním tvaru
 
 Gama korekce::
 Nelineární bodová transformace kompenzující vlastnosti lidského oka pro lepší využití bitové hloubky.
@@ -101,9 +125,12 @@ kde stem:[T] je práh. Pokud je stem:[T] konstanta, pak se jedná o _globální 
 Prahování se pořádně věnuje otázka link:../analyza-rastroveho-obrazu/[Analýza rastrového obrazu].
 --
 
+Paleta::
+Můžeme použít funkci či vyhledávácí tabulku pro přemapování existujících hodnot v obrazu na jiné (viz barevné škály u vizualizací).
+
 === Nehomogenní
 
-Bodové transformace, které *závisí* na pozici pixelu v obraze. Je definována pomocí _převodní charakteristiky_. Patří sem třeba:
+Bodové transformace, které *závisí* na pozici pixelu v obraze. Je definována pomocí _převodní charakteristiky_ stem:[I'(u, v) \leftarrow f(I(u,v), u,v)]. Patří sem třeba:
 
 --
 * korekce nerovnoměrného osvětlení,
@@ -131,6 +158,8 @@ Kumulativní histogram stem:[\mathbb{H}] bbsahuje množství pixelů s intenzito
 
 Vyrovnání histogramu / histogram equalization::
 Změna obrazu tak, aby jeho kumulativní histogram měl konkrétní tvar, obvykle aby byl lineární. <<histogram-eq>>
++
+Typicky k tomu využíváme funkci stem:[f(x) = \text{cumhist}(x) \cdot \frac{a_{\text{max}}}{w \cdot h}], kde stem:[\text{cumhist}] je kumulativní histogram pro barvu v bodě x, step:[a_{\text{max}}] je maximální intenzita a stem:[w \times h] je velikost obrazu.
 +
 ====
 
@@ -160,7 +189,7 @@ Z histogramu lze vysledovat řadu věcí jak manuálně tak automaticky. Často 
 * šikmost / skewness.
 --
 
-== Filtry
+== Konvoluční filtry
 
 Filtr::
 Filtr je termín ze zpracování signálů (kterýmžto obraz z jisté perspektivy je). Je to zařízení, postup, či transformace, která ze signálu odstraňuje nechtěnné informace. <<filter>>
@@ -200,6 +229,23 @@ Obrazy však mají dvě dimenze, takže se používá dvourozměrná diskrétní
 kde stem:[h] je _kernel / konvoluční jádro_ dáno jako matice velikosti stem:[(2k + 1) \times (2k + 1)].
 +
 WARNING: Všimni si, že kvůli stem:[f \lbrack x - m, x - n \rbrack] se jádro při aplikaci na obraz překlápí. Kdyby to bylo stem:[f \lbrack x + m, x + n \rbrack], tak jde o *korelaci*, ne o konvoluci.
++
+Konvoluce má složitost stem:[O(MNKL)], kde stem:[M \times N] je velikost obrazu a stem:[K \times L] je velikost jádra. Pro velká jádra se složitost blíží stem:[O(M^2 N^2)].
++
+Konvoluce je *komutativní*, *asociativní*, *xy separabilní* (lze ji rozdělit na dvě jednorozměrné konvoluce, pokud platí, že stem:[H_{x,y}(i,j) = H_x(i) \cdot H_y(j)]), a *lineární* (tedy lze ji *násobit skalárem* a *sčítat*).
+
+Okrajové hodnoty::
+Je důležité si uvědomit, že na okrajích obrazu nelze aplikovat konvoluci tak, jak je definována. Existuje několik způsobů, jak s tímto problémem pracovat:
++
+--
+* _Doplnění nulami_: okraje se doplní nulami,
+* _Doplnění nejbližší hodnotou_: okraje se doplní hodnotou nejbližšího pixelu,
+* _Doplnění zrcadlením_: okraje se doplní hodnotami jako podle zrcadla,
+* _Doplnění periodickým opakováním_: okraje se doplní hodnotami z opačné strany obrazu.
+* _Zmenšení okolí pro pixely u krajů obrazu_: pixely mimo obraz se ignorují.
+--
++
+image::./img/szp09_okraje.png[width=500]
 
 === Lineární
 
@@ -218,6 +264,18 @@ a \cdot \Theta(I) &= \Theta(a \cdot I) \\
 +
 kde stem:[I, I_1, I_2] jsou obrazy a stem:[a] je skalární hodnota.
 
+Posunutí::
+Jednoduchý lineární filtr, který posune obraz o nějaký vektor.
++
+[stem]
+++++
+\begin{bmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+++++
+
 Box filtr / box blur::
 Rozmazání pomocí okolních pixelů.
 +
@@ -230,6 +288,12 @@ Rozmazání pomocí okolních pixelů.
 1 & 1 & 1
 \end{bmatrix}
 ++++
+
+Gaussian filtr / Gaussian blur::
+Rozmazání pomocí okolních pixelů s Gaussovským váhováním, kde stem:[\sigma] je parametr určující šířku Gaussova zvonu.
+
+Rozdílové filtry::
+Filtry, které počítají rozdíly mezi okolními pixely. Často se využívají pro detekci hran (viz dále).
 
 === Nelineární
 
@@ -247,74 +311,7 @@ Proces, kdy hledání _hran_ v obraze. Hrana je křivka, podél níž pixely vý
 
 IMPORTANT: Numerické diferenciaci se věnuje otázka link:../numericke-metody/[Numerické metody].
 
-=== Podle první derivace
-
-Robertsův operátor / Roberts cross::
-Aproximuje velikost gradientu pomocí konečných diferencí. Detekuje především hrany se sklonem 45°.
-+
-[stem]
-++++
-\lvert \nabla f(m, n) \rvert \approx \textcolor{red}{\lvert f(m, n) - f(m + 1, n + 1) \rvert} + \textcolor{blue}{\lvert f(m + 1, n) - f(m, n + 1) \rvert}
-++++
-+
-kde barevné výrazy získa dvěma konvolucemi s jádry:
-+
-[stem]
-++++
-\textcolor{red}{R_x}  = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} \qquad
-\textcolor{blue}{R_y} = \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix}
-++++
-
-Sobelův operátor::
-Aproximuje velikost gradientu pomocí *centrálních* konečných diferencí. Skládá se ze dvou konvolucí s jádry:
-+
-[stem]
-++++
-G_x = \begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1 \end{bmatrix} \qquad
-G_y = \begin{bmatrix} 1 & 2 & 1 \\ 0 & 0 & 0 \\ -1 & -2 & -1 \end{bmatrix}
-++++
-+
-Tato jádra se dají odseparovat na:
-+
-[stem]
-++++
-G_x = \begin{bmatrix} -1 \\ 0 \\ 1 \end{bmatrix} \cdot \begin{bmatrix} 1 & 2 & 1 \end{bmatrix} \qquad
-G_y = \begin{bmatrix} 1 \\ 2 \\ 1 \end{bmatrix} \cdot \begin{bmatrix} -1 & 0 & 1 \end{bmatrix}
-++++
-+
-[NOTE]
---
-Všimni si, že jeden kernel je Gaussovo rozmázání a druhý jsou centrální diference.
---
-+
-Aproximace je pak dána jako:
-+
-[stem]
-++++
-\lvert \nabla f(m, n) \rvert \approx \sqrt{(G_x * I)^2 + (G_y * I)^2}
-++++
-+
-kde stem:[I] je vstupní obraz.
-
-Canny edge detector::
-Algoritmus pro detekci hran. <<canny>> <<canny-tds>>
-+
---
-* Má nízké procento chyb.
-* Přesně lokalizuje hrany.
-* Má jednoznačnou odezvu (hrana prostě buď je nebo není).
-* Ale *neprodukuje* nutně spojité hrany.
---
-+
-Zjednodušený postup:
-+
---
-1. Aplikuj Gaussovo rozmazání na vstupní obraz, pro odstranění šumu.
-2. Spočítej gradient intenzity obrazu (pomocí Roberts, Sobela, ...).
-3. Non-maximum suppression: zuž hrany na jednopixelovou šířku.
-4. Double threshold: urči, které pixely jsou _strong_, _weak_ a _non-relevant_.
-5. Aplikuj hysterezní prahování: spoj _strong_ pixely s _weak_ pixely, pokud je kolem nich _strong_ pixel.
---
+=== Podle první derivace (gradientu)
 
 Prewittové operátor / Prewitt operator::
 Aproximuje velikost gradientu pomocí *centrálních* konečných diferencí. Skládá se ze dvou konvolucí s jádry:
@@ -347,8 +344,75 @@ kde stem:[I] je vstupní obraz.
 Všimni si podobnosti s Sobelovým operátorem. Jen místo Gaussovského rozmazání používá box filtr.
 ====
 
+Sobelův operátor::
+Aproximuje velikost gradientu pomocí *centrálních* konečných diferencí. Skládá se ze dvou konvolucí s jádry:
++
+[stem]
+++++
+G_x = \begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1 \end{bmatrix} \qquad
+G_y = \begin{bmatrix} 1 & 2 & 1 \\ 0 & 0 & 0 \\ -1 & -2 & -1 \end{bmatrix}
+++++
++
+Tato jádra se dají odseparovat na:
++
+[stem]
+++++
+G_x = \begin{bmatrix} -1 \\ 0 \\ 1 \end{bmatrix} \cdot \begin{bmatrix} 1 & 2 & 1 \end{bmatrix} \qquad
+G_y = \begin{bmatrix} 1 \\ 2 \\ 1 \end{bmatrix} \cdot \begin{bmatrix} -1 & 0 & 1 \end{bmatrix}
+++++
++
+[NOTE]
+--
+Všimni si, že jeden kernel je Gaussovo rozmázání a druhý jsou centrální diference.
+--
++
+Aproximace je pak dána jako:
++
+[stem]
+++++
+\lvert \nabla f(m, n) \rvert \approx \sqrt{(G_x * I)^2 + (G_y * I)^2}
+++++
++
+kde stem:[I] je vstupní obraz.
+
+Robertsův operátor / Roberts cross::
+Aproximuje velikost gradientu pomocí konečných diferencí. Detekuje především hrany se sklonem 45°.
++
+[stem]
+++++
+\lvert \nabla f(m, n) \rvert \approx \textcolor{red}{\lvert f(m, n) - f(m + 1, n + 1) \rvert} + \textcolor{blue}{\lvert f(m + 1, n) - f(m, n + 1) \rvert}
+++++
++
+kde barevné výrazy získa dvěma konvolucemi s jádry:
++
+[stem]
+++++
+\textcolor{red}{R_x}  = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} \qquad
+\textcolor{blue}{R_y} = \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix}
+++++
+
 Robinsonův operátor / Robinson compass mark::
 Detekuje hrany pomocí centrální diferencí. Používá osm různých jader, jedno prokaždý směr na kompasu. To mu umožňuje snadno aproximovat nejen velikost ale i směr gradientu.
+
+Canny edge detector::
+Algoritmus pro detekci hran. <<canny>> <<canny-tds>>
++
+--
+* Má nízké procento chyb.
+* Přesně lokalizuje hrany.
+* Má jednoznačnou odezvu (hrana prostě buď je nebo není).
+* Ale *neprodukuje* nutně spojité hrany.
+--
++
+Zjednodušený postup:
++
+--
+1. Aplikuj Gaussovo rozmazání na vstupní obraz, pro odstranění šumu.
+2. Spočítej gradient intenzity obrazu (pomocí Roberts, Sobela, ...).
+3. Non-maximum suppression: zuž hrany na jednopixelovou šířku.
+4. Double threshold: urči, které pixely jsou _strong_, _weak_ a _non-relevant_.
+5. Aplikuj hysterezní prahování: spoj _strong_ pixely s _weak_ pixely, pokud je kolem nich _strong_ pixel.
+--
 
 === Podle druhé derivace
 
@@ -375,7 +439,7 @@ Laplaceův operátor stem:[\Delta] hledá hrany pomocí divergence gradientu.
 +
 [stem]
 ++++
-\Delta f = \nabla^2 f = \nabla \cdot nabla f = f_{xx} + f_{yy}
+\Delta f = \nabla^2 f = \nabla \cdot \nabla f = f_{xx} + f_{yy}
 ++++
 +
 kde stem:[f] je vstupní obraz.
@@ -410,15 +474,15 @@ Matice pro LoG je potom dána jako:
 +
 image::./img/szp09_mexican_hat.png[width=300]
 
-Difference of Gaussian (DoG)::
-Aproximuje LoG pomocí rozdílu dvou Gaussovských rozmazání. <<dog>>
-+
-[stem]
-++++
-\Gamma_{\sigma_1, \sigma_2} = I * G_{\sigma_1} - I * G_{\sigma_2}
-++++
-+
-kde stem:[I] je vstupní obraz a stem:[G_{\sigma_1}] a stem:[G_{\sigma_2}] jsou Gaussovská jádra s různými rozptylem. Platí stem:[\sigma_1 < \sigma_2].
+// Difference of Gaussian (DoG)::
+// Aproximuje LoG pomocí rozdílu dvou Gaussovských rozmazání. <<dog>>
+// +
+// [stem]
+// ++++
+// \Gamma_{\sigma_1, \sigma_2} = I * G_{\sigma_1} - I * G_{\sigma_2}
+// ++++
+// +
+// kde stem:[I] je vstupní obraz a stem:[G_{\sigma_1}] a stem:[G_{\sigma_2}] jsou Gaussovská jádra s různými rozptylem. Platí stem:[\sigma_1 < \sigma_2].
 
 == Integrální transformace
 
@@ -441,6 +505,11 @@ ____
 Fourierka je ako more. Je to hromada vlniek.
 ____
 
+[TIP]
+====
+3Blue1Brown má skvělý link:https://www.youtube.com/watch?v=spUNpyF58BY[video o Fourierově transformaci], ze kterého to pochopíš! _(a evidentně je tak dobrý, že mi Copilot sám nabídl správný link...)_
+====
+
 Je operace (integrální transformace) při níž je obraz převeden z _prostorové_ do _frekvenční_ domény. A při _inverzní Fourierově transformaci_ obráceně. <<fourier>>
 
 --
@@ -457,9 +526,29 @@ Eulerova formule je vztah mezi komplexními čísly a goniometrickými funkcemi.
 ++++
 e^{i \theta} = \cos \theta + i \sin \theta
 ++++
++
+Lidskými slovy říká (viz 3b1b), že komplexní číslo stem:[e^{i t}] popisuje pohyb po jednotkové kružnici v komplexní rovině proti směru hodinových ručiček. Jedna otáčka je stem:[t = 2 \pi] radianů.
 
 1D Fourierova transformace::
-Forward (z prostorové do frekvenční domény): <<fourier>>
+Eulerovu formuli využijeme při popisu Fourierovy transformace:
++
+[stem]
+++++
+\underbrace{\mathcal{F}(u)}_{\substack{\text{FT pro} \\ \text{frekvenci } u}} = 
+\underbrace{\int_{-\infty}^{\infty}
+    \underbrace{f(x)}_{\substack{\text{poloměr} \\ \text{podle} \\ \text{funkce } f}}
+    \underbrace{e^{
+        \underbrace{-}_{\substack{\text{chceme} \\ \text{po směru} \\ \text{hodin}}}
+        \underbrace{i}_{\substack{\text{komplexní} \\ \text{číslo}}}
+        \underbrace{2 \pi}_{\substack{\text{celá} \\ \text{kružnice}}}
+        \underbrace{u}_{\substack{\text{frekvence} \\ \text{ve FT}}}
+        \underbrace{x}_{\substack{\text{čas} \\ \text{ve funkci } f}}
+    }}_{\text{fáze kružnice podle frekvence a času}}
+    dx
+}_{\text{pro všechna } x \text{ v celém definičním oboru funkce} f}
+++++
++
+*Forward* (z prostorové do frekvenční domény): <<fourier>>
 +
 [stem]
 ++++
@@ -471,7 +560,7 @@ Forward (z prostorové do frekvenční domény): <<fourier>>
 \end{align*}
 ++++
 +
-Inverse (z frekvenční do prostorové domény):
+*Inverse* (z frekvenční do prostorové domény):
 +
 [stem]
 ++++
@@ -484,7 +573,7 @@ f(x) & = {1 \over \sqrt N} \sum_{m=0}^{N-1} \mathcal{F}(k) e^{{2 \pi i m k \over
 ++++
 
 2D Fourierova transformace::
-Forward (z prostorové do frekvenční domény): <<fourier>>
+*Forward* (z prostorové do frekvenční domény): <<fourier>>
 +
 [stem]
 ++++
@@ -496,7 +585,7 @@ Forward (z prostorové do frekvenční domény): <<fourier>>
 \end{align*}
 ++++
 +
-Inverse (z frekvenční do prostorové domény):
+*Inverse* (z frekvenční do prostorové domény):
 +
 [stem]
 ++++
@@ -578,13 +667,18 @@ Patří sem operace jako:
 --
 
 Dopředné mapování / forward mapping::
-Procházíme pixely v stem:[I] a hledáme jejich umístění v stem:[J].
+Procházíme pixely v stem:[I] a hledáme jejich umístění v stem:[J] (_metoda "Kam s ním?"_).
 
 Zpětné mapování / backward mapping::
-Pro každý pixel stem:[J] počítáme jeho původní umístění v stem:[I].
+Pro každý pixel stem:[J] počítáme jeho původní umístění v stem:[I] (_metoda "Kde je?"_).
 
 
 == Vlnková transformace / wavelet transform
+
+[TIP]
+====
+Opět výborné video, bohužel ne od 3b1b, ale obdobně kvalitně zpracované: link:https://www.youtube.com/watch?v=jnxqHcObNK4[Wavelets: a mathematical microscope].
+====
 
 Vlnka / wavelet::
 Funkce stem:[\psi], která je omezená v čase. Je to "brief oscillation". <<wavelet>>
@@ -592,7 +686,7 @@ Funkce stem:[\psi], která je omezená v čase. Je to "brief oscillation". <<wav
 image::./img/szp09_wavelet.svg[width=300]
 +
 --
-* Má konečnou energii:
+* *Má konečnou energii*:
 +
 [stem]
 ++++
@@ -608,7 +702,7 @@ C_\psi = \int_{0}^{\infty} { {|\hat{\psi}(\omega)|^{2}}\over{\omega} } \, \mathr
 +
 kde stem:[\hat{\psi}] je Fourierova transformace stem:[\psi]. Tato podmínka zajišťuje invertibilitu vlnkové transformace.
 
-* Z podmínky přípustnosti plyne, že vlnka musí mít nulovou střední hodnotu:
+* Z podmínky přípustnosti plyne, že vlnka *musí mít nulovou střední hodnotu*:
 +
 [stem]
 ++++
@@ -630,11 +724,32 @@ Používá se k:
 * Kompresi signálu.
 --
 
+Základní myšlenka je:
+
+1. Zvolíme mateřskou vlnku stem:[\psi] (je spousta různých, ale nejznámnější je Morletova vlnka stem:[\psi(t) = k \cdot \underbrace{e^{i \omega_0 t}}_{\text{Rotace jako u FT}} \cdot \underbrace{e^{\frac{-t^2}{2}}}_{\text{Škála}}]
++
+image::./img/szp09_wavelet_steps1.png[width=500]
+2. Tuto vlnku můžeme posouvat a škálovat pomocí parametrů stem:[a] a stem:[b] - stem:[\psi_{a,b} = \psi \frac{t-b}{a}].
++
+image::./img/szp09_wavelet_steps2.png[width=500]
+3. Posouváme naši vlnkovou funkci po signálu oběma parametry a pro každý bod sledujeme shodu s funkcí. Tu získáme intuitivně, jako integrál součinu vlnky a signálu stem:[\int_{-\infty}^{\infty} y(t) \psi_{a,b}(t) dt]. Pokud se ale podíváme na to, co to znamená ve frekvenční doméně, zjistíme, že to je skalární součin mezi Fourierovou transformací signálu a vlnky stem:[\langle f, \psi_{a,b} \rangle].
++
+image::./img/szp09_wavelet_steps3.png[width=500]
+4. Pokud toto uděláme pro každý bod časové (stem:[a]) a frekvenční (stem:[b]) domény, dostaneme výsledný obraz vlnkové transformace.
++
+image::./img/szp09_wavelet_steps4.png[width=500]
+5. Ale co to? V reálné části výsledku vidíme podivné vlnky! To je proto, že vlnková funkce je komplexní a ve skutečnosti nám dot product nevrací jednu hodnotu, ale komplexní číslo. Pokud zkoumáme to, pak vidíme, že rotuje kolem středu imaginární roviny. Stačí nám tedy změřit jeho vzdálenost od středu (absolutní hodnotu komplexního čísla) a dostáváme vlnkovou transformaci.
++
+image::./img/szp09_wavelet_steps5.png[width=500]
+
+
+Ve výsledku je to fakt jen *dot product funkce stem:[f] s upravenou vlnkou stem:[\psi_{a,b}]*!
+
 [stem]
 ++++
 \begin{aligned}
 \left[\operatorname {W} _{\psi }\,f\right](a,b) &=
-    \langle f,\psi _{a,b}\rangle \\
+    \langle f,\psi _{a,b}\rangle\\
     
 &=\int _{-\infty }^{+\infty }\!f(t)\,\psi _{a,b}^{\ast }(t)\,\mathrm {d} t\\
 
