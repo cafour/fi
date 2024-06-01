@@ -818,6 +818,11 @@ image::./img/szp09_hough_transform.png[width=600]
 
 == Radonova transformace
 
+[TIP]
+====
+Jako je již tradicí, mám pro vás link:https://www.youtube.com/watch?v=f0sxjhGHRPo[video]...
+====
+
 Integrální transformace, která integruje funkci přes přímky. Tedy rozkládá funkci na hromádku parametrů, které definují přímky.
 
 Užitečná je především inverzní Radonova transformace, která se používá v tomografii ("CTčko"). <<radon>>
