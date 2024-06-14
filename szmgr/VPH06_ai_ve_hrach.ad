@@ -5,7 +5,7 @@
 
 [NOTE]
 ====
-Pohyb, kinematika, řízení chování. Prohledávání a hledání cest: A* nad datovými strukturami a heuristiky, reprezentace herního světa, Monte Carlo prohledávání, hierarchické hledání cest. Rozhodování, rozhodovací stromy, stavové automaty, stromy chování. Strategie a taktika, navigační body, taktická analýza.
+Pohyb, kinematický a dynamický pohyb. Hledání cest, algoritmy prohledávání grafu, A* s jeho datovými strukturami a heuristikami, reprezentace herního světa, hierarchické hledání cest. Rozhodování, rozhodovací stromy, stavové automaty, stromy chování, cílem orientované chování. Taktická a strategická umělá inteligence, navigační body a taktika, taktická analýza. Deskové hry, minimax algoritmy, Monte Carlo prohledávání.
 
 _PA217_
 ====
@@ -37,11 +37,14 @@ Změna rotace. Desetinné číslo z intervalu stem:[\lbrack 0, 2\pi )].
 Agent::
 Postava / objekt / entita vykonávájí pohyb a činící rozhodnutí.
 
-=== Kinematika
+=== Kinematický pohyb
 
 Postavy se prostě pohybují bez ohledu na fyzikální korektnost.
 
 --
+* Charakter má pozici, orientaci, rychlost a úhlovou rychlost.
+* Nemá zrychlení - rychlost se může měnit okamžitě.
+* Orientace může být počítána podle směru rychlosti.
 * Výhodou je jednoduchost a předvídatelnost.
 * Nevýhodou je, že pohyb nemusí být věrohodný.
 * Příkladem je pohyb většiny postav ovládaných hráčem. Pokud hráč pustí `W`, chce obvykle zastavit hned.
@@ -63,12 +66,22 @@ void Update(float deltaTime)
 }
 ----
 
-=== Řízení chování / steering behaviors
+Algoritmy kinematického pohybu::
+--
+* _Seek_: agent se snaží dostat k cíli. (`velocity = (target.pos - character.pos).normalized * maxSpeed`)
+* _Flee_: agent se snaží dostat od cíle. (`velocity = (character.pos - target.pos).normalized * maxSpeed`)
+* _Arrival_: agent se snaží dostat k cíli a zpomaluje, když je blízko.
+* _Wander_: agent se hýbe náhodně - náhodně mění rotaci a jde neustále vpřed. (`rotation = ranom(0, 1) - random(0, 1) * maxRotation`)
+--
 
-Jednoduché algoritmy pro pohyb. Jsou škálovatelné a předvídatelné, ale mají problém s lokálními pastmi (zaseknou se a neví, jak ven).
+=== Dynamický pohyb
 
-Dynamic movement::
-Fyzikálně korektní pohyb. Postavy zrychlují ve směru cíle, dosahují maximální rychlosti a zpomalují, pokud je cíl blízko.
+Postavy mění rychlost a zatáčí podle fyzikálních zákonů. Oproti kinematickému pohybu obsahují zrychlení (lineární i úhlové) - plynule zrychlují, dosahují maximální rychlosti a plynule zpomalují.
+
+
+==== Řízení chování / steering behaviors
+
+Jednoduché algoritmy pro pohyb. Jsou škálovatelné a předvídatelné, ale mají problém s lokálními pastmi (zaseknou se a neví, jak ven). Základními algoritmy jsou:
 
 Seek::
 Přímočárý... doslova. Najde vektor mířící k cíli a aplikuje je jej jako steering.
@@ -78,6 +91,14 @@ image::./img/vph06_seek.jpg[Seek schematic, 300]
 
 Flee::
 Jako seek, ale *od* cíle místo k cíli.
+
+Align::
+Agent se snaží zarovnat svou orientaci s cílem. 
+
+Velocity matching::
+Agent se snaží mít stejnou rychlost jako cíl.
+
+Pomocí těchto základních algoritmů lze vytvořit složitější chování:
 
 Arrival::
 Jako seek, ale začne zpomalovat, když je blízko cíle, takže jej "nepřestřelí".
@@ -101,17 +122,10 @@ Příklad: kořist se vyhýbá predátorovi.
 Wander::
 Agent se hýbe náhodně. Není to ale tak jednoduché, jak se zdá, protože nechceme, aby sebou agent jen házel ze strany na stranu. Jako seek, ale k cíli se v každém kroku přidává drobný náhodný posun.
 
-Object avoidance / vyhýbání se překážkám::
+Obstacle avoidance / vyhýbání se překážkám::
 Agent detekuje, zda se v blízké době srazí s překážkou -- ray castingem, testy na overlapping -- a pokud ano, najde cíl, který je mimo překážku a aplikuje _seek_.
 +
 Má problém s úzkými překážkami a pastmi.
-
-Flocking / chování hejna::
-Chování celé skupiny agentů:
-+
-* _Separation / oddělení_: agent se snaží nenarážet do ostatních agentů v daném okolí.
-* _Alignment / zarovnání_: pohybuj se (průměrně) stejným směrem a rychlostí jako ostatní agenti v okolí.
-* _Cohesion / soudržnost_: pohybuj se směrem ke středu hmoty hejna.
 
 Path following::
 Agent směřuje ne _jen_ k pouhému bodu, ale k _nejbližšímu_ bodu na dané cestě a ten _seekuje_.
@@ -119,11 +133,23 @@ Agent směřuje ne _jen_ k pouhému bodu, ale k _nejbližšímu_ bodu na dané c
 Predictive path following::
 Agent předvídá, kde bude za krátkou chvíli a hledá _nejbližší_ bod na dané cestě k *této predikci*. Pohyb je plynulejší.
 
-Kombinování steering behaviors::
-Steering behaviors se dají kombinovat.
-+
+Cohesion::
+Agent se snaží být blízko ostatním agentům ve skupině. Jeho target je průměrná pozice blízkých agentů.
+
+Separation::
+Agent se snaží udržet si odstup od ostatních agentů ve skupině. Jde o Evade, jehož síla je závislá na vzdálenosti od ostatních agentů.
+
+Jednotlivé steering behaviors se dají kombinovat:
+
 * _Blending_: provádí více steering behaviors najednou a výsledný vektor je jejich váženým průměrem.
 * _Arbitration_: volí jedno steering behavior, které má absolutní moc.
+
+Flocking / chování hejna::
+Blenduje 3 chování, díky kterým se agenti drží pohromadě a pohybují se jako hejno.
++
+* _Separation / oddělení_: agent se snaží nenarážet do ostatních agentů v daném okolí.
+* _Alignment / zarovnání_: pohybuj se (průměrně) stejným směrem a rychlostí jako ostatní agenti v okolí.
+* _Cohesion / soudržnost_: pohybuj se směrem ke středu hmoty hejna.
 
 == Pathfinding / hledání cest
 
@@ -231,6 +257,11 @@ List<Node> ReconstructPath(Node goal) {
 }
 ----
 
+Datové struktury pro A*::
+--
+A* vyžaduje priority queue, která umí rychle vybírat prvek s nejnižší prioritou. Nejjednodušší je implementovat ji pomocí binární haldy. Pokud je však prohledávání na velmi velkém grafu (millions of nodes), lze pro urychlení použít například Bucketed Priority Queue (PBQ). Ta rozdělí uzly do bucketů podle jejich priority - buckety jsou seřazené, ale jejich obsah ne. Pro velký počet uzlů může být PBQ rychlejší díky menšímu počtu operací s pamětí.
+--
+
 Volba heuristiky::
 +
 --
@@ -253,6 +284,15 @@ Clusterová (shluková) heuristika::
 image::./img/vph06_cluster_heuristic.png[width=400]
 +
 image::./img/vph06_heuristic_comparison.png[width=100%]
+
+D* algoritmus::
+Varianta A*, která se umí vyrovnat s dynamickými změnami v grafu.
+
+Iterative Deepening A* (IDA*)::
+Depth-first search s heuristikou. Iterative deepening znamená, že se postupně zvyšuje maximální hloubka prohledávání. <<ida-star>>
+
+Simplified Memory Bounded A* (SMA*)::
+A* co má nižší paměťové nároky.
 
 === Reprezentace herního světa
 
@@ -296,60 +336,6 @@ image::./img/vph06_navmesh.png[Navigation System in Unity, 400]
 +
 .Polygonal mesh graph <<ai-for-games>>
 image::./img/vph06_polygonal_mesh_graph.png[width=400]
-
-D* algoritmus::
-Varianta A*, která se umí vyrovnat s dynamickými změnami v grafu.
-
-Iterative Deepening A* (IDA*)::
-Depth-first search s heuristikou. Iterative deepening znamená, že se postupně zvyšuje maximální hloubka prohledávání. <<ida-star>>
-
-Simplified Memory Bounded A* (SMA*)::
-A* co má nižší paměťové nároky.
-
-
-=== Monte Carlo prohledávání
-
-[TIP]
---
-Monte Carlo::
-Město známé pro svá casina.
-
-Monte Carlo metoda::
-Algoritmy a techniky spoléhající na náhodou, mega velké množiny vzorků a statistickou analýzu. <<monte-carlo>>
---
-
-Monte Carlo tree search (MCTS)::
-Heuristický algoritmus pro prohledávání stromových grafů. V kontextu deskových her se používá pro hledání nejlepšího tahu.<<mcts>>
-+
---
-1. _Selection_: vyber uzel reprezentující stav hry, ze kterého ještě hra neskončila.
-2. _Expansion_: vytvoř možné volby ze zvoleného tahu.
-3. _Simulation_: vyber volbu náhodně a odsimuluj hru až do konce.
-4. _Backpropagation_: aktualizuj statistiky v uzlech na cestě od kořene k listu.
---
-+
-.Step of Monte Carlo tree search by link:https://commons.wikimedia.org/w/index.php?curid=88889583[Rmoss92]
-image::./img/vph06_mcts.svg[width=100%]
-
-Tree boundary::
-Metoda (policy), kdy v uzlech nad _MCTS tree boundary_ jsou akce voleny inteligentně. Pod touto hranicí jsou akce voleny náhodně.
-
-Upper confidence bound (UCT)::
-Metrika pro volbu nejlepšího uzlu.
-+
-[stem]
-++++
-\text{UCT} = \overline{X_j} + C \sqrt{\frac{\ln n}{n_j}}
-++++
-+
-kde:
-+
---
-* stem:[\overline{X_j}] je střední hodnota odměny z akce v uzlu stem:[j]. Může být třeba počet výher / počet her.
-* stem:[C] je _exploration parameter_, který určuje, jak moc se má algoritmus zaměřovat na prozkoumávání nových uzlů.
-* stem:[n] je počet her, ve kterých byl zvolen rodičovský uzel.
-* stem:[n_j] je počet her, ve kterých byl zvolen uzel stem:[j].
---
 
 === Hierarchické hledání cest
 
@@ -432,11 +418,24 @@ Vnitřní uzly::
 --
 
 Decorator / dekorátor::
-Obaluje nějaký uzel a mění jeho chování.
+Obaluje nějaký uzel a mění jeho chování (např. inverze výsledku, opakování).
 
 Filtery::
 Rozhodují, jestli akci provedou nebo ne, případně až po nějakém čase či s nějakou pravděpodobností. Např. nemusí být žádoucí, aby se agent pořád dokola snažil otevřít dveře.
 
+=== Cílem orientované chování
+
+Charakter má své cíle a snaží se jich dosáhnout za pomoci mnoha různých akcí.
+
+* Množina cílů, každý cíl má různou prioritu.
+* Množina akcí závyslích na stavu světa (např. podle oběktů v okolí).
+** Akce mohou být atomické (např. sněz jídlo) nebo složené (např. jdi do supermarketu, kup jídlo, vrať se domů, sněz jídlo).
+** Provedené akce ovlivňují cíle (např. když sníme jídlo, změní se priorita cíle "sníst jídlo" na 0).
+* Vybrání nejlepší akce není tak jednoduché.
+** Nejjednodušší je vybrat akci s nejvyšší prioritou. To ale může mít nevyžádané vedlejší efekty (např. mám žízeň, vypiju vodu, počůrám se, protože jsem měl i potřebu jít na záchod).
+** Můžeme určit celkovou nespokojenost na základě všech potřeb a vybrat akci, která ji nejvíce sníží. (Počůrání by zvýšilo nespokojenost, proto se charakter rozhodne jít první na záchod.)
+** Výběr akce by měl zohledňovat i délky jednotlivých akcí a jak se v průběhu času mění priority cílů.
+** Jednou akcí můžu znemožnit jinou. Proto je potřeba plánovat akce dopředu. 
 
 == Strategie a taktika
 
@@ -450,13 +449,22 @@ Pathfinding nodes::
 Místa kudy se dá projít.
 
 Tactical locations / rally points::
-Místa kde se skrýt před útokem, místa ke snipení, místa pro ambush, atd.
+Místa kde se skrýt před útokem, místa ke snipení, místa pro ambush, atd. Do scény je může přidat přímo level designer nebo se mohou generovat automaticky.
 +
 .Tactical locations <<ai-for-games>>
 image::./img/vph06_tactical_locations.png[width=500]
 
 Context sensitive locations / závislost na kontextu::
 Tactical locations mohou záviset na kontextu, třeba pozici protihráčů a jejich chování. Závislost na kontextu je implementována tak, že hodnota waypointu je předpočítána pro několik různých situací, či dodatečnou prací (např. ray castem) za běhu hry.
+
+Cover points::
+Místa, kde se agent může schovat před nepřítelem. Kvalita je závyslá na množství a směru krytí a aktuální pozici nepřítele.
+
+Visibility points::
+Místa s dobrým výhledem na důležité body v levelu. Visibility point může být zároveň i cover point, ale ne vždy.
+
+Shadow points::
+Místa ve stínu.
 
 === Taktická analýza
 
@@ -467,12 +475,16 @@ Influence maps::
 * Může být např. dán počtem jednotek a budov a jejich silou.
 * Upadá se vzdáleností od jednotek.
 * Používají se k určení toho, které oblasti jsou bezpečné a kterým je lepší se vyhnout, nebo kde jsou nepřátelské hranice nejslabší.
+* Pokud strana nemá všechny informace, můžeme vytvořit dvě influence mapy - každou pro jednoho hráče dle jemu dostupných informací.
 +
 .Influence map by link:https://www.gamedev.net/tutorials/programming/artificial-intelligence/the-core-mechanics-of-influence-mapping-r2799/[gamedev.net]
 image::./img/vph06_influence_maps.png[width=500]
 
 Terrain analyses::
 Podobné waypointům ale pro vnější prostředí. Popisují, jak težké je daným terénem projít, jaká je na něm viditelnost, cover, možnost útect, potenciál ke snipení, atd.
+
+Frag-map::
+Mapa, která obsahuje hodnoty zabití - pokud agent dostane hit, hodnota klesne, pokud zasáhne nepřítele hodnota stoupne. Dá se předpočátat offline při testování a poté adaptovat za běhu hry.
 
 Multi-layer analyses::
 Informace v taktických analýzách lze rozdělit do tří kategorií:
@@ -503,6 +515,94 @@ Možné řešení:
 ++++
 
 ====
+
+== Deskové hry
+
+Typicky turn-based hry pro dva hráče, často s perfektní informací.
+
+Perfect information::
+Od začátku hry jsou známe všechny možnosti a jejich následky.
+
+Imperfect information::
+Některé informace jsou skryté nebo náhodné, např. karty v ruce, hod kostkou.
+
+Zero-sum games::
+Hra, kde výhra jednoho hráče je prohrou druhého (např. šachy).
+
+Non-zero-sum games::
+Výhra jednoho hráče nemusí být prohra druhého, stejně tak prohra jednoho hráče nemusí být výhra druhého (např. kooperativní hry, prisoner's dilemma). 
+
+=== AI turn-based algoritmy
+
+Algoritmy pro hledání nejlepšího tahu v tahových zero-sum deskových hrách pro dva hráče s perfektní informací.
+
+Game tree::
+Hru lze reprezentovat jako strom, kde uzly jsou stavy hry a hrany jednotlivé tahy. Listy jsou koncové stavy hry a mají hodnotu (výhru, prohru, remízu). Prohledáváním stromu lze najít nejlepší tah.
++
+* Branching factor: dán počtem možných tahů v daném stavu.
+* Depth: počet tahů do konce hry.
+* Transposition: do některých stavů se dá dostat více cestami.
+
+==== Minimax algoritmus
+
+Projdi strom a vyber nejlepší možný tah pro nás s ohledem na to, že soupeř bude volit nejlepší tah pro sebe.
+
+* Vybíráme nejlepší pozici pro nás - výběr maximální hodnoty.
+* Oponent vybírá nejhorší pozici pro nás - výběr minimální hodnoty.
+* Výběr se opakuje až do listu stromu - koncový stav s danou hodnotou. V případě, že nejsme schopní z časových důvodů prohledat celý strom, můžeme použít heuristiku pro ohodnocení nody (třeba počet a ohodnocení bílích figurek - černých figurek).
+
+Alpha-beta pruning::
+Stromy pro hry jsou obvykle příliš velké na to, aby se daly prohledat celé (tic-tac-toe 9! stavů, šachy > 10^40 stavů). Zároveň ale nepotřebujeme prohledávat části, u kterých víme, že se určitě nestanou. Např. pokud najdeme v maxovi větev s hodnotou 5, nemusíme prohledávat podstrom mina, o kterém víme, že vybere menší hodnotu než 3. Této optimalizaci se říká _alpha-beta pruning_.
+
+[TIP]
+--
+Minmax i alpha-beta pruning se chápe nejlíp s vizualizací. Můžete kouknout například na link:https://youtu.be/l-hh51ncgDI?feature=shared[Algorithms Explained – minimax and alpha-beta pruning].
+--
+
+==== Monte Carlo prohledávání
+
+[TIP]
+--
+Monte Carlo::
+Město známé pro svá casina.
+
+Monte Carlo metoda::
+Algoritmy a techniky spoléhající na náhodou, mega velké množiny vzorků a statistickou analýzu. <<monte-carlo>>
+--
+
+Monte Carlo tree search (MCTS)::
+Heuristický algoritmus pro prohledávání stromových grafů. V kontextu deskových her se používá pro hledání nejlepšího tahu.<<mcts>>
++
+--
+1. _Selection_: vyber uzel reprezentující stav hry, ze kterého ještě hra neskončila.
+2. _Expansion_: vytvoř možné volby ze zvoleného tahu.
+3. _Simulation_: vyber volbu náhodně a odsimuluj hru až do konce.
+4. _Backpropagation_: aktualizuj statistiky v uzlech na cestě od kořene k listu.
+--
++
+.Step of Monte Carlo tree search by link:https://commons.wikimedia.org/w/index.php?curid=88889583[Rmoss92]
+image::./img/vph06_mcts.svg[width=100%]
+
+Tree boundary::
+Metoda (policy), kdy v uzlech nad _MCTS tree boundary_ jsou akce voleny inteligentně. Pod touto hranicí jsou akce voleny náhodně.
+
+Upper confidence bound (UCT)::
+Metrika pro volbu nejlepšího uzlu.
++
+[stem]
+++++
+\text{UCT} = \overline{X_j} + C \sqrt{\frac{\ln n}{n_j}}
+++++
++
+kde:
++
+--
+* stem:[\overline{X_j}] je střední hodnota odměny z akce v uzlu stem:[j]. Může být třeba počet výher / počet her.
+* stem:[C] je _exploration parameter_, který určuje, jak moc se má algoritmus zaměřovat na prozkoumávání nových uzlů.
+* stem:[n] je počet her, ve kterých byl zvolen rodičovský uzel.
+* stem:[n_j] je počet her, ve kterých byl zvolen uzel stem:[j].
+--
+
 
 [bibliography]
 == Zdroje
