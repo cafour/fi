@@ -28,7 +28,7 @@ Typické fáze analýzy obrazu::
 
 == Segmentace obrazu
 
-Rozdělení obrazu na _segmenty_ (oblasti, regiony, spojené množiny) podle nějaké společné vlastnosti.
+Rozdělení definičního oboru obrazu stem:[\Omega] na _segmenty_ stem:[\Omega = \Omega_0 \cup \Omega_1 \cup \dots \cup \Omega_{n-1}] (oblasti, regiony, spojené množiny) podle nějaké společné vlastnosti.
 
 [quote, Haralick a Shapiro]
 ____
@@ -38,12 +38,35 @@ ____
 4. Boundaries should be simple, not ragged, and be spatially accurate.
 ____
 
+Segmentace přiřazuje každému pixelu obrazu jednoznačnou značku (číslo) podle toho, do které komponenty patří. Výsledkem je šedotónový obraz, kde každá komponenta má jinou intenzitu. Oblasti (=regiony) lze reprezentovat pomocí obrysu (=kontury).
+
+Typickým problémem je rozpoznávání objektů. Možnosti řešení:
+
+- *Prahování* (často s využitím histogramu)
+- Shlukovací metody
+- Metody založené na kompresi
+- Narůstání regionů (region-growing, split-and-merge)
+- PDE-based (parametrické a implicitní aktivní křivky)
+- Variační přístupy (modely Mumford-Shah a Chan-Vese)
+- Grafové přístupy (graph-cuts, MST, MRF)
+- *Algoritmus záplava* (watershed)
+- Hierarchické segmentace
+- Metody pracující s modelem tvaru (ASM, AAM)
+- *Neuronové sítě* (zejména konvoluční)
+
+Před samotnou segmentací je vhodné obraz předpřipravit.
+
 Algoritmy značení komponent / connected-component labeling (CCL)::
 Algoritmy, které přiřazují každému pixelu obrazu jednoznačnou značku (číslo) podle toho, do které komponenty patří. Je algoritmickou aplikací teorie grafů na obraz.
 +
 Obraz je převeden na graf, kde každý pixel je vrchol a hrany jsou mezi sousedními pixely. Hrany jsou ohodnoceny podle podobnosti sousedních pixelů. Segmenty jsou pak komponenty souvislosti v grafu.
 +
 IMPORTANT: Segmentace je problém nalezení oblastí. CCL je jen jedno z možných řešení.
+
+=== Neuronové sítě
+Moderní přístup, vyžaduje velké množství parametrů a mohou být náročné na trénování, existuje mnoho předtrénovaných modelů.
+
+*Plně konvoluční sítě* -- Všechny vrstvy jsou konvoluční, typicky Downsample + Upsample. Výstupy můžou být různé podle natrénované sítě.
 
 === Prahování / thresholding
 
@@ -54,30 +77,72 @@ ____
 
 Pixely jsou rozděleny na regiony podle jejich intenzity. Pixely s intenzitou nižší než _threshold / práh_ jsou označeny jako pozadí, ostatní jako popředí.
 
+Důležitá je volba prahu. Někdy víme procento pixelů, které mají být popředí / pozadí, ale typicky zjistíme z analýzy histogramu.
+
 --
 * Prahování je jedna z nejjednodušších metod segmentace obrazu.
 * Práh lze určit manuálně nebo automaticky.
 --
 
-Globální prahování::
+==== Globální prahování
 Práh je stejný pro celý obraz. Nezávisle na pozici.
 
-Lokální (adaptivní) prahování::
-Práh se mění podle pozice v obraze. Třeba podle průměru intenzit v okolí.
+Otsuova metoda::
+Minimalizace váženého součtu rozptylu intenzit v popředí a pozadí.
++
+[stem]
+++++
+\sigma^2_w(t) = q_1(t) \sigma_1^2(t) + q_2(t) \sigma_2^2(t)
+++++
++
+image::./img/szp10_otsu.png[width=500]
++
+Při velkém šumu je problém s analýzou i segmentací
 
-Dvouúrovňové prahování::
-Pokud je obraz jednoduchá, pak histogram obsahuje dva vysoké vrcholy s údolím mezi nimi. Práh lze potom snadno zvolit jako dno tohoto údolí.
+Gradientní prahování::
+Práh počítaný jako vážený průměr intenzit, kde váhy odpovídají normalizované velikosti gradientu. Vychází z předpokladu, že gradient má velkou velikost
+v místech výskytu hran => vyšší váha.
++
+[stem]
+++++
+a_{th} = \sum_{u,v} I(u,v) \cdot \frac{|\nabla I(u,v)|}{\sum_{i,j} |\nabla I(i,j)|}
+++++
+
+Unimodální histogram::
+Pro obrazy, kde je viditelné jediné výrazné maximum (pro pixely pozadí). Použijeme Trojúhelníkovou metodu:;
++
+[stem]
+++++
+\begin{aligned}
+M &\equiv [m, h(m)] &\text{ globální maximum histogramu}\\
+N &\equiv [n, h(n)] &\text{ kde } n \text{ je hodnota intenzity s nenulovou četností nejdál od } m\\
+T &\equiv [t, h(t)] &\text{ bod s největší vzdáleností od přímky } MN
+\end{aligned}
+++++
++
+image::./img/szp10_unimodal.png[width=500]
 
 Hysterézní prahování::
 Používá dva prahy: _nízký_ a _vysoký_. S pixely mezi nimi zachází _vcelku inteligentně_.
 +
 --
 * Pixely s hodnotou *vyšší* než _vysoký práh_ jsou označeny jako popředí.
-* Pixely s hodnotou *vyšší* než _nízký práh_ jsou oznaženy jako popředí, jen pokud z něj existuje cesta přes pixely s hodnotou mezi _nízkým_ a _vysokým práhem_ k pixelu v popředí.
+* Pixely s hodnotou *vyšší* než _nízký práh_ jsou oznaženy jako popředí, pokud obsahují alespoň jeden pixel získaný vysokým prahem.
 * Všechny ostatní pixely jsou označeny jako pozadí.
 --
 +
 image::./img/szp10_hysteresis.png[width=400]
+
+Víceúrovňové prahování::
+Pokud je obraz jednoduchá, pak histogram obsahuje více vysokých vrcholů s údolím mezi nimi. Práh lze potom snadno zvolit jako dno těchto údolí.
+
+==== Lokální (adaptivní) prahování
+Práh se mění podle pozice v obraze. Třeba podle průměru intenzit v okolí.
+
+=== Algoritmus záplava (watershed)
+Přístup k segmentaci obrazu z matematické morfologie, který kombinuje segmentaci pomocí narůstání oblastí a segmentaci založenou na hranách.
+
+Detaily jsou popsány dále v textu.
 
 
 == Popis objektů
@@ -107,6 +172,20 @@ Descriptory dělíme na:
 ** Potřebujeme segmentaci.
 --
 
+Číselné charakteristiky intentizity::
+Průměr, rozptyl, medián, kvantily, maximum, atd. přes intenzity pixelů objektu.
+
+Velikost / plocha::
+Počet pixelů objektu.
+
+Obvod::
+Počet hraničních pixelů objektu.
+
+Topologické vlastnosti::
+Vlastnosti objektu nezávislé na jeho deformaci. Např. počet děr.
++
+IMPORTANT: Pro topologické vlastnosti viz otázka link:../3d-modelovani-a-datove-struktury/[3D modelování a datové struktury].
+
 Ohraničující obdélník / bounding box::
 Nejmenší obdélník ohraničující objekt.
 +
@@ -132,17 +211,23 @@ Jak moc je objekt podobný kruhu?
 Konvexní obal / convex hull::
 Nejmenší konvexní polygon ohraničující objekt.
 
+Hranice / boundary::
+Popisuje okraj objektu. Obvykle je zakódovaná jako posloupnost bodů.
+
 Geometrický střed / centroid::
 Průměr souřadnic pixelů objektu.
 
 Těžiště / hmotný střed / center of mass::
 Vážený průměr souřadnic pixelů objektu. Váhy jsou intenzity pixelů. Pokud je objekt homogenní, je těžiště totožné s geometrickým středem.
 
-Hranice / boundary::
-Popisuje okraj objektu. Obvykle je zakódovaná jako posloupnost bodů.
-
 Momenty / moments::
 Popisují tvar objektu. Používájí se ale i pro popis pravděpodobnostních rozdělení.
++
+Moment se obecně řídí vzorcem stem:[m_{pq}(R) = \sum_{(u,v) \in R} I(u,v) \cdot u^p v^q], kde stem:[I(u,v)] je intenzita pixelu na pozici stem:[(u,v)] a stem:[R] je oblast objektu.
++
+Vidíme, že obsah odpovídá stem:[m_{00}] a geometrický střed (=těžiště) stem:[(m_{10}/m_{00}, m_{01}/m_{00})].
++
+Můžeme využít *centrální momenty*, které jsou posunuté do těžiště objektu stem:[m_{pq}(R) = \sum_{(u,v) \in R} I(u,v) \cdot (u - \hat{x})^p \cdot (v - \hat{y})^q]
 +
 --
 * _První moment_: střední hodnota / hmotný střed.
@@ -163,22 +248,8 @@ TIP: "Moment" nereferuje na čas, ale spíš na svůj starý význam "důležito
 Prostorová orientace / spatial orientation::
 Směr a velikost delší strany nejmenšího bounding boxu. Lze ji také spočítat pomocí momentů setrvačnosti.
 
-Číselné charakteristiky intentizity::
-Průměr, rozptyl, medián, kvantily, maximum, atd. přes intenzity pixelů objektu.
-
-Velikost / plocha::
-Počet pixelů objektu.
-
 Podlouhlost / elongatedness / eccentricity::
 Poměr mezi délkou a šířkou objektu. Dá se spočítat pomocí momentů setrvačnosti.
-
-Obvod::
-Počet hraničních pixelů objektu.
-
-Topologické vlastnosti::
-Vlastnosti objektu nezávislé na jeho deformaci. Např. počet děr.
-+
-IMPORTANT: Pro topologické vlastnosti viz otázka link:../3d-modelovani-a-datove-struktury/[3D modelování a datové struktury].
 
 Matice součásného výskytu / co-occurrence matrix::
 Matice, která popisuje, jak často se vyskytují dvojice pixelů s danými intenzitami v dané vzdálenosti a směru. Používá se pro popis textury.
@@ -357,7 +428,7 @@ Množina souřadnic, pomocí které je obraz zpracováván. <<pb130>>
 +
 --
 * Má definovaný _počátek_ -- stem:[(0, 0)]. Schematicky se značí křížkem.
-* Aktuálně uvažovaná souřadnie do něj nemusí patřit.
+* Aktuálně uvažovaná souřadnice do něj nemusí patřit.
 --
 +
 image::./img/szp10_structuring_elements.png[width=100%]

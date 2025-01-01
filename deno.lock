@@ -4,6 +4,7 @@
     "specifiers": {
       "npm:@asciidoctor/core@3": "npm:@asciidoctor/core@3.0.2",
       "npm:@js-temporal/polyfill@0.4.4": "npm:@js-temporal/polyfill@0.4.4",
+      "npm:@types/node": "npm:@types/node@18.16.19",
       "npm:@types/react@18.2.47": "npm:@types/react@18.2.47",
       "npm:asciidoctor-kroki": "npm:asciidoctor-kroki@0.18.1_@asciidoctor+core@3.0.2",
       "npm:autoprefixer@10.4.16": "npm:autoprefixer@10.4.16_postcss@8.4.32",
@@ -281,6 +282,10 @@
       },
       "@pagefind/windows-x64@1.0.4": {
         "integrity": "sha512-QlBCVeZfj9fc9sbUgdOz76ZDbeK4xZihOBAFqGuRJeChfM8pnVeH9iqSnXgO3+m9oITugTf7PicyRUFAG76xeQ==",
+        "dependencies": {}
+      },
+      "@types/node@18.16.19": {
+        "integrity": "sha512-IXl7o+R9iti9eBW4Wg2hx1xQDig183jj7YLn8F7udNceyfkbn1ZxmzZXuak20gR40D7pIkIY1kYGx5VIGbaHKA==",
         "dependencies": {}
       },
       "@types/prop-types@15.7.11": {
