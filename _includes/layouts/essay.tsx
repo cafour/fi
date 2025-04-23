@@ -8,9 +8,9 @@ export default ({ title, children }: Lume.Data) => (
       <h1>{title}</h1>
     </header>
     <main>
-      <section>
+      <article>
         {children}
-      </section>
+      </article>
     </main>
   </>
 );

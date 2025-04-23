@@ -17,7 +17,7 @@
 }
 
 @include in-light {
-    --color-admonition-caution: #{color.adjust($color-admonition-caution, $lightness: +10%)};
+    --color-admonition-caution: #{color.adjust($color-admonition-caution, $lightness: +30%, $saturation: -30%)};
     --color-admonition-important: #{color.adjust($color-admonition-important, $lightness: +25%)};
     --color-admonition-note: #{color.adjust($color-admonition-note, $lightness: +25%)};
     --color-admonition-tip: #{color.adjust($color-admonition-tip, $lightness: +25%)};

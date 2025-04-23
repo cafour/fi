@@ -5,7 +5,8 @@ export interface FrontPageData extends Lume.Data {
 
 export default ({ title, children, styles, useNewStyle }: FrontPageData) => {
   return (
-    <html>
+    // dark theme is not ready yet
+    <html data-theme="light">
       <head>
         <meta charSet="utf-8" />
         <link rel="icon" sizes="16x16" href="/icons/fi_16.ico" />
