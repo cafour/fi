@@ -292,7 +292,7 @@ Výsledná matice je:
 
 [stem]
 ++++
-P_\text{persp} =  M_\text{depth} \cdot S \cdot D \cdot T =
+P_\text{persp} =  S \cdot D \cdot M_\text{depth} \cdot T =
 
 \begin{bmatrix}
     \textcolor{green}{\frac{2 \cdot \text{near}}{\text{right} - \text{left}}}
