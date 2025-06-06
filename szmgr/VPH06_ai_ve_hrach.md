@@ -3,13 +3,11 @@ title: "Umělá inteligence v počítačových hrách"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Pohyb, kinematický a dynamický pohyb. Hledání cest, algoritmy prohledávání grafu, A\* s jeho datovými strukturami a heuristikami, reprezentace herního světa, hierarchické hledání cest. Rozhodování, rozhodovací stromy, stavové automaty, stromy chování, cílem orientované chování. Taktická a strategická umělá inteligence, navigační body a taktika, taktická analýza. Deskové hry, minimax algoritmy, Monte Carlo prohledávání.
+> <br>
+> _PA217_
 
-Pohyb, kinematický a dynamický pohyb. Hledání cest, algoritmy prohledávání grafu, A\* s jeho datovými strukturami a heuristikami, reprezentace herního světa, hierarchické hledání cest. Rozhodování, rozhodovací stromy, stavové automaty, stromy chování, cílem orientované chování. Taktická a strategická umělá inteligence, navigační body a taktika, taktická analýza. Deskové hry, minimax algoritmy, Monte Carlo prohledávání.
-
-_PA217_
-
-</dd></dl>
 
 ## Pohyb
 
@@ -313,8 +311,8 @@ Agenti nevidí herní svět stejně jako hráči, vidí ho spíš jako graf s uz
 
 Nejprve hledá cestu na vysoké úrovni (mezi clustery), pak v rámci clusteru.
 
-**❗ IMPORTANT**\
-Výhodou je, že zrychluje hledání cest.
+> [!IMPORTANT]
+> Výhodou je, že zrychluje hledání cest.
 
 Nevýhodou je, že vzdálenost mezi clustery se blbě měří, protože hráč do něj mohl vstoupit z různých míst. V praxi se používá třeba:
 

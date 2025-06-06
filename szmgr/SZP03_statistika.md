@@ -3,18 +3,16 @@ title: "Statistika"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Diskrétní a spojité náhodné veličiny (NV), základní rozložení. Číselné charakteristiky NV. Centrální limitní věta. Bodové odhady, intervaly spolehlivosti, testování statistických hypotéz, hladina významnosti. Základní parametrické a neparametrické testy, ANOVA, testy nezávislosti NV. Lineární regrese, celkový F-test, dílčí t-testy.
+> <br>
+> _MV013_
 
-Diskrétní a spojité náhodné veličiny (NV), základní rozložení. Číselné charakteristiky NV. Centrální limitní věta. Bodové odhady, intervaly spolehlivosti, testování statistických hypotéz, hladina významnosti. Základní parametrické a neparametrické testy, ANOVA, testy nezávislosti NV. Lineární regrese, celkový F-test, dílčí t-testy.
-
-_MV013_
-
-</dd></dl>
 
 **Opakování**
 
-**💡 TIP**\
-Viz bakalářské otázky [Kombinatorika a pravděpodobnost](../../szb/kombinatorika-a-pravdepodobnost/) a [Statistika](../../szb/statistika/).
+> [!TIP]
+> Viz bakalářské otázky [Kombinatorika a pravděpodobnost](../../szb/kombinatorika-a-pravdepodobnost/) a [Statistika](../../szb/statistika/).
 
 - **Statistika**\
   Zabývá se sbíráním, organizací, analýzou, interpretací a prezentací dat. [statistics](#statistics)
@@ -143,8 +141,8 @@ Stejně jako náhodné veličiny popisují jevy, číselné charakteristiky popi
 - **Střední hodnota / mean / expected value**\
   Průměr hodnot veličiny vážený jejich pravděpodobností. Značí se $\overline{X}$ nebo $E(X)$.
 
-  **📌 NOTE**\
-   Taky někdy označovaný jako _obecný moment prvního řádu / první obecný moment_. [moment](#moment)
+  > [!NOTE]
+  > Taky někdy označovaný jako _obecný moment prvního řádu / první obecný moment_. [moment](#moment)
 
 - **$\alpha$-kvantil $Q_\alpha$**\
   Dělí statický soubor na stejně velké části.
@@ -174,8 +172,8 @@ Jak moc se od sebe prvky liší (nezávisle na konstantním posunutí)?
   \text{var}(X) = E\left((x_i - E(X))^2\right)
   ```
 
-  **📌 NOTE**\
-   Taky někdy označovaný jako _centrální moment druhého řádu / druhý centrální moment_. [moment](#moment)
+  > [!NOTE]
+  > Taky někdy označovaný jako _centrální moment druhého řádu / druhý centrální moment_. [moment](#moment)
 
 - **Směrodatná odchylka / standard deviation**\
   Míra variability NV. Značí se $\sigma$ nebo $\text{SD}(X)$. Je definovaná jako $\sqrt{\sigma^2}$.
@@ -227,8 +225,8 @@ Popisuje chování _výběrového průměru_ pro velké soubory vzorků a umož�
 
 - **Lévyho-Lindenbergova věta**
 
-  **💡 TIP**\
-  Zobecnění Moivreovy-Laplacovy věty.
+  > [!TIP]
+  > Zobecnění Moivreovy-Laplacovy věty.
 
   Mějme NV $X$. Pokud je $X$ součtem $n$ vzájemně nezávislých NV $X_1, X_2, ..., X_n$ se shodným rozdělením libovolného typu, s konečnou střední hodnotou $E(X_i) = \mu$ a konečným rozptylem $D(X_i) = \sigma^2$, pak pro normovanou NV $U$ asymptoticky s $n \to \infty$ platí:
 
@@ -300,8 +298,8 @@ Popisuje chování _výběrového průměru_ pro velké soubory vzorků a umož�
   > T_n = T(X_1, X_2, \ldots, X_n)
   > ```
 
-  **💡 TIP**\
-   _Estimator_ je funkce počítající statistiku použitá k odhadu parametru. [statistic](#statistic)
+  > [!TIP]
+  > _Estimator_ je funkce počítající statistiku použitá k odhadu parametru. [statistic](#statistic)
 
 - **Bodový odhad / point estimate / pointwise estimate**\
   Odhad parametru daný **jednou hodnotou**, která hodnotu parametru aproximuje.
@@ -358,11 +356,11 @@ Máme vzorek velikosti $n$ s výběrovým průměrem $\overline{X}$ a výběrov�
 
   Říká, jak dobře náš model (rozdělení pravděpodobnosti náhodné veličiny dané parametry) sedí na naměřená data.
 
-  **📌 NOTE**\
-  Pravděpodobnost je funkce jevů. Likelihood je funkce parametrů modelu.
+  > [!NOTE]
+  > Pravděpodobnost je funkce jevů. Likelihood je funkce parametrů modelu.
 
-  **📌 NOTE**\
-  Likelihood nemusí nutně vracet čísla z intervalu $\lbrack 0, 1 \rbrack$.
+  > [!NOTE]
+  > Likelihood nemusí nutně vracet čísla z intervalu $\lbrack 0, 1 \rbrack$.
 
 - **Maximum likelihood estimation (MLE)**\
   Metoda odhadu parametru založená na maximalizaci likelihoodu, že model sedí na naměřená data. [mle](#mle)
@@ -402,12 +400,11 @@ Platí presumpce nevinny. Předpokládáme, že člověk zločin nespáchal, dok
   - _Typ I_: zamítnutí $H_0$, i když je pravdivá -- _false positive_.
   - _Typ II_: nezamítnutí $H_0$, i když je nepravdivá -- _false negative_.
 
-    <dl><dt><strong>📌 NOTE</strong></dt><dd>
-
-    _Positive_ = zamítnutí $H_0$, tedy potvrzení $H_1$.
-
-    _Negative_ = nezamítnutí $H_0$, tedy o $H_1$ nevíme nic.
-    </dd></dl>
+    > [!NOTE]
+    > _Positive_ = zamítnutí $H_0$, tedy potvrzení $H_1$.
+    > <br>
+    > _Negative_ = nezamítnutí $H_0$, tedy o $H_1$ nevíme nic.
+    
 
 - **$p$-hodnota (hladina významnosti)**\
   Nejmenší hladina významnosti $\alpha$, při které ještě zamítáme $H_0$. [p-value](#p-value)
@@ -418,8 +415,8 @@ Platí presumpce nevinny. Předpokládáme, že člověk zločin nespáchal, dok
   p = P(\text{type I error}) = P(\text{we reject } H_0 \;|\; H_0)
   ]
 
-  **💡 TIP**\
-   Pokud $p$-value vyjde menší než požadovaná hladina významnosti $\alpha$, pak pravděpodobnost, že došlo k chybě typu I je dostatečně malá na to, abychom mohli tvrdit, že zavrhujeme $H_0$, protože $H_0$ neplatí, a tedy akceptujeme $H_1$.
+  > [!TIP]
+  > Pokud $p$-value vyjde menší než požadovaná hladina významnosti $\alpha$, pak pravděpodobnost, že došlo k chybě typu I je dostatečně malá na to, abychom mohli tvrdit, že zavrhujeme $H_0$, protože $H_0$ neplatí, a tedy akceptujeme $H_1$.
 
 ### Parametrické testy
 

@@ -3,16 +3,14 @@ title: "Modelování 3D postav (2023)"
 description: "TODO"
 ---
 
-**⚠️ WARNING**\
-Tato otázka zatím nebyla aktualizována. Nová varze obsahuje pár věcí navíc!
+> [!WARNING]
+> Tato otázka zatím nebyla aktualizována. Nová varze obsahuje pár věcí navíc!
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Avatar, postava, model. Modelování mnohoúhelníkových sítí (high-poly, low-poly), topologie a modifikace těchto sítí, tvorba textur (maps baking). Kostra modelu a potažení kostry (rigging, skinning).
+> <br>
+> _VV035, VV036_
 
-Avatar, postava, model. Modelování mnohoúhelníkových sítí (high-poly, low-poly), topologie a modifikace těchto sítí, tvorba textur (maps baking). Kostra modelu a potažení kostry (rigging, skinning).
-
-_VV035, VV036_
-
-</dd></dl>
 
 - **Model**\
   Model je komplikované slovo s mnoha významy:
@@ -81,14 +79,14 @@ _VV035, VV036_
 
 ## Topologie a modifikace
 
-**💡 TIP**\
-Pro základní topologické pojmy viz [3D modelování a datové struktury](../3d-modelovani-a-datove-struktury/).
+> [!TIP]
+> Pro základní topologické pojmy viz [3D modelování a datové struktury](../3d-modelovani-a-datove-struktury/).
 
 - **Meshflow**\
   Logické uspořádání hran a polygonů v mnohoúhelníkové síti.
 
-  **📌 NOTE**\
-   Nepovedlo se mi tenhle termín najít jinde než ve slidech pro VV035/VV036. Zdá se mi, že je to v zásadě synononymum pro _topologii_.
+  > [!NOTE]
+  > Nepovedlo se mi tenhle termín najít jinde než ve slidech pro VV035/VV036. Zdá se mi, že je to v zásadě synononymum pro _topologii_.
 
 - **Quad topologie**\
   Při modelování (nejen postav) se snažíme, aby všechny polygony byly quady (čtyřúhelníky). Je to zejména proto, že subdivision na nich funguje lépe, a _3D artisti_ dokáží lépe odhadnout, co se s nimi při takových operacích stane.
@@ -112,8 +110,8 @@ Pro základní topologické pojmy viz [3D modelování a datové struktury](../3
 
 Typický 3D model se skládá nejen z meshe, ale i z materiálů, které jsou v herních enginech typicky reprezentovány texturami (mapami).
 
-**📌 NOTE**\
-Typy map souvisí s _physically based rendering_ (PBR), kterému se částečně věnuje otázka [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/).
+> [!NOTE]
+> Typy map souvisí s _physically based rendering_ (PBR), kterému se částečně věnuje otázka [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/).
 
 - **UV unwrapping**\
   Tvorba 2D reprezentace 3D modelu -- projekce jeho polygonů na 2D plochu. Toto mapování se posléze využívá při texturování. Proces zahrnuje označování _seams_ -- hran, podél kterých se bude model "rozřezávat". Nevhodná volba seams vede k deformaci textur.

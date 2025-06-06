@@ -3,13 +3,11 @@ title: "Herní design II"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Jednotka herního designu, návrh designu hry, designový dokument hry. Teoretické koncepty herní analýzy - magický kruh (Huizinga), kybertext (Aarseth), plynutí (flow; Csikszentmihalyi). Symetrické a nesymetrické (kompetitivní) hry, dominantní strategie. Narativ, vyprávění, příběh, hraní (gameplay). Tutoriál (návod/naučení), onboarding (organické/neinvazivní naučení hry), foreshadowing (před-naznačování). Testování herního zážitku (cílové skupiny (focus), obecné testování hry (play)).
+> <br>
+> _PA215, PA216_
 
-Jednotka herního designu, návrh designu hry, designový dokument hry. Teoretické koncepty herní analýzy - magický kruh (Huizinga), kybertext (Aarseth), plynutí (flow; Csikszentmihalyi). Symetrické a nesymetrické (kompetitivní) hry, dominantní strategie. Narativ, vyprávění, příběh, hraní (gameplay). Tutoriál (návod/naučení), onboarding (organické/neinvazivní naučení hry), foreshadowing (před-naznačování). Testování herního zážitku (cílové skupiny (focus), obecné testování hry (play)).
-
-_PA215, PA216_
-
-</dd></dl>
 
 ## Návrh hry
 
@@ -73,8 +71,8 @@ Hry můžou mít různou obtížnost. Ta se dá mnohdy explicitně nastavit v me
 
 #### Flow channel
 
-**💡 TIP**\
-Termín, se kterým přišel Mihaly Csikszentmihalyi _[me-high cheek-sent-me-high]_.
+> [!TIP]
+> Termín, se kterým přišel Mihaly Csikszentmihalyi _[me-high cheek-sent-me-high]_.
 
 Balanc mezi nudou a přílišnou obtížností.
 
@@ -87,8 +85,8 @@ Balanc mezi nudou a přílišnou obtížností.
 
 ## Teorie her
 
-**⚠️ WARNING**\
-Game design != Game theory
+> [!WARNING]
+> Game design != Game theory
 
 Teorie her se na _hry_ dívá jako na matematické modely, které popisují chování nějakých racionálních agentů.[wiki](#wiki)
 
@@ -207,8 +205,8 @@ V emergentním vyprávění je příběh důsledkem toho, že hra je dostatečn�
 - **Content generation**\
   Některé hry umožňují hráčům vytvářet nebo přidávat vlastní obsah. Toto velice často podporuje emergentní vyprávění. Možnost měnit věci, zvyšuje entropii / kreativní chaos a podporuje tak fandom, prosumerismus.
 
-  **📌 NOTE**\
-   Prosumer = producer + consumer
+  > [!NOTE]
+  > Prosumer = producer + consumer
 
 ## Tutoriál a onboarding
 
@@ -234,19 +232,17 @@ Jak tutoriál tak onboarding učí hráče, jak hru hrát. Onboarding je širš�
   - Kognitivní (např. paměť, pozornost)
   - Senzorické (např. zrak, sluch, hmat)
 
-    <dl><dt><strong>⚠️ WARNING</strong></dt><dd>
+    > [!WARNING]
+    > Pozor na kognitivní overload!
+    
 
-    Pozor na kognitivní overload!
-    </dd></dl>
-
-    <dl><dt><strong>💡 TIP</strong></dt><dd>
-
-    Doporučuje se učit hráče **maximálně** tři věci najednou. Může to být třeba:
-
-    1. Jak aktivovat nějakou schopnost.
-    2. Jak ji použít jako reakci na nepřítele.
-    3. A jak navíc uhýbat před projektily, zatímco ji používám.
-    </dd></dl>
+    > [!TIP]
+    > Doporučuje se učit hráče **maximálně** tři věci najednou. Může to být třeba:
+    > <br>
+    > 1. Jak aktivovat nějakou schopnost.
+    > 2. Jak ji použít jako reakci na nepřítele.
+    > 3. A jak navíc uhýbat před projektily, zatímco ji používám.
+    
 
 - **Tutoriál**\
   Typicky jeden nebo více levelů, kdy jsou hráči dány informace, jak hru hrát. Tyto levely jsou často vytrženy ze zbytku hry a nejsou součástí vyprávění a herního světa.

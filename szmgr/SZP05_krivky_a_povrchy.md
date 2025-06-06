@@ -3,13 +3,11 @@ title: "Křivky a povrchy"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Implicitní a parametrické reprezentace. Interpolace a aproximace. Cn, Gn spojitost, podmínky spojitosti pro po částech definované funkce. Bézierovy křivky, B-spline křivky, pass:[&lt;s>NURBS, &lt;/s>]Coonsovy pass:[&lt;s>křivky a &lt;/s>]pláty. Povrchy tvořené rekurzivním dělením polygonů.
+> <br>
+> _PB009, PA010_
 
-Implicitní a parametrické reprezentace. Interpolace a aproximace. Cn, Gn spojitost, podmínky spojitosti pro po částech definované funkce. Bézierovy křivky, B-spline křivky, pass:[&lt;s>NURBS, &lt;/s>]Coonsovy pass:[&lt;s>křivky a &lt;/s>]pláty. Povrchy tvořené rekurzivním dělením polygonů.
-
-_PB009, PA010_
-
-</dd></dl>
 
 ## Druhy reprezentace
 
@@ -47,11 +45,11 @@ kde $c$ je konstanta a je obvykle rovná 0.
 
 Tato rovnice udává množinu bodů, ze které se křivka nebo povrch sestává. Takové množině se někdy říká _level set_ a metodám, které s nimi pracují _level-set methods_.
 
-**❗ IMPORTANT**\
-Výhodou implicitně zadaných ploch je kompaktnější reprezentace a jednodušší ray casting. Nicméně výpočty s nimi jsou časově náročné, takže se stejně nejdřív převádí na polygonové meshe -- _polygonizace_.
+> [!IMPORTANT]
+> Výhodou implicitně zadaných ploch je kompaktnější reprezentace a jednodušší ray casting. Nicméně výpočty s nimi jsou časově náročné, takže se stejně nejdřív převádí na polygonové meshe -- _polygonizace_.
 
-**❗ IMPORTANT**\
-Tahle sekce přesahuje do [3D modelování a datové struktury](../3d-modelovani-a-datove-struktury/) -> _Implicitní reprezentace a modelování_.
+> [!IMPORTANT]
+> Tahle sekce přesahuje do [3D modelování a datové struktury](../3d-modelovani-a-datove-struktury/) -> _Implicitní reprezentace a modelování_.
 
 ### Parametrická reprezentace
 
@@ -228,8 +226,8 @@ Je podobná parametrické spojitosti, ale vyžaduje jen "geometrickou" spojitost
 
 Platí, že $C^n \Rightarrow G^n$, ale obráceně $G^n \not\Rightarrow C^n$.
 
-**📌 NOTE**\
-Podle slidů z PB009 musí faktor úměrnosti být různý od 0. [pb009-2019](#pb009-2019) Podle Barskyho a DeRoseho musí v první derivaci být $> 0$ a v dalších už je to šumák. [geometric-continuity](#geometric-continuity) Co je správně? Kdo ví. Nemám dost častu to zjistit, takže to ponechávám jako cvičení čtenáři.
+> [!NOTE]
+> Podle slidů z PB009 musí faktor úměrnosti být různý od 0. [pb009-2019](#pb009-2019) Podle Barskyho a DeRoseho musí v první derivaci být $> 0$ a v dalších už je to šumák. [geometric-continuity](#geometric-continuity) Co je správně? Kdo ví. Nemám dost častu to zjistit, takže to ponechávám jako cvičení čtenáři.
 
 ## Křivky
 
@@ -381,8 +379,8 @@ Mezi jejich vlastnosti patří:
 
 Lze ji definovat pomocí **Cox-de Boorovy** rekurzivní formule:
 
-**💡 TIP**\
-de Boorův algoritmus je generalizací DeCasteljauova algoritmu ale pro B-splajny.
+> [!TIP]
+> de Boorův algoritmus je generalizací DeCasteljauova algoritmu ale pro B-splajny.
 
 ```math
 \begin{aligned}
@@ -412,8 +410,8 @@ Jejich užitečnost spočívá v tom, že libovolný splajn stupně $n$ daný se
 S(x) = \sum_{i=0} c_i B_{i,n}(x)
 ```
 
-**📌 NOTE**\
-Uzlů je zpravidla víc než $n+1$, protože pak teprve máme víc než jeden B-spline, který kombinujeme.
+> [!NOTE]
+> Uzlů je zpravidla víc než $n+1$, protože pak teprve máme víc než jeden B-spline, který kombinujeme.
 
 - **Uniformní B-splajny**\
   Uzly jsou rozloženy rovnoměrně. Tedy mezi každými dvěma uzly $t_i$ a $t_{i+1}$ je stejná vzdálenost $h$.
@@ -447,8 +445,8 @@ Uzlů je zpravidla víc než $n+1$, protože pak teprve máme víc než jeden B-
 
   ![width=400](./img/szp05_coons_basis.png)
 
-  **📌 NOTE**\
-   Něco ohledně tohohle termínu mi hrozně smrdí. Zdá se, že jediní, kdo používají "coons cubic curve" jsme my a ČVUT.
+  > [!NOTE]
+  > Něco ohledně tohohle termínu mi hrozně smrdí. Zdá se, že jediní, kdo používají "coons cubic curve" jsme my a ČVUT.
 
 ## Povrchy
 
@@ -490,8 +488,8 @@ Interpolační povrch.
 
 Plochy vzniknuvší interpolací mezi křivkami udávající jejich okraje. Dají se na sebe pěkně napojovat, právě protože jsou definovány svými okraji.
 
-**⚠️ WARNING**\
-Coonsovy pláty jsou **interpolační**, zatímco Coonsovy křivky jsou **aproximační**.
+> [!WARNING]
+> Coonsovy pláty jsou **interpolační**, zatímco Coonsovy křivky jsou **aproximační**.
 
 - **Bilineární Coonsovy pláty**
 
@@ -622,8 +620,8 @@ Aproximační plochy analogické B-spline křivkám, ale se dvěma parametry.
 
   $N_{i,n}(u)$ a $N_{j,m}(v)$ jsou B-spline bázové funkce stupně $n$ a $m$. $w_{i,j}$ jsou váhy.
 
-**💡 TIP**\
-NURBS plochy se využívají v modelovací technice _sweeping_ (šablonování), kdy se množina bodů pohybuje (posunuje, rotuje, ...) prostorem za vniku tělesa. [sweeping](#sweeping)
+> [!TIP]
+> NURBS plochy se využívají v modelovací technice _sweeping_ (šablonování), kdy se množina bodů pohybuje (posunuje, rotuje, ...) prostorem za vniku tělesa. [sweeping](#sweeping)
 
 ## Surface subdivision / rekurzivní dělení polygonů
 

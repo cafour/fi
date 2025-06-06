@@ -3,13 +3,11 @@ title: "Zpracování rastrového obrazu"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Bodové transformace. Histogram, vyrovnání histogramu, analýza histogramu. Lineární a nelineární filtry. Detekce hran. Fourierova transformace. Vzorkovací teorém, převzorkování, geometrické transformace. Vlnková transformace. Houghova/Radonova transformace.
+> <br>
+> _PB130/PV131_
 
-Bodové transformace. Histogram, vyrovnání histogramu, analýza histogramu. Lineární a nelineární filtry. Detekce hran. Fourierova transformace. Vzorkovací teorém, převzorkování, geometrické transformace. Vlnková transformace. Houghova/Radonova transformace.
-
-_PB130/PV131_
-
-</dd></dl>
 
 - **Rastr / bitmapa**\
   Obraz reprezentovaný pomocí 2D pole _pixelů_. Každý pixel obsahuje jednu (pokud je obraz černobílý) nebo více (typicky RGB nebo CMYK) intenzit. Intenzity jsou zakódovány na _bity_. [raster](#raster)
@@ -149,8 +147,8 @@ Histogram kvantifikuje množství a frekvenci barev obsažených v obraze. Ve st
   ![width=49%](./img/szp09_histogram_eq_after_01.jpg)
   ![width=49%](./img/szp09_histogram_eq_after_02.svg)
 
-  **📌 NOTE**\
-   Původní fotku vyfotil [Phillip](https://commons.wikimedia.org/w/index.php?curid=855363) [Capper](https://commons.wikimedia.org/w/index.php?curid=855383).
+  > [!NOTE]
+  > Původní fotku vyfotil [Phillip](https://commons.wikimedia.org/w/index.php?curid=855363) [Capper](https://commons.wikimedia.org/w/index.php?curid=855383).
 
 - **Analýza histogramu**\
   Z histogramu lze vysledovat řadu věcí jak manuálně tak automaticky. Často se proto používá jako mezikrok v jiných algoritmech. Lze z něj například zjistit: [histogram](#histogram) [histogram-bbc](#histogram-bbc)
@@ -194,8 +192,8 @@ Histogram kvantifikuje množství a frekvenci barev obsažených v obraze. Ve st
 
   kde $h$ je _kernel / konvoluční jádro_ dáno jako matice velikosti $(2k + 1) \times (2k + 1)$.
 
-  **⚠️ WARNING**\
-   Všimni si, že kvůli $f \lbrack x - m, x - n \rbrack$ se jádro při aplikaci na obraz překlápí. Kdyby to bylo $f \lbrack x + m, x + n \rbrack$, tak jde o **korelaci**, ne o konvoluci.
+  > [!WARNING]
+  > Všimni si, že kvůli $f \lbrack x - m, x - n \rbrack$ se jádro při aplikaci na obraz překlápí. Kdyby to bylo $f \lbrack x + m, x + n \rbrack$, tak jde o **korelaci**, ne o konvoluci.
 
   Konvoluce má složitost $O(MNKL)$, kde $M \times N$ je velikost obrazu a $K \times L$ je velikost jádra. Pro velká jádra se složitost blíží $O(M^2 N^2)$.
 
@@ -268,8 +266,8 @@ Proces, kdy hledání _hran_ v obraze. Hrana je křivka, podél níž pixely vý
 - Bývá implementováná pomocí (první, druhé) derivace (resp. numerické diferenciace).
 - Hrany lze detekovat pomocí konvoluce.
 
-**❗ IMPORTANT**\
-Numerické diferenciaci se věnuje otázka [Numerické metody](../numericke-metody/).
+> [!IMPORTANT]
+> Numerické diferenciaci se věnuje otázka [Numerické metody](../numericke-metody/).
 
 ### Podle první derivace (gradientu)
 
@@ -296,10 +294,9 @@ Numerické diferenciaci se věnuje otázka [Numerické metody](../numericke-meto
 
   kde $I$ je vstupní obraz.
 
-    <dl><dt><strong>📌 NOTE</strong></dt><dd>
-
-  Všimni si podobnosti s Sobelovým operátorem. Jen místo Gaussovského rozmazání používá box filtr.
-    </dd></dl>
+    > [!NOTE]
+    > Všimni si podobnosti s Sobelovým operátorem. Jen místo Gaussovského rozmazání používá box filtr.
+    
 
 - **Sobelův operátor**\
   Aproximuje velikost gradientu pomocí **centrálních** konečných diferencí. Skládá se ze dvou konvolucí s jádry:
@@ -429,11 +426,9 @@ Patří sem transformace jako:
 >
 > — Nika Kunzová
 
-<dl><dt><strong>💡 TIP</strong></dt><dd>
+> [!TIP]
+> 3Blue1Brown má skvělý [video o Fourierově transformaci](https://www.youtube.com/watch?v=spUNpyF58BY), ze kterého to pochopíš! _(a evidentně je tak dobrý, že mi Copilot sám nabídl správný link...)_
 
-3Blue1Brown má skvělý [video o Fourierově transformaci](https://www.youtube.com/watch?v=spUNpyF58BY), ze kterého to pochopíš! _(a evidentně je tak dobrý, že mi Copilot sám nabídl správný link...)_
-
-</dd></dl>
 
 Je operace (integrální transformace) při níž je obraz převeden z _prostorové_ do _frekvenční_ domény. A při _inverzní Fourierově transformaci_ obráceně. [fourier](#fourier)
 
@@ -540,11 +535,11 @@ Samplování je převod spojitého signálu na diskrétní. [sampling](#sampling
   - Původní spojitý signál musí být frekvenčně omezený (band-limited), aby bylo možné v něm určit nejvyšší frekvenci.
   - Při nesplnění těchto podmínek vzniká aliasing.
 
-    **💡 TIP**\
-    Aliasingu se věnuje část otázky [Renderování s využitím GPU](../renderovani-s-vyuzitim-gpu/).
+    > [!TIP]
+    > Aliasingu se věnuje část otázky [Renderování s využitím GPU](../renderovani-s-vyuzitim-gpu/).
 
-  **💡 TIP**\
-   Intuitivně je signál hromádka kopečků. Abychom poznali i ty nejužší kopečky -- s nejvyšší frekvencí -- musíme mít dostatečně jemné síto -- koukat na kopečky s dvakrát takovou frekvencí, abychom si všimli, že někde začíná a končí.
+  > [!TIP]
+  > Intuitivně je signál hromádka kopečků. Abychom poznali i ty nejužší kopečky -- s nejvyšší frekvencí -- musíme mít dostatečně jemné síto -- koukat na kopečky s dvakrát takovou frekvencí, abychom si všimli, že někde začíná a končí.
 
 - **Rekonstrukce**\
   Proces, kdy z diskrétního signálu zpět získáme spojitý signál. [reconstruction](#reconstruction)
@@ -581,11 +576,9 @@ Patří sem operace jako:
 
 ## Vlnková transformace / wavelet transform
 
-<dl><dt><strong>💡 TIP</strong></dt><dd>
+> [!TIP]
+> Opět výborné video, bohužel ne od 3b1b, ale obdobně kvalitně zpracované: [Wavelets: a mathematical microscope](https://www.youtube.com/watch?v=jnxqHcObNK4).
 
-Opět výborné video, bohužel ne od 3b1b, ale obdobně kvalitně zpracované: [Wavelets: a mathematical microscope](https://www.youtube.com/watch?v=jnxqHcObNK4).
-
-</dd></dl>
 
 - **Vlnka / wavelet**\
   Funkce $\psi$, která je omezená v čase. Je to "brief oscillation". [wavelet](#wavelet)
@@ -686,11 +679,9 @@ Matematicky vzato, k vysoké korelaci vlnky se signálem (vysokému korelačním
 
 ## Houghova transformace
 
-<dl><dt><strong>💡 TIP</strong></dt><dd>
+> [!TIP]
+> Super [minutu a půl dlouhé video, co ti řekne úplně všechno](https://www.youtube.com/watch?v=X1DxCPS1iwA).
 
-Super [minutu a půl dlouhé video, co ti řekne úplně všechno](https://www.youtube.com/watch?v=X1DxCPS1iwA).
-
-</dd></dl>
 
 Integrální transformace, která identifikuje přímky v obraze. V rozšířené podobě hledá libovolné tvary zadané parametricky. [hough](#hough)
 
@@ -711,11 +702,9 @@ Integrální transformace, která identifikuje přímky v obraze. V rozšířen�
 
 ## Radonova transformace
 
-<dl><dt><strong>💡 TIP</strong></dt><dd>
+> [!TIP]
+> Jako je již tradicí, mám pro vás [video](https://www.youtube.com/watch?v=f0sxjhGHRPo)...
 
-Jako je již tradicí, mám pro vás [video](https://www.youtube.com/watch?v=f0sxjhGHRPo)...
-
-</dd></dl>
 
 Integrální transformace, která integruje funkci přes přímky. Tedy rozkládá funkci na hromádku parametrů, které definují přímky.
 

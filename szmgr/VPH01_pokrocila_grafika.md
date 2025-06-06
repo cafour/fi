@@ -3,23 +3,21 @@ title: "Pokročilá počítačová grafika (2023)"
 description: "TODO"
 ---
 
-**⚠️ WARNING**\
-Tato je stará verze otázky. Nová verze: [Grafické principy ve vývoji her](./VPH01_graficke_principy_ve_vyvoji_her.ad).
+> [!WARNING]
+> Tato je stará verze otázky. Nová verze: [Grafické principy ve vývoji her](./VPH01_graficke_principy_ve_vyvoji_her.ad).
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Techniky aproximace objektů. Renderování objemových dat (bodový mrak, techniky rekonstrukce povrchů, přímé renderování objemu). Lokální a globální modely nasvícení. Renderování založené na fyzikálních modelech (PBR). Techniky renderování stínů.
+> <br>
+> _PA010, PA213_
 
-Techniky aproximace objektů. Renderování objemových dat (bodový mrak, techniky rekonstrukce povrchů, přímé renderování objemu). Lokální a globální modely nasvícení. Renderování založené na fyzikálních modelech (PBR). Techniky renderování stínů.
-
-_PA010, PA213_
-
-</dd></dl>
 
 ## Techniky aproximace objektů
 
 3D objekty mohou být definované mnoha miliony polygony či výpočetně náročnými matematickými funkcemi. Pro renderování v reálném čase je tedy žádoucí je zjednodušit a přitom zachovat jejich vzhled -- aproximovat je.
 
-**❗ IMPORTANT**\
-Aproximace objektů souvisí s collidery, kterým se částečně věnuje otázka [Grafické a fyzikální principy](../graficke-a-fyzikalni-principy/).
+> [!IMPORTANT]
+> Aproximace objektů souvisí s collidery, kterým se částečně věnuje otázka [Grafické a fyzikální principy](../graficke-a-fyzikalni-principy/).
 
 ### Redukce počtu polygonů
 
@@ -348,8 +346,8 @@ Stíny jsou důležité, jelikož:
 
   ![width=500rem](./img/vph01_shadow_maps.png)
 
-  **❗ IMPORTANT**\
-   Shadow mapám se důkladně věnuje otázka [Renderování s využitím GPU](../renderovani-s-vyuzitim-gpu/)
+  > [!IMPORTANT]
+  > Shadow mapám se důkladně věnuje otázka [Renderování s využitím GPU](../renderovani-s-vyuzitim-gpu/)
 
 - **Shadow volumes**\
   Počítá stíny ve 3D. Shadow volume explicitně popisuje objem prostoru ve stínu nějakého polygonu.

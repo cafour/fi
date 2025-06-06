@@ -3,13 +3,11 @@ title: "Algoritmy a datové struktury"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Pokročilé techniky návrhu algoritmů: dynamické programování, hladové strategie, backtracking. Amortizovaná analýza. Vyhledávání řetězců: naivní algoritmus pro hledání řetězců, Karp-Rabinův algoritmus, hledání řetězců pomocí konečných automatů. Algoritmus Knuth-Morris-Pratt.
+> <br>
+> _IV003_
 
-Pokročilé techniky návrhu algoritmů: dynamické programování, hladové strategie, backtracking. Amortizovaná analýza. Vyhledávání řetězců: naivní algoritmus pro hledání řetězců, Karp-Rabinův algoritmus, hledání řetězců pomocí konečných automatů. Algoritmus Knuth-Morris-Pratt.
-
-_IV003_
-
-</dd></dl>
 
 ## Pokročilé techniky návrhu algoritmů
 
@@ -30,20 +28,18 @@ Konkrétněji, dynamické programování je vhodnou technikou, pokud:
 - (optimální) řešení původního problému lze jednoduše spočítat z (optimálních) řešení jeho podproblémů,
 - podproblémy jde přirozeně seřadit od _nejmenšího_ po _největší_.
 
-<dl><dt><strong>💡 TIP</strong></dt><dd>
+> [!TIP]
+> O tom, že problémů musí být polynomiální počet, přemýšlím intuitivně tak, že se musí dát vyřešit v nějakém vícenásobném `for`-cyklu a uložit do multi-dimenzionálního pole.
+> <br>
+> Pokud mám $l$ zanořených cyklů, vyřeším nejvíc $n^l$ podproblémů.
 
-O tom, že problémů musí být polynomiální počet, přemýšlím intuitivně tak, že se musí dát vyřešit v nějakém vícenásobném `for`-cyklu a uložit do multi-dimenzionálního pole.
-
-Pokud mám $l$ zanořených cyklů, vyřeším nejvíc $n^l$ podproblémů.
-
-</dd></dl>
 
 #### Memoizace
 
 _Memoizace_ v zásadě není nic jiného než tabulka, pole, `HashSet`, nebo něco podobného, kam si algoritmus ukládá řešení jednotlivých podproblémů.
 
-**💡 TIP**\
-V pseudokódu se označuje jako $M$ (asi memory), $A$ (asi array), nebo $C$ (asi cache).
+> [!TIP]
+> V pseudokódu se označuje jako $M$ (asi memory), $A$ (asi array), nebo $C$ (asi cache).
 
 #### Bottom-up
 
@@ -51,11 +47,9 @@ Rekurze tradičně řeší problém _zeshora_ -- začně celým problémem, kter
 
 Jediným háček je v tom přijít na to, které podproblémy jsou ty nejmenší a v jakém pořádí je musíme spočítat, aby byly všechny připravené pro výpočet větších podproblémů. Bez tohohle algoritmus nebude fungovat korektně.
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Zjednodušeně jde o to přetransformovat rekurzi na cykly. Pěkný vedlejším efektem je, že je jednodušší určit složitost algoritmu.
 
-Zjednodušeně jde o to přetransformovat rekurzi na cykly. Pěkný vedlejším efektem je, že je jednodušší určit složitost algoritmu.
-
-</dd></dl>
 
 #### Kuchařka
 
@@ -201,8 +195,8 @@ Umožňuje přesnější analýzu časové a prostorové složitosti, protože u
 
 **Připomenutí**
 
-**💡 TIP**\
-Viz bakalářská otázka [Korektnost a složitost algoritmu](../../szb/korektnost-a-slozitost-algoritmu/).
+> [!TIP]
+> Viz bakalářská otázka [Korektnost a složitost algoritmu](../../szb/korektnost-a-slozitost-algoritmu/).
 
 Základními pojmy analýzy složitosti jsou:
 
@@ -260,14 +254,14 @@ Pro každou operaci v posloupnosti:
 - Pokud je _skutečná_ cena nižší než _kreditová_, tak zaplatíme skutečnou cenu a přebývající kredity uspoříme na _účtu_.
 - Pokud je _skutečná_ cena vyšší než _kreditová_, tak zaplatíme skutečnou cenu a případný nedostatek kreditů doplatíme z úspor na _účtu_.
 
-**❗ IMPORTANT**\
-Pokud je po celou dobu provádění operací stav účtu **nezáporný**, pak je _skutečná_ složitost celé posloupnosti operací menší nebo rovna součtu _kreditových_ cen operací.
+> [!IMPORTANT]
+> Pokud je po celou dobu provádění operací stav účtu **nezáporný**, pak je _skutečná_ složitost celé posloupnosti operací menší nebo rovna součtu _kreditových_ cen operací.
 
-**⚠️ WARNING**\
-Pokud stav účtu **kdykoliv během posloupnosti** klesne pod nulu, pak jsou kreditové ceny nastaveny **špatně**!
+> [!WARNING]
+> Pokud stav účtu **kdykoliv během posloupnosti** klesne pod nulu, pak jsou kreditové ceny nastaveny **špatně**!
 
-**💡 TIP**\
-Tato metoda se dá upravit tak, že kredity náleží individuálním objektům ve struktuře místo struktury jako celku. Cena operace se pak platí z kreditů objektů, nad kterým operace probíhá.
+> [!TIP]
+> Tato metoda se dá upravit tak, že kredity náleží individuálním objektům ve struktuře místo struktury jako celku. Cena operace se pak platí z kreditů objektů, nad kterým operace probíhá.
 
 **Zásobník (kredity)**
 
@@ -674,11 +668,11 @@ int KnuthMorrisPratt(string text, string pattern)
 }
 ```
 
-**⚠️ WARNING**\
-Nejsem si jistý, že ty indexy v kódu výše mám dobře.
+> [!WARNING]
+> Nejsem si jistý, že ty indexy v kódu výše mám dobře.
 
-**📌 NOTE**\
-"In other words we can amortize character mismatches against earlier character matches." [iv003-strings](#iv003-strings)
+> [!NOTE]
+> "In other words we can amortize character mismatches against earlier character matches." [iv003-strings](#iv003-strings)
 
 - **Složitost**\
   Amortizací neúspěšných porovnání vůči úspěšným získáme $\mathcal{O}(m)$ pro `ComputeFailure` a $\mathcal{O}(n)$ pro `KnuthMorrisPratt`.

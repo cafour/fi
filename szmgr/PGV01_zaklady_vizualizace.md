@@ -3,13 +3,11 @@ title: "Základy vizualizace"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Základní metriky pro hodnocení kvality vizualizace, vizuální proměnné. Základní vizualizační techniky pro 1D, 2D, 3D a 4D data. Objemová data – vizualizace explicitních a implicitních povrchů. Geovizualizace – choropletové mapy, kartogramy.
+> <br>
+> _PV251, PA214_
 
-Základní metriky pro hodnocení kvality vizualizace, vizuální proměnné. Základní vizualizační techniky pro 1D, 2D, 3D a 4D data. Objemová data – vizualizace explicitních a implicitních povrchů. Geovizualizace – choropletové mapy, kartogramy.
-
-_PV251, PA214_
-
-</dd></dl>
 
 Neexistuje jednotná definice vizualizace, ale může to být například "Proces předávání dat grafickou formou", nebo "Nástroj, který umožňuje uživateli vhled do dat".
 
@@ -89,11 +87,9 @@ Někdy se přidává k základním 7 vizuálním proměnným. Lze ho připojit k
 
 ## Základní vizualizační techniky prostorových dat
 
-<dl><dt><strong>💡 TIP</strong></dt><dd>
+> [!TIP]
+> V téhle otázce se autor pravděpodobně maličko jinak kouká na to, co znamená dimenze dat, než je uvedeno ve slidech z PV251. Zde se dimenze dat chápe jako počet proměnných, nikoliv jako počet prostorových dimenzí. Zde uvedená 1D prostorová data mají tedy 2 a více dimenzí, 2D prostorová data mají 3 a více dimenzí a 3D prostorová data mají 4 a více dimenzí.
 
-V téhle otázce se autor pravděpodobně maličko jinak kouká na to, co znamená dimenze dat, než je uvedeno ve slidech z PV251. Zde se dimenze dat chápe jako počet proměnných, nikoliv jako počet prostorových dimenzí. Zde uvedená 1D prostorová data mají tedy 2 a více dimenzí, 2D prostorová data mají 3 a více dimenzí a 3D prostorová data mají 4 a více dimenzí.
-
-</dd></dl>
 
 ### 0D (neprostorová) data
 

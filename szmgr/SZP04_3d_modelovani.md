@@ -3,13 +3,11 @@ title: "3D modelování a datové struktury"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Mnohoúhelníkové a trojúhelníkové sítě: datové struktury, modelování, pass:[&lt;s>filtrování&lt;/s>], změna struktury sítě, **\*zjednodušování sítě\*\***. Implicitní **a parametrické\*** reprezentace a modelování **_(SDF, CSG, B-Rep)_**.
+> <br>
+> _PA010_
 
-Mnohoúhelníkové a trojúhelníkové sítě: datové struktury, modelování, pass:[&lt;s>filtrování&lt;/s>], změna struktury sítě, **\*zjednodušování sítě\*\***. Implicitní **a parametrické\*** reprezentace a modelování **_(SDF, CSG, B-Rep)_**.
-
-_PA010_
-
-</dd></dl>
 
 ## Mnohoúhelníkové a trojúhelníkové sítě
 
@@ -80,19 +78,17 @@ _PA010_
     >
     > — PA010
 
-    <dl><dt><strong>💡 TIP</strong></dt><dd>
+    > [!TIP]
+    > Podle Wikipedie je _genus_ česky _rod plochy_.
+    
 
-    Podle Wikipedie je _genus_ česky _rod plochy_.
-    </dd></dl>
-
-    <dl><dt><strong>💡 TIP</strong></dt><dd>
-
-    Je to **maximální** počet těch řezů.
-
-    Následující povrch[genus](#genus) jde rozdělit podél červené křivky na dva, ale neuvažujeme ji, protože chceme **nejvyší možný** počet řezů, které povrch **nerozdělí**.
-
-    ![width=500rem](./img/szp04_genus.png)
-    </dd></dl>
+    > [!TIP]
+    > Je to **maximální** počet těch řezů.
+    > <br>
+    > Následující povrch[genus](#genus) jde rozdělit podél červené křivky na dva, ale neuvažujeme ji, protože chceme **nejvyší možný** počet řezů, které povrch **nerozdělí**.
+    > <br>
+    > ![width=500rem](./img/szp04_genus.png)
+    
 
 - **Boundary edge loops / rings**\
   Edge loops uvnitř stěn, které nejsou vnějšími hranicemi objektu.
@@ -116,34 +112,31 @@ _PA010_
   \chi(M) = V - E + F - R = 2 \cdot (S - G) \text{ (s děrami)}
   ```
 
-    <dl><dt><strong>❗ IMPORTANT</strong></dt><dd>
+    > [!IMPORTANT]
+    > Pro libovolný mnohostěn (polyhedron) bez děr je $\chi = 2$.
+    
 
-  Pro libovolný mnohostěn (polyhedron) bez děr je $\chi = 2$.
-    </dd></dl>
-
-    <dl><dt><strong>❗ IMPORTANT</strong></dt><dd>
-
-  Pro uzavřený 2-manifoldní trojúhelníkový mesh:
-
-  Každý trojúhelník má 3 hrany a každá hrana je sdílena dvěma trojúhelníky, takže $E = \frac{3}{2} F$.
-
-  **💡 TIP**\
-   Intuitivně: pokud jsme neúsporní, pak máme tři hrany pro každý trojúhelník ($3F$), každou hranu ale "přilepíme" k nějakému dalšímu trojúhelníku, takže každou hranu máme zbytečně dvakrát ($2E$), proto $3F = 2E$, tedy $E = \frac{3}{2} F$.
-
-  Z Euler-Poincaré plyne, že
-
-  ```math
-  V = 2 + E - F = 2 + \frac{3}{2} F - F = 2 + \frac{1}{2} F \sim \frac{1}{2}
-  ```
-
-  - Tedy platí poměr $E:F:V = 3:2:1$.
-  - Tedy průmeřný vertex degree (počet hran, které vycházejí z vertexu) je $2 \cdot \frac{E}{V} \sim 6$.
-
-  Každá hrana (ve 2-manifoldu) přispívá k degree právě dvou vertexů, protože někde začíná a končí.
-
-  Kdybychom sečetli degree všech vertexů, dostali bychom $2E$, proto $2E \sim 6V$.
-
-    </dd></dl>
+    > [!IMPORTANT]
+    > Pro uzavřený 2-manifoldní trojúhelníkový mesh:
+    > <br>
+    > Každý trojúhelník má 3 hrany a každá hrana je sdílena dvěma trojúhelníky, takže $E = \frac{3}{2} F$.
+    > <br>
+    > **💡 TIP**\
+    > > Intuitivně: pokud jsme neúsporní, pak máme tři hrany pro každý trojúhelník ($3F$), každou hranu ale "přilepíme" k nějakému dalšímu trojúhelníku, takže každou hranu máme zbytečně dvakrát ($2E$), proto $3F = 2E$, tedy $E = \frac{3}{2} F$.
+    > <br>
+    > Z Euler-Poincaré plyne, že
+    > <br>
+    > ```math
+    > V = 2 + E - F = 2 + \frac{3}{2} F - F = 2 + \frac{1}{2} F \sim \frac{1}{2}
+    > ```
+    > <br>
+    > - Tedy platí poměr $E:F:V = 3:2:1$.
+    > - Tedy průmeřný vertex degree (počet hran, které vycházejí z vertexu) je $2 \cdot \frac{E}{V} \sim 6$.
+    > <br>
+    > Každá hrana (ve 2-manifoldu) přispívá k degree právě dvou vertexů, protože někde začíná a končí.
+    > <br>
+    > Kdybychom sečetli degree všech vertexů, dostali bychom $2E$, proto $2E \sim 6V$.
+    
 
 - **Simplex**\
   Nejjednodušší polytop (generalizace mnohoúhelníku, mnohostěnu, atd.). Generalizace trojúhelníku v libovolné dimenzi:
@@ -200,8 +193,8 @@ _PA010_
 
 ### Modelování
 
-**❗ IMPORTANT**\
-Tahle sekce má docela průnik s otázkou [Modelování 3D postav](../modelovani-3d-postav/).
+> [!IMPORTANT]
+> Tahle sekce má docela průnik s otázkou [Modelování 3D postav](../modelovani-3d-postav/).
 
 - **Boundary representation model (B-rep)**\
   Modelování objektů pomocí jejich hranic -- boundaries (hrany, stěny, atd.).
@@ -221,8 +214,8 @@ Tahle sekce má docela průnik s otázkou [Modelování 3D postav](../modelovani
 - **Eulerovy operátory**\
   Operátory zachovávající Euler-Poincaré formuli. Jsou dostatečné pro konstrukci užitečných meshů. Pracují s 6 parametry: $V$ -- vertices, $E$ -- edges, $F$ -- faces, $H$ -- components, $S$ -- shells, $G$ -- genus. [pa010-2021](#pa010-2021) [boundaries](#boundaries)
 
-  **📌 NOTE**\
-   Zdá se, že $H$ -- components je ekvivalentní $R$ -- rings.
+  > [!NOTE]
+  > Zdá se, že $H$ -- components je ekvivalentní $R$ -- rings.
 
   Ač Eulerových operátorů se dá zadefinovat mnoho, v praxi stačí:
 
@@ -328,8 +321,8 @@ Tahle sekce má docela průnik s otázkou [Modelování 3D postav](../modelovani
 
 ### Změna struktury sítě
 
-**❗ IMPORTANT**\
-Modifikace meshů mají značný přesah do otázky [Křivky a povrchy](../krivky-a-povrchy/) a taky [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/)
+> [!IMPORTANT]
+> Modifikace meshů mají značný přesah do otázky [Křivky a povrchy](../krivky-a-povrchy/) a taky [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/)
 
 - **Překlápění hrany / edge flip**\
   Lokální změna, která nahradí hranu $(b,c)$ hranou $(a,d)$. Trojúhelníky $(a,b,c)$ a $(b,d,c)$ se stanou $(a,d,c)$ a $(a,b,d)$. [pa010-2021](#pa010-2021)

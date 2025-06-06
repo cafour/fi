@@ -138,13 +138,13 @@ Games are not experiences, they are artifacts people play with while / to create
 
 Hry dovedou navodit řadu různých herních zážitků, které můžeme různými způsoby kategorizovat.
 
-**❗ IMPORTANT**\
-Herní zážitky souvisí s pojmem obtížnost, kterému se věnuje část otázky [Herní design II](../herni-design-ii/).
+> [!IMPORTANT]
+> Herní zážitky souvisí s pojmem obtížnost, kterému se věnuje část otázky [Herní design II](../herni-design-ii/).
 
 ==== LeBlanc’s Eight Kinds of Fun
 
-**💡 TIP**\
-Taky označované jako _Taxonomy of Game Pleasures_ a _herní "pošušňáníčka"_. [pa215-2019](#pa215-2019)
+> [!TIP]
+> Taky označované jako _Taxonomy of Game Pleasures_ a _herní "pošušňáníčka"_. [pa215-2019](#pa215-2019)
 
 Game designer Marc LeBlanc rozdělil herní zážitky do osmi kategorií: [leblanc](#leblanc)[mda](#mda)
 
@@ -197,8 +197,8 @@ Něco známeho, povědomého pro hráče.
 == Prototypování her
 Designér iterativně vytváří hrubé verze hry, které testuje a upravuje. Prototyp je osekaná verze hry, která obsahuje mechaniky, ale ne nutně grafiku. Prototyp lze využít k ověření herního designu - je hra zábavná?
 
-**❗ IMPORTANT**\
-Testováním se více zabývá otázka [Herní design II](../herni-design-ii/).
+> [!IMPORTANT]
+> Testováním se více zabývá otázka [Herní design II](../herni-design-ii/).
 
 == Game Designer
 
@@ -273,8 +273,8 @@ Zjednodušit a předat informace o tom co fungeje a co ne ostatním. Musí umět
 
 == The Core Game Ontology
 
-**📌 NOTE**\
-Ontologie -- disciplína zabývající se bytím a základními pojmy jako je realita, existence, atp.
+> [!NOTE]
+> Ontologie -- disciplína zabývající se bytím a základními pojmy jako je realita, existence, atp.
 
 Lehký slovník pro popis her. [cgo](#cgo) Hodí se při komunikaci s klienty, nevyvojáři a nehráči. [pa216-2020](#pa216-2020)
 

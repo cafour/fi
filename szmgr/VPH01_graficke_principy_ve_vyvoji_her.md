@@ -3,18 +3,16 @@ title: "Grafické principy ve vývoji her (2024)"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Příprava a vývoj scény (grayboxing, zástupné modely (placeholders)). Lokální a globální modely nasvícení. Vykreslování založené na fyzikálních modelech (PBR). Techniky optimalizace výkonu vykreslování (úrovně detailů, řešení viditelnosti objektů (culling), MIP mapy).
+> <br>
+> _PB009, PA010, PA213, PV255_
 
-Příprava a vývoj scény (grayboxing, zástupné modely (placeholders)). Lokální a globální modely nasvícení. Vykreslování založené na fyzikálních modelech (PBR). Techniky optimalizace výkonu vykreslování (úrovně detailů, řešení viditelnosti objektů (culling), MIP mapy).
-
-_PB009, PA010, PA213, PV255_
-
-</dd></dl>
 
 ## Příprava a vývoj scény
 
-**📌 NOTE**\
-Poznámky o grayboxingu, iterování, modulárním workflow, atd. jsou z přednášky Lukáše Medka v rámci PV255. [medek](#medek)
+> [!NOTE]
+> Poznámky o grayboxingu, iterování, modulárním workflow, atd. jsou z přednášky Lukáše Medka v rámci PV255. [medek](#medek)
 
 - **Iterace**\
   Práce v iteracích pomáhá:
@@ -217,8 +215,8 @@ BRDF je řešena pomocí ray tracingu, radiosity, nebo nějakým hybridním ře�
 
   ![width=300rem](./img/vph02_mipmaps.png)
 
-  **💡 TIP**\
-  Jak je patrné z obrázku výše, chytrým uložením je mipmapovaná textura jen o 33 % větší než původní textura. (Nová má velikost $\frac{4}{3}$ té staré.)
+  > [!TIP]
+  > Jak je patrné z obrázku výše, chytrým uložením je mipmapovaná textura jen o 33 % větší než původní textura. (Nová má velikost $\frac{4}{3}$ té staré.)
 
 - **Shaderové / GPU optimalizace**\
   Existuje řada nástrojů, které umožňují debugovat a optimalizovat GPU:

@@ -3,16 +3,14 @@ title: "Grafy a grafové algoritmy"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Reprezentace grafů. Souvislost grafu, rovinné grafy. Prohledávání grafu do šířky a do hloubky, nejkratší vzdálenosti, kostry, toky v sítích. Algoritmy: Bellman-Ford, Dijkstra, Ford-Fulkerson, Push-Relabel, maximální párování v bipartitních grafech.
+> <br>
+> _IB000, IB002, IV003_
 
-Reprezentace grafů. Souvislost grafu, rovinné grafy. Prohledávání grafu do šířky a do hloubky, nejkratší vzdálenosti, kostry, toky v sítích. Algoritmy: Bellman-Ford, Dijkstra, Ford-Fulkerson, Push-Relabel, maximální párování v bipartitních grafech.
 
-_IB000, IB002, IV003_
-
-</dd></dl>
-
-**💡 TIP**\
-Tahle otázka má solidní překryv s bakalářskými otázkami [Grafy](../../szb/grafy/) a [Grafové problémy](../../szb/grafove-problemy/).
+> [!TIP]
+> Tahle otázka má solidní překryv s bakalářskými otázkami [Grafy](../../szb/grafy/) a [Grafové problémy](../../szb/grafove-problemy/).
 
 ## Terminologie
 
@@ -174,11 +172,11 @@ Hledá nejkratší cesty z jednoho vrcholu do všech ostatních.
 - Je podobný BFS, ale používá prioritní frontu.
 - Funguje **pouze** na grafech **bez záporných** hran.
 
-**💡 TIP**\
-Složitost závisí na implementaci prioritní fronty. Je to $\Theta(V)$ insertů, $\Theta(V)$ hledání nejmenšího prvku, $\Theta(E)$ snížení priority.
+> [!TIP]
+> Složitost závisí na implementaci prioritní fronty. Je to $\Theta(V)$ insertů, $\Theta(V)$ hledání nejmenšího prvku, $\Theta(E)$ snížení priority.
 
-**📌 NOTE**\
-Implementace níže používá pole (resp. Pythoní `list`), tedy složitost je $\Theta(V^2)$, jelikož hledání minima je lineární.
+> [!NOTE]
+> Implementace níže používá pole (resp. Pythoní `list`), tedy složitost je $\Theta(V^2)$, jelikož hledání minima je lineární.
 
 ```python
 def dijkstra(graph: List[List[Tuple[int, int]]], s: int) \
@@ -208,8 +206,8 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 - Můžeme hledat zároveň ze začátku a konce pomocí dvou front a skončit, jakmile se někde potkají.
 - Můžeme přidat _potenciál_ -- dodatečnou heuristickou váhu.
 
-  **❗ IMPORTANT**\
-  Téhle variantě se říká A\* (A star). Věnuje se mu část otázky [Umělá inteligence v počítačových hrách](../umela-inteligence-v-pocitacovych-hrach/).
+  > [!IMPORTANT]
+  > Téhle variantě se říká A\* (A star). Věnuje se mu část otázky [Umělá inteligence v počítačových hrách](../umela-inteligence-v-pocitacovych-hrach/).
 
 ## Kostry
 
@@ -283,8 +281,8 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
   - Každá fáze zabere $\mathcal{O}( \lvert E \rvert )$ času, protože procházíme všechny hrany.
   - Celková složitost: $\mathcal{O}( \lvert E \rvert \log \lvert V \rvert )$
 
-  **💡 TIP**\
-   Kruskal sice taky buduje stromy na více místech najednou, ale není "paralelní", protože minimalita kostry spoléhá na to, že hrany jsou seřazené. Borůvka takový požadavek nemá, a proto je paralelizovatelnější.
+  > [!TIP]
+  > Kruskal sice taky buduje stromy na více místech najednou, ale není "paralelní", protože minimalita kostry spoléhá na to, že hrany jsou seřazené. Borůvka takový požadavek nemá, a proto je paralelizovatelnější.
 
 **Složitosti algoritmů**
 
@@ -338,8 +336,8 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 - **Augmenting path $P$**\
   Jednoduchá $s \rightsquigarrow t$ cesta v residuální síti $G_f$.
 
-  **📌 NOTE**\
-   T.j. cesta která může jít i proti směru toku $f$.
+  > [!NOTE]
+  > T.j. cesta která může jít i proti směru toku $f$.
 
   _Bottleneck kapacita_ je nejmenší kapacita hran v augmenting path $P$.
 
@@ -423,8 +421,8 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
   - _sink_: $h(t) = 0$,
   - _height difference_: $(\forall (v, w) \in E_{G_f})(h(v) \le h(w) + 1)$.
 
-    **📌 NOTE**\
-    Pokud mezi dvěma vrcholy $(v, w)$ v reziduální síti vede hrana, pak je $v$ nejvýše o jednu úroveň výš než $w$.
+    > [!NOTE]
+    > Pokud mezi dvěma vrcholy $(v, w)$ v reziduální síti vede hrana, pak je $v$ nejvýše o jednu úroveň výš než $w$.
 
 - **Push operace**\
   Pro (reziduálně-grafovou) hranu $(v, w)$ se pokusí přesunout excess flow z $v$ do $w$, aniž by porušil (reziduální) kapacitu $(v, w)$.
