@@ -1,767 +1,544 @@
-= Statistika
-:url: ./statistika/
-:page-group: szp
-:page-order: SZP03
+---
+title: "Statistika"
+description: "TODO"
+---
 
-[NOTE]
-====
+<dl><dt><strong>📌 NOTE</strong></dt><dd>
+
 Diskrétní a spojité náhodné veličiny (NV), základní rozložení. Číselné charakteristiky NV. Centrální limitní věta. Bodové odhady, intervaly spolehlivosti, testování statistických hypotéz, hladina významnosti. Základní parametrické a neparametrické testy, ANOVA, testy nezávislosti NV. Lineární regrese, celkový F-test, dílčí t-testy.
 
 _MV013_
-====
 
-.Opakování
-====
+</dd></dl>
 
-TIP: Viz bakalářské otázky link:../../szb/kombinatorika-a-pravdepodobnost/[Kombinatorika a pravděpodobnost] a link:../../szb/statistika/[Statistika].
+**Opakování**
 
-Statistika::
-Zabývá se sbíráním, organizací, analýzou, interpretací a prezentací dat. <<statistics>>
-+
-* _Popisná / decriptive_: shrnuje data, která máme,
-* _Inferenční / inferential_: předpokládá, že data která máme jsou jen součástí celku; pracuje s modely celé populace a hypotézami o ní.
+**💡 TIP**\
+Viz bakalářské otázky [Kombinatorika a pravděpodobnost](../../szb/kombinatorika-a-pravdepodobnost/) a [Statistika](../../szb/statistika/).
 
-Základní prostor stem:[\Omega]::
-Konečná množina možných jevů. Např stem:[\{1, 2, 3, 4, 5, 6\}] pro možné hody šestistěnkou.
+- **Statistika**\
+  Zabývá se sbíráním, organizací, analýzou, interpretací a prezentací dat. [statistics](#statistics)
 
-Možný výsledek (elementární náhodný jev) stem:[\omega_k]::
-Prvek základního prostoru stem:[\Omega].
+  - _Popisná / decriptive_: shrnuje data, která máme,
+  - _Inferenční / inferential_: předpokládá, že data která máme jsou jen součástí celku; pracuje s modely celé populace a hypotézami o ní.
 
-Náhodný jev (event) stem:[A]::
-Podmnožina stem:[A \sube \Omega], která nás zajímá. Např. _"Na šestistěnce padne sudé číslo."_
+- **Základní prostor $\Omega$**\
+  Konečná množina možných jevů. Např $\{1, 2, 3, 4, 5, 6\}$ pro možné hody šestistěnkou.
+- **Možný výsledek (elementární náhodný jev) $\omega_k$**\
+  Prvek základního prostoru $\Omega$.
+- **Náhodný jev (event) $A$**\
+  Podmnožina $A \sube \Omega$, která nás zajímá. Např. _"Na šestistěnce padne sudé číslo."_
 
-====
+## Náhodné veličiny
 
-== Náhodné veličiny
+- **Náhodná veličina (NV) / random variable**\
+  Něco, co se dá u každého možného výsledku změřit. Zobrazení z prostoru elementárních jevů do měřitelného prostoru $E$ (třeba $\mathbb{R}$).
 
-Náhodná veličina (NV) / random variable::
-Něco, co se dá u každého možného výsledku změřit. Zobrazení z prostoru elementárních jevů do měřitelného prostoru stem:[E] (třeba stem:[\mathbb{R}]).
-+
-stem:[X : \Omega \to \mathbb{E}]
+  $X : \Omega \to \mathbb{E}$
 
+### Diskrétní
 
-=== Diskrétní
+Diskrétní NV je náhodná veličina, která nabývá konečně nebo spočetně mnoha hodnot. $\mathbb{E}$ je konečná nebo spočetná, např. $\N$.
 
-Diskrétní NV je náhodná veličina, která nabývá konečně nebo spočetně mnoha hodnot. stem:[\mathbb{E}] je konečná nebo spočetná, např. stem:[\N].
-
-====
 Příklad: hodnota na šestistěnce.
-====
 
-Jinými slovy, NV stem:[X : \Omega \to \R] je _diskrétní_, pokud se prvky stem:[\Omega] zobrazí do stem:[\R] jako izolované body stem:[\{x_1, x_2, \ldots\}].
+Jinými slovy, NV $X : \Omega \to \R$ je _diskrétní_, pokud se prvky $\Omega$ zobrazí do $\R$ jako izolované body $\{x_1, x_2, \ldots\}$.
 
-Rozdělení pravděpodobnosti::
-Funkce stem:[P(X) : \mathbb{E} \to \R], která každé hodnotě popsané veličinou stem:[X] přiřazuje pravděpodobnost jejího výskytu.
+- **Rozdělení pravděpodobnosti**\
+  Funkce $P(X) : \mathbb{E} \to \R$, která každé hodnotě popsané veličinou $X$ přiřazuje pravděpodobnost jejího výskytu.
 
---
-* Každá stem:[x_i] má nenulovou pravděpodobnost. Jinými slovy - nějaká *určitě* nastane.
-+
-[stem]
-++++
-P(x_i) > 0
-++++
+- Každá $x_i$ má nenulovou pravděpodobnost:
 
-* Součet pravděpodobností všech možných hodnot stem:[x_i] je stem:[1]:
-+
-[stem]
-++++
-\sum_{x} P(x_i) = 1
-++++
---
+  ```math
+  P(x_i) > 0
+  ```
 
-=== Spojité
+- Součet pravděpodobností všech možných hodnot $x_i$ je $1$:
 
-Spojitá NV je náhodná veličina, která nabývá až nespočetně nekonečně mnoha hodnot. Tedy stem:[\mathbb{E}] je nespočetná, např. stem:[\R].
+  ```math
+  \sum_{x} P(x_i) = 1
+  ```
 
-====
+### Spojité
+
+Spojitá NV je náhodná veličina, která nabývá až nespočetně nekonečně mnoha hodnot. Tedy $\mathbb{E}$ je nespočetná, např. $\R$.
+
 Příklad: doba čekání na šalinu, analogový signál, výška člověka (pokud máme fakt dobrej metr).
-====
 
-Jinými slovy, NV stem:[X : \Omega \to \R] je _spojitá_, pokud se prvky stem:[\Omega] zobrazí do stem:[\R] jako interval stem:[\lbrack a, b \rbrack].
+Jinými slovy, NV $X : \Omega \to \R$ je _spojitá_, pokud se prvky $\Omega$ zobrazí do $\R$ jako interval $\lbrack a, b \rbrack$.
 
-Hustota pravděpodobnosti / probability density function (PDF)::
-Funkce stem:[f(x) : \mathbb{E} \to \R], která každé hodnotě popsané veličinou stem:[X] přiřazuje pravděpodobnost jejího výskytu.
+- **Hustota pravděpodobnosti / probability density function (PDF)**\
+  Funkce $f(x) : \mathbb{E} \to \R$, která každé hodnotě popsané veličinou $X$ přiřazuje pravděpodobnost jejího výskytu.
 
---
-* Každý bod tohoto intervalu má *nulovou* pravděpodobnost:
-+
-[stem]
-++++
-f(x) = 0
-++++
+- Každý bod tohoto intervalu má **nulovou** pravděpodobnost:
 
-* Nicméně integrál pravděpodobnostní funkce stem:[f(x)] je stem:[1]:
-+
-[stem]
-++++
-\int_{-\infty}^{\infty} f(x) dx = 1
-++++
+  ```math
+  f(x) = 0
+  ```
 
-* Pravděpodobnost, že NV nabývá hodnoty z intervalu stem:[\lbrack a, b \rbrack] je pak:
-+
-[stem]
-++++
-P(a \leq X \leq b) = \int_{a}^{b} f(x) dx
-++++
---
+- Nicméně integrál pravděpodobnostní funkce $f(x)$ je $1$:
 
-=== Základní rozložení
+  ```math
+  \int_{-\infty}^{\infty} f(x) dx = 1
+  ```
 
-Distribuční funkce / cumulative distribution function (CDF)::
-+
---
+- Pravděpodobnost, že NV nabývá hodnoty z intervalu $\lbrack a, b \rbrack$ je pak:
 
-Funkce stem:[F(X) : \mathbb{E} \to \R] udává pravděpodobnost, že NV stem:[X] nabývá hodnoty menší než stem:[x].
+  ```math
+  P(a \leq X \leq b) = \int_{a}^{b} f(x) dx
+  ```
 
-[stem]
-++++
-\begin{align*}
+### Základní rozložení
 
-F(x) &= P(X \leq x) & \text{pro diskrétní NV} \\
-F(x) &= \int_{-\infty}^{x} f(x) dx & \text{pro spojité NV}
+- **Distribuční funkce / cumulative distribution function (CDF)**
 
-\end{align*}
-++++
+  Funkce $F(X) : \mathbb{E} \to \R$ udává pravděpodobnost, že NV $X$ nabývá hodnoty menší než $x$.
 
-Charakterizuje rozdělení, kterému náhodná veličina stem:[X] podléhá.
+  ```math
+  \begin{align*}
 
-Pro spojité NV je to plocha pod křivkou pravděpodobnostní funkce. A taky se dá použít k vyjádření pravdepodobnosti:
+  F(x) &= P(X \leq x) & \text{pro diskrétní NV} \\
+  F(x) &= \int_{-\infty}^{x} f(x) dx & \text{pro spojité NV}
 
-[stem]
-++++
-P(a \leq X \leq b) = F(b) - F(a)
-++++
+  \end{align*}
+  ```
 
---
+  Charakterizuje rozdělení, kterému náhodná veličina $X$ podléhá.
 
-.Diskrétní rozložení
-[%header,cols="1,4,3,2"]
-|===
-| Název
-| Definice
-| Popis
-| Příklad
+  Pro spojité NV je to plocha pod křivkou pravděpodobnostní funkce. A taky se dá použít k vyjádření pravdepodobnosti:
 
-| Bernoulliho / alternativní
-| stem:[
-    P(x) = \begin{cases}
-        1 - p & x \ne 1 \\
-        p & x = 1 \\
-    \end{cases}
-]
-| Náhodný pokus, kde jsou jen dva možné výsledky.
-| Hod mincí.
+  ```math
+  P(a \leq X \leq b) = F(b) - F(a)
+  ```
 
-| Binomické
-| stem:[
-    P(x, n, p) = \binom{n}{x} p^x (1-p)^{n-k}
-]
-| Sekvence stem:[n] pokusů. Popisuje pravděpodobnost, že stem:[x] bude úspěšných.
-| Hod mincí stem:[n] krát.
+**Diskrétní rozložení**
 
-| Poissonovo
-| stem:[
-    P(k, \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}
-]
-| Pokud se něco děje průměrně stem:[\lambda]-krát za jednotku času, jaká je pravděpodobnost, že se to stane stem:[k]-krát za stejnou jednotku času? Výskyt jednoho jevu nesmí ovlivnit pravděpodobnost následujícího výskytu a také se nemohou stát dva jevy najednou.
-| Kolik lidí přijde do obchodu za hodinu. _(Za předpokladu, že je pandemie a dovnitř může jen jeden člověk.)_
+| Název                                                                                    |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| Definice                                                                                 | Popis                                                                                                                                                                                                                                                      | Příklad                                                                                                     | Bernoulliho / alternativní         |
+| $ P(x) = \begin{cases} 1 - p & x \ne 1 \\ p & x = 1 \\ \end{cases} $                     | Náhodný pokus, kde jsou jen dva možné výsledky.                                                                                                                                                                                                            | Hod mincí.                                                                                                  | Binomické                          |
+| $ P(x, n, p) = \binom{n}{x} p^x (1-p)^{n-k} $                                            | Sekvence $n$ pokusů. Popisuje pravděpodobnost, že $x$ bude úspěšných.                                                                                                                                                                                      | Hod mincí $n$ krát.                                                                                         | Poissonovo                         |
+| $ P(k, \lambda) = \frac{\lambda^k e^{-\lambda}}{k!} $                                    | Pokud se něco děje průměrně $\lambda$-krát za jednotku času, jaká je pravděpodobnost, že se to stane $k$-krát za stejnou jednotku času? Výskyt jednoho jevu nesmí ovlivnit pravděpodobnost následujícího výskytu a také se nemohou stát dva jevy najednou. | Kolik lidí přijde do obchodu za hodinu. _(Za předpokladu, že je pandemie a dovnitř může jen jeden člověk.)_ | Geometrické                        |
+| $ P(k, p) = \begin{cases} p (1-p)^k & k = 0, 1, ... \\ 0 & \text{jinak} \\ \end{cases} $ | Když tě zajímá, jaká je šance, že se něco pokazí $k$ krát, než to konečně uspěje.                                                                                                                                                                          | Kolikrát musíš hodit mincí, než padne poprvé hlava.                                                         | (Diskrétní) rovnoměrné / uniformní |
 
-| Geometrické
-| stem:[
-    P(k, p) = \begin{cases}
-        p (1-p)^k & k = 0, 1, ... \\
-        0 & \text{jinak} \\
-    \end{cases}
-]
-| Když tě zajímá, jaká je šance, že se něco pokazí stem:[k] krát, než to konečně uspěje.
-| Kolikrát musíš hodit mincí, než padne poprvé hlava.
+**Spojité rozložení**
 
-| (Diskrétní) rovnoměrné / uniformní
-| stem:[
-    P(x) = \begin{cases}
-        \frac{1}{\lvert A \rvert} & x \in A \\
-        0 & \text{jinak} \\
-    \end{cases}
-]
-| Když jsou všechny jevy stem:[x] z dané množiny stem:[A] stejně pravděpodobné.
-| Hod d20.
-|===
+| Název                                                                                                                                                                             |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | -------------------------------- |
+| Definice                                                                                                                                                                          | Popis                                                                                                                                                                                                             | Příklad                                   | (Spojité) rovnoměrné / uniformní |
+| $ f(x) = \begin{cases} \frac{1}{b-a} & a \le x \le b \\ 0 & x &lt; a \lor x > b \\ \end{cases} $                                                                                  | Všechny jevy v daném intervalu $(a, b)$ (může být otevřený nebo uzavřený) jsou stejně pravděpodobné.                                                                                                              | Bod na kružnici.                          | Exponenciální                    |
+| $ f(x, \lambda) = \begin{cases} \lambda e^{-\lambda x} & x \ge 0 \\ 0 & x &lt; 0 \\ \end{cases} $                                                                                 | Čas mezi jevy v Poissonově procesu.                                                                                                                                                                               | Jak dlouho budeš čekat na šalinu.         | Normální / Gaussovo              |
+| $ f\_\mathcal{N}(x, \mu, \sigma^2) = \frac{1}{\sigma \sqrt{2 \pi}} e^{ -\frac {\left(x - \mu \right)^2} {2\sigma^2} } $                                                           | Používá se jako default, když nevíš, jakou má proměnná distribuci, kvůli centrální limitní větě. ($\mu$ je mean, $\sigma^2$ je rozptyl).                                                                          | Výška lidí.                               | Standardní normální              |
+| $ f(x) = f\_\mathcal{N}(x, 0, 1) = \frac{1}{\sqrt{2 \pi}} e^{-\frac{x^2}{2}} $                                                                                                    | Je fajn, protože má standardní odchylku rovnu jedné, takže člověku stačí si pamatovat, že: _ 68 % je v intervalu $(-1, 1)$, _ 95 % je v intervalu $(-2, 2)$, \* 99,7 % je v intervalu $(-3, 3)$.                  | Výška lidí (ale přeškálovaná).            | Cauchy                           |
+| $ f(x) = \frac{1}{ \pi \sigma \left\lbrack 1 + \left( \frac{x - \mu}{\sigma} \right)^2 \right\rbrack } $                                                                          | Poměr dvou spojitých náhodných proměnných s normálním rozdělením. Expected value ani rozptyl na ní nejsou definované.                                                                                             | Poměr výšky k šířce obličeje.             | Gamma                            |
+| $ f(x, \alpha, \beta) = \begin{cases} \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha - 1} e^{-\beta x} & x > 0 \\ 0 & \text{jinak} \\ \end{cases} $                                | Když máš sekvenci jevů, kde čekací doba na každý má exponenciální rozdělení s rate $\beta$, pak čekací doba na $n$-tý jev má Gamma rozdělení s $\alpha = n$.                                                      | Jak dlouho budeš čekat na $n$-tou šalinu. | $\chi^2$ (Chi-square)            |
+| $ f(x, n) = \begin{cases} { \Large \frac{ x^{\frac{n}{2} - 1} e^{-\frac{x}{2}} }{ 2^\frac{n}{2} \Gamma\left( \frac{k}{2} \right) } } & x > 0 \\ 0 & \text{jinak} \\ \end{cases} $ | Používá se při testování hypotéz. Nechť $Z_1, Z_2, ..., Z_n$ jsou nezávislé náhodné proměnné se standardním normálním rozdělením a $X = \sum_{i=1}^n Z_i^2$, pak $X$ má $\chi^2$ rozdělení s $n$ stupni volnosti. | Testování, jestli je mince férová.        | Studentovo $t$                   |
 
-.Spojité rozložení
-[%header,cols="1,4,3,2"]
-|===
-| Název
-| Definice
-| Popis
-| Příklad
-
-| (Spojité) rovnoměrné / uniformní
-| stem:[
-    f(x) = \begin{cases}
-        \frac{1}{b-a} & a \le x \le b \\
-        0 & x < a \lor x > b \\
-    \end{cases}
-]
-| Všechny jevy v daném intervalu stem:[(a, b)] (může být otevřený nebo uzavřený) jsou stejně pravděpodobné.
-| Bod na kružnici.
-
-| Exponenciální
-| stem:[
-    f(x, \lambda) = \begin{cases}
-        \lambda e^{-\lambda x} & x \ge 0 \\
-        0 & x < 0 \\
-    \end{cases}
-]
-| Čas mezi jevy v Poissonově procesu. Časovou jednotku si můžeme zvolit, ale musí být pak stejná všude.
-| Jak dlouho budeš čekat na šalinu.
-
-| Normální / Gaussovo
-| stem:[
-    f_\mathcal{N}(x, \mu, \sigma^2) = \frac{1}{\sigma \sqrt{2 \pi}} e^{
-            -\frac
-                {\left(x - \mu \right)^2}
-                {2\sigma^2}
-        }
-]
-| Používá se jako default, když nevíš, jakou má proměnná distribuci, kvůli centrální limitní větě. (stem:[\mu] je mean, stem:[\sigma^2] je rozptyl). (95% obsahu je v intervalu stem:[\mu \pm \sigma] of stem:[\mu])
-| Výška lidí.
-
-| Standardní normální
-| stem:[
-    f(x) = f_\mathcal{N}(x, 0, 1) = \frac{1}{\sqrt{2 \pi}} e^{-\frac{x^2}{2}}
-]
-a| Je fajn, protože má standardní odchylku rovnu jedné, takže člověku stačí si pamatovat, že:
-
-* 68 % je v intervalu stem:[(-1, 1)],
-* 95 % je v intervalu stem:[(-2, 2)],
-* 99,7 % je v intervalu stem:[(-3, 3)].
-
-| Výška lidí (ale přeškálovaná).
-
-| Cauchy
-| stem:[
-    f(x) = \frac{1}{
-        \pi \sigma \left\lbrack
-            1 + \left(
-                \frac{x - \mu}{\sigma}
-            \right)^2
-        \right\rbrack
-    }
-]
-| Poměr dvou spojitých náhodných proměnných s normálním rozdělením. Expected value ani rozptyl na ní nejsou definované.
-| Poměr výšky k šířce obličeje.
-
-| Gamma
-| stem:[
-    f(x, \alpha, \beta) = \begin{cases}
-        \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha - 1} e^{-\beta x} & x > 0 \\
-        0 & \text{jinak} \\
-    \end{cases}
-]
-| Když máš sekvenci jevů, kde čekací doba na každý má exponenciální rozdělení s rate stem:[\beta], pak čekací doba na stem:[n]-tý jev má Gamma rozdělení s stem:[\alpha = n].
-| Jak dlouho budeš čekat na stem:[n]-tou šalinu.
-
-| stem:[\chi^2] (Chi-square)
-| stem:[
-    f(x, n) = \begin{cases}
-        {
-            \Large
-            \frac{
-                x^{\frac{n}{2} - 1} e^{-\frac{x}{2}}
-            }{
-                2^\frac{n}{2} \Gamma\left( \frac{k}{2} \right)
-            }
-        }
-        & x > 0 \\
-        0 & \text{jinak} \\
-    \end{cases}
-]
-| Používá se při testování hypotéz. Nechť stem:[Z_1, Z_2, ..., Z_n] jsou nezávislé náhodné proměnné se standardním normálním rozdělením a stem:[X = \sum_{i=1}^n Z_i^2], pak stem:[X] má stem:[\chi^2] rozdělení s stem:[n] stupni volnosti.
-| Testování, jestli je mince férová.
-
-| Studentovo stem:[t]
-| stem:[
-    f(x, n) = \frac{
-        \Gamma (\frac{n+1}{2})
-    }{
-        \sqrt{n \pi} \Gamma(\frac{n}{2})
-    }
-    \left(
-        1 + \frac{x^2}{n}
-    \right)^{-\frac{n+1}{2}}
-]
-| Používá se na odhadování meanu normálně distribuované populace, jejíž rozptyl neznáš (což je skoro vždycky), ale máš z ní samply.
-| Odhadování průměru výšky lidí.
-
-|===
-
-=== Číselné charakteristiky
+### Číselné charakteristiky
 
 Stejně jako náhodné veličiny popisují jevy, číselné charakteristiky popisují chování náhodných veličin... pomocí čísel.
 
-==== Míry polohy
+#### Míry polohy
 
-Střední hodnota / mean / expected value::
-Průměr hodnot veličiny vážený jejich pravděpodobností. Značí se stem:[\overline{X}] nebo stem:[E(X)].
-+
-NOTE: Taky někdy označovaný jako _obecný moment prvního řádu / první obecný moment_. <<moment>>
+- **Střední hodnota / mean / expected value**\
+  Průměr hodnot veličiny vážený jejich pravděpodobností. Značí se $\overline{X}$ nebo $E(X)$.
 
-stem:[\alpha]-kvantil stem:[Q_\alpha]::
-Dělí statický soubor na stejně velké části.
+  **📌 NOTE**\
+   Taky někdy označovaný jako _obecný moment prvního řádu / první obecný moment_. [moment](#moment)
 
-Medián::
-Prostřední prvek uspořádaného statistického souboru. Kvantil stem:[Q_{0.5}].
-+
-[stem]
-++++
-\tilde{x} = \begin{cases}
-    x_{\frac{n+1}{2}} & \text{pro liché }n\\
-    \frac{1}{2} (x_\frac{n}{2} + x_{\frac{n}{2} + 1}) & \text{pro sudé }n
-\end{cases}
-++++
+- **$\alpha$-kvantil $Q_\alpha$**\
+  Dělí statický soubor na stejně velké části.
+- **Medián**\
+  Prostřední prvek uspořádaného statistického souboru. Kvantil $Q_{0.5}$.
 
-Percentil::
-Výběrový kvantil (stem:[p]-tý kvantil, kde stem:[0 < p < 1]) stem:[Q_p].
+  ```math
+  \tilde{x} = \begin{cases}
+      x_{\frac{n+1}{2}} & \text{pro liché }n\\
+      \frac{1}{2} (x_\frac{n}{2} + x_{\frac{n}{2} + 1}) & \text{pro sudé }n
+  \end{cases}
+  ```
 
-Modus::
-Hodnota s největší četností. Je akceptovatelné, že je _modů_ vícero (bimodální - až multimodální).
+- **Percentil**\
+  Výběrový kvantil ($p$-tý kvantil, kde $0 &lt; p &lt; 1$) $Q_p$.
+- **Modus**\
+  Hodnota s největší četností.
 
-==== Míry variability
+#### Míry variability
 
-[quote]
 Jak moc se od sebe prvky liší (nezávisle na konstantním posunutí)?
 
-Rozpyl / variance::
-Vyjadřuje, jak moc se NV odchyluje od své střední hodnoty. Značí se stem:[\sigma^2], stem:[\text{var}(X)] nebo stem:[D(X)].
-+
-[stem]
-++++
-\text{var}(X) = E\left((x_i - E(X))^2\right)
-++++
-+
-NOTE: Taky někdy označovaný jako _centrální moment druhého řádu / druhý centrální moment_. <<moment>>
+- **Rozpyl / variance**\
+  Vyjadřuje, jak moc se NV odchyluje od své střední hodnoty. Značí se $\sigma^2$, $\text{var}(X)$ nebo $D(X)$.
 
-Směrodatná odchylka / standard deviation::
-Míra variability NV. Značí se stem:[\sigma] nebo stem:[\text{SD}(X)]. Je definovaná jako stem:[\sqrt{\sigma^2}].
+  ```math
+  \text{var}(X) = E\left((x_i - E(X))^2\right)
+  ```
 
-ovariance veličin stem:[X] a stem:[Y]::
-Měří určitou podobnost mezi stem:[X] a stem:[Y].
-+
-[stem]
-++++
-\text{cov}(X, Y) = E((X - E(X)) \cdot (Y - E(Y)))
-++++
-+
-Ze vzorce výše plyne
-+
-[stem]
-++++
-\begin{aligned}
-    \text{cov}(X, X) &= \text{var}(X) \\
-    \text{cov}(X, Y) &= \text{cov}(Y, X) \\
-    \text{cov}(X, Y) &= E(X \cdot Y) - E(X) \cdot E(Y)
-\end{aligned}
-++++
+  **📌 NOTE**\
+   Taky někdy označovaný jako _centrální moment druhého řádu / druhý centrální moment_. [moment](#moment)
 
-Korelace::
-Míra podobnosti stem:[\rho_{X, Y}] náhodných veličin stem:[X] a stem:[Y]. Pokud stem:[X = X], pak stem:[\rho_{X, X} = 1]. Pokud jsou stem:[X] a stem:[Y] nezávislé, pak stem:[\rho_{X, Y} = 0].
-+
-[stem]
-++++
-\rho_{X, Y} = \frac{\text{cov}(X, Y)}{\sqrt{\text{var}(X)} \cdot \sqrt{\text{var}(Y)}}
-= \frac{E((X - E(X)) \cdot (Y - E(Y)))}{\sqrt{\text{var}(X)} \cdot \sqrt{\text{var}(Y)}}
-++++
+- **Směrodatná odchylka / standard deviation**\
+  Míra variability NV. Značí se $\sigma$ nebo $\text{SD}(X)$. Je definovaná jako $\sqrt{\sigma^2}$.
+- **ovariance veličin $X$ a $Y$**\
+  Měří určitou podobnost mezi $X$ a $Y$.
 
-==== Míry tvaru
+  ```math
+  \text{cov}(X, Y) = E((X - E(X)) \cdot (Y - E(Y)))
+  ```
 
-Koeficient šikmosti / skewness::
-Vztah polohy meanu vůči mediánu. Vyjadřuje symetrii dat.
+  Ze vzorce výše plyne
 
-Koeficient špičatosti / kurtosis::
-Jak vysoký je peak? Jak moc je to rozpláclé.
+  ```math
+  \begin{aligned}
+      \text{cov}(X, X) &= \text{var}(X) \\
+      \text{cov}(X, Y) &= \text{cov}(Y, X) \\
+      \text{cov}(X, Y) &= E(X \cdot Y) - E(X) \cdot E(Y)
+  \end{aligned}
+  ```
 
-== Centrální limitní věta (CLV) / Central limit theorem (CLT)
+- **Korelace**\
+  Míra podobnosti $\rho_{X, Y}$ náhodných veličin $X$ a $Y$. Pokud $X = X$, pak $\rho_{X, X} = 1$. Pokud jsou $X$ a $Y$ nezávislé, pak $\rho_{X, Y} = 0$.
 
-[quote]
-S rostoucím počtem sample výsledků stem:[X_i] se jejich distribuce blíží normálnímu rozdělení bez ohledu na jejich původní rozdělení.
+  ```math
+  \rho_{X, Y} = \frac{\text{cov}(X, Y)}{\sqrt{\text{var}(X)} \cdot \sqrt{\text{var}(Y)}}
+  = \frac{E((X - E(X)) \cdot (Y - E(Y)))}{\sqrt{\text{var}(X)} \cdot \sqrt{\text{var}(Y)}}
+  ```
+
+#### Míry tvaru
+
+- **Koeficient šikmosti / skewness**\
+  Vztah polohy meanu vůči mediánu. Vyjadřuje symetrii dat.
+- **Koeficient špičatosti / kurtosis**\
+  Jak vysoký je peak? Jak moc je to rozpláclé.
+
+## Centrální limitní věta (CLV) / Central limit theorem (CLT)
+
+S rostoucím počtem sample výsledků $X_i$ se jejich distribuce blíží normálnímu rozdělení bez ohledu na jejich původní rozdělení.
 
 Popisuje chování _výběrového průměru_ pro velké soubory vzorků a umožňuje tak sestrojení intervalových odhadů.
 
+- **Moivreova-Laplacova věta**
 
-Lévyho-Lindenbergova věta::
-+
-Mějme NV stem:[X]. Pokud je stem:[X] součtem stem:[n] vzájemně nezávislých NV stem:[X_1, X_2, ..., X_n] se shodným rozdělením libovolného typu, s konečnou střední hodnotou stem:[E(X_i) = \mu] a konečným rozptylem stem:[D(X_i) = \sigma^2], pak pro normovanou NV stem:[U] asymptoticky s stem:[n \to \infty] platí:
+  Mějme NV $X$. Pokud je $X$ součtem $n$ vzájemně nezávislých NV $X_1, X_2, ..., X_n$ s Bernoulliho rozdělením s parametrem $\pi$, má $X$ binomické rozdělení s parametry $n$ a $\pi$, pak s $n \to \infty$:
 
-[stem]
-++++
-\begin{aligned}
+  ```math
+  \frac{X - n \pi}{\sqrt{n \pi (1 - \pi)}} \approx N(0, 1)
+  ```
 
-\overline{X} = \frac{1}{n} \sum_{i=1}^n X_i &\approx N \left( \mu, \frac{\sigma^2}{n} \right) \\
+- **Lévyho-Lindenbergova věta**
 
-\sqrt{n} \frac{\overline{X} - \mu}{\sqrt{\sigma^2}} &\approx N(0, 1) \\
+  **💡 TIP**\
+  Zobecnění Moivreovy-Laplacovy věty.
 
-\frac{\sum_{i=1}^n X_i - n \mu}{\sqrt{n \sigma^2}} &\approx N(0, 1)
+  Mějme NV $X$. Pokud je $X$ součtem $n$ vzájemně nezávislých NV $X_1, X_2, ..., X_n$ se shodným rozdělením libovolného typu, s konečnou střední hodnotou $E(X_i) = \mu$ a konečným rozptylem $D(X_i) = \sigma^2$, pak pro normovanou NV $U$ asymptoticky s $n \to \infty$ platí:
 
-\end{aligned}
-++++
+  ```math
+  \begin{aligned}
 
-.Výpočet s CLV
-====
-Nechť stem:[X] je náhodná proměnná popisují jak padá 6, když hodíme kostkou 100krát. Tedy:
+  \overline{X} = \frac{1}{n} \sum_{i=1}^n X_i &\approx N \left( \mu, \frac{\sigma^2}{n} \right) \\
 
-[stem]
-++++
-X \approx \text{Binomial} \left( 100, \frac{1}{6} \right)
-++++
+  \sqrt{n} \frac{\overline{X} - \mu}{\sqrt{\sigma^2}} &\approx N(0, 1) \\
 
-Podle CLV má stem:[X] asymptoticky stem:[X \approx N(\frac{100}{6},\frac{500}{36})].
+  \frac{\sum_{i=1}^n X_i - n \mu}{\sqrt{n \sigma^2}} &\approx N(0, 1)
 
-Pak například pravděpodobnost, že šestka padne méně než 16krát je:
+  \end{aligned}
+  ```
 
-[stem]
-++++
-\begin{aligned}
+  **Výpočet s CLV**
 
-P(X < 16) &\doteq P(X \leq 16) = 0.429 \\
-P(X < 16) = P(X \leq 15) &\doteq F(X \leq 15) = 0.327 \\
+  Nechť $X$ je náhodná proměnná popisují jak padá 6, když hodíme kostkou 100krát. Tedy:
 
-\end{aligned}
-++++
+  ```math
+  X \approx \text{Binomial} \left( 100, \frac{1}{6} \right)
+  ```
 
-S _continuity correction_ (opravou v důsledku změny z diskrétní na spojitou NV) je to:
+  Podle CLV má $X$ asymptoticky $X \approx N(\frac{100}{6},\frac{500}{36})$.
 
-[stem]
-++++
-P(X < 16) = P(X \leq 15.5) \doteq F(15.5) = 0.377
-++++
-====
+  Pak například pravděpodobnost, že šestka padne méně než 16krát je:
 
-Moivreova-Laplacova věta::
-+
---
-TIP: Specializace Lévyho-Lindenbergovy věty - rychlejší pro Bernoulliho rozdělení
+  ```math
+  \begin{aligned}
 
-Mějme NV stem:[X]. Pokud je stem:[X] součtem stem:[n] vzájemně nezávislých NV stem:[X_1, X_2, ..., X_n] s Bernoulliho rozdělením s parametrem stem:[\pi], má stem:[X] binomické rozdělení s parametry stem:[n] a stem:[\pi], pak s stem:[n \to \infty]:
+  P(X < 16) &\doteq P(X \leq 16) = 0.429 \\
+  P(X < 16) = P(X \leq 15) &\doteq F(X \leq 15) = 0.327 \\
 
-[stem]
-++++
-\frac{X - n \pi}{\sqrt{n \pi (1 - \pi)}} \approx N(0, 1)
-++++
+  \end{aligned}
+  ```
 
---
+  S _continuity correction_ (opravou v důsledku změny z diskrétní na spojitou NV) je to:
 
-== Odhady
+  ```math
+  P(X < 16) = P(X \leq 15.5) \doteq F(15.5) = 0.377
+  ```
 
-Odhad parametru / parameter estimation::
-Když se snažíš vymyslet, jaké asi hodnoty mají parametery té které distribuce mít, aby co nejlíp pasovala na tvoje samply.
-+
-Cílem odhadu je určit parametry rozdělení NV stem:[X] na základě informace z výběrového souboru (realizaci NV, datasetu). Chceme hodnotu a přesnost odhadu.
+## Odhady
 
-Metoda odhadu / estimator::
-Popisuje, jak odhad získat.
+- **Odhad parametru / parameter estimation**\
+  Když se snažíš vymyslet, jaké asi hodnoty mají parametery té které distribuce mít, aby co nejlíp pasovala na tvoje samply.
 
-Nestranný odhad / unbiased estimator::
-Metoda odhadu parametru stem:[\theta] taková, že střední hodnota odhadu je rovna stem:[\theta]. Nestrannost je celkem rozumné omezení, protože nechceme, aby byl odhad odchýlený.
+  Cílem odhadu je určit parametry rozdělení NV $X$ na základě informace z výběrového souboru (realizaci NV, datasetu). Chceme hodnotu a přesnost odhadu.
 
-Nejlepší nestranný odhad / best unbiased estimator::
-Nestranný odhad, který má nejmenší rozptyl ze všech nestranných odhadů.
+- **Metoda odhadu / estimator**\
+  Popisuje, jak odhad získat.
+- **Nestranný odhad / unbiased estimator**\
+  Metoda odhadu parametru $\theta$ taková, že střední hodnota odhadu je rovna $\theta$. Nestrannost je celkem rozumné omezení, protože nechceme, aby byl odhad odchýlený.
+- **Nejlepší nestranný odhad / best unbiased estimator**\
+  Nestranný odhad, který má nejmenší rozptyl ze všech nestranných odhadů.
+- **Konzistentní odhad / consistent estimator**\
+  Metoda odhadu parametru $\theta$ taková, že s počtem vzorků $n$ konverguje k $\theta$ pro $n \to \infty$. [consistent-estimator](#consistent-estimator)
+- **(Výběrová) statistika / (sample) statistic**\
+  Náhodná veličina dána funkcí, která bere výběrový soubor a vrací číslo. Máme například:
 
-Konzistentní odhad / consistent estimator::
-Metoda odhadu parametru stem:[\theta] taková, že s počtem vzorků stem:[n] konverguje k stem:[\theta] pro stem:[n \to \infty]. <<consistent-estimator>>
+  - _Výběrový průměr / sample mean_,
+  - _Výběrový rozptyl / sample variance_,
+  - _Výběrovou směrodatnou odchylku / sample standard deviation_,
+  - _Výběrovou (empirickou) distribuční funkci / sample distribution function_.
 
-(Výběrová) statistika / (sample) statistic::
-Náhodná veličina dána funkcí, která bere výběrový soubor a vrací číslo. Máme například:
-+
---
-* _Výběrový průměr / sample mean_,
-* _Výběrový rozptyl / sample variance_, unbiased varianta:\
-    stem:[\frac{1}{1-n} \sum_{i = 0}^{n}(x_i - \bar{x})^2]
-* _Výběrovou směrodatnou odchylku / sample standard deviation_,
-* _Výběrovou (empirickou) distribuční funkci / sample distribution function_.
---
-+
-[quote]
-____
-Náhodná veličina stem:[T_n], která vznikne aplikací funkce stem:[T] na náhodný výběr o velikosti stem:[n] stem:[\mathbf{X} = (X_1, X_2, \ldots, X_n)] se nazývá statistika.
+  > Náhodná veličina $T_n$, která vznikne aplikací funkce $T$ na náhodný výběr o velikosti $n$ $\mathbf{X} = (X_1, X_2, \ldots, X_n)$ se nazývá statistika.
+  >
+  > ```math
+  > T_n = T(X_1, X_2, \ldots, X_n)
+  > ```
 
-[stem]
-++++
-T_n = T(X_1, X_2, \ldots, X_n)
-++++
-____
-+
-TIP: _Estimator_ je funkce počítající statistiku použitá k odhadu parametru. <<statistic>>
+  **💡 TIP**\
+   _Estimator_ je funkce počítající statistiku použitá k odhadu parametru. [statistic](#statistic)
 
-Bodový odhad / point estimate / pointwise estimate::
-Odhad parametru daný *jednou hodnotou*, která hodnotu parametru aproximuje.
+- **Bodový odhad / point estimate / pointwise estimate**\
+  Odhad parametru daný **jednou hodnotou**, která hodnotu parametru aproximuje.
+- **Intervalový odhad / interval estimate**\
+  Odhad parametru daný pomocí **intervalu hodnot**, který hodnotu parametru s velkou pravděpodobností obsahuje. Délka intervalu vypovídá o přesnosti odhadu.
+- **Interval spolehlivosti / confidence interval**\
+  Interval spolehlivosti parametru $\theta$ s hladinou spolehlivosti $1 - \alpha$, kde $\alpha \in \lbrack 0, 1 \rbrack$ je dvojice statistik $\lbrack \theta_L, \theta_U \rbrack$ taková, že:
 
-Intervalový odhad / interval estimate::
-Odhad parametru daný pomocí *intervalu hodnot*, který hodnotu parametru s velkou pravděpodobností obsahuje. Délka intervalu vypovídá o přesnosti odhadu.
+  ```math
+  P(\theta_L < \theta < \theta_U) = 1 - \alpha
+  ```
 
-Interval spolehlivosti / confidence interval::
-Interval spolehlivosti parametru stem:[\theta] s hladinou spolehlivosti stem:[1 - \alpha], kde stem:[\alpha \in \lbrack 0, 1 \rbrack] je dvojice statistik stem:[\lbrack \theta_L, \theta_U \rbrack] taková, že:
-+
-[stem]
-++++
-P(\theta_L < \theta < \theta_U) = 1 - \alpha
-++++
-+
-kde stem:[\theta_L] je *dolní mez intervalu* a stem:[\theta_U] je *horní mez intervalu*.
+  kde $\theta_L$ je **dolní mez intervalu** a $\theta_U$ je **horní mez intervalu**.
 
-Hladina významnosti a spolehlivosti / significance and confidence level::
-* Hladina významnosti stem:[\alpha] je pravděpodobnost, že parametr *nespadá* do intervalového odhadu.
-* Hladina spolehlivosti stem:[1 - \alpha] je pravděpodobnost, že parametr *spadá* do intervalového odhadu.
+- **Hladina významnosti a spolehlivosti / significance and confidence level**
+  - Hladina významnosti $\alpha$ je pravděpodobnost, že parametr **nespadá** do intervalového odhadu.
+  - Hladina spolehlivosti $1 - \alpha$ je pravděpodobnost, že parametr **spadá** do intervalového odhadu.
+- **Levostranný, pravostranný a oboustranný interval / left-tailed, right-tailed and two-tailed interval**
+  - _Levostranný (dolní)_: $P(\theta \le \theta_L) = 1 - \alpha$.
+  - _Pravostranný (horní)_: $P(\theta \ge \theta_U) = 1 - \alpha$.
+  - _Oboustranný_: $P(\theta \le \theta_L) = P(\theta \ge \theta_U) = \frac{\alpha}{2}$.
 
-Levostranný, pravostranný a oboustranný interval / left-tailed, right-tailed and two-tailed interval::
-* _Levostranný (dolní)_: stem:[P(\theta_L \le \theta) = 1 - \alpha].
-* _Pravostranný (horní)_: stem:[P(\theta_U \ge \theta) = 1 - \alpha].
-* _Oboustranný_: stem:[P(\theta_L < \theta) = P(\theta < \theta) = \frac{\alpha}{2}].
+**Tvorba intervalového odhadu**
 
-.Tvorba intervalového odhadu
-====
-Máme vzorek velikosti stem:[n] s výběrovým průměrem stem:[\overline{X}] a výběrovým rozptylem stem:[S^2]. Odhadněte střední hodnotu stem:[\mu] s hladinou spolehlivosti 0.95, pokud víte, že stem:[X \approx N(\mu, \sigma^2)], kde rozptyl stem:[\sigma^2] je neznámý.
+Máme vzorek velikosti $n$ s výběrovým průměrem $\overline{X}$ a výběrovým rozptylem $S^2$. Odhadněte střední hodnotu $\mu$ s hladinou spolehlivosti 0.95, pokud víte, že $X \approx N(\mu, \sigma^2)$, kde rozptyl $\sigma^2$ je neznámý.
 
-1. Zvolíme vhodnou výběrovou statistiku stem:[T(X)] jejíž rozdělení závislé na stem:[\mu] známe. V tomhle případě Studentův t-test:
-+
-[stem]
-++++
-T(X) = \frac{\overline{X} - \mu}{S / \sqrt{n}} \sim t_{n - 1}
-++++
-+
-Tedy víme, že stem:[T(X) \sim t(n-1)]
+1. Zvolíme vhodnou výběrovou statistiku $T(X)$ jejíž rozdělení závislé na $\mu$ známe. V tomhle případě Studentův t-test:
 
-2. Určíme kvantily stem:[t_\frac{\alpha}{2} = t_{0.025}] a stem:[t_{1 - \frac{\alpha}{2}} = t_{0.975}] z stem:[T(X)]:
-+
-[stem]
-++++
-\begin{aligned}
+   ```math
+   T(X) = \frac{\overline{X} - \mu}{S / \sqrt{n}} \sim t_{n - 1}
+   ```
 
-P(t_{0.025}(n - 1) < T(X) < t_{0.975}(n-1)) &= 1 - \alpha = 0.95 \\
+   Tedy víme, že $T(X) \sim t(n-1)$
 
-t_{0.025}(n - 1) &= -t_{0.975}(n - 1) \\
+2. Určíme kvantily $t_\frac{\alpha}{2} = t_{0.025}$ a $t_{1 - \frac{\alpha}{2}} = t_{0.975}$ z $T(X)$:
 
-P(t_{0.025}(n - 1) < T(X) < -t_{0.025}(n-1)) &= 0.95 \\
+   ```math
+   \begin{aligned}
 
-P(\overline{X} - t_{0.025}(n - 1) \frac{S}{\sqrt{n}} < \textcolor{red}{\mu} < \overline{X} + t_{0.025}(n - 1) \frac{S}{\sqrt{n}}) &= 0.95
+   P(t_{0.025}(n - 1) < T(X) < t_{0.975}(n-1)) &= 1 - \alpha = 0.95 \\
 
-\end{aligned}
-++++
+   t_{0.025}(n - 1) &= -t_{0.975}(n - 1) \\
+
+   P(t_{0.025}(n - 1) < T(X) < -t_{0.025}(n-1)) &= 0.95 \\
+
+   P(\overline{X} - t_{0.025}(n - 1) \frac{S}{\sqrt{n}} < \textcolor{red}{\mu} < \overline{X} + t_{0.025}(n - 1) \frac{S}{\sqrt{n}}) &= 0.95
+
+   \end{aligned}
+   ```
 
 3. Vyčíslíme interval z poslední rovnice.
-====
 
-Věrohodnost / likelihood::
-+
---
-Říká, jak dobře náš model (rozdělení pravděpodobnosti náhodné veličiny dané parametry) sedí na naměřená data.
+- **Věrohodnost / likelihood**
 
-NOTE: Pravděpodobnost je funkce jevů. Likelihood je funkce parametrů modelu.
+  Říká, jak dobře náš model (rozdělení pravděpodobnosti náhodné veličiny dané parametry) sedí na naměřená data.
 
-NOTE: Likelihood nemusí nutně vracet čísla z intervalu stem:[\lbrack 0, 1 \rbrack].
---
+  **📌 NOTE**\
+  Pravděpodobnost je funkce jevů. Likelihood je funkce parametrů modelu.
 
-Maximum likelihood estimation (MLE)::
-Metoda odhadu parametru založená na maximalizaci likelihoodu, že model sedí na naměřená data. <<mle>>
+  **📌 NOTE**\
+  Likelihood nemusí nutně vracet čísla z intervalu $\lbrack 0, 1 \rbrack$.
 
-Method of moments (MOM)::
-Metoda odhadu parametru založená na rovnosti teoretického a výběrového momentu. <<mom>>
+- **Maximum likelihood estimation (MLE)**\
+  Metoda odhadu parametru založená na maximalizaci likelihoodu, že model sedí na naměřená data. [mle](#mle)
+- **Method of moments (MOM)**\
+  Metoda odhadu parametru založená na rovnosti teoretického a výběrového momentu. [mom](#mom)
 
+## Testování statistických hypotéz
 
-== Testování statistických hypotéz
+- **Hypotéza**\
+  Nějaký předpoklad o datech, který chceme ověřit. Často je formulovaná pomocí parametrů modelu. Např. _"střední hodnota je 5."_
+- **Testování hypotézy**\
+  Cílem testování hypotéz je ověřit, že data **nepopírají** nějakou hypotézu.
 
-Hypotéza::
-Nějaký předpoklad o datech, který chceme ověřit. Často je formulovaná pomocí parametrů modelu. Např. _"střední hodnota je 5."_
+  - _Null hypothesis $H_0$_: "výchozí nastavení"; často tvrdí, že nějaká vlastnost neexistuje.
+  - _Alternative hypothesis $H_1$_: "to co, chceme dokázat"; opak $H_0$.
 
-Testování hypotézy::
-Cílem testování hypotéz je ověřit, že data *nepopírají* nějakou hypotézu.
-+
---
-* _Null hypothesis stem:[H_0]_: "výchozí nastavení"; často tvrdí, že nějaká vlastnost neexistuje.
-* _Alternative hypothesis stem:[H_1]_: "to co, chceme dokázat"; opak stem:[H_0].
---
-+
-Alternativní hypotézu _potvrzujeme_ tak, že _vyvracíme_ nulovou hypotézu. Pokud se nám nepodaří vyvrátit stem:[H_0], pak o stem:[H_1] nevíme nic. <<null>>
-+
-[quote, MV013]
-____
-Na testování použijeme statistiku stem:[T_n = T(\mathbf{X})], kterou nazýváme *testovací statistikou*. Množinu hodnot, které může testovací statistika nabýt, rozdělíme na dvě disjunktní oblasti. Jednu označíme stem:[W_\alpha], a nazveme ji *kritickou oblastí* (nebo také _oblastí zamítnutí hypotézy_ (*region of rejection*, *critical region*)) a druhá je doplňkovou oblastí (oblast _nezamítnutí testované hypotézy_).
+  Alternativní hypotézu _potvrzujeme_ tak, že _vyvracíme_ nulovou hypotézu. Pokud se nám nepodaří vyvrátit $H_0$, pak o $H_1$ nevíme nic. [null](#null)
 
-Na základě realizace náhodného výběru stem:[\mathbf{x} = (x_1, ..., x_n)'] vypočítáme hodnotu testovací statistiky stem:[t_n = T(\mathbf{x})].
+  > Na testování použijeme statistiku $T_n = T(\mathbf{X})$, kterou nazýváme **testovací statistikou**. Množinu hodnot, které může testovací statistika nabýt, rozdělíme na dvě disjunktní oblasti. Jednu označíme $W_\alpha$, a nazveme ji **kritickou oblastí** (nebo také _oblastí zamítnutí hypotézy_ (**region of rejection**, **critical region**)) a druhá je doplňkovou oblastí (oblast _nezamítnutí testované hypotézy_).
+  >
+  > Na základě realizace náhodného výběru $\mathbf{x} = (x_1, ..., x_n)'$ vypočítáme hodnotu testovací statistiky $t_n = T(\mathbf{x})$.
+  >
+  > - Pokud hodnota testovací statistiky $t_n$ nabude hodnoty z kritické oblasti, t.j. $t_n = T(\mathbf{x}) \in W_\alpha$, pak **nulovou hypotézu zamítáme**.
+  > - Pokud hodnota testovací statistiky $t_n$ nabude hodnoty z oblasti nezamítnutí, t.j. $t_n = T(\mathbf{x}) \not\in W_\alpha$, pak **nulovou hypotézu nezamítáme**.
+  >
+  > — MV013
 
-* Pokud hodnota testovací statistiky stem:[t_n] nabude hodnoty z kritické oblasti, t.j. stem:[t_n = T(\mathbf{x}) \in W_\alpha], pak *nulovou hypotézu [.underline]#zamítáme#*.
-* Pokud hodnota testovací statistiky stem:[t_n] nabude hodnoty z oblasti nezamítnutí, t.j. stem:[t_n = T(\mathbf{x}) \not\in W_\alpha], pak *nulovou hypotézu [.underline]#nezamítáme#*.
-____
+**Metafora se soudem**
 
-.Metafora se soudem
-====
 Platí presumpce nevinny. Předpokládáme, že člověk zločin nespáchal, dokud tuhle hypotézu nevyvrátíme.
 
-* _stem:[H_0]_: "Obžalovaný *neukradl* papamobil."
-* _stem:[H_1]_: "Obžalovaný *ukradl* papamobil."
-====
+- _$H_0$_: "Obžalovaný **neukradl** papamobil."
+- _$H_1$_: "Obžalovaný **ukradl** papamobil."
 
-Chyby v testování hypotéz::
-* _Typ I_: zamítnutí stem:[H_0], i když je pravdivá -- _false positive_.
-* _Typ II_: nezamítnutí stem:[H_0], i když je nepravdivá -- _false negative_.
-+
-[NOTE]
-====
-_Positive_ = zamítnutí stem:[H_0], tedy potvrzení stem:[H_1].
+- **Chyby v testování hypotéz**
 
-_Negative_ = nezamítnutí stem:[H_0], tedy o stem:[H_1] nevíme nic.
-====
+  - _Typ I_: zamítnutí $H_0$, i když je pravdivá -- _false positive_.
+  - _Typ II_: nezamítnutí $H_0$, i když je nepravdivá -- _false negative_.
 
-stem:[p]-hodnota (hladina významnosti)::
-Nejmenší hladina významnosti stem:[\alpha], při které ještě zamítáme stem:[H_0]. <<p-value>>
-+
-Pravděpodobnost, že došlo k chybě typu I -- zavrhnuli jsme stem:[H_0], ačkoli platí.
-+
-stem:[
-    p = P(\text{type I error}) = P(\text{we reject } H_0 \;|\; H_0)
-]
-+
-TIP: Pokud stem:[p]-value vyjde menší než požadovaná hladina významnosti stem:[\alpha], pak pravděpodobnost, že došlo k chybě typu I je dostatečně malá na to, abychom mohli tvrdit, že zavrhujeme stem:[H_0], protože stem:[H_0] neplatí, a tedy akceptujeme stem:[H_1].
+    <dl><dt><strong>📌 NOTE</strong></dt><dd>
 
-=== Parametrické testy
+    _Positive_ = zamítnutí $H_0$, tedy potvrzení $H_1$.
+
+    _Negative_ = nezamítnutí $H_0$, tedy o $H_1$ nevíme nic.
+    </dd></dl>
+
+- **$p$-hodnota (hladina významnosti)**\
+  Nejmenší hladina významnosti $\alpha$, při které ještě zamítáme $H_0$. [p-value](#p-value)
+
+  Pravděpodobnost, že došlo k chybě typu I -- zavrhnuli jsme $H_0$, ačkoli platí.
+
+  stem:[
+  p = P(\text{type I error}) = P(\text{we reject } H_0 \;|\; H_0)
+  ]
+
+  **💡 TIP**\
+   Pokud $p$-value vyjde menší než požadovaná hladina významnosti $\alpha$, pak pravděpodobnost, že došlo k chybě typu I je dostatečně malá na to, abychom mohli tvrdit, že zavrhujeme $H_0$, protože $H_0$ neplatí, a tedy akceptujeme $H_1$.
+
+### Parametrické testy
 
 Parametrické testy jsou založené na parametrech pravděpodobnostních rozdělení.
 
-Studentův T-test::
-Umožňuje ověřit zda normální rozdělení má danou střední hodnotu. Taky umožňuje ověřit zda dvě normální rozdělení mají stejnou střední hodnotu, za předpokladu, že mají stejný (byť neznámý) rozptyl. <<t-test>>
+- **Studentův T-test**\
+  Umožňuje ověřit zda normální rozdělení má danou střední hodnotu. Taky umožňuje ověřit zda dvě normální rozdělení mají stejnou střední hodnotu, za předpokladu, že mají stejný (byť neznámý) rozptyl. [t-test](#t-test)
+- **Analysis of variance (ANOVA)**\
+  Testuje rozdíly mezi středními hodnotami dvou a více skupin. Používá se k ověření, zda rozptyly dvou nebo více množin dat jsou stejné až na konstantní posun a škálování. [anova](#anova)
 
-Analysis of variance (ANOVA)::
-Testuje rozdíly mezi středními hodnotami dvou a více skupin. Používá se k ověření, zda rozptyly dvou nebo více množin dat jsou stejné až na konstantní posun a škálování. <<anova>> Je to alternativa k dělání testů _každý s každým_.
-
-=== Neparametrické testy
+### Neparametrické testy
 
 Neparametrické testy nejsou založené (jen) na parametrech pravděpodobnostních rozdělení. Používají se, když neznáme rozdělení dat, nebo je těžké splnit předpoklady parametrických testů.
 
-Sign test::
-Testuje, zda se dvě náhodné veličiny (= párový test!) při pozorování liší konzistentně. Jinými slovy, zda střední hodnota jejich rozdílu má nulový medián.
+- **Sign test**\
+  Testuje, zda se dvě náhodné veličiny při pozorování liší konzistentně. Jinými slovy, zda stření hodnota jejich rozdílu má nulový medián.
+- **One-sample Wilcoxon signed-rank test**\
+  Testuje, zda vzorky patří do symetrického rozdělení s daným mediánem.
+- **Pearsonův chi-squared ($\chi^2$) test**\
+  Umožňuje ověřit, že dvě kategorické NV jsou nezávislé. [chi-squared](#chi-squared)
 
-One-sample Wilcoxon signed-rank test::
-Testuje, zda vzorky patří do symetrického rozdělení s daným mediánem.
+### Testy (ne)závislosti náhodných veličin
 
-Pearsonův chi-squared (stem:[\chi^2]) test::
-Umožňuje ověřit, že dvě kategorické NV jsou nezávislé. <<chi-squared>>
+**Opakování**
 
-=== Testy (ne)závislosti náhodných veličin
+- **Statistická / stochastická nezávislost**\
+  Náhodné jevy $A$ a $B$ jsou stochasticky nezávislé, pokud $P(A \cap B) = P(A) \cdot P(B)$.
 
-.Opakování
-====
-Statistická / stochastická nezávislost::
-Náhodné jevy stem:[A] a stem:[B] jsou stochasticky nezávislé, pokud stem:[P(A \cap B) = P(A) \cdot P(B)].
-+
-*Výskyt stem:[A] nemá vliv na výskyt stem:[B].*
-+
+  **Výskyt $A$ nemá vliv na výskyt $B$.**
 
-* "Při při prvním hodu padne 6" a "při druhém hodu padne 6" jsou *nezávislé* jevy.
-* Naproti tomu jev, že padne 6 při prvním hodu kostkou a jev, že součet čísel zaznamenaných v prvním a druhém pokusu je 8, jsou *závislé* jevy. <<nezavislost>>
-====
+  - "Při při prvním hodu padne 6" a "při druhém hodu padne 6" jsou **nezávislé** jevy.
+  - Naproti tomu jev, že padne 6 při prvním hodu kostkou a jev, že součet čísel zaznamenaných v prvním a druhém pokusu je 8, jsou **závislé** jevy. [nezavislost](#nezavislost)
 
-Nezávislost diskrétních NV::
-+
---
-Pokud stem:[X], stem:[Y] a stem:[Z] jsou diskrétní náhodné veličiny, pak definujeme stem:[X] a stem:[Y] jako _podmíněně nezávislé_ vzhledem k stem:[Z], pokud:
+- **Nezávislost diskrétních NV**
 
-[stem]
-++++
-P(X \le x, Y \le y | Z = z) = P(X \le x | Z = z) \cdot P(Y \le y | Z = z)
-++++
+  Pokud $X$, $Y$ a $Z$ jsou diskrétní náhodné veličiny, pak definujeme $X$ a $Y$ jako _podmíněně nezávislé_ vzhledem k $Z$, pokud:
 
-pro všechny stem:[x], stem:[y] a stem:[z] takové, že stem:[P(Z = z) > 0].
---
+  ```math
+  P(X \le x, Y \le y | Z = z) = P(X \le x | Z = z) \cdot P(Y \le y | Z = z)
+  ```
 
-Nezávislost spojitých NV::
-+
---
-Pokud stem:[X], stem:[Y] a stem:[Z] jsou spojité náhodné veličiny a mají společnou hustotu pravděpodobnosti stem:[f_{XYZ}(x,y,z)], pak definujeme stem:[X] a stem:[Y] jako _podmíněně nezávislé_ vzhledem k stem:[Z], pokud:
+  pro všechny $x$, $y$ a $z$ takové, že $P(Z = z) > 0$.
 
-[stem]
-++++
-f_{X,Y|Z}(x,y|z) = f_{X|Z}(x|z) \cdot f_{Y|Z}(y|z)
-++++
+- **Nezávislost spojitých NV**
 
-pro všechna stem:[x], stem:[y] a stem:[z] takové, že stem:[f_Z(z) > 0].
---
+  Pokud $X$, $Y$ a $Z$ jsou spojité náhodné veličiny a mají společnou hustotu pravděpodobnosti $f_{XYZ}(x,y,z)$, pak definujeme $X$ a $Y$ jako _podmíněně nezávislé_ vzhledem k $Z$, pokud:
 
-[quote, Wikipedia: Statistická nezávislost]
-____
-To neformálně řečeno znamená, že jakmile máme k dispozici informaci obsaženou v Z, není už další informace A užitečná pro přesnější poznání B ani znalost B nepřidá nic pro pochopení A, i kdyby A a B byly vzájemně závislé.
-____
+  ```math
+  f_{X,Y|Z}(x,y|z) = f_{X|Z}(x|z) \cdot f_{Y|Z}(y|z)
+  ```
 
-Regrese::
-Analýza vztahu mezi dvěma závislými NV.
+  pro všechna $x$, $y$ a $z$ takové, že $f_Z(z) > 0$.
 
-Lineární regrese::
-Regrese s předpokladem, že vztah dvě NV jsou závislé lineárně. Rovnici regresní přímky zapisujeme jako:
-+
-[stem]
-++++
-Y_i = \beta_0 + \beta_1 \cdot X_i + \varepsilon_i
-++++
-+
-Kde:
-+
---
-* stem:[Y] je NV závislá na stem:[X],
-* stem:[\beta_0] je konstanta,
-* stem:[\beta_1] je směrnice (slope),
-* stem:[\varepsilon_i] je stem:[i]-tá pozorovaná hodnota chyby -- náhodná složka / šum.
---
-+
-Platí:
-+
---
-* stem:[E(\varepsilon_i) = 0],
-* stem:[D(\varepsilon_i) = \sigma^2],
-* stem:[\text{cov}(\varepsilon_i, \varepsilon_j) = 0] pro stem:[i \neq j],
-* stem:[\varepsilon_i \sim N(0, \sigma^2)] -- náhodná složka má normální rozdělení,
-* regresní parametry stem:[\beta_0] a stem:[\beta_1] mohou mít libovolnou hodnotu.
---
+> To neformálně řečeno znamená, že jakmile máme k dispozici informaci obsaženou v Z, není už další informace A užitečná pro přesnější poznání B ani znalost B nepřidá nic pro pochopení A, i kdyby A a B byly vzájemně závislé.
+>
+> — Wikipedia: Statistická nezávislost
 
-Celkový F-test::
-Pracuje s nulovou hypotézou ve tvaru:
-+
-[stem]
-++++
-H_0: \beta_1 = \beta_2 = \ldots = \beta_k = 0
-++++
-+
-Tedy testujeme, zda hodnota analyzované NV závisí na lineární kombinaci vysvětlujících NV. Pokud je stem:[H_0] zamítnuta, pak alespoň jedna závislost existuje. Pokud je stem:[H_0] nezamítnuta, pak je množina vysvětlujících NV úplně blbě.
-+
-Testová statistika má F-rozdělení.
+- **Regrese**\
+  Analýza vztahu mezi dvěma závislými NV.
+- **Lineární regrese**\
+  Regrese s předpokladem, že vztah dvě NV jsou závislé lineárně. Rovnici regresní přímky zapisujeme jako:
 
-Dílčí t-testy::
-Umožňují otestovat, že dává smysl použít stem:[i]-tou vysvětlující NV. Testujeme nulovou hypotézu:
-+
-[stem]
-++++
-H_0: \beta_i = 0
-++++
-+
-Pokud nelze zamítnout, pak stem:[i]-tá vysvětlující NV nemá vliv na analyzovanou NV a můžeme ji vynechat.
-+
-Testová statistika má Studentovo t-rozdělení.
+  ```math
+  Y_i = \beta_0 + \beta_1 \cdot X_i + \varepsilon_i
+  ```
 
+  Kde:
 
-[bibliography]
-== Zdroje
+  - $Y$ je NV závislá na $X$,
+  - $\beta_0$ je konstanta,
+  - $\beta_1$ je směrnice (slope),
+  - $\varepsilon_i$ je $i$-tá pozorovaná hodnota chyby -- náhodná složka / šum.
 
-* [[[statistics,1]]] link:https://en.wikipedia.org/wiki/Statistics[Wikipedia: Statistics]
-* [[[nv,2]]] link:https://cs.wikipedia.org/wiki/N%C3%A1hodn%C3%A1_veli%C4%8Dina[Wikipedia: Náhodná veličina]
-* [[[cdf,3]]] link:https://en.wikipedia.org/wiki/Cumulative_distribution_function[Wikipedia: Cumulative distribution function]
-* [[[mean,4]]] link:https://en.wikipedia.org/wiki/Mean[Wikipedia: Mean]
-* [[[clv,5]]] link:https://cs.wikipedia.org/wiki/Centr%C3%A1ln%C3%AD_limitn%C3%AD_v%C4%9Bta[Wikipedia: Centrální limitní věta]
-* [[[consistent-estimator,6]]] link:https://en.wikipedia.org/wiki/Consistent_estimator[Wikipedia: Consistent estimator]
-* [[[statistic, 7]]] link:https://en.wikipedia.org/wiki/Statistic[Wikipedia: Statistic]
-* [[[mle, 8]]] link:https://en.wikipedia.org/wiki/Maximum_likelihood_estimation[Wikipedia: Maximum likelihood estimation]
-* [[[mom, 9]]] link:https://en.wikipedia.org/wiki/Method_of_moments_(statistics)[Wikipedia: Method of moments]
-* [[[null, 10]]] link:https://en.wikipedia.org/wiki/Null_hypothesis[Wikipedia: Null hypothesis]
-* [[[p-value, 11]]] link:https://cs.wikipedia.org/wiki/P-hodnota[Wikipedia: P-hodnota]
-* [[[mv013,12]]] link:https://is.muni.cz/auth/el/fi/jaro2021/MV013/[MV013 Statistics for Computer Science (jaro 2021)]
-* [[[anova, 13]]] link:https://en.wikipedia.org/wiki/Analysis_of_variance[Wikipedia: Analysis of variance]
-* [[[nezavislost,14]]] link:https://cs.wikipedia.org/wiki/Statistick%C3%A1_nez%C3%A1vislost[Wikipedia: Statistická nezávislost]
-* [[[t-test, 15]]] link:https://cs.wikipedia.org/wiki/T-test[Wikipedia: T-test]
-* [[[chi-squared,16]]] link:https://www.scribbr.com/statistics/chi-square-tests/[Chi-square tests]
-* [[[moment, 17]]] link:http://kfe.fjfi.cvut.cz/~limpouch/sigdat/pravdh/node10.html[Momenty rozdělení]
+  Platí:
+
+  - $E(\varepsilon_i) = 0$,
+  - $D(\varepsilon_i) = \sigma^2$,
+  - $\text{cov}(\varepsilon_i, \varepsilon_j) = 0$ pro $i \neq j$,
+  - $\varepsilon_i \sim N(0, \sigma^2)$ -- náhodná složka má normální rozdělení,
+  - regresní parametry $\beta_0$ a $\beta_1$ mohou mít libovolnou hodnotu.
+
+- **Celkový F-test**\
+  Pracuje s nulovou hypotézou ve tvaru:
+
+  ```math
+  H_0: \beta_1 = \beta_2 = \ldots = \beta_k = 0
+  ```
+
+  Tedy testujeme, zda hodnota analyzované NV závisí na lineární kombinaci vysvětlujících NV. Pokud je $H_0$ zamítnuta, pak alespoň jedna závislost existuje. Pokud je $H_0$ nezamítnuta, pak je množina vysvětlujících NV úplně blbě.
+
+  Testová statistika má F-rozdělení.
+
+- **Dílčí t-testy**\
+  Umožňují otestovat, že dává smysl použít $i$-tou vysvětlující NV. Testujeme nulovou hypotézu:
+
+  ```math
+  H_0: \beta_i = 0
+  ```
+
+  Pokud nelze zamítnout, pak $i$-tá vysvětlující NV nemá vliv na analyzovanou NV a můžeme ji vynechat.
+
+  Testová statistika má Studentovo t-rozdělení.
+
+## Zdroje
+
+- [[[statistics,1]]] [Wikipedia: Statistics](https://en.wikipedia.org/wiki/Statistics)
+- [[[nv,2]]] [Wikipedia: Náhodná veličina](https://cs.wikipedia.org/wiki/N%C3%A1hodn%C3%A1_veli%C4%8Dina)
+- [[[cdf,3]]] [Wikipedia: Cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function)
+- [[[mean,4]]] [Wikipedia: Mean](https://en.wikipedia.org/wiki/Mean)
+- [[[clv,5]]] [Wikipedia: Centrální limitní věta](https://cs.wikipedia.org/wiki/Centr%C3%A1ln%C3%AD_limitn%C3%AD_v%C4%9Bta)
+- [[[consistent-estimator,6]]] [Wikipedia: Consistent estimator](https://en.wikipedia.org/wiki/Consistent_estimator)
+- [[[statistic, 7]]] [Wikipedia: Statistic](https://en.wikipedia.org/wiki/Statistic)
+- [[[mle, 8]]] [Wikipedia: Maximum likelihood estimation](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation)
+- [[[mom, 9]]] [Wikipedia: Method of moments](<https://en.wikipedia.org/wiki/Method_of_moments_(statistics)>)
+- [[[null, 10]]] [Wikipedia: Null hypothesis](https://en.wikipedia.org/wiki/Null_hypothesis)
+- [[[p-value, 11]]] [Wikipedia: P-hodnota](https://cs.wikipedia.org/wiki/P-hodnota)
+- [[[mv013,12]]] [MV013 Statistics for Computer Science (jaro 2021)](https://is.muni.cz/auth/el/fi/jaro2021/MV013/)
+- [[[anova, 13]]] [Wikipedia: Analysis of variance](https://en.wikipedia.org/wiki/Analysis_of_variance)
+- [[[nezavislost,14]]] [Wikipedia: Statistická nezávislost](https://cs.wikipedia.org/wiki/Statistick%C3%A1_nez%C3%A1vislost)
+- [[[t-test, 15]]] [Wikipedia: T-test](https://cs.wikipedia.org/wiki/T-test)
+- [[[chi-squared,16]]] [Chi-square tests](https://www.scribbr.com/statistics/chi-square-tests/)
+- [[[moment, 17]]] [Momenty rozdělení](http://kfe.fjfi.cvut.cz/~limpouch/sigdat/pravdh/node10.html)
