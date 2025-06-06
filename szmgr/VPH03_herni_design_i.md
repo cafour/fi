@@ -139,7 +139,7 @@ Games are not experiences, they are artifacts people play with while / to create
 Hry dovedou navodit řadu různých herních zážitků, které můžeme různými způsoby kategorizovat.
 
 > [!IMPORTANT]
-> Herní zážitky souvisí s pojmem obtížnost, kterému se věnuje část otázky [Herní design II](../herni-design-ii/).
+> Herní zážitky souvisí s pojmem obtížnost, kterému se věnuje část otázky [Herní design II](../vph04_herni_design_ii/).
 
 ==== LeBlanc’s Eight Kinds of Fun
 
@@ -198,7 +198,7 @@ Něco známeho, povědomého pro hráče.
 Designér iterativně vytváří hrubé verze hry, které testuje a upravuje. Prototyp je osekaná verze hry, která obsahuje mechaniky, ale ne nutně grafiku. Prototyp lze využít k ověření herního designu - je hra zábavná?
 
 > [!IMPORTANT]
-> Testováním se více zabývá otázka [Herní design II](../herni-design-ii/).
+> Testováním se více zabývá otázka [Herní design II](../vph04_herni_design_ii/).
 
 == Game Designer
 

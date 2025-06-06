@@ -49,7 +49,7 @@ Tato rovnice udává množinu bodů, ze které se křivka nebo povrch sestává.
 > Výhodou implicitně zadaných ploch je kompaktnější reprezentace a jednodušší ray casting. Nicméně výpočty s nimi jsou časově náročné, takže se stejně nejdřív převádí na polygonové meshe -- _polygonizace_.
 
 > [!IMPORTANT]
-> Tahle sekce přesahuje do [3D modelování a datové struktury](../3d-modelovani-a-datove-struktury/) -> _Implicitní reprezentace a modelování_.
+> Tahle sekce přesahuje do [3D modelování a datové struktury](../szp04_3d_modelovani/) -> _Implicitní reprezentace a modelování_.
 
 ### Parametrická reprezentace
 

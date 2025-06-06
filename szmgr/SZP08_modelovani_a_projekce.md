@@ -32,7 +32,7 @@ description: A guide in my new Starlight docs site.
 ## MVP matice
 
 > [!IMPORTANT]
-> Pro implementaci v OpenGL viz [Renderování s využitím GPU](../renderovani-s-vyuzitim-gpu/).
+> Pro implementaci v OpenGL viz [Renderování s využitím GPU](../vph07_gpu_rendering/).
 
 > [!WARNING]
 > Při zápisu matic bacha na to, jestli jsou row-major nebo column-major. Třeba v OpenGL to znamená, že se všechny matice píší v transponované podobě, jelikož OpenGL je column-major a v takovém pořádí jsou i parametery `mat2`, `mat3` a `mat4` V GLSL.

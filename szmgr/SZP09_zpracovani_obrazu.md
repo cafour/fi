@@ -105,7 +105,7 @@ Převod nelze vyjádřit v lineárním tvaru
 
   kde $T$ je práh. Pokud je $T$ konstanta, pak se jedná o _globální prahování_.
 
-  Prahování se pořádně věnuje otázka [Analýza rastrového obrazu](../analyza-rastroveho-obrazu/).
+  Prahování se pořádně věnuje otázka [Analýza rastrového obrazu](../szp10_analyza_obrazu/).
 
 - **Paleta**\
   Můžeme použít funkci či vyhledávácí tabulku pro přemapování existujících hodnot v obrazu na jiné (viz barevné škály u vizualizací).
@@ -267,7 +267,7 @@ Proces, kdy hledání _hran_ v obraze. Hrana je křivka, podél níž pixely vý
 - Hrany lze detekovat pomocí konvoluce.
 
 > [!IMPORTANT]
-> Numerické diferenciaci se věnuje otázka [Numerické metody](../numericke-metody/).
+> Numerické diferenciaci se věnuje otázka [Numerické metody](../szp02_numericke_metody/).
 
 ### Podle první derivace (gradientu)
 
@@ -536,7 +536,7 @@ Samplování je převod spojitého signálu na diskrétní. [sampling](#sampling
   - Při nesplnění těchto podmínek vzniká aliasing.
 
     > [!TIP]
-    > Aliasingu se věnuje část otázky [Renderování s využitím GPU](../renderovani-s-vyuzitim-gpu/).
+    > Aliasingu se věnuje část otázky [Renderování s využitím GPU](../vph07_gpu_rendering/).
 
   > [!TIP]
   > Intuitivně je signál hromádka kopečků. Abychom poznali i ty nejužší kopečky -- s nejvyšší frekvencí -- musíme mít dostatečně jemné síto -- koukat na kopečky s dvakrát takovou frekvencí, abychom si všimli, že někde začíná a končí.

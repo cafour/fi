@@ -155,7 +155,7 @@ description: "TODO"
 ### Trénink
 
 > [!IMPORTANT]
-> Pro likelihood viz otázka [Statistika](../statistika/).
+> Pro likelihood viz otázka [Statistika](../szp03_statistika/).
 
 Neuronka je model, kde váhy neuronů jsou parametry. Při učení neuronek je naším cílem maximalizovat likelihood, jakožto míru toho, že naše síť sedí na "naměřená data", training set $\cal T$. Tomuhle přístupu se říká _maximum likelihood principle_.
 
@@ -277,7 +277,7 @@ Za předpokladu, že $E$ je squared error, pak:
 Neuronové sítě uzpůsobené ke zpracování obrazu. Místo násobení matic používají alespoň v jedné vrstvě konvoluci. Konvoluční sítě mají dva nové typy vrstev: _konvoluční_ a _pooling_, ale jinak se od klasických MLP moc neliší. Aktivace a trénink zůstavají v podstatě stejné. [cnn](#cnn)
 
 > [!IMPORTANT]
-> Pro konvoluci viz otázka [Zpracování rastrového obrazu](../zpracovani-rastroveho-obrazu/).
+> Pro konvoluci viz otázka [Zpracování rastrového obrazu](../szp09_zpracovani_obrazu/).
 
 **Typical CNN by [Aphex34](https://commons.wikimedia.org/w/index.php?curid=45679374)**
 
