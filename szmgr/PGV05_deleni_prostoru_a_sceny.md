@@ -44,7 +44,7 @@ Složitost vytvoření Octree/Quadtree je $O(n \log n)$. Složitost vyhledáván
 
 ### k-D stromy
 
-(Převzato z PGV04 [pgv04](#pgv04)) k-D strom střídavě dělí prostor (2D nebo 3D) na dvě poloviny podle střídajících se os. Ve uzlech jsou uloženy (typicky) dělící čáry a v listech samotné body.
+(Převzato z PGV04 [^pgv04]) k-D strom střídavě dělí prostor (2D nebo 3D) na dvě poloviny podle střídajících se os. Ve uzlech jsou uloženy (typicky) dělící čáry a v listech samotné body.
 
 ![width=600](./img/pgv04_kd_build.png)
 
@@ -153,6 +153,5 @@ Detekce kolizí je proces, kdy testujeme, zda se dva objekty v prostoru dotýkaj
 
 Pro určení pořadí vykreslovaných objektů můžeme také využít hierarchické reprezentace scény. Typicky se pro tento problém využívá BSP stromů.
 
-## Zdroje
 
-- [[[pgv04,1]]] ../geometricke_algoritmy/
+[^pgv04]: ../geometricke_algoritmy/

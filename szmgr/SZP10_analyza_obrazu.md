@@ -205,14 +205,14 @@ Popis objektů je proces, při kterém se počítají vlastnosti segmentovaných
   - _Druhý moment_: rozptyl / moment setrvačnosti.
 
 - **Moment setrvačnosti / moment of inertia**\
-  Míra setrvačnosti při otáčení kolem těžiště. Popisuje rozložení hmoty okolo těžiště (_odchylku_ od něj v jistém smyslu). Umožňuje určit směr nejdůležitější osy objektu. [image-moment](#image-moment)
+  Míra setrvačnosti při otáčení kolem těžiště. Popisuje rozložení hmoty okolo těžiště (_odchylku_ od něj v jistém smyslu). Umožňuje určit směr nejdůležitější osy objektu. [^image-moment]
 
   Provazochodci využívají moment setrvačnosti při chůzi po laně.
 
   ![szp10_provazochodec](./img/szp10_provazochodec.jpg)
 
 > [!TIP]
-> "Moment" nereferuje na čas, ale spíš na svůj starý význam "důležitost". Ve fyzice navíc obvykle souvisí s otáčivým pohybem. [moment](#moment)
+> "Moment" nereferuje na čas, ale spíš na svůj starý význam "důležitost". Ve fyzice navíc obvykle souvisí s otáčivým pohybem. [^moment]
 
 - **Prostorová orientace / spatial orientation**\
   Směr a velikost delší strany nejmenšího bounding boxu. Lze ji také spočítat pomocí momentů setrvačnosti.
@@ -351,7 +351,7 @@ Mapování, které každému pixelu popředí přiřazuje vzdálenost k nejbliž
 
 ## Matematická morfologie
 
-Teorie a techniky pro analýzu geometrických struktur. Jsou založené na teorii množin, topologii, atd. Nejčastěji se aplikuje na digitální binární obrazy, ale dá se použít na grafy, meshe, apod. [morphology](#morphology)
+Teorie a techniky pro analýzu geometrických struktur. Jsou založené na teorii množin, topologii, atd. Nejčastěji se aplikuje na digitální binární obrazy, ale dá se použít na grafy, meshe, apod. [^morphology]
 
 - **Binární obraz**\
   Dá se vnímat jako funkce $I: \Omega \rightarrow \{0, 1\}$, kde $\Omega \sub \mathbb{Z}^2$.
@@ -363,7 +363,7 @@ Teorie a techniky pro analýzu geometrických struktur. Jsou založené na teori
 Pracují na každém pixelu a jeho okolí -- strukturním elementu.
 
 - **Strukturní element / structuring element (SE)**\
-  Množina souřadnic, pomocí které je obraz zpracováván. [pb130](#pb130)
+  Množina souřadnic, pomocí které je obraz zpracováván. [^pb130]
 
   - Má definovaný _počátek_ -- $(0, 0)$. Schematicky se značí křížkem.
   - Aktuálně uvažovaná souřadnice do něj nemusí patřit.
@@ -504,7 +504,7 @@ Pracují na každém pixelu a jeho okolí -- strukturním elementu.
   ![width=500](./img/szp10_top_hat.png)
 
 - **Watershed**\
-  Algoritmický přístup k segmentaci skrze matematickou morfologii. Kombinuje segmentaci _narůstáním oblastí_ a _detekcí hran_. [pb130](#pb130)
+  Algoritmický přístup k segmentaci skrze matematickou morfologii. Kombinuje segmentaci _narůstáním oblastí_ a _detekcí hran_. [^pb130]
 
   - Simulace zvyšování hladiny vody krok za krokem.
   - Obraz vnímán jako topografický povrch. Ve všech lokálních minimech je "udělána díra" odkud stoupá hladina vody.
@@ -525,13 +525,12 @@ Pracují na každém pixelu a jeho okolí -- strukturním elementu.
 
   ![width=600](./img/szp10_watershed.png)
 
-## Zdroje
 
-- [[[pb130,1]]] [PB130 Úvod do digitálního zpracování obrazu (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PB130/)
-- [[[pv131,2]]] [PV131 Digitální zpracování obrazu (jaro 2023)](https://is.muni.cz/auth/el/fi/jaro2023/PV131/)
-- [[[image-moment,3]]] [Wikipedia: Image moment](https://en.wikipedia.org/wiki/Image_moment)
-- [[[moment, 4]]] [Wikipedia: Moment (mathematics)](<https://en.wikipedia.org/wiki/Moment_(mathematics)>)
-- [[[morphology, 5]]] [Wikipedia: Mathematical morphology](https://en.wikipedia.org/wiki/Mathematical_morphology)
+[^pb130]: [PB130 Úvod do digitálního zpracování obrazu (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PB130/)
+[^pv131]: [PV131 Digitální zpracování obrazu (jaro 2023)](https://is.muni.cz/auth/el/fi/jaro2023/PV131/)
+[^image]: [Wikipedia: Image moment](https://en.wikipedia.org/wiki/Image_moment)
+[^moment]: [Wikipedia: Moment (mathematics)](<https://en.wikipedia.org/wiki/Moment_(mathematics)>)
+[^morphology]: [Wikipedia: Mathematical morphology](https://en.wikipedia.org/wiki/Mathematical_morphology)
 
 ## Další zdroje
 

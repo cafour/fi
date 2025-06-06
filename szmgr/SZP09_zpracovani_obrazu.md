@@ -10,12 +10,12 @@ description: "TODO"
 
 
 - **Rastr / bitmapa**\
-  Obraz reprezentovaný pomocí 2D pole _pixelů_. Každý pixel obsahuje jednu (pokud je obraz černobílý) nebo více (typicky RGB nebo CMYK) intenzit. Intenzity jsou zakódovány na _bity_. [raster](#raster)
+  Obraz reprezentovaný pomocí 2D pole _pixelů_. Každý pixel obsahuje jednu (pokud je obraz černobílý) nebo více (typicky RGB nebo CMYK) intenzit. Intenzity jsou zakódovány na _bity_. [^raster]
 
   > Je to 2D mapa bitů... bitmapa. Get it?
 
 - **Zpracování obrazu / digital image processing**\
-  Oblast informatiky zabývající se manipulací s obrazy pomocí počítače. Obsahuje třeba: [dip](#dip)
+  Oblast informatiky zabývající se manipulací s obrazy pomocí počítače. Obsahuje třeba: [^dip]
 
   - zpracování raw dat ze senzorů ve foťácích,
   - odstranění šumu,
@@ -133,7 +133,7 @@ Histogram kvantifikuje množství a frekvenci barev obsažených v obraze. Ve st
   ```
 
 - **Vyrovnání histogramu / histogram equalization**\
-  Změna obrazu tak, aby jeho kumulativní histogram měl konkrétní tvar, obvykle aby byl lineární. [histogram-eq](#histogram-eq)
+  Změna obrazu tak, aby jeho kumulativní histogram měl konkrétní tvar, obvykle aby byl lineární. [^histogram-eq]
 
   Typicky k tomu využíváme funkci $f(x) = \mathbb{H}[x] \cdot \frac{a_{\text{max}}}{w \cdot h}$, kde $\text{cumhist}$ je kumulativní histogram pro barvu v bodě x, $a_{\text{max}}$ je maximální intenzita a $w \cdot h$ je velikost obrazu.
 
@@ -151,7 +151,7 @@ Histogram kvantifikuje množství a frekvenci barev obsažených v obraze. Ve st
   > Původní fotku vyfotil [Phillip](https://commons.wikimedia.org/w/index.php?curid=855363) [Capper](https://commons.wikimedia.org/w/index.php?curid=855383).
 
 - **Analýza histogramu**\
-  Z histogramu lze vysledovat řadu věcí jak manuálně tak automaticky. Často se proto používá jako mezikrok v jiných algoritmech. Lze z něj například zjistit: [histogram](#histogram) [histogram-bbc](#histogram-bbc)
+  Z histogramu lze vysledovat řadu věcí jak manuálně tak automaticky. Často se proto používá jako mezikrok v jiných algoritmech. Lze z něj například zjistit: [^histogram] [^histogram-bbc]
 
   - průměrný jas,
   - kontrast,
@@ -162,7 +162,7 @@ Histogram kvantifikuje množství a frekvenci barev obsažených v obraze. Ve st
 ## Konvoluční filtry
 
 - **Filtr**\
-  Filtr je termín ze zpracování signálů (kterýmžto obraz z jisté perspektivy je). Je to zařízení, postup, či transformace, která ze signálu odstraňuje nechtěnné informace. [filter](#filter)
+  Filtr je termín ze zpracování signálů (kterýmžto obraz z jisté perspektivy je). Je to zařízení, postup, či transformace, která ze signálu odstraňuje nechtěnné informace. [^filter]
 - **Šum / noise**\
   Šum je informace, která v obrazu vznikla kvůli nedokonalosti snímače, přenosu, uložení dat, atd. Ač někdy může vypadat docela cool, obvykle je to nechtěná informace. Podle frekvenční charakteristiky se dělí na:
 
@@ -172,7 +172,7 @@ Histogram kvantifikuje množství a frekvenci barev obsažených v obraze. Ve st
   - _Impulzní_: nahrazuje některé hodnoty signálu jinými hodnotami; patří sem například _sůl a pepř / salt and pepper noise_.
 
 - **Konvoluce**\
-  Matematická operace, která vezme dvě funkce $f$ a $g$ a produkuje třetí funkci $h = f * g$ popisující, jak jedna funkce mění tvar té druhé. Je komutativní, takže je jedno, která je _první_ a která je _druhá_. Ve spojité doméně je definována jako: [convolution](#convolution)
+  Matematická operace, která vezme dvě funkce $f$ a $g$ a produkuje třetí funkci $h = f * g$ popisující, jak jedna funkce mění tvar té druhé. Je komutativní, takže je jedno, která je _první_ a která je _druhá_. Ve spojité doméně je definována jako: [^convolution]
 
   ```math
   (f * g)(t) = \int_{-\infty}^{\infty} \cdot f(\tau) g(t - \tau) d\tau
@@ -340,7 +340,7 @@ Proces, kdy hledání _hran_ v obraze. Hrana je křivka, podél níž pixely vý
 - **Robinsonův operátor / Robinson compass mark**\
   Detekuje hrany pomocí centrální diferencí. Používá osm různých jader, jedno prokaždý směr na kompasu. To mu umožňuje snadno aproximovat nejen velikost ale i směr gradientu.
 - **Canny edge detector**\
-  Algoritmus pro detekci hran. [canny](#canny) [canny-tds](#canny-tds)
+  Algoritmus pro detekci hran. [^canny] [^canny-tds]
 
   - Má nízké procento chyb.
   - Přesně lokalizuje hrany.
@@ -360,7 +360,7 @@ Proces, kdy hledání _hran_ v obraze. Hrana je křivka, podél níž pixely vý
 Hrany lze detekovat pomocí druhé derivace obrazu. Nacházejí se v _nulových bodech / zero crossings_ (tedy v maximech a minimech první derivace).
 
 - **Divergence**\
-  Divergence je operátor, který vrací skalární hodnotu. Popisuje zda gradient roste či klesá. Je definován jako: [divergence](#divergence)
+  Divergence je operátor, který vrací skalární hodnotu. Popisuje zda gradient roste či klesá. Je definován jako: [^divergence]
 
   ```math
   \text{div} \vec{F} = \nabla \cdot \vec{F} = \frac{\partial F_x}{\partial x} + \frac{\partial F_y}{\partial y} + \frac{\partial F_z}{\partial z}
@@ -411,7 +411,7 @@ Hrany lze detekovat pomocí druhé derivace obrazu. Nacházejí se v _nulových 
 
 ## Integrální transformace
 
-Transformace, která mapuje funkci $f: A \to B$ z jejího původního funkčního prostoru $A \to B$ do nějakého jiného funkčního prostoru $A' \to B'$. Používá se, protože s některými vlastnostmi funkcí je snazší pracovat v jiném prostoru. [integral-transform](#integral-transform)
+Transformace, která mapuje funkci $f: A \to B$ z jejího původního funkčního prostoru $A \to B$ do nějakého jiného funkčního prostoru $A' \to B'$. Používá se, protože s některými vlastnostmi funkcí je snazší pracovat v jiném prostoru. [^integral-transform]
 
 Patří sem transformace jako:
 
@@ -430,7 +430,7 @@ Patří sem transformace jako:
 > 3Blue1Brown má skvělý [video o Fourierově transformaci](https://www.youtube.com/watch?v=spUNpyF58BY), ze kterého to pochopíš! _(a evidentně je tak dobrý, že mi Copilot sám nabídl správný link...)_
 
 
-Je operace (integrální transformace) při níž je obraz převeden z _prostorové_ do _frekvenční_ domény. A při _inverzní Fourierově transformaci_ obráceně. [fourier](#fourier)
+Je operace (integrální transformace) při níž je obraz převeden z _prostorové_ do _frekvenční_ domény. A při _inverzní Fourierově transformaci_ obráceně. [^fourier]
 
 - Frekvenční doména je složena ze sinusoid s různými frekvencemi a fázemi (indikovaných pomocí polárních souřadnic).
 - Intenzita pixelu v obrazu frekvenční domény pak udává amplitudu dané sinusoidy.
@@ -464,7 +464,7 @@ Je operace (integrální transformace) při níž je obraz převeden z _prostoro
   }_{\text{pro všechna } x \text{ v celém definičním oboru funkce} f}
   ```
 
-  **Forward** (z prostorové do frekvenční domény): [fourier](#fourier)
+  **Forward** (z prostorové do frekvenční domény): [^fourier]
 
   ```math
   \begin{align*}
@@ -487,7 +487,7 @@ Je operace (integrální transformace) při níž je obraz převeden z _prostoro
   ```
 
 - **2D Fourierova transformace**\
-  **Forward** (z prostorové do frekvenční domény): [fourier](#fourier)
+  **Forward** (z prostorové do frekvenční domény): [^fourier]
 
   ```math
   \begin{align*}
@@ -510,9 +510,9 @@ Je operace (integrální transformace) při níž je obraz převeden z _prostoro
   ```
 
 - **Fast Fourier Transform (FFT)**\
-  Algoritmus pro rychlé výpočty diskrétní Fourierovy transformace (DFT). [fft](#fft)
+  Algoritmus pro rychlé výpočty diskrétní Fourierovy transformace (DFT). [^fft]
 - **Konvoluční teorém**\
-  Říká, že běžné násobení ve frekvenční doméně odpovídá konvoluci v prostorové doméně a obráceně. To je cool, protože konvoluce je pomalá, ale násobení je rychlé. [convolution](#convolution)
+  Říká, že běžné násobení ve frekvenční doméně odpovídá konvoluci v prostorové doméně a obráceně. To je cool, protože konvoluce je pomalá, ale násobení je rychlé. [^convolution]
 
   ```math
   \mathcal{F} \{ f * g \} = \mathcal{F} \{ f \} \cdot \mathcal{F} \{ g \}
@@ -522,15 +522,15 @@ Je operace (integrální transformace) při níž je obraz převeden z _prostoro
 
 ## Sampling / vzorkování
 
-Samplování je převod spojitého signálu na diskrétní. [sampling](#sampling)
+Samplování je převod spojitého signálu na diskrétní. [^sampling]
 
 - **Převzorkování**\
   Je proces, kdy na vstupu je **diskrétní** signál s nějakou vzorkovací frekvencí a na výstupu je **diskrétní** signál s **jinou** vzorkovací frekvencí.
 
-  V případě 2D obrazů to může ale nemusí znamenat změnu velikosti obrazu. [image-scaling](#image-scaling)
+  V případě 2D obrazů to může ale nemusí znamenat změnu velikosti obrazu. [^image-scaling]
 
 - **Vzorkovací teorém / Nyquist-Shannon sampling theorem**\
-  Říká, že chceme-li spojitý signál převést na diskrétní a pak z tohoto diskrétního signálu zrekonstruovat původní spojitý signál, můsíme samplovat s alespoň dvojnásobnou frekvencí než je nejvyšší frekvence v původním signálu. [n-s](#n-s)
+  Říká, že chceme-li spojitý signál převést na diskrétní a pak z tohoto diskrétního signálu zrekonstruovat původní spojitý signál, můsíme samplovat s alespoň dvojnásobnou frekvencí než je nejvyšší frekvence v původním signálu. [^n-s]
 
   - Původní spojitý signál musí být frekvenčně omezený (band-limited), aby bylo možné v něm určit nejvyšší frekvenci.
   - Při nesplnění těchto podmínek vzniká aliasing.
@@ -542,7 +542,7 @@ Samplování je převod spojitého signálu na diskrétní. [sampling](#sampling
   > Intuitivně je signál hromádka kopečků. Abychom poznali i ty nejužší kopečky -- s nejvyšší frekvencí -- musíme mít dostatečně jemné síto -- koukat na kopečky s dvakrát takovou frekvencí, abychom si všimli, že někde začíná a končí.
 
 - **Rekonstrukce**\
-  Proces, kdy z diskrétního signálu zpět získáme spojitý signál. [reconstruction](#reconstruction)
+  Proces, kdy z diskrétního signálu zpět získáme spojitý signál. [^reconstruction]
 - **Rekonstrukční filtr**\
   Filtr pro rekonstrukci signálu.
 
@@ -554,7 +554,7 @@ Samplování je převod spojitého signálu na diskrétní. [sampling](#sampling
 
 ## Geometrické transformace
 
-Geometrická transformace $T$ je bijekce mezi body dvou obrazů $I$ a $J$. Díky tomu, že je to bijekce, k ní musí vždy existovat inverze. [geometric-transform](#geometric-transform)
+Geometrická transformace $T$ je bijekce mezi body dvou obrazů $I$ a $J$. Díky tomu, že je to bijekce, k ní musí vždy existovat inverze. [^geometric-transform]
 
 ```math
 J \lbrack u, v \rbrack = T(u, v) = I \lbrack x(u, v), y(u, v) \rbrack
@@ -581,7 +581,7 @@ Patří sem operace jako:
 
 
 - **Vlnka / wavelet**\
-  Funkce $\psi$, která je omezená v čase. Je to "brief oscillation". [wavelet](#wavelet)
+  Funkce $\psi$, která je omezená v čase. Je to "brief oscillation". [^wavelet]
 
   ![width=300](./img/szp09_wavelet.svg)
 
@@ -607,7 +607,7 @@ Patří sem operace jako:
 
 ---
 
-Vlnková transformace je integrální transformace, která popisuje funkci v **čase** a **frekvenci** zároveň. Popis v čase je dán tím, že vlnky (narozdíl od sinusoid u Fourierky) jsou časově omezené. [wavelet](#wavelet)
+Vlnková transformace je integrální transformace, která popisuje funkci v **čase** a **frekvenci** zároveň. Popis v čase je dán tím, že vlnky (narozdíl od sinusoid u Fourierky) jsou časově omezené. [^wavelet]
 
 Používá se k:
 
@@ -675,7 +675,7 @@ Dále platí:
 
 Představme si například vlnku, která má frekvenci tónu střední C a krátké trvání odpovídající osminové notě. Provedeme-li v pravidelných intervalech konvoluci takovéto vlnky se signálem - nahrávkou písně - pak nám výsledky této konvoluce napoví, kdy byla nota „osminové střední C“ v nahrávce použita.
 
-Matematicky vzato, k vysoké korelaci vlnky se signálem (vysokému korelačnímu koeficientu) dojde v těch místech (intervalech), kde signál obsahuje informaci o podobné frekvenci, tedy tam, kde je námi zvolené vlnce nejpodobnější. Tento koncept je jádrem mnoha aplikací vlnkové transformace. [others](#others)
+Matematicky vzato, k vysoké korelaci vlnky se signálem (vysokému korelačnímu koeficientu) dojde v těch místech (intervalech), kde signál obsahuje informaci o podobné frekvenci, tedy tam, kde je námi zvolené vlnce nejpodobnější. Tento koncept je jádrem mnoha aplikací vlnkové transformace. [^others]
 
 ## Houghova transformace
 
@@ -683,7 +683,7 @@ Matematicky vzato, k vysoké korelaci vlnky se signálem (vysokému korelačním
 > Super [minutu a půl dlouhé video, co ti řekne úplně všechno](https://www.youtube.com/watch?v=X1DxCPS1iwA).
 
 
-Integrální transformace, která identifikuje přímky v obraze. V rozšířené podobě hledá libovolné tvary zadané parametricky. [hough](#hough)
+Integrální transformace, která identifikuje přímky v obraze. V rozšířené podobě hledá libovolné tvary zadané parametricky. [^hough]
 
 - Dlouho byla používána pro detekci čar na silnici pro autonomní řízení aut. (Už ne. Dnes se používají neuronové sítě.)
 - Pracuje nad binárním obrazem.
@@ -708,7 +708,7 @@ Integrální transformace, která identifikuje přímky v obraze. V rozšířen�
 
 Integrální transformace, která integruje funkci přes přímky. Tedy rozkládá funkci na hromádku parametrů, které definují přímky.
 
-Užitečná je především inverzní Radonova transformace, která se používá v tomografii ("CTčko"). [radon](#radon)
+Užitečná je především inverzní Radonova transformace, která se používá v tomografii ("CTčko"). [^radon]
 
 ![width=100%](./img/szp09_radon.png)
 
@@ -771,33 +771,32 @@ Inverzní funkce je velice užitečná, ale poměrně složitá, takže doufám,
 | Hlavním cílem je rekonstrukce obrazu -- inverzní transformace           |
 | Hlavním cílem je detekce tvarů                                          |
 
-## Zdroje
 
-- [[[pb130,1]]] [PB130 Úvod do digitálního zpracování obrazu (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PB130/)
-- [[[pv131,2]]] [PV131 Digitální zpracování obrazu (jaro 2023)](https://is.muni.cz/auth/el/fi/jaro2023/PV131/)
-- [[[raster,3]]] [Wikipedia: Raster graphics](https://en.wikipedia.org/wiki/Raster_graphics)
-- [[[dip,4]]] [Wikipedia: Digital image processing](https://en.wikipedia.org/wiki/Digital_image_processing)
-- [[[filter,5]]] [Wikipedia: Filter (signal processing)](<https://en.wikipedia.org/wiki/Filter_(signal_processing)>)
-- [[[convolution,6]]] [Wikipedia: Convolution](https://en.wikipedia.org/wiki/Convolution)
-- [[[edge-detection,7]]] [Wikipedia: Edge detection](https://en.wikipedia.org/wiki/Edge_detection)
-- [[[fourier, 8]]] [Wikipedia: Fourier transform](https://en.wikipedia.org/wiki/Fourier_transform)
-- [[[fft, 9]]] [Wikipedia: Fast Fourier transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform)
-- [[[samping, 10]]] [Wikipedia: Sampling (signal processing)](<https://en.wikipedia.org/wiki/Sampling_(signal_processing)>)
-- [[[scaling, 11]]] [Wikipedia: Image scaling](https://en.wikipedia.org/wiki/Image_scaling)
-- [[[n-s, 12]]] [Wikipedia: Nyquist–Shannon sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem)
-- [[[geometric-transform,13]]] [Wikipedia: Geometric transformation](https://en.wikipedia.org/wiki/Geometric_transformation)
-- [[[reconstruction, 14]]] [Wikipedia: Signal reconstruction](https://en.wikipedia.org/wiki/Signal_reconstruction)
-- [[[wavelet,15]]] [Wikipedia: Wavelet transform](https://en.wikipedia.org/wiki/Wavelet_transform)
-- [[[hough, 16]]] [Wikipedia: Hough transform](https://en.wikipedia.org/wiki/Hough_transform)
-- [[[radon, 17]]] [Wikipedia: Radon transform](https://en.wikipedia.org/wiki/Radon_transform)
-- [[[integral-transform, 18]]] [Wikipedia: Integral transform](https://en.wikipedia.org/wiki/Integral_transform)
-- [[[histogram, 19]]] [Wikipedia: Histogram](https://en.wikipedia.org/wiki/Histogram)
-- [[[histogram-eq, 20]]] [Wikipedia: Histogram equalization](https://en.wikipedia.org/wiki/Histogram_equalization)
-- [[[histogram-bbc, 21]]] [Bitesize: Histograms - Higher only](https://www.bbc.co.uk/bitesize/guides/zspfcwx/revision/3)
-- [[[sobel, 22]]] [Wikipedia: Sobel operator](https://en.wikipedia.org/wiki/Sobel_operator)
-- [[[canny, 23]]] [Wikipedia: Canny edge detector](https://en.wikipedia.org/wiki/Canny_edge_detector)
-- [[[canny-tds, 24]]] [Canny Edge Detection Step by Step in Python — Computer Vision](https://towardsdatascience.com/canny-edge-detection-step-by-step-in-python-computer-vision-b49c3a2d8123)
-- [[[divergence, 25]]] [Wikipedia: Divergence (operátor)](<https://cs.wikipedia.org/wiki/Divergence_(oper%C3%A1tor)>)
-- [[[dog, 26]]] [Wikipedia: Difference of Gaussians](https://en.wikipedia.org/wiki/Difference_of_Gaussians)
-- [[[others, 27]]] https://hackmd.io/@fi-muni-viz-2022/SywCznl2t
-- [[[waveleet, 28]]] [Wikipedia: Vlnka](https://cs.wikipedia.org/wiki/Vlnka)
+[^pb130]: [PB130 Úvod do digitálního zpracování obrazu (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PB130/)
+[^pv131]: [PV131 Digitální zpracování obrazu (jaro 2023)](https://is.muni.cz/auth/el/fi/jaro2023/PV131/)
+[^raster]: [Wikipedia: Raster graphics](https://en.wikipedia.org/wiki/Raster_graphics)
+[^dip]: [Wikipedia: Digital image processing](https://en.wikipedia.org/wiki/Digital_image_processing)
+[^filter]: [Wikipedia: Filter (signal processing)](<https://en.wikipedia.org/wiki/Filter_(signal_processing)>)
+[^convolution]: [Wikipedia: Convolution](https://en.wikipedia.org/wiki/Convolution)
+[^edge]: [Wikipedia: Edge detection](https://en.wikipedia.org/wiki/Edge_detection)
+[^fourier]: [Wikipedia: Fourier transform](https://en.wikipedia.org/wiki/Fourier_transform)
+[^fft]: [Wikipedia: Fast Fourier transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform)
+[^samping]: [Wikipedia: Sampling (signal processing)](<https://en.wikipedia.org/wiki/Sampling_(signal_processing)>)
+[^scaling]: [Wikipedia: Image scaling](https://en.wikipedia.org/wiki/Image_scaling)
+[^n]: [Wikipedia: Nyquist–Shannon sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem)
+[^geometric]: [Wikipedia: Geometric transformation](https://en.wikipedia.org/wiki/Geometric_transformation)
+[^reconstruction]: [Wikipedia: Signal reconstruction](https://en.wikipedia.org/wiki/Signal_reconstruction)
+[^wavelet]: [Wikipedia: Wavelet transform](https://en.wikipedia.org/wiki/Wavelet_transform)
+[^hough]: [Wikipedia: Hough transform](https://en.wikipedia.org/wiki/Hough_transform)
+[^radon]: [Wikipedia: Radon transform](https://en.wikipedia.org/wiki/Radon_transform)
+[^integral]: [Wikipedia: Integral transform](https://en.wikipedia.org/wiki/Integral_transform)
+[^histogram]: [Wikipedia: Histogram](https://en.wikipedia.org/wiki/Histogram)
+[^histogram]: [Wikipedia: Histogram equalization](https://en.wikipedia.org/wiki/Histogram_equalization)
+[^histogram]: [Bitesize: Histograms - Higher only](https://www.bbc.co.uk/bitesize/guides/zspfcwx/revision/3)
+[^sobel]: [Wikipedia: Sobel operator](https://en.wikipedia.org/wiki/Sobel_operator)
+[^canny]: [Wikipedia: Canny edge detector](https://en.wikipedia.org/wiki/Canny_edge_detector)
+[^canny]: [Canny Edge Detection Step by Step in Python — Computer Vision](https://towardsdatascience.com/canny-edge-detection-step-by-step-in-python-computer-vision-b49c3a2d8123)
+[^divergence]: [Wikipedia: Divergence (operátor)](<https://cs.wikipedia.org/wiki/Divergence_(oper%C3%A1tor)>)
+[^dog]: [Wikipedia: Difference of Gaussians](https://en.wikipedia.org/wiki/Difference_of_Gaussians)
+[^others]: https://hackmd.io/@fi-muni-viz-2022/SywCznl2t
+[^waveleet]: [Wikipedia: Vlnka](https://cs.wikipedia.org/wiki/Vlnka)

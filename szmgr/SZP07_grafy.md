@@ -528,7 +528,7 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 ## Maximální párování v bipartitních grafech
 
 - **Párování / matching**\
-  Množina $M \sube E$ taková, že žádné dvě hrany v $M$ nemají společný vrchol. [matching](#matching)
+  Množina $M \sube E$ taková, že žádné dvě hrany v $M$ nemají společný vrchol. [^matching]
 
   Prázdná množina je párováním na každém grafu. Graf bez hran má pouze prázdné párování.
 
@@ -541,7 +541,7 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 - **Perfektní párování**\
   Takové párování, které páruje všechny vrcholy grafu. Každé perfektní párování je zároveň maximální.
 - **Maximum cardinality matching (MCM) v bipartitním grafu**\
-  Problém nalezení maximálního párování v grafu. Ve speciálním případě, kdy graf je bipartitní, se tento problém dá převést na problém nalezení maximálního toku v síti: [mcm](#mcm)
+  Problém nalezení maximálního párování v grafu. Ve speciálním případě, kdy graf je bipartitní, se tento problém dá převést na problém nalezení maximálního toku v síti: [^mcm]
 
   1. Mejmě bipartitní graf $G=(X+Y,E)$.
 
@@ -557,13 +557,12 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 
      ![width=300](./img/szp07_mcm_03.png)
 
-## Zdroje
 
-- [[[ib000,1]]] [IB000 Matematické základy informatiky (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/IB000/um/)
-- [[[ib002,2]]] [IB002 Algoritmy a datové struktury (jaro 2020)](https://is.muni.cz/auth/el/fi/jaro2020/IB002/um/)
-- [[[ib003,3]]] [IV003 Algoritmy a datové struktury II (jaro 2021)](https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/)
-- [[[matching,4]]] [Wikipedia: Párování grafu](https://cs.wikipedia.org/wiki/P%C3%A1rov%C3%A1n%C3%AD_grafu)
-- [[[mcm, 5]]] [Wikipedia: Maximum cardinality matching](https://en.wikipedia.org/wiki/Maximum_cardinality_matching)
+[^ib000]: [IB000 Matematické základy informatiky (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/IB000/um/)
+[^ib002]: [IB002 Algoritmy a datové struktury (jaro 2020)](https://is.muni.cz/auth/el/fi/jaro2020/IB002/um/)
+[^ib003]: [IV003 Algoritmy a datové struktury II (jaro 2021)](https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/)
+[^matching]: [Wikipedia: Párování grafu](https://cs.wikipedia.org/wiki/P%C3%A1rov%C3%A1n%C3%AD_grafu)
+[^mcm]: [Wikipedia: Maximum cardinality matching](https://en.wikipedia.org/wiki/Maximum_cardinality_matching)
 
 ## Další zdroje
 

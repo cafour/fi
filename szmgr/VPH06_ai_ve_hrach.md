@@ -73,7 +73,7 @@ Jednoduché algoritmy pro pohyb. Jsou škálovatelné a předvídatelné, ale ma
 - **Seek**\
   Přímočárý... doslova. Najde vektor mířící k cíli a aplikuje je jej jako steering.
 
-  **Seek schematic [steering](#steering)**
+  **Seek schematic [^steering]**
 
   ![Seek schematic](./img/vph06_seek.jpg)
 
@@ -89,7 +89,7 @@ Pomocí těchto základních algoritmů lze vytvořit složitější chování:
 - **Arrival**\
   Jako seek, ale začne zpomalovat, když je blízko cíle, takže jej "nepřestřelí".
 
-  **Arrival schematic [steering](#steering)**
+  **Arrival schematic [^steering]**
 
   ![Arrival schematic](./img/vph06_arrival.jpg)
 
@@ -160,9 +160,9 @@ Pathfinding vnímá scénu jako graf, ve kterém hledá (obvykle nejkratší) ce
 
 ### A\* algoritmus
 
-Podobný Dijkstrovu algoritmu, ale navíc se snaží odhadnout, který směr je nejlepší. Používá heuristiku $h$ pro výběr dalšího uzlu k prozkoumání. Kombinuje Dijsktrův algoritmus s greedy best-first hledáním. [astar](#astar)
+Podobný Dijkstrovu algoritmu, ale navíc se snaží odhadnout, který směr je nejlepší. Používá heuristiku $h$ pro výběr dalšího uzlu k prozkoumání. Kombinuje Dijsktrův algoritmus s greedy best-first hledáním. [^astar]
 
-**A\* algoritmus [astar](#astar)**
+**A\* algoritmus [^astar]**
 
 ![width=100%](./img/vph06_astar.png)
 
@@ -238,7 +238,7 @@ List<Node> ReconstructPath(Node goal) {
   - Heuristika je _admissible_ pokud nepřeceňuje.
 
 - **Heuristika -- Euklidovská vzdálenost**\
-  Poskytuje poměrně přesný nebo podceněný odhad vzdálenosti k cíli. Funguje dobře v exteriérech, ale v interiérech dává kvůli stěnám a dalším překážkám silně podhodnocené odhady. [pa217](#pa217)
+  Poskytuje poměrně přesný nebo podceněný odhad vzdálenosti k cíli. Funguje dobře v exteriérech, ale v interiérech dává kvůli stěnám a dalším překážkám silně podhodnocené odhady. [^pa217]
 
   ![width=400](./img/vph06_euclidean_distance.png)
 
@@ -255,7 +255,7 @@ List<Node> ReconstructPath(Node goal) {
 - **D** algoritmus*\
   Varianta A*, která se umí vyrovnat s dynamickými změnami v grafu.
 - **Iterative Deepening A** (IDA*)*\
-  Depth-first search s heuristikou. Iterative deepening znamená, že se postupně zvyšuje maximální hloubka prohledávání. [ida-star](#ida-star)
+  Depth-first search s heuristikou. Iterative deepening znamená, že se postupně zvyšuje maximální hloubka prohledávání. [^ida-star]
 - **Simplified Memory Bounded A** (SMA*)*\
   A\* co má nižší paměťové nároky.
 
@@ -274,7 +274,7 @@ Agenti nevidí herní svět stejně jako hráči, vidí ho spíš jako graf s uz
 - **Tile-based / dlaždicové**\
   Některé hry, např real-time strategie (RTS), mají svět rozdělen do čtvercových / hexagonálních dlaždic. Díky tomu je jednoduché je převést na graf, neboť co dlaždice to uzel.
 
-  **Sid Meier’s Civilization V [civ5](#civ5)**
+  **Sid Meier’s Civilization V [^civ5]**
 
   ![width=400](./img/vph06_civilization.jpg)
 
@@ -290,18 +290,18 @@ Agenti nevidí herní svět stejně jako hráči, vidí ho spíš jako graf s uz
 
   V praxi může generovat příliš mnoho bodů, ale může sloužit jako užitečný základ pro manuální úpravy.
 
-  **Points of visibility [ai-for-games](#ai-for-games)**
+  **Points of visibility [^ai-for-games]**
 
   ![width=400](./img/vph06_points_of_visibility.png)
 
 - **Navmesh / navigation mesh / navigační sítě**\
   Populární technika, kdy level designer popíše podlahové polygony. Agenti mohou chodit kamkoliv v rámci těchto polygonů a přecházet mezi těmi, které jsou spojené. Využívá geometrii už přítomnou v levelu nebo svoji vlastní.
 
-  **Navigation System in Unity [navmesh](#navmesh)**
+  **Navigation System in Unity [^navmesh]**
 
   ![Navigation System in Unity](./img/vph06_navmesh.png)
 
-  **Polygonal mesh graph [ai-for-games](#ai-for-games)**
+  **Polygonal mesh graph [^ai-for-games]**
 
   ![width=400](./img/vph06_polygonal_mesh_graph.png)
 
@@ -328,7 +328,7 @@ Agenti obvykle musí činit rozhodnutí ohledně toho, co budou dělat dál: za�
 
 Rozhodnutí jsou reprezentována jako strom. Vniřní uzly jsou podmínky, listy jsou akce, hrany reprezentují možnosti. Rozhodovací proces začíná u kořene a postupuje dolů stromem, dokud nenarazí na list -- ta akce se následně provede.
 
-**Průchod rozhodovacím stromem [ai-for-games](#ai-for-games)**
+**Průchod rozhodovacím stromem [^ai-for-games]**
 
 ![width=500](./img/vph06_decision_trees.png)
 
@@ -336,21 +336,21 @@ Rozhodnutí jsou reprezentována jako strom. Vniřní uzly jsou podmínky, listy
 
 Reprezentuje aktuální chování agenta pomocí stavů ve stavovém automatu. Každý stav zahrnuje nějaké akce. Přechody mezi stavy jsou spojeny s podmínkami a akcemi.
 
-**State machine [ai-for-games](#ai-for-games)**
+**State machine [^ai-for-games]**
 
 ![width=500](./img/vph06_state_machine.png)
 
 - **Hierarchické stavové automaty**\
   Stavy mohou obsahovat celé další stavové automaty. To umožňuje rozdělit chování agenta na části.
 
-  **Hierarchical state machine [ai-for-games](#ai-for-games)**
+  **Hierarchical state machine [^ai-for-games]**
 
   ![width=500](./img/vph06_hierarchical_state_machine.png)
 
 - **Stavový automat s rozhodovacími stromy v přechodech**\
   V přechodech mezi stavy jsou decision trees. Listy jsou další stavy.
 
-  **State machine with decision tree transitions [ai-for-games](#ai-for-games)**
+  **State machine with decision tree transitions [^ai-for-games]**
 
   ![width=500](./img/vph06_decision_tree_state_machine.png)
 
@@ -362,11 +362,11 @@ Reprezentuje aktuální chování agenta pomocí stavů ve stavovém automatu. K
 - Dá se vyrobit modulárně a znovupoužitelně.
 - Často pro něj existují i custom editory s GUI.
 
-**Behavior tree [ai-for-games](#ai-for-games)**
+**Behavior tree [^ai-for-games]**
 
 ![width=500](./img/vph06_behavior_tree.png)
 
-**Parallel behavior tree [pa217](#pa217)**
+**Parallel behavior tree [^pa217]**
 
 ![width=500](./img/vph06_parallel_behavior_tree.png)
 
@@ -411,7 +411,7 @@ Waypoint je pozice v levelu, která je něčím zajímavá.
 - **Tactical locations / rally points**\
   Místa kde se skrýt před útokem, místa ke snipení, místa pro ambush, atd. Do scény je může přidat přímo level designer nebo se mohou generovat automaticky.
 
-  **Tactical locations [ai-for-games](#ai-for-games)**
+  **Tactical locations [^ai-for-games]**
 
   ![width=500](./img/vph06_tactical_locations.png)
 
@@ -510,10 +510,10 @@ Minmax i alpha-beta pruning se chápe nejlíp s vizualizací. Můžete kouknout 
 - **Monte Carlo**\
   Město známé pro svá casina.
 - **Monte Carlo metoda**\
-  Algoritmy a techniky spoléhající na náhodou, mega velké množiny vzorků a statistickou analýzu. [monte-carlo](#monte-carlo)
+  Algoritmy a techniky spoléhající na náhodou, mega velké množiny vzorků a statistickou analýzu. [^monte-carlo]
 
 - **Monte Carlo tree search (MCTS)**\
-  Heuristický algoritmus pro prohledávání stromových grafů. V kontextu deskových her se používá pro hledání nejlepšího tahu.[mcts](#mcts)
+  Heuristický algoritmus pro prohledávání stromových grafů. V kontextu deskových her se používá pro hledání nejlepšího tahu.[^mcts]
 
   1. _Selection_: vyber uzel reprezentující stav hry, ze kterého ještě hra neskončila.
   2. _Expansion_: vytvoř možné volby ze zvoleného tahu.
@@ -540,14 +540,13 @@ Minmax i alpha-beta pruning se chápe nejlíp s vizualizací. Můžete kouknout 
   - $n$ je počet her, ve kterých byl zvolen rodičovský uzel.
   - $n_j$ je počet her, ve kterých byl zvolen uzel $j$.
 
-## Zdroje
 
-- [[[pa217, 1]]] PA217 AI for Games
-- [[[ai-for-games, 2]]] Ian Millington, John Funge: Artificial Intelligence for Games
-- [[[steering, 3]]] [Steering Behaviors](https://slsdo.github.io/steering-behaviors/)
-- [[[navmesh, 4]]] [Navigation System in Unity](https://docs.unity3d.com/Manual/nav-NavigationSystem.html)
-- [[[astar, 5]]] [Introduction to the A\* Algorithm](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
-- [[[civ5, 6]]] [Sid Meier’s Civilization V](https://store.steampowered.com/app/8930/Sid_Meiers_Civilization_V/)
-- [[[monte-carlo, 7]]] [Wikipedia: Monte Carlo method](https://en.wikipedia.org/wiki/Monte_Carlo_method)
-- [[[mcts, 8]]] [Wikipedia: Monte Carlo tree search](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search)
-- [[[ida-star, 9]]] [Wikipedia: Iterative deepening A\*](https://en.wikipedia.org/wiki/Iterative_deepening_A*)
+[^pa217]: PA217 AI for Games
+[^ai]: Ian Millington, John Funge: Artificial Intelligence for Games
+[^steering]: [Steering Behaviors](https://slsdo.github.io/steering-behaviors/)
+[^navmesh]: [Navigation System in Unity](https://docs.unity3d.com/Manual/nav-NavigationSystem.html)
+[^astar]: [Introduction to the A\* Algorithm](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
+[^civ5]: [Sid Meier’s Civilization V](https://store.steampowered.com/app/8930/Sid_Meiers_Civilization_V/)
+[^monte]: [Wikipedia: Monte Carlo method](https://en.wikipedia.org/wiki/Monte_Carlo_method)
+[^mcts]: [Wikipedia: Monte Carlo tree search](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search)
+[^ida]: [Wikipedia: Iterative deepening A\*](https://en.wikipedia.org/wiki/Iterative_deepening_A*)

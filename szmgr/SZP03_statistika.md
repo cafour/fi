@@ -15,7 +15,7 @@ description: "TODO"
 > Viz bakalářské otázky [Kombinatorika a pravděpodobnost](../../szb/kombinatorika-a-pravdepodobnost/) a [Statistika](../../szb/statistika/).
 
 - **Statistika**\
-  Zabývá se sbíráním, organizací, analýzou, interpretací a prezentací dat. [statistics](#statistics)
+  Zabývá se sbíráním, organizací, analýzou, interpretací a prezentací dat. [^statistics]
 
   - _Popisná / decriptive_: shrnuje data, která máme,
   - _Inferenční / inferential_: předpokládá, že data která máme jsou jen součástí celku; pracuje s modely celé populace a hypotézami o ní.
@@ -142,7 +142,7 @@ Stejně jako náhodné veličiny popisují jevy, číselné charakteristiky popi
   Průměr hodnot veličiny vážený jejich pravděpodobností. Značí se $\overline{X}$ nebo $E(X)$.
 
   > [!NOTE]
-  > Taky někdy označovaný jako _obecný moment prvního řádu / první obecný moment_. [moment](#moment)
+  > Taky někdy označovaný jako _obecný moment prvního řádu / první obecný moment_. [^moment]
 
 - **$\alpha$-kvantil $Q_\alpha$**\
   Dělí statický soubor na stejně velké části.
@@ -173,7 +173,7 @@ Jak moc se od sebe prvky liší (nezávisle na konstantním posunutí)?
   ```
 
   > [!NOTE]
-  > Taky někdy označovaný jako _centrální moment druhého řádu / druhý centrální moment_. [moment](#moment)
+  > Taky někdy označovaný jako _centrální moment druhého řádu / druhý centrální moment_. [^moment]
 
 - **Směrodatná odchylka / standard deviation**\
   Míra variability NV. Značí se $\sigma$ nebo $\text{SD}(X)$. Je definovaná jako $\sqrt{\sigma^2}$.
@@ -283,7 +283,7 @@ Popisuje chování _výběrového průměru_ pro velké soubory vzorků a umož�
 - **Nejlepší nestranný odhad / best unbiased estimator**\
   Nestranný odhad, který má nejmenší rozptyl ze všech nestranných odhadů.
 - **Konzistentní odhad / consistent estimator**\
-  Metoda odhadu parametru $\theta$ taková, že s počtem vzorků $n$ konverguje k $\theta$ pro $n \to \infty$. [consistent-estimator](#consistent-estimator)
+  Metoda odhadu parametru $\theta$ taková, že s počtem vzorků $n$ konverguje k $\theta$ pro $n \to \infty$. [^consistent-estimator]
 - **(Výběrová) statistika / (sample) statistic**\
   Náhodná veličina dána funkcí, která bere výběrový soubor a vrací číslo. Máme například:
 
@@ -299,7 +299,7 @@ Popisuje chování _výběrového průměru_ pro velké soubory vzorků a umož�
   > ```
 
   > [!TIP]
-  > _Estimator_ je funkce počítající statistiku použitá k odhadu parametru. [statistic](#statistic)
+  > _Estimator_ je funkce počítající statistiku použitá k odhadu parametru. [^statistic]
 
 - **Bodový odhad / point estimate / pointwise estimate**\
   Odhad parametru daný **jednou hodnotou**, která hodnotu parametru aproximuje.
@@ -363,9 +363,9 @@ Máme vzorek velikosti $n$ s výběrovým průměrem $\overline{X}$ a výběrov�
   > Likelihood nemusí nutně vracet čísla z intervalu $\lbrack 0, 1 \rbrack$.
 
 - **Maximum likelihood estimation (MLE)**\
-  Metoda odhadu parametru založená na maximalizaci likelihoodu, že model sedí na naměřená data. [mle](#mle)
+  Metoda odhadu parametru založená na maximalizaci likelihoodu, že model sedí na naměřená data. [^mle]
 - **Method of moments (MOM)**\
-  Metoda odhadu parametru založená na rovnosti teoretického a výběrového momentu. [mom](#mom)
+  Metoda odhadu parametru založená na rovnosti teoretického a výběrového momentu. [^mom]
 
 ## Testování statistických hypotéz
 
@@ -377,7 +377,7 @@ Máme vzorek velikosti $n$ s výběrovým průměrem $\overline{X}$ a výběrov�
   - _Null hypothesis $H_0$_: "výchozí nastavení"; často tvrdí, že nějaká vlastnost neexistuje.
   - _Alternative hypothesis $H_1$_: "to co, chceme dokázat"; opak $H_0$.
 
-  Alternativní hypotézu _potvrzujeme_ tak, že _vyvracíme_ nulovou hypotézu. Pokud se nám nepodaří vyvrátit $H_0$, pak o $H_1$ nevíme nic. [null](#null)
+  Alternativní hypotézu _potvrzujeme_ tak, že _vyvracíme_ nulovou hypotézu. Pokud se nám nepodaří vyvrátit $H_0$, pak o $H_1$ nevíme nic. [^null]
 
   > Na testování použijeme statistiku $T_n = T(\mathbf{X})$, kterou nazýváme **testovací statistikou**. Množinu hodnot, které může testovací statistika nabýt, rozdělíme na dvě disjunktní oblasti. Jednu označíme $W_\alpha$, a nazveme ji **kritickou oblastí** (nebo také _oblastí zamítnutí hypotézy_ (**region of rejection**, **critical region**)) a druhá je doplňkovou oblastí (oblast _nezamítnutí testované hypotézy_).
   >
@@ -407,7 +407,7 @@ Platí presumpce nevinny. Předpokládáme, že člověk zločin nespáchal, dok
     
 
 - **$p$-hodnota (hladina významnosti)**\
-  Nejmenší hladina významnosti $\alpha$, při které ještě zamítáme $H_0$. [p-value](#p-value)
+  Nejmenší hladina významnosti $\alpha$, při které ještě zamítáme $H_0$. [^p-value]
 
   Pravděpodobnost, že došlo k chybě typu I -- zavrhnuli jsme $H_0$, ačkoli platí.
 
@@ -423,9 +423,9 @@ Platí presumpce nevinny. Předpokládáme, že člověk zločin nespáchal, dok
 Parametrické testy jsou založené na parametrech pravděpodobnostních rozdělení.
 
 - **Studentův T-test**\
-  Umožňuje ověřit zda normální rozdělení má danou střední hodnotu. Taky umožňuje ověřit zda dvě normální rozdělení mají stejnou střední hodnotu, za předpokladu, že mají stejný (byť neznámý) rozptyl. [t-test](#t-test)
+  Umožňuje ověřit zda normální rozdělení má danou střední hodnotu. Taky umožňuje ověřit zda dvě normální rozdělení mají stejnou střední hodnotu, za předpokladu, že mají stejný (byť neznámý) rozptyl. [^t-test]
 - **Analysis of variance (ANOVA)**\
-  Testuje rozdíly mezi středními hodnotami dvou a více skupin. Používá se k ověření, zda rozptyly dvou nebo více množin dat jsou stejné až na konstantní posun a škálování. [anova](#anova)
+  Testuje rozdíly mezi středními hodnotami dvou a více skupin. Používá se k ověření, zda rozptyly dvou nebo více množin dat jsou stejné až na konstantní posun a škálování. [^anova]
 
 ### Neparametrické testy
 
@@ -436,7 +436,7 @@ Neparametrické testy nejsou založené (jen) na parametrech pravděpodobnostní
 - **One-sample Wilcoxon signed-rank test**\
   Testuje, zda vzorky patří do symetrického rozdělení s daným mediánem.
 - **Pearsonův chi-squared ($\chi^2$) test**\
-  Umožňuje ověřit, že dvě kategorické NV jsou nezávislé. [chi-squared](#chi-squared)
+  Umožňuje ověřit, že dvě kategorické NV jsou nezávislé. [^chi-squared]
 
 ### Testy (ne)závislosti náhodných veličin
 
@@ -448,7 +448,7 @@ Neparametrické testy nejsou založené (jen) na parametrech pravděpodobnostní
   **Výskyt $A$ nemá vliv na výskyt $B$.**
 
   - "Při při prvním hodu padne 6" a "při druhém hodu padne 6" jsou **nezávislé** jevy.
-  - Naproti tomu jev, že padne 6 při prvním hodu kostkou a jev, že součet čísel zaznamenaných v prvním a druhém pokusu je 8, jsou **závislé** jevy. [nezavislost](#nezavislost)
+  - Naproti tomu jev, že padne 6 při prvním hodu kostkou a jev, že součet čísel zaznamenaných v prvním a druhém pokusu je 8, jsou **závislé** jevy. [^nezavislost]
 
 - **Nezávislost diskrétních NV**
 
@@ -520,22 +520,21 @@ Neparametrické testy nejsou založené (jen) na parametrech pravděpodobnostní
 
   Testová statistika má Studentovo t-rozdělení.
 
-## Zdroje
 
-- [[[statistics,1]]] [Wikipedia: Statistics](https://en.wikipedia.org/wiki/Statistics)
-- [[[nv,2]]] [Wikipedia: Náhodná veličina](https://cs.wikipedia.org/wiki/N%C3%A1hodn%C3%A1_veli%C4%8Dina)
-- [[[cdf,3]]] [Wikipedia: Cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function)
-- [[[mean,4]]] [Wikipedia: Mean](https://en.wikipedia.org/wiki/Mean)
-- [[[clv,5]]] [Wikipedia: Centrální limitní věta](https://cs.wikipedia.org/wiki/Centr%C3%A1ln%C3%AD_limitn%C3%AD_v%C4%9Bta)
-- [[[consistent-estimator,6]]] [Wikipedia: Consistent estimator](https://en.wikipedia.org/wiki/Consistent_estimator)
-- [[[statistic, 7]]] [Wikipedia: Statistic](https://en.wikipedia.org/wiki/Statistic)
-- [[[mle, 8]]] [Wikipedia: Maximum likelihood estimation](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation)
-- [[[mom, 9]]] [Wikipedia: Method of moments](<https://en.wikipedia.org/wiki/Method_of_moments_(statistics)>)
-- [[[null, 10]]] [Wikipedia: Null hypothesis](https://en.wikipedia.org/wiki/Null_hypothesis)
-- [[[p-value, 11]]] [Wikipedia: P-hodnota](https://cs.wikipedia.org/wiki/P-hodnota)
-- [[[mv013,12]]] [MV013 Statistics for Computer Science (jaro 2021)](https://is.muni.cz/auth/el/fi/jaro2021/MV013/)
-- [[[anova, 13]]] [Wikipedia: Analysis of variance](https://en.wikipedia.org/wiki/Analysis_of_variance)
-- [[[nezavislost,14]]] [Wikipedia: Statistická nezávislost](https://cs.wikipedia.org/wiki/Statistick%C3%A1_nez%C3%A1vislost)
-- [[[t-test, 15]]] [Wikipedia: T-test](https://cs.wikipedia.org/wiki/T-test)
-- [[[chi-squared,16]]] [Chi-square tests](https://www.scribbr.com/statistics/chi-square-tests/)
-- [[[moment, 17]]] [Momenty rozdělení](http://kfe.fjfi.cvut.cz/~limpouch/sigdat/pravdh/node10.html)
+[^statistics]: [Wikipedia: Statistics](https://en.wikipedia.org/wiki/Statistics)
+[^nv]: [Wikipedia: Náhodná veličina](https://cs.wikipedia.org/wiki/N%C3%A1hodn%C3%A1_veli%C4%8Dina)
+[^cdf]: [Wikipedia: Cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function)
+[^mean]: [Wikipedia: Mean](https://en.wikipedia.org/wiki/Mean)
+[^clv]: [Wikipedia: Centrální limitní věta](https://cs.wikipedia.org/wiki/Centr%C3%A1ln%C3%AD_limitn%C3%AD_v%C4%9Bta)
+[^consistent]: [Wikipedia: Consistent estimator](https://en.wikipedia.org/wiki/Consistent_estimator)
+[^statistic]: [Wikipedia: Statistic](https://en.wikipedia.org/wiki/Statistic)
+[^mle]: [Wikipedia: Maximum likelihood estimation](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation)
+[^mom]: [Wikipedia: Method of moments](<https://en.wikipedia.org/wiki/Method_of_moments_(statistics)>)
+[^null]: [Wikipedia: Null hypothesis](https://en.wikipedia.org/wiki/Null_hypothesis)
+[^p]: [Wikipedia: P-hodnota](https://cs.wikipedia.org/wiki/P-hodnota)
+[^mv013]: [MV013 Statistics for Computer Science (jaro 2021)](https://is.muni.cz/auth/el/fi/jaro2021/MV013/)
+[^anova]: [Wikipedia: Analysis of variance](https://en.wikipedia.org/wiki/Analysis_of_variance)
+[^nezavislost]: [Wikipedia: Statistická nezávislost](https://cs.wikipedia.org/wiki/Statistick%C3%A1_nez%C3%A1vislost)
+[^t]: [Wikipedia: T-test](https://cs.wikipedia.org/wiki/T-test)
+[^chi]: [Chi-square tests](https://www.scribbr.com/statistics/chi-square-tests/)
+[^moment]: [Momenty rozdělení](http://kfe.fjfi.cvut.cz/~limpouch/sigdat/pravdh/node10.html)
