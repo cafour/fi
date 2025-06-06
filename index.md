@@ -2,6 +2,7 @@
 layout: layouts/standalone.tsx
 styles: [ main ]
 title: FI Notes
+description: Notes (mostly in Czech) from the Faculty of Informatics of Masaryk University in Brno.
 ---
 
 Notes (mostly in Czech) from the [Faculty of Informatics of Masaryk University](https://www.fi.muni.cz/) in Brno.
