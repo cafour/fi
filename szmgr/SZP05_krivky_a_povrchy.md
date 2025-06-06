@@ -192,7 +192,7 @@ Pro zbytek otázky je podstatné znát několik termínů:
 
   V případě kubiky výše to znamená, že $G$ obsahuje body, kterými křivka prochází.
 
-  Mějmě funkci $f(x)$, jejíž hodnotu známe v bodech $f(x_0), f(x_1), \ldots, f(x_n)$. Interpolace znamená nalezení hodnot $f(x)$ pro všechna $x_0 &lt; x &lt; x_n$.
+  Mějmě funkci $f(x)$, jejíž hodnotu známe v bodech $f(x_0), f(x_1), \ldots, f(x_n)$. Interpolace znamená nalezení hodnot $f(x)$ pro všechna $x_0  < x  < x_n$.
 
 - **Aproximace**\
   Přiblížení, odhad. Je nepřesným popisem nějaké jiné entity (např. čísla či funkce). Saháme k ní, pokud pro analytické řešení nemáme dost informací nebo výpočetní kapacity. Aproximace je méně přesná než interpolace, ale výpočetně jednodušší.

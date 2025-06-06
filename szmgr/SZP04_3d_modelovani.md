@@ -420,7 +420,7 @@ _Když máme objekt definovaný polévkou matematických symbolů místo hromád
   kde $d(x, A)$ je nejmenší vzdálenost bodu $x$ od entity $A$. [pa010-2020](#pa010-2020)
 
 - **Constructive solid geometry (CSG)**\
-  Umožňuje kombinovat implicitní objekty pomocí logických operací. Předpokládáme, že pokud $f(x, y, z) &lt; 0$ pak je bod uvnitř objektu daném $f$. Tato metoda nezachovává $C^1$ spojitost. Pro dva objekty $f$ a $g$: [pa010-2020](#pa010-2020)
+  Umožňuje kombinovat implicitní objekty pomocí logických operací. Předpokládáme, že pokud $f(x, y, z)  < 0$ pak je bod uvnitř objektu daném $f$. Tato metoda nezachovává $C^1$ spojitost. Pro dva objekty $f$ a $g$: [pa010-2020](#pa010-2020)
 
   - _Sjednocení_: $\min(f, g)$,
   - _Průnik_: $\max(f, g)$,

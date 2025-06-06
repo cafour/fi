@@ -94,7 +94,7 @@ description: "TODO"
   x_{k+1} = x_k - \frac{x_k - x_s}{f(x_k) - f(x_s)} f(x_k)
   ```
 
-  kde $s$ je největší index takový, že $f(x_k)f(x_s) &lt; 0$.
+  kde $s$ je největší index takový, že $f(x_k)f(x_s)  < 0$.
 
 ## Přímé metody pro řešení systému lineárních rovnic
 
@@ -212,7 +212,7 @@ Modifikace Gauss-Seidelovy metody. Využívá parametr $\omega$, který určuje,
 \end{align*}
 ```
 
-- Pro $0 &lt; \omega &lt; 1$ se názývá metodou dolní relaxace. Je vhodná v případě, kdy Gauss-Seidel nekonverguje.
+- Pro $0  < \omega  < 1$ se názývá metodou dolní relaxace. Je vhodná v případě, kdy Gauss-Seidel nekonverguje.
 - Pro $\omega = 1$ je totožná s Gauss-Seidelem.
 - Pro $\omega > 1$ se názývá metodou horní relaxace / SOR metodou. Zrychluje konvergenci Gauss-Seidela.
 
