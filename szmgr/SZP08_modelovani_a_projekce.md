@@ -1,5 +1,5 @@
 ---
-title: 8. Modelování a projekce
+title: Modelování a projekce
 description: A guide in my new Starlight docs site.
 ---
 
