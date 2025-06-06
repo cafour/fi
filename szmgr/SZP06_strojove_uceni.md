@@ -106,7 +106,7 @@ description: "TODO"
   - $x_0$ -- pro snažší implementaci se závádí dodatečný vstup, který má vždy hodnotu 1 a váhu rovnu -bias
 
   > [!NOTE]
-  > Vnitřní potenciál funguje jako nadrovina (čára při 2D, rovina při 3D, nepředstavitelný mostrum ve vyšších dimenzí), která rozděluje prostor vstupů na část, kde je $\xi &lt; 0$ a kde $\xi > 0$.
+  > Vnitřní potenciál funguje jako nadrovina (čára při 2D, rovina při 3D, nepředstavitelný mostrum ve vyšších dimenzí), která rozděluje prostor vstupů na část, kde je $\xi  < 0$ a kde $\xi > 0$.
 
 - **Multilayer perceptron (MLP)**
 
@@ -126,9 +126,9 @@ description: "TODO"
   - $\xi_j$ -- vnitřní potenciál neuronu $j$ po skončení výpočtu
   - $y_j$ -- výstup neuronu $j$ po skončení výpočtu
   - $x_0 = 1$ -- hodnota formálního jednotkového vstupu (kvůli biasům)
-  - $w_{j,i}$ -- váha spojení **z** neuronu $i$ **do** neuronu $j$ (dst &lt;- src)
+  - $w_{j,i}$ -- váha spojení **z** neuronu $i$ **do** neuronu $j$ (dst  <- src)
   - $w_{j,0} = -b_j$ -- bias -- váha z formální jednotky do neuronu $j$
-  - $j_{\leftarrow}$ -- množina neuronů $i$, jenž mají spojení **do** $j$ (j &lt;- i)
+  - $j_{\leftarrow}$ -- množina neuronů $i$, jenž mají spojení **do** $j$ (j  <- i)
   - $j^{\rightarrow}$ -- množina neuronů $i$, do nichž vede spojení **z** $j$ (j -> i)
 
 ### Aktivita
@@ -213,7 +213,7 @@ Neuronka je model, kde váhy neuronů jsou parametry. Při učení neuronek je n
 - **Backpropagation / zpětná propagace**\
   Technika, kdy se v průběhu _gradient descent_ ztráta způsobená konkrétním neuronem dedukuje na zákládě jeho příspěvku k výsledku. Algoritmus tak postupuje od output vrstvy směrem k input vrstvě.
 - **Learning rate $\varepsilon$**\
-  Hyperparametr $0 &lt; \varepsilon \le 1$ ovlivňující rychlost učení. Může záviset na iteraci $t$, pak je to funkce $\varepsilon(t)$.
+  Hyperparametr $0  < \varepsilon \le 1$ ovlivňující rychlost učení. Může záviset na iteraci $t$, pak je to funkce $\varepsilon(t)$.
 
 **Gradient descent v MLP**
 

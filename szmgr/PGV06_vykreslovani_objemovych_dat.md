@@ -69,7 +69,7 @@ Před samotnou rekonstrukcí je často potřeba provézt ještě předzpracován
   ![width=600](./img/pgv06_alpha_shapes.png)
 
 - **Aproximace implicitní funkcí**\
-  Uvažujme implicitní funkci $f(x, y, z)$, která je signed-distance funkcí od našeho daného povrchu (na povrchu = 0, uvnitř &lt; 0, venku > 0). Taková funkce popisuje povrch jako nulovou hladinu.
+  Uvažujme implicitní funkci $f(x, y, z)$, která je signed-distance funkcí od našeho daného povrchu (na povrchu = 0, uvnitř  < 0, venku > 0). Taková funkce popisuje povrch jako nulovou hladinu.
 
   Pro definici takové funkce by nám teoreticky stačily body našeho pointcloudu, které všechny nadefinujeme na nulovou hodnotu. Tímto způsobem má však naše funkce trivalní řešení, protože bychom mohli zvolit funkci, která pro všechny body vrací 0. Abochom tomu zabránili, přidáme pro každý bod dva nové body (1 uvnitř a jeden venku) posunuté podél normály. Tímto způsobem získáme funkci, která je nulová na povrchu a má správné znaménko uvnitř a venku.
 

@@ -31,7 +31,7 @@ Pokud je $M_{eff} \sim 1$, pak je čas na interpretaci a renderování krátký.
 $M_{exp} = \frac{\text{displayed information}}{\text{information to be expressed}}$, kde $0 \leq M_{exp} \leq 1$.
 
 - Pokud je $M_{exp} = 1$, pak je expresivita ideální.
-- Pokud je $M_{exp} &lt; 1$, pak zobrazujeme méně informací, než jsme zamýšleli.
+- Pokud je $M_{exp}  < 1$, pak zobrazujeme méně informací, než jsme zamýšleli.
 - Pokud je $M_{exp} > 1$, pak zobrazujeme více informací, než bychom měli.
 
 ## Vizuální proměnné

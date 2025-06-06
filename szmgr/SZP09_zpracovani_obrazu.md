@@ -53,9 +53,9 @@ Převodní funkce je lineární, definována, jako $f(a) = ka + q$.
 - Identita: $k = 1, q = 0$
 - Inverze intenzit (negativ): $k = -1, q = a_{max}$
 - Zvýšení jasu: $k = 1, q > 0$
-- Snížení jasu: $k = 1, q &lt; 0$
+- Snížení jasu: $k = 1, q  < 0$
 - Zvýšení kontrastu: $k > 1, q = 0$
-- Snížení kontrastu: $0 &lt; k &lt; 1, q = 0$
+- Snížení kontrastu: $0  < k  < 1, q = 0$
 - Lineární roztažení: viz dále
 - (Percentilové roztažení: viz dále)
 - **Negativ**\

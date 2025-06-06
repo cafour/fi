@@ -10,7 +10,7 @@ description: "TODO"
 
 
 - **Divergence**\
-  Operace, která nám říká, jak moc vektorové pole míří ven z daného bodu. Pokud je $\text{div} j > 0$, pak se v daném bodě hodnota časem snižuje, pokud je $\text{div} j &lt; 0$, pak se hodnota zvyšuje.
+  Operace, která nám říká, jak moc vektorové pole míří ven z daného bodu. Pokud je $\text{div} j > 0$, pak se v daném bodě hodnota časem snižuje, pokud je $\text{div} j  < 0$, pak se hodnota zvyšuje.
 
   $\text{div} j = \nabla^T j = (\partial_x, \partial_y) \cdot (j_1, j_2) = \partial_x j_1 + \partial_y j_2$.
 

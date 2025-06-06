@@ -128,7 +128,7 @@ def bfs(graph: List[List[bool]], stamps: List[int], vertex: int) -> None:
 Problém nalezení buď nejkratší cesty mezi dvěma vrcholy nebo nejkratší cesty z jednoho vrcholu do všech ostatních.
 
 - **Relaxace hrany $(u, v)$**\
-  Zkrácení vzdálenosti k vrcholu $v$ průchodem přes vrchol $u$. Musí platit $u\text{.distance} + w(u, v) &lt; v\text{.distance}$. Hrana $(u, v)$ je v takovém případě _napjatá_.
+  Zkrácení vzdálenosti k vrcholu $v$ průchodem přes vrchol $u$. Musí platit $u\text{.distance} + w(u, v)  < v\text{.distance}$. Hrana $(u, v)$ je v takovém případě _napjatá_.
 
 ### Bellman-Fordův algoritmus
 
@@ -324,7 +324,7 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 
   Je to pětice $G_f = (V, E_f, s, t, c_f)$, kde
 
-  - $E_f = \{ e \in E : f(e) &lt; c(e) \} \cup \{ e^R : f(e) > 0 \}$,
+  - $E_f = \{ e \in E : f(e)  < c(e) \} \cup \{ e^R : f(e) > 0 \}$,
   - pokud $e = (u, v) \in E$, $e^R = (v, u)$,
   - stem:[
     c_f(e) = \begin{cases}

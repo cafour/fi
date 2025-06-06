@@ -70,7 +70,7 @@ Jediným háček je v tom přijít na to, které podproblémy jsou ty nejmenší
 
     Řešení využívá toho, že čas plyne výhradně dopředu, takže se můžeme na podproblémy dívat chronologicky a nebudou se překrývat.
 
-    Nechť $p(j)$ je index takové události $i &lt; j$, že $i$ a $j$ jsou kompatibilní.
+    Nechť $p(j)$ je index takové události $i  < j$, že $i$ a $j$ jsou kompatibilní.
 
     ```math
     \text{OPT}(j) = \begin{cases}
