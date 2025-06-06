@@ -16,21 +16,21 @@ description: "TODO"
 - **Geometrie**
   - Mění jí deformace.
   - Např. to, kde jsou body.
-  - Zahrnuje zakřivení (curvature), plochu (area), vzdálenosti mezi body, atd. [pa010-2021](#pa010-2021)
+  - Zahrnuje zakřivení (curvature), plochu (area), vzdálenosti mezi body, atd. [^pa010-2021]
 - **Topologie**
 
   - Nemění ji deformace.
   - Např. to jak jsou body propojené.
-  - Sousednost (neighborhood), souvislost (connectedness), adjacency. atd. [pa010-2021](#pa010-2021)
+  - Sousednost (neighborhood), souvislost (connectedness), adjacency. atd. [^pa010-2021]
 
-    **Topology [topology](#topology)**
+    **Topology [^topology]**
 
     ![Topology](./img/szp04_topology.png)
 
 - **Topological manifold**\
-  Prostor/útvar, který lokálně _připomíná_ (je homeomorfní) $n$-dimenzionální Euklidovský prostor. [pa010-2021](#pa010-2021) [manifold-wiki](#manifold-wiki)
+  Prostor/útvar, který lokálně _připomíná_ (je homeomorfní) $n$-dimenzionální Euklidovský prostor. [^pa010-2021] [^manifold-wiki]
 
-  $n$-manifold je takový topologický manifold, kde okolí každého bodu je homeomorfní s $n$-dimenzionálním Euklidovským prostorem. [manifold-wiki](#manifold-wiki)
+  $n$-manifold je takový topologický manifold, kde okolí každého bodu je homeomorfní s $n$-dimenzionálním Euklidovským prostorem. [^manifold-wiki]
 
   Manifoldy jsou typicky fyzikálně validní a efektivní (např. pomocí half-edge).
 
@@ -38,7 +38,7 @@ description: "TODO"
   - Libovolný diskrétní prostor je 0-manifold.
   - Kruh je 1-manifold.
   - Torus (donut) a Kleinova láhev je 2-manifold (povrch).
-  - Každý povrch je 2-manifold až na neuzavřené hrany. [pa010-2021](#pa010-2021)
+  - Každý povrch je 2-manifold až na neuzavřené hrany. [^pa010-2021]
   - $n$-dimenzionální koule je $n$-manifold.
 
     ![width=100%](./img/szp04_manifold.png)
@@ -85,7 +85,7 @@ description: "TODO"
     > [!TIP]
     > Je to **maximální** počet těch řezů.
     > <br>
-    > Následující povrch[genus](#genus) jde rozdělit podél červené křivky na dva, ale neuvažujeme ji, protože chceme **nejvyší možný** počet řezů, které povrch **nerozdělí**.
+    > Následující povrch[^genus] jde rozdělit podél červené křivky na dva, ale neuvažujeme ji, protože chceme **nejvyší možný** počet řezů, které povrch **nerozdělí**.
     > <br>
     > ![width=500rem](./img/szp04_genus.png)
     
@@ -207,12 +207,12 @@ description: "TODO"
   - Sousedící faces mají stejnou orientaci.
   - Žádné faces "nevisí" ven z modelu.
 - **Geometrická validita**\
-  Numerické chyby v geometrii (např. v pozicích vertexů) mohou způsobit konflikty mezi topologickou a geometrickou informací. [pa010-2021](#pa010-2021)
+  Numerické chyby v geometrii (např. v pozicích vertexů) mohou způsobit konflikty mezi topologickou a geometrickou informací. [^pa010-2021]
 
   _Např.: Rovnice rovin tvrdí, že hrana je uvnitř objektu, ale topologie říká, že je mimo něj._
 
 - **Eulerovy operátory**\
-  Operátory zachovávající Euler-Poincaré formuli. Jsou dostatečné pro konstrukci užitečných meshů. Pracují s 6 parametry: $V$ -- vertices, $E$ -- edges, $F$ -- faces, $H$ -- components, $S$ -- shells, $G$ -- genus. [pa010-2021](#pa010-2021) [boundaries](#boundaries)
+  Operátory zachovávající Euler-Poincaré formuli. Jsou dostatečné pro konstrukci užitečných meshů. Pracují s 6 parametry: $V$ -- vertices, $E$ -- edges, $F$ -- faces, $H$ -- components, $S$ -- shells, $G$ -- genus. [^pa010-2021] [^boundaries]
 
   > [!NOTE]
   > Zdá se, že $H$ -- components je ekvivalentní $R$ -- rings.
@@ -263,7 +263,7 @@ description: "TODO"
   - `OR` - sjednocení $\cup^*$
   - `SUB` - rozdíl $\setminus^*$
 
-  Regularizace vypadá tak, že nejprve je provedena booleovská operace, poté je vypočítán _interior_ a následně _closure_. [rbo](#rbo)
+  Regularizace vypadá tak, že nejprve je provedena booleovská operace, poté je vypočítán _interior_ a následně _closure_. [^rbo]
 
   - _Interior point_ $p$ tělesa $S$ je takový bod, že existuje $r$ takové, že otevřená koule s poloměrem $r$ a středem v $p$ obsahuje jen body z $S$.
   - _Exterior point_ $p$ tělesa $S$ je takový bod, že existuje $r$ takové, že otevřená koule s poloměrem $r$ a střem v $p$ **nemá žádný průnik** s $S$.
@@ -274,11 +274,11 @@ description: "TODO"
 
   _Otevřená koule_ je koule bez povrchu. Tedy právě ty body, které jsou jejím "vnitřkem".
 
-  **Schéma interior and a boundary tělesa $A \cap B$ [pa010-2021](#pa010-2021)**
+  **Schéma interior and a boundary tělesa $A \cap B$ [^pa010-2021]**
 
   ![width=200](./img/szp04_interior_boundary.png)
 
-  **Příklad regularizovaného průniku [pa010-2021](#pa010-2021)**
+  **Příklad regularizovaného průniku [^pa010-2021]**
 
   ![width=100%](./img/szp04_rbo.png)
 
@@ -325,29 +325,29 @@ description: "TODO"
 > Modifikace meshů mají značný přesah do otázky [Křivky a povrchy](../krivky-a-povrchy/) a taky [Pokročilá počítačová grafika](../vph01_pokrocila_grafika/)
 
 - **Překlápění hrany / edge flip**\
-  Lokální změna, která nahradí hranu $(b,c)$ hranou $(a,d)$. Trojúhelníky $(a,b,c)$ a $(b,d,c)$ se stanou $(a,d,c)$ a $(a,b,d)$. [pa010-2021](#pa010-2021)
+  Lokální změna, která nahradí hranu $(b,c)$ hranou $(a,d)$. Trojúhelníky $(a,b,c)$ a $(b,d,c)$ se stanou $(a,d,c)$ a $(a,b,d)$. [^pa010-2021]
 
   ![width=400](./img/szp04_edge_flip.png)
 
 - **Rozdělení hrany / edge split**\
-  Lokální změna přidávající další vertex a hrany mezi dva trojúhelníky, které tak rozdělí na čtyři. [pa010-2021](#pa010-2021)
+  Lokální změna přidávající další vertex a hrany mezi dva trojúhelníky, které tak rozdělí na čtyři. [^pa010-2021]
 
   ![width=400](./img/szp04_edge_split.png)
 
 - **Zhroucení grany / edge collapse**\
-  Lokální změna, která nahrazuje hranu vrcholem. [pa010-2021](#pa010-2021)
+  Lokální změna, která nahrazuje hranu vrcholem. [^pa010-2021]
 
   ![width=400](./img/szp04_edge_collapse.png)
 
 - **Upsampling / subdivision**\
-  Globální změna, která rozdělí jedno primitivum (trojúhelník / quad) na více. Vyhlazuje mesh dělením na menší kousky. [pa010-2021](#pa010-2021)
+  Globální změna, která rozdělí jedno primitivum (trojúhelník / quad) na více. Vyhlazuje mesh dělením na menší kousky. [^pa010-2021]
 
   ![width=400](./img/szp04_subdivision.png)
 
 - **Downsampling / decimation / simplification**\
   Globální redukce množství primitiv. Často využívá edge collapse.
 - **Regularization / mesh resampling**\
-  Globální upráva s cílem zlepšit kvalitu meshe, např.: tvar trojúhelníků a četnost vertexů. [pa010-2021](#pa010-2021)
+  Globální upráva s cílem zlepšit kvalitu meshe, např.: tvar trojúhelníků a četnost vertexů. [^pa010-2021]
 
   ![width=400](./img/szp04_mesh_regularization.png)
 
@@ -359,7 +359,7 @@ description: "TODO"
   3. Překlop hrany, pokud to zlepší stupeň vrcholu (ideální je 6).
   4. Vycentruj vrcholy.
 
-  Zlepšuje rychlost některých algoritmů, eliminuje podlouhlé trojúhelníky, které se blbě renderují, zlepšuje subdivision, ale nejde použít vždy a může vést ke ztrátě detailů (řeší _Adaptive remeshing_). [pa010-2021](#pa010-2021)
+  Zlepšuje rychlost některých algoritmů, eliminuje podlouhlé trojúhelníky, které se blbě renderují, zlepšuje subdivision, ale nejde použít vždy a může vést ke ztrátě detailů (řeší _Adaptive remeshing_). [^pa010-2021]
 
   ![width=400](./img/szp04_isotropic_remeshing.png)
 
@@ -417,10 +417,10 @@ _Když máme objekt definovaný polévkou matematických symbolů místo hromád
   - _Generalized cylinder_: $d(x, \text{curve}) = r$,
   - _Offset surface_: $d(x, \text{surface}) = r$.
 
-  kde $d(x, A)$ je nejmenší vzdálenost bodu $x$ od entity $A$. [pa010-2020](#pa010-2020)
+  kde $d(x, A)$ je nejmenší vzdálenost bodu $x$ od entity $A$. [^pa010-2020]
 
 - **Constructive solid geometry (CSG)**\
-  Umožňuje kombinovat implicitní objekty pomocí logických operací. Předpokládáme, že pokud $f(x, y, z)  < 0$ pak je bod uvnitř objektu daném $f$. Tato metoda nezachovává $C^1$ spojitost. Pro dva objekty $f$ a $g$: [pa010-2020](#pa010-2020)
+  Umožňuje kombinovat implicitní objekty pomocí logických operací. Předpokládáme, že pokud $f(x, y, z)  < 0$ pak je bod uvnitř objektu daném $f$. Tato metoda nezachovává $C^1$ spojitost. Pro dva objekty $f$ a $g$: [^pa010-2020]
 
   - _Sjednocení_: $\min(f, g)$,
   - _Průnik_: $\max(f, g)$,
@@ -428,7 +428,7 @@ _Když máme objekt definovaný polévkou matematických symbolů místo hromád
   - _Komplement_: $-f$.
 
 - **Bloby (kapky)**\
-  Součet několika Gaussových křivek. [pa010-2020](#pa010-2020)
+  Součet několika Gaussových křivek. [^pa010-2020]
 
   ```math
   \begin{align*}
@@ -450,7 +450,7 @@ _Když máme objekt definovaný polévkou matematických symbolů místo hromád
   ![width=300](./img/szp04_blobs.png)
 
 - **Metaballs**\
-  Podobné blobům, ale nepoužívá exponenciální funkci. Organicky se "slévající" koule. [pa010-2020](#pa010-2020)
+  Podobné blobům, ale nepoužívá exponenciální funkci. Organicky se "slévající" koule. [^pa010-2020]
 
   ```math
   \begin{align*}
@@ -475,16 +475,15 @@ _Když máme objekt definovaný polévkou matematických symbolů místo hromád
 
   ![width=100%](./img/szp04_metaballs.png)
 
-## Zdroje
 
-- [[[pa010-2021,1]]] Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)
-- [[[pa010-2020,2]]] Sochor: PA010 Intermediate Computer Graphics (podzim 2020)
-- [[[notes-pa010,3]]] [Moje poznámky z PA010 (podzim 2020)](/fi/pa010/)
-- [[[manifold-wiki,4]]] [Wikipedia: Topological manifold](https://en.wikipedia.org/wiki/Topological_manifold)
-- [[[klein-bottle,5]]] [Konrad Polthier: Imaging maths - Inside the Klein bottle ](https://plus.maths.org/content/imaging-maths-inside-klein-bottle)
-- [[[genus,6]]] [Saul Schleimer: Notes on the complex of curves](https://www.researchgate.net/publication/228393582_Notes_on_the_complex_of_curves)
-- [[[topology, 7]]] [Topology vs. Geometry](https://www.austincc.edu/herbling/shape-of-space.pdf)
-- [[[boundaries, 8]]] [Ian Stroud: Boundary Representation Modelling Techniques](https://link.springer.com/book/10.1007/978-1-84628-616-2)
-- [[[rbo, 9]]] [Interior, Exterior and Closure](https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/model/closure.html)
-- [[[validity,10]]] [Representational validity of boundary representation models](https://www.sciencedirect.com/science/article/pii/S0010448500000476)
-- [[[denoising,11]]] [Bilateral Normal Filtering for Mesh Denoising](https://ieeexplore.ieee.org/document/5674028)
+[^pa010]: Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)
+[^pa010]: Sochor: PA010 Intermediate Computer Graphics (podzim 2020)
+[^notes]: [Moje poznámky z PA010 (podzim 2020)](/fi/pa010/)
+[^manifold]: [Wikipedia: Topological manifold](https://en.wikipedia.org/wiki/Topological_manifold)
+[^klein]: [Konrad Polthier: Imaging maths - Inside the Klein bottle ](https://plus.maths.org/content/imaging-maths-inside-klein-bottle)
+[^genus]: [Saul Schleimer: Notes on the complex of curves](https://www.researchgate.net/publication/228393582_Notes_on_the_complex_of_curves)
+[^topology]: [Topology vs. Geometry](https://www.austincc.edu/herbling/shape-of-space.pdf)
+[^boundaries]: [Ian Stroud: Boundary Representation Modelling Techniques](https://link.springer.com/book/10.1007/978-1-84628-616-2)
+[^rbo]: [Interior, Exterior and Closure](https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/model/closure.html)
+[^validity]: [Representational validity of boundary representation models](https://www.sciencedirect.com/science/article/pii/S0010448500000476)
+[^denoising]: [Bilateral Normal Filtering for Mesh Denoising](https://ieeexplore.ieee.org/document/5674028)
