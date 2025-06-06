@@ -3,13 +3,11 @@ title: "Techniky dělení prostoru a scény"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Datové struktury (oct-, quad-, BSP-, k-d stromy), jejich konstrukce a údržba, používané heuristiky. Objemem ohraničující tělesa a jejich hierarchie, způsob konstrukce a použití. Detekce kolizí, vykreslování.
+> <br>
+> _MA017, PA010, PA213_
 
-Datové struktury (oct-, quad-, BSP-, k-d stromy), jejich konstrukce a údržba, používané heuristiky. Objemem ohraničující tělesa a jejich hierarchie, způsob konstrukce a použití. Detekce kolizí, vykreslování.
-
-_MA017, PA010, PA213_
-
-</dd></dl>
 
 Hierarchické reprezentace scény se snaží zefektivnit výpočty kolizí pomocí rozdělení scény na menší části. Díky tomu je možné testovat kolize na méně objektech a navíc na takových, kde je tento výpočet jednodušší.
 

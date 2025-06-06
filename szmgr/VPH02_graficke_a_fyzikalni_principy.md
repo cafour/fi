@@ -3,21 +3,19 @@ title: "Grafické a fyzikální principy (2023)"
 description: "TODO"
 ---
 
-**⚠️ WARNING**\
-Tato je stará verze otázky. Nová verze: [Fyzikální principy ve vývoji her](./VPH02_fyzikalni_principy_ve_vyvoji_her.ad).
+> [!WARNING]
+> Tato je stará verze otázky. Nová verze: [Fyzikální principy ve vývoji her](./VPH02_fyzikalni_principy_ve_vyvoji_her.ad).
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Příprava a vývoj scény, grayboxing, zástupné modely (placeholders). Optimalizace výkonu vykreslování (úrovně detailů, odstřelování objektů, MIP mapy). Využití shaderů pro efekty ve hrách. Sledování paprsků, objekty pro detekci kolizí, fyzika hadrové panenky.
+> <br>
+> _PA010, PA199, PA213, PV255_
 
-Příprava a vývoj scény, grayboxing, zástupné modely (placeholders). Optimalizace výkonu vykreslování (úrovně detailů, odstřelování objektů, MIP mapy). Využití shaderů pro efekty ve hrách. Sledování paprsků, objekty pro detekci kolizí, fyzika hadrové panenky.
-
-_PA010, PA199, PA213, PV255_
-
-</dd></dl>
 
 ## Příprava a vývoj scény
 
-**📌 NOTE**\
-Poznámky o grayboxingu, iterování, modulárním workflow, atd. jsou z přednášky Lukáše Medka v rámci PV255. [medek](#medek)
+> [!NOTE]
+> Poznámky o grayboxingu, iterování, modulárním workflow, atd. jsou z přednášky Lukáše Medka v rámci PV255. [medek](#medek)
 
 - **Iterace**\
   Práce v iteracích pomáhá:
@@ -87,8 +85,8 @@ Poznámky o grayboxingu, iterování, modulárním workflow, atd. jsou z předn�
 
   ![width=300rem](./img/vph02_mipmaps.png)
 
-  **💡 TIP**\
-  Jak je patrné z obrázku výše, chytrým uložením je mipmapovaná textura jen o 33 % větší než původní textura. (Nová má velikost $\frac{4}{3}$ té staré.)
+  > [!TIP]
+  > Jak je patrné z obrázku výše, chytrým uložením je mipmapovaná textura jen o 33 % větší než původní textura. (Nová má velikost $\frac{4}{3}$ té staré.)
 
 - **Shaderové / GPU optimalizace**\
   Existuje řada nástrojů, které umožňují debugovat a optimalizovat GPU:
@@ -141,8 +139,8 @@ Poznámky o grayboxingu, iterování, modulárním workflow, atd. jsou z předn�
 
   ![width=500rem](./img/vph02_dof.png)
 
-  **💡 TIP**\
-   Circle of Confusion (CoC) je kruh způsobený imperfektním zaostřením. Měřením CoC foťáky určují depth of field. [coc](#coc)
+  > [!TIP]
+  > Circle of Confusion (CoC) je kruh způsobený imperfektním zaostřením. Měřením CoC foťáky určují depth of field. [coc](#coc)
 
 ## Ray tracing / sledování paprsků
 
@@ -223,8 +221,8 @@ Ray tracing jsou techniky, které trasují paprsky světla napříč scénou.
 
 ## Fyzikální simulace
 
-**❗ IMPORTANT**\
-Renderování založenému na fyzikálních principech se věnuje část otázky [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/).
+> [!IMPORTANT]
+> Renderování založenému na fyzikálních principech se věnuje část otázky [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/).
 
 - **Rigid body**\
   Aproximace reálného fyzikálního tělesa. Předpokládá uniformní hostotu a **neřeší:**

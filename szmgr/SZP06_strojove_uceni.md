@@ -3,16 +3,14 @@ title: "Strojové učení"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Strojové učení a rozpoznávání vzorů: problém klasifikace a regrese, shluková analýza, učení s učitelem a bez učitele. Vícevrstvé neuronové sítě, vícevrstvé perceptrony, ztrátové funkce, zpětná propagace. pass:[&lt;s>Hopfieldova síť, &lt;/s>]konvoluční sítě, rekurentní sítěpass:[&lt;s>, samo-organizující mapy&lt;/s>].
+> <br>
+> _PV021_
 
-Strojové učení a rozpoznávání vzorů: problém klasifikace a regrese, shluková analýza, učení s učitelem a bez učitele. Vícevrstvé neuronové sítě, vícevrstvé perceptrony, ztrátové funkce, zpětná propagace. pass:[&lt;s>Hopfieldova síť, &lt;/s>]konvoluční sítě, rekurentní sítěpass:[&lt;s>, samo-organizující mapy&lt;/s>].
 
-_PV021_
-
-</dd></dl>
-
-**💡 TIP**\
-Velkou část zpracování téhle otázky jsem ukradl [sám sobě](/fi/pv021/).
+> [!TIP]
+> Velkou část zpracování téhle otázky jsem ukradl [sám sobě](/fi/pv021/).
 
 ## Strojové učení a rozpoznávání vzorů
 
@@ -107,8 +105,8 @@ Velkou část zpracování téhle otázky jsem ukradl [sám sobě](/fi/pv021/).
   - bias -- udává "jak těžké" je pro neuron se aktivovat (čím vyšší číslo, tím těžší je pro neuron vydat nenulový výstup)
   - $x_0$ -- pro snažší implementaci se závádí dodatečný vstup, který má vždy hodnotu 1 a váhu rovnu -bias
 
-  **📌 NOTE**\
-  Vnitřní potenciál funguje jako nadrovina (čára při 2D, rovina při 3D, nepředstavitelný mostrum ve vyšších dimenzí), která rozděluje prostor vstupů na část, kde je $\xi &lt; 0$ a kde $\xi > 0$.
+  > [!NOTE]
+  > Vnitřní potenciál funguje jako nadrovina (čára při 2D, rovina při 3D, nepředstavitelný mostrum ve vyšších dimenzí), která rozděluje prostor vstupů na část, kde je $\xi &lt; 0$ a kde $\xi > 0$.
 
 - **Multilayer perceptron (MLP)**
 
@@ -156,8 +154,8 @@ Velkou část zpracování téhle otázky jsem ukradl [sám sobě](/fi/pv021/).
 
 ### Trénink
 
-**❗ IMPORTANT**\
-Pro likelihood viz otázka [Statistika](../statistika/).
+> [!IMPORTANT]
+> Pro likelihood viz otázka [Statistika](../statistika/).
 
 Neuronka je model, kde váhy neuronů jsou parametry. Při učení neuronek je naším cílem maximalizovat likelihood, jakožto míru toho, že naše síť sedí na "naměřená data", training set $\cal T$. Tomuhle přístupu se říká _maximum likelihood principle_.
 
@@ -243,8 +241,8 @@ w_{ji}^{(t+1)}
 
 Za předpokladu, že $E$ je squared error, pak:
 
-**⚠️ WARNING**\
-V případě, že $E$ není squared error, následující výpočet neplatí.
+> [!WARNING]
+> V případě, že $E$ není squared error, následující výpočet neplatí.
 
 ```math
 \large
@@ -278,8 +276,8 @@ V případě, že $E$ není squared error, následující výpočet neplatí.
 
 Neuronové sítě uzpůsobené ke zpracování obrazu. Místo násobení matic používají alespoň v jedné vrstvě konvoluci. Konvoluční sítě mají dva nové typy vrstev: _konvoluční_ a _pooling_, ale jinak se od klasických MLP moc neliší. Aktivace a trénink zůstavají v podstatě stejné. [cnn](#cnn)
 
-**❗ IMPORTANT**\
-Pro konvoluci viz otázka [Zpracování rastrového obrazu](../zpracovani-rastroveho-obrazu/).
+> [!IMPORTANT]
+> Pro konvoluci viz otázka [Zpracování rastrového obrazu](../zpracovani-rastroveho-obrazu/).
 
 **Typical CNN by [Aphex34](https://commons.wikimedia.org/w/index.php?curid=45679374)**
 
@@ -370,8 +368,8 @@ Neuronové sítě, jejichž architektura obsahuje cykly. Tedy výstup v jednom b
   \mathcal{T} = \{ (\bold{x}_1, \bold{d}_1), ..., (\bold{x}_p, \bold{d}_p) \}
   ```
 
-  **📌 NOTE**\
-  Ano, to znamená, že $x_{lt1}$ je první prvek $t$-ho prvku v $l$-té vstupní sekvenci.
+  > [!NOTE]
+  > Ano, to znamená, že $x_{lt1}$ je první prvek $t$-ho prvku v $l$-té vstupní sekvenci.
 
   Squared error samplu $(\bold{x}, \bold{d})$:
 
@@ -424,8 +422,8 @@ Neuronové sítě, jejichž architektura obsahuje cykly. Tedy výstup v jednom b
   \end{aligned}
   ```
 
-  **💡 TIP**\
-  Pokud $\textcolor{red}{\sigma' \cdot W_{k’k}} \not\approx 1$, pak gradient buď vybouchne nebo se ztratí.
+  > [!TIP]
+  > Pokud $\textcolor{red}{\sigma' \cdot W_{k’k}} \not\approx 1$, pak gradient buď vybouchne nebo se ztratí.
 
   - **Long Short-Term Memory (LSTM)**\
     LSTM řeší problém s vanishing a exploding gradientem, kterým RNN. V RNN je $\sigma$ typicky $\tanh$. V LSTM obsahuje jeden hidden neuron vlastně čtyři "podvrstvy", které mimo jiné umožňují část paměti zapomenout:

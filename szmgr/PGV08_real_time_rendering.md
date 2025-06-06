@@ -3,13 +3,11 @@ title: "Vykreslování v reálném čase"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Ořezávání, techniky založené na viditelnosti, vykreslování s různou úrovní detailů (LOD rendering), vykreslování terénu. Stíny: tvrdé stíny, měkké stíny, techniky vykreslování stínů v prostoru scény a v obrazovém prostoru.
+> <br>
+> _PA010, PA213_
 
-Ořezávání, techniky založené na viditelnosti, vykreslování s různou úrovní detailů (LOD rendering), vykreslování terénu. Stíny: tvrdé stíny, měkké stíny, techniky vykreslování stínů v prostoru scény a v obrazovém prostoru.
-
-_PA010, PA213_
-
-</dd></dl>
 
 - **Real time rendering**\
   Snažíme se zlevnit a zrychlit vyrenderování jednoho snímku scény. Můžeme toho docílit typicky zahozením částí, které nejsou vidět a nahrazením drahého renderování vzdálených objektů levnějším.
@@ -228,8 +226,8 @@ Stíny jsou důležité, jelikož:
 
   ![width=500rem](./img/vph01_shadow_maps.png)
 
-  **❗ IMPORTANT**\
-   Shadow mapám se důkladně věnuje otázka [Renderování s využitím GPU](../renderovani-s-vyuzitim-gpu/)
+  > [!IMPORTANT]
+  > Shadow mapám se důkladně věnuje otázka [Renderování s využitím GPU](../renderovani-s-vyuzitim-gpu/)
 
 - **Shadow volumes**\
   Počítá stíny ve 3D. Shadow volume explicitně popisuje objem prostoru ve stínu nějakého polygonu.

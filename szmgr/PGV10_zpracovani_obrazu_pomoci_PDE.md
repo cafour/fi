@@ -3,13 +3,11 @@ title: "Zpracování obrazu pomocí PDE"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Difúzní filtrování (lineární difuze, nelineární izotropní a nelineární anizotropní difuze). Level set metody (pohyb ve směru normály, pohyb řízený křivostí a pohyb ve vnějším vektorovém poli). Fast marching algoritmus.
+> <br>
+> _PA166_
 
-Difúzní filtrování (lineární difuze, nelineární izotropní a nelineární anizotropní difuze). Level set metody (pohyb ve směru normály, pohyb řízený křivostí a pohyb ve vnějším vektorovém poli). Fast marching algoritmus.
-
-_PA166_
-
-</dd></dl>
 
 - **Divergence**\
   Operace, která nám říká, jak moc vektorové pole míří ven z daného bodu. Pokud je $\text{div} j > 0$, pak se v daném bodě hodnota časem snižuje, pokud je $\text{div} j &lt; 0$, pak se hodnota zvyšuje.

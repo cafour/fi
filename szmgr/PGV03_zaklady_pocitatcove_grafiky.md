@@ -3,13 +3,11 @@ title: "Základy počítačové grafiky"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> OpenGL blokový diagram, GLSL – vertex a fragment shader. Vytvoření GLSL programu. Základní typy vstupních a výstupních proměnných. Druhy grafických primitiv. Vertex Buffer Objects a Vertex Array Objects. Princip rasterizace, framebuffer. Textury: mapování, filtrování, syntéza.
+> <br>
+> _PB009, PA010, PV112, PV227_
 
-OpenGL blokový diagram, GLSL – vertex a fragment shader. Vytvoření GLSL programu. Základní typy vstupních a výstupních proměnných. Druhy grafických primitiv. Vertex Buffer Objects a Vertex Array Objects. Princip rasterizace, framebuffer. Textury: mapování, filtrování, syntéza.
-
-_PB009, PA010, PV112, PV227_
-
-</dd></dl>
 
 ## OpenGL blokový diagram
 
@@ -370,11 +368,9 @@ Výhodami syntetizovaných textur je:
 - dobrá návaznost na hranách geometrie, pokud syntetizujeme 3D texturu
 - parametrizovatelnost
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Není na první pohled jasné, co je zamýšleno pod pojmem "syntéza textur". Pravděpodobně jsou myšleny popsané techniky generování textur pomocí shaderů. Jak ale podotknul Honza Byška, syntéza textur z definice popisuje proces vytváření velké textury z malých fragmentů jiných textur (listnatou louku z jednotlivých listů, kamenou dlažbu z kamenů, ...). Pro více informací koukněte na [synthesis1](#synthesis1) a [synthesis2](#synthesis2).
 
-Není na první pohled jasné, co je zamýšleno pod pojmem "syntéza textur". Pravděpodobně jsou myšleny popsané techniky generování textur pomocí shaderů. Jak ale podotknul Honza Byška, syntéza textur z definice popisuje proces vytváření velké textury z malých fragmentů jiných textur (listnatou louku z jednotlivých listů, kamenou dlažbu z kamenů, ...). Pro více informací koukněte na [synthesis1](#synthesis1) a [synthesis2](#synthesis2).
-
-</dd></dl>
 
 ## Zdroje
 

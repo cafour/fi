@@ -3,13 +3,11 @@ title: "Analýza rastrového obrazu"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Segmentace obrazu, algoritmy značení komponent, popis objektů, klasifikace objektů. Výpočet mapy vzdáleností. Základy matematické morfologie (dilatace a eroze, otevření a uzavření, hit-or-miss, top-hat, watershed).
+> <br>
+> _PB130/PV131_
 
-Segmentace obrazu, algoritmy značení komponent, popis objektů, klasifikace objektů. Výpočet mapy vzdáleností. Základy matematické morfologie (dilatace a eroze, otevření a uzavření, hit-or-miss, top-hat, watershed).
-
-_PB130/PV131_
-
-</dd></dl>
 
 - **Typické fáze analýzy obrazu**
   1. Předzpracování
@@ -57,8 +55,8 @@ Před samotnou segmentací je vhodné obraz předpřipravit.
 
   Obraz je převeden na graf, kde každý pixel je vrchol a hrany jsou mezi sousedními pixely. Hrany jsou ohodnoceny podle podobnosti sousedních pixelů. Segmenty jsou pak komponenty souvislosti v grafu.
 
-  **❗ IMPORTANT**\
-   Segmentace je problém nalezení oblastí. CCL je jen jedno z možných řešení.
+  > [!IMPORTANT]
+  > Segmentace je problém nalezení oblastí. CCL je jen jedno z možných řešení.
 
 ### Neuronové sítě
 
@@ -164,8 +162,8 @@ Popis objektů je proces, při kterém se počítají vlastnosti segmentovaných
 - **Topologické vlastnosti**\
   Vlastnosti objektu nezávislé na jeho deformaci. Např. počet děr.
 
-  **❗ IMPORTANT**\
-   Pro topologické vlastnosti viz otázka [3D modelování a datové struktury](../3d-modelovani-a-datove-struktury/).
+  > [!IMPORTANT]
+  > Pro topologické vlastnosti viz otázka [3D modelování a datové struktury](../3d-modelovani-a-datove-struktury/).
 
 - **Ohraničující obdélník / bounding box**\
   Nejmenší obdélník ohraničující objekt.
@@ -213,8 +211,8 @@ Popis objektů je proces, při kterém se počítají vlastnosti segmentovaných
 
   ![szp10_provazochodec](./img/szp10_provazochodec.jpg)
 
-**💡 TIP**\
-"Moment" nereferuje na čas, ale spíš na svůj starý význam "důležitost". Ve fyzice navíc obvykle souvisí s otáčivým pohybem. [moment](#moment)
+> [!TIP]
+> "Moment" nereferuje na čas, ale spíš na svůj starý význam "důležitost". Ve fyzice navíc obvykle souvisí s otáčivým pohybem. [moment](#moment)
 
 - **Prostorová orientace / spatial orientation**\
   Směr a velikost delší strany nejmenšího bounding boxu. Lze ji také spočítat pomocí momentů setrvačnosti.
@@ -231,8 +229,8 @@ Popis objektů je proces, při kterém se počítají vlastnosti segmentovaných
 
 Problém zařazení objektů do jedné z předem daných tříd.
 
-**❗ IMPORTANT**\
-Detaily přístupů řešení klasifikace lze nalézt v otázce [Strojové učení](../strojove-uceni/).
+> [!IMPORTANT]
+> Detaily přístupů řešení klasifikace lze nalézt v otázce [Strojové učení](../strojove-uceni/).
 
 - **Konstrukce formálního popisu / známý algoritmus**\
   Pokud lze napsat formální popis tříd, lze klasifikátor realizovat přímo pomocí programu.

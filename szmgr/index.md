@@ -16,8 +16,8 @@ Poznámky k magisterským státnicím oboru _Vývoj počítačových her_ v čer
   - [Podzim 2021](https://is.muni.cz/auth/el/fi/podzim2021/PA215/index.qwarp)
   - [Podzim 2019](https://is.muni.cz/auth/el/fi/podzim2019/PA215/um/)
 
-    **💡 TIP**\
-    Odpovědi na některé podotázky jsou jen ve starších materiálech.
+    > [!TIP]
+    > Odpovědi na některé podotázky jsou jen ve starších materiálech.
 
 - **PA216 Game Design II**
   - [Jaro 2023](https://is.muni.cz/auth/el/fi/jaro2023/PA216/index.qwarp)

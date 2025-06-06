@@ -3,16 +3,14 @@ title: "Renderování s využitím GPU (2023)"
 description: "TODO"
 ---
 
-**⚠️ WARNING**\
-Tato otázka zatím nebyla aktualizována. Nová varze obsahuje pár termínů navíc!
+> [!WARNING]
+> Tato otázka zatím nebyla aktualizována. Nová varze obsahuje pár termínů navíc!
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Principy OpenGL, souřadnicové systémy (prostor světa, prostor kamery, prostor objektů), typy shaderů a jejich použití (vertex, fragment, compute, teselační). Technika stínových map. Principy odloženého stínování a jejich použití. Efekty prostoru obrazu (anti-alias, ambientní okluze).
+> <br>
+> _PV227_
 
-Principy OpenGL, souřadnicové systémy (prostor světa, prostor kamery, prostor objektů), typy shaderů a jejich použití (vertex, fragment, compute, teselační). Technika stínových map. Principy odloženého stínování a jejich použití. Efekty prostoru obrazu (anti-alias, ambientní okluze).
-
-_PV227_
-
-</dd></dl>
 
 - **OpenGL**\
   API pro (nejen) vykreslování grafiky na GPU.
@@ -39,8 +37,8 @@ _PV227_
 
 ## Souřadnicové systémy
 
-**❗ IMPORTANT**\
-Tahle část otázky má značný překryv s otázkou [Modelování a projekce](../modelovani-a-projekce/).
+> [!IMPORTANT]
+> Tahle část otázky má značný překryv s otázkou [Modelování a projekce](../modelovani-a-projekce/).
 
 **Coordinate Systems [coordinate-systems](#coordinate-systems)**
 
@@ -82,8 +80,8 @@ Tahle část otázky má značný překryv s otázkou [Modelování a projekce](
 
   OpenGL převádí NDC do window space pomocí _viewport_ transformace.
 
-  **⚠️ WARNING**\
-   Počátek (origin) viewport space je **vlevo dole** a má ve výchozím nastavení má souřadnice $(0, 0)$. [viewport](#viewport)
+  > [!WARNING]
+  > Počátek (origin) viewport space je **vlevo dole** a má ve výchozím nastavení má souřadnice $(0, 0)$. [viewport](#viewport)
 
 - **OpenGL handedness**\
   NDC v OpenGL je **left-handed**. Nicméně v OpenGL panuje konvence, že world space a camera space jsou **right-handed** (např. s `glm`). K přechodu dochází překlopením směru osy $Z$ použitím projekční matice ($P$). [coordinate-systems](#coordinate-systems) V OpenGL tedy platí:
@@ -167,8 +165,8 @@ Při zvolání `glDraw*` se používá OpenGL pipeline, která se skládá z ně
   - stencil test -- zahodí fragmenty, které neprojdou testem na stencil buffer -- umožňuje např. implementovat Portal effect,
   - test hloubky -- zahodí fragmenty, které jsou zakryty jinými fragmenty,
 
-    **💡 TIP**\
-    Tenhle test se nemusí nutně stát až po FS. OpenGL se dá nastavit tak, aby provedlo _early depth test_ před spuštěním FS.
+    > [!TIP]
+    > Tenhle test se nemusí nutně stát až po FS. OpenGL se dá nastavit tak, aby provedlo _early depth test_ před spuštěním FS.
 
   - color blending a bitwise operace.
 
@@ -179,8 +177,8 @@ Při zvolání `glDraw*` se používá OpenGL pipeline, která se skládá z ně
 
 ## Shadow mapy
 
-**❗ IMPORTANT**\
-Renderování stínů se věnuje také otázka [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/).
+> [!IMPORTANT]
+> Renderování stínů se věnuje také otázka [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/).
 
 1. Vytvoř shadow mapu -- vyrenderuj scénu z pohledu světla a ulož hloubku do Z-bufferu.
 2. Stínování -- vyrenderuj scénu jako obvykle, ale aplikuj shadow mapu
@@ -241,25 +239,23 @@ Tuto techniku použijeme např. když máme ve scéně fakt hodně světel.
 
 ![vph07_deferred_shading](./img/vph07_deferred_shading.png)
 
-<dl><dt><strong>❗ IMPORTANT</strong></dt><dd>
+> [!IMPORTANT]
+> Výhody:
+> <br>
+> - osvětlení je počítáno jen jednou pro každý pixel,
+> - můžeme mít více světel,
+> - vyhodnocujeme méně různých kombinací materiálů a světel,
+> - hodí se i na další post-process efekty.
 
-Výhody:
 
-- osvětlení je počítáno jen jednou pro každý pixel,
-- můžeme mít více světel,
-- vyhodnocujeme méně různých kombinací materiálů a světel,
-- hodí se i na další post-process efekty.
-</dd></dl>
+> [!WARNING]
+> Nevýhody:
+> <br>
+> - vzdáváme se multisamplingu (resp. musíme nejprve použít edge detection, aby multisampling fungoval správně),
+> - ztěžuje implementaci průhledných materiálů,
+> - vyžaduje více paměti,
+> - materiály nesmí být příliš komplikované kvůli omezeným možnostem paměti.
 
-<dl><dt><strong>⚠️ WARNING</strong></dt><dd>
-
-Nevýhody:
-
-- vzdáváme se multisamplingu (resp. musíme nejprve použít edge detection, aby multisampling fungoval správně),
-- ztěžuje implementaci průhledných materiálů,
-- vyžaduje více paměti,
-- materiály nesmí být příliš komplikované kvůli omezeným možnostem paměti.
-</dd></dl>
 
 ## Screen space effects / efekty prostoru obrazu
 

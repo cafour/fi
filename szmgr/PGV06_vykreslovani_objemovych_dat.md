@@ -3,19 +3,15 @@ title: "Vykreslování objemových dat"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Rekonstrukce povrchu - kontury, objem, bodový mrak. Algoritmus pochodujících kostek. Přímé vykreslování objemových dat.
+> <br>
+> _PB009, PA010, PA213_
 
-Rekonstrukce povrchu - kontury, objem, bodový mrak. Algoritmus pochodujících kostek. Přímé vykreslování objemových dat.
 
-_PB009, PA010, PA213_
+> [!TIP]
+> Většina obsahu převzata z původní otázky VPH01 Pokročilá počítačová grafika
 
-</dd></dl>
-
-<dl><dt><strong>💡 TIP</strong></dt><dd>
-
-Většina obsahu převzata z původní otázky VPH01 Pokročilá počítačová grafika
-
-</dd></dl>
 
 ## Bodový mrak (point cloud)
 

@@ -3,13 +3,11 @@ title: "Vývoj her"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Architektura herního engine (jednotlivé moduly a jejich význam). Herní rozhraní (fyzická, virtuální, typy vstupních a výstupních zařízení, mapování). Audio ve hrách (propagace zvuku ve scéně, digitální zvuk, PCM, latence, mixování zvuků). Síťová vrstva (přenosová rychlost, latence, obousměrné zpoždění, jitter a ztráta dat), metody redukce latence, TCP vs. UDP.
+> <br>
+> _PV255_
 
-Architektura herního engine (jednotlivé moduly a jejich význam). Herní rozhraní (fyzická, virtuální, typy vstupních a výstupních zařízení, mapování). Audio ve hrách (propagace zvuku ve scéně, digitální zvuk, PCM, latence, mixování zvuků). Síťová vrstva (přenosová rychlost, latence, obousměrné zpoždění, jitter a ztráta dat), metody redukce latence, TCP vs. UDP.
-
-_PV255_
-
-</dd></dl>
 
 ## Architektura herního enginu
 
@@ -59,8 +57,8 @@ _Fyzická rozhraní_ jsou všechny možné ovladače, klávesnice, myš, joystic
 - **Analogová**\
   Posílají spojité signály. Typickým příkladem je analogový joystick, ale taky např. tlačítka na gamepadu, která mohou mít různou intenzitu stisku. Patří sem, ale taky motion sensory jako kinect, gyroskop, akcelerometr, atd.
 
-  **📌 NOTE**\
-   Mechanické klávesnice, které mnohdy taky posílají spojité signály, zdá se nikdo zatím moc nepoužil.
+  > [!NOTE]
+  > Mechanické klávesnice, které mnohdy taky posílají spojité signály, zdá se nikdo zatím moc nepoužil.
 
 ### Virtuální rozhraní
 
@@ -91,8 +89,8 @@ Na _virtuální rozhraní_ si hráč nesáhne. Jsou to všemožná menu, invent�
 
   ![width=400](./img/vph05_meta_interface.jpg)
 
-  **💡 TIP**\
-   [Meta](https://about.meta.com) rozhraní != Oculus Quest
+  > [!TIP]
+  > [Meta](https://about.meta.com) rozhraní != Oculus Quest
 
 - **Spatial (prostorová) rozhraní**\
   Nejsou "bežnou" součástí herního světa, ale nejsou ani mimo něj.
@@ -330,8 +328,8 @@ Monetizace je proces extrakce finančních prostředků z videoherního, interak
 
   Hry se do tohoto modelu většinou spadnou až po dostatečně dlouhé době (abandonware).
 
-  **💡 TIP**\
-   Víš, že sem spadá třeba [Quake](https://github.com/id-Software/Quake), [DOOM](https://github.com/id-Software/DOOM) nebo [Wolfenstein 3D](https://github.com/id-Software/wolf3d)?
+  > [!TIP]
+  > Víš, že sem spadá třeba [Quake](https://github.com/id-Software/Quake), [DOOM](https://github.com/id-Software/DOOM) nebo [Wolfenstein 3D](https://github.com/id-Software/wolf3d)?
 
 - **Games as a service (GaaS)**\
   Různé taktiky, jak hru monetizovat i po té, co si ji hráč koupil, aby za ni platil kontinuálně. Mezi tyto taktiky patří např. subscripce, mikrotransakce, reklamy, atd.
@@ -373,8 +371,8 @@ Serious games se dají dělit podle jejich cíle:
 
   Třeba simulace letu, řízení nějakého průmyslového procesu, nebo lékařského postupu.
 
-  **📌 NOTE**\
-   Chce se mi zmínit [Surgeon Simulator](https://store.steampowered.com/app/233720/surgeon_simulator/), ale to nejspíš není nejlepší příklad.
+  > [!NOTE]
+  > Chce se mi zmínit [Surgeon Simulator](https://store.steampowered.com/app/233720/surgeon_simulator/), ale to nejspíš není nejlepší příklad.
 
 - **Zvýšení povědomí a změna chování**\
   Například aplikace o globálním oteplování, třídění odpadu, nebo o zdravém životním stylu.

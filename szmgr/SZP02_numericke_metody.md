@@ -3,13 +3,11 @@ title: "Numerické metody"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Iterativní metody pro řešení nelineárních rovnic (Newtonova metoda a její modifikace). Přímé metody pro řešení systému lineárních rovnic (Gaussova eliminace, Jacobi, Gauss-Seidel, relaxační metody). Numerická diferenciace, diferenciační schémata.
+> <br>
+> _MA018_
 
-Iterativní metody pro řešení nelineárních rovnic (Newtonova metoda a její modifikace). Přímé metody pro řešení systému lineárních rovnic (Gaussova eliminace, Jacobi, Gauss-Seidel, relaxační metody). Numerická diferenciace, diferenciační schémata.
-
-_MA018_
-
-</dd></dl>
 
 - **Numerická analýza / numerical analysis**\
   Oblast matematiky / informatiky zabývající se tvorbou numerických metod a algoritmů, které řeší problémy matematické analýzy (např. derivace, integrály a podobný symbolický balast) pomocí numerické aproximace. [numerical-analysis](#numerical-analysis)
@@ -283,16 +281,16 @@ Numerická diferenciace se využívá pro aproximaci differenciálních rovnic (
 - **Langrangeova interpolace**\
   Pokud známe hodnoty $f$ můžeme mezi nimi interpolovat pomocí Lagrangeova polynomu a derivovat ten, protože derivovat polynomy je jednoduché.
 
-  **❗ IMPORTANT**\
-   Lagrangeovu interpolaci řeší část otázky [Křivky a povrchy](../krivky-a-povrchy/).
+  > [!IMPORTANT]
+  > Lagrangeovu interpolaci řeší část otázky [Křivky a povrchy](../krivky-a-povrchy/).
 
 - **Finite difference method**\
   Rodina metod numerické diferenciace, které využívají _konečné diference_. Tedy approximují limitu v definici derivace malými posuny ve vstupních hodnotách diferenciovaných funkcí. [finite-difference-method](#finite-difference-method)
 
   Jednotlivým "odstínům" -- konkrétním výpočetním vzorcům -- téhle metody se říká _diferenciační schémata_.
 
-  **💡 TIP**\
-   Abych pravdu řekl, nepodařilo se mi najít zdroj pro konkrétní definici pojmu "diferenciační schéma".
+  > [!TIP]
+  > Abych pravdu řekl, nepodařilo se mi najít zdroj pro konkrétní definici pojmu "diferenciační schéma".
 
 - **(Konečné) diference prvního řádu / first-order (finite) differences**\
   Nejjednodušší schéma numerické diferenciace. Vychází z definice derivace. [finite-difference](#finite-difference)
@@ -317,8 +315,8 @@ Numerická diferenciace se využívá pro aproximaci differenciálních rovnic (
 
   kde $h$ je kladné číslo napodobující nekonečně malou změnu (limitu) v definici derivace. Může to být konstanta, může ale být i zvoleno adaptivně.
 
-  **💡 TIP**\
-   Tečna je tak napodobena sečnou.
+  > [!TIP]
+  > Tečna je tak napodobena sečnou.
 
 - **Richardson extrapolation**\
   Způsob zlepšení rate of convergence iterativních metod. [richardson](#richardson)

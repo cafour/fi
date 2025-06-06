@@ -3,13 +3,11 @@ title: "Metody vizualizace"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Vizualizace multidimenzionálních dat – scatterplot matrix, paralelní souřadnice, skládání dimenzí. Vizualizace hierarchických struktur – treemaps, radiální techniky. Základní třídy interakčních technik, techniky používané v prostoru obrazovky, objektu, dat, datových struktur.
+> <br>
+> _PV251, PA214_
 
-Vizualizace multidimenzionálních dat – scatterplot matrix, paralelní souřadnice, skládání dimenzí. Vizualizace hierarchických struktur – treemaps, radiální techniky. Základní třídy interakčních technik, techniky používané v prostoru obrazovky, objektu, dat, datových struktur.
-
-_PV251, PA214_
-
-</dd></dl>
 
 ## Vizualizace multidimenzionálních dat
 
@@ -80,11 +78,9 @@ Node-link diagram, Tree (Klasické zobrazení), Radial Tree (Sunburst, ale strom
 
 Tyto interakce můžeme aplikovat na různé operandy. Operand interakce je prostor, na který interakci aplikujeme.
 
-<dl><dt><strong>💡 TIP</strong></dt><dd>
+> [!TIP]
+> Rozdělení mi není úplně 100% jasné, takže budu rád za opravy. Celé slidy čerpají z knihy Interactive Data Visualization: Foundations, Techniques, and Applications, Second Edition (dostupné z [Anna’s Archive](https://annas-archive.org/md5/0bf49e061a8b82167d0e05a5d2b50476))
 
-Rozdělení mi není úplně 100% jasné, takže budu rád za opravy. Celé slidy čerpají z knihy Interactive Data Visualization: Foundations, Techniques, and Applications, Second Edition (dostupné z [Anna’s Archive](https://annas-archive.org/md5/0bf49e061a8b82167d0e05a5d2b50476))
-
-</dd></dl>
 
 ### Techniky pro prostor obrazovky (Pixely)
 

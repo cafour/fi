@@ -3,13 +3,11 @@ title: "Lokální a globální modely osvětlení"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Blinn-Phongův osvětlovací model, BRDF, sledování paprsků, radiosita, fotonové mapy, participující média. Vykreslování založené na fyzikálních modelech (PBR). Osvětlení založené na obrázku (IBL).
+> <br>
+> _PB009, PV227, PA010, PA213_
 
-Blinn-Phongův osvětlovací model, BRDF, sledování paprsků, radiosita, fotonové mapy, participující média. Vykreslování založené na fyzikálních modelech (PBR). Osvětlení založené na obrázku (IBL).
-
-_PB009, PV227, PA010, PA213_
-
-</dd></dl>
 
 - **Lokální osvětlení (local illumination) / direct lighting**\
   Berou v úvahu jen světlo, které dopadá přímo na daný bod/objekt. Neřeší okolní objekty, ani nepřímé osvětlení. Je založený na empirických znalostech o chování světla, spíš než simulaci fyzikálních zákonů.
@@ -232,11 +230,9 @@ Physically based rendering (PBR) je způsob renderování, který se snaží co 
 
 ## Image-based lighting (IBL)
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Tahle část otázky by si možná zasloužila rozšířit, ale bohužel tomu víc nerozumím :D
 
-Tahle část otázky by si možná zasloužila rozšířit, ale bohužel tomu víc nerozumím :D
-
-</dd></dl>
 
 IBL využívá envitornmentálních textur (HDR CubeMap, ...) pro vyhodnocení světla z každého směru scény.
 

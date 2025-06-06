@@ -3,19 +3,15 @@ title: "Geometrické algoritmy"
 description: "TODO"
 ---
 
-<dl><dt><strong>📌 NOTE</strong></dt><dd>
+> [!NOTE]
+> Konvexní obaly, konstrukce ve 2D a 3D. Voroného diagramy, Delaunayova triangulace, dualita, triangulace, triangulace s omezením. Prostorové vyhledávání (datové struktury, algoritmy).
+> <br>
+> _MA017, PA093_
 
-Konvexní obaly, konstrukce ve 2D a 3D. Voroného diagramy, Delaunayova triangulace, dualita, triangulace, triangulace s omezením. Prostorové vyhledávání (datové struktury, algoritmy).
 
-_MA017, PA093_
+> [!TIP]
+> Většina algoritmů je výborně popsaná na webu předmětu [MA017 Geometrické algoritmy](https://is.muni.cz/auth/do/sci/UMS/el/geometricke-alg/index.html) včetně interaktivních animací a ukázek.
 
-</dd></dl>
-
-<dl><dt><strong>💡 TIP</strong></dt><dd>
-
-Většina algoritmů je výborně popsaná na webu předmětu [MA017 Geometrické algoritmy](https://is.muni.cz/auth/do/sci/UMS/el/geometricke-alg/index.html) včetně interaktivních animací a ukázek.
-
-</dd></dl>
 
 ## Konvexní obaly
 
