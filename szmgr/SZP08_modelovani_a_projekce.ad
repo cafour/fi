@@ -37,7 +37,7 @@ IMPORTANT: Pro implementaci v OpenGL viz link:../renderovani-s-vyuzitim-gpu/[Ren
 
 WARNING: Při zápisu matic bacha na to, jestli jsou row-major nebo column-major. Třeba v OpenGL to znamená, že se všechny matice píší v transponované podobě, jelikož OpenGL je column-major a v takovém pořádí jsou i parametery `mat2`, `mat3` a `mat4` V GLSL.
 
-Modelovací matice stem:[M]::
+Modelová matice stem:[M]::
 Převádí souřadnice z prostoru objektu (local space) do prostoru světa (world space). Využívá se pro rotaci (stem:[R]), škálování (stem:[S]) a translaci (stem:[T]) objektu.
 +
 [stem]
