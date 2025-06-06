@@ -49,27 +49,11 @@ Tahle část otázky má značný překryv s otázkou [Modelování a projekce](
 - **Model space / local space / prostor objektu**\
   Každý vykreslený objekt má svůj lokální souřadnicový prostor daný editorem, ve kterém byl vytvořen, nastavením exportu a formátem, ve kterém byl vyexportován: [sw-coordinates](#sw-coordinates)
 
-  | Editor       |
-  | ------------ |
-  | Handedness   |
-  | $X$          |
-  | $Y$          |
-  | $Z$          |
-  | _Blender_    |
-  | right-handed |
-  | doprava      |
-  | dopředu      |
-  | **nahoru**   |
-  | _3ds Max_    |
-  | right-handed |
-  | doprava      |
-  | dopředu      |
-  | **nahoru**   |
-  | _Maya_       |
-  | right-handed |
-  | doprava      |
-  | **nahoru**   |
-  | dopředu      |
+  | Editor    | Handedness   | $X$     | $Y$        | $Z$        |
+  | --------- | ------------ | ------- | ---------- | ---------- |
+  | _Blender_ | right-handed | doprava | dopředu    | **nahoru** |
+  | 3ds Max   | right-handed | doprava | dopředu    | **nahoru** |
+  | Maya      | right-handed | doprava | **nahoru** | dopředu    |
 
 - **World space / prostor světa**\
   Globální prostor, ve kterém se objekty nachází. Měřítko je dáno aplikací.
@@ -104,17 +88,17 @@ Tahle část otázky má značný překryv s otázkou [Modelování a projekce](
 - **OpenGL handedness**\
   NDC v OpenGL je **left-handed**. Nicméně v OpenGL panuje konvence, že world space a camera space jsou **right-handed** (např. s `glm`). K přechodu dochází překlopením směru osy $Z$ použitím projekční matice ($P$). [coordinate-systems](#coordinate-systems) V OpenGL tedy platí:
 
-  | Space                  |
-  | ---------------------- | ------- | ------ | -------------------------- | -------- |
-  | Handedness             | $X$     | $Y$    | $Z$                        | _Local_  |
-  | záleží na modelu       | --      | --     | --                         | _World_  |
-  | typicky _right-handed_ | doprava | nahoru | **dozadu**                 | _View_   |
-  | typicky _right-handed_ | doprava | nahoru | **dozadu** (**do** kamery) | _Clip_   |
-  | _left-handed_          | doprava | nahoru | **dopředu**                | _NDC_    |
-  | _left-handed_          | doprava | nahoru | **dopředu**                | _Window_ |
+  | Space    | Handedness             | $X$     | $Y$    | $Z$                        |
+  | -------- | ---------------------- | ------- | ------ | -------------------------- |
+  | _Local_  | záleží na modelu       | --      | --     | --                         |
+  | _World_  | typicky _right-handed_ | doprava | nahoru | **dozadu**                 |
+  | _View_   | typicky _right-handed_ | doprava | nahoru | **dozadu** (**do** kamery) |
+  | _Clip_   | _left-handed_          | doprava | nahoru | **dopředu**                |
+  | _NDC_    | _left-handed_          | doprava | nahoru | **dopředu**                |
+  | _Window_ | _left-handed_          | doprava | nahoru | **dopředu**                |
 
-  **💡 TIP**\
-   Fun-fact: ve Vulkanu je NDC $x \in (-1.0, 1.0), y \in (-1.0, 1.0), z \in (\textcolor{red}{0.0}, 1.0)$. A navíc je **right-handed**, takže souřadnice $(-1.0, -1.0, 0.0)$ je vlevo **nahoře**, kdežto v OpenGL je vlevo **dole**. [vulkan-coords](#vulkan-coords)
+  > [!TIP]
+  > Fun-fact: ve Vulkanu je NDC $x \in (-1.0, 1.0), y \in (-1.0, 1.0), z \in (\textcolor{red}{0.0}, 1.0)$. A navíc je **right-handed**, takže souřadnice $(-1.0, -1.0, 0.0)$ je vlevo **nahoře**, kdežto v OpenGL je vlevo **dole**. [vulkan-coords](#vulkan-coords)
 
 ## Pipeline (typy shaderů)
 
