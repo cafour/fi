@@ -80,7 +80,7 @@ description: "TODO"
 ## Topologie a modifikace
 
 > [!TIP]
-> Pro základní topologické pojmy viz [3D modelování a datové struktury](../3d-modelovani-a-datove-struktury/).
+> Pro základní topologické pojmy viz [3D modelování a datové struktury](../szp04_3d_modelovani/).
 
 - **Meshflow**\
   Logické uspořádání hran a polygonů v mnohoúhelníkové síti.
@@ -111,7 +111,7 @@ description: "TODO"
 Typický 3D model se skládá nejen z meshe, ale i z materiálů, které jsou v herních enginech typicky reprezentovány texturami (mapami).
 
 > [!NOTE]
-> Typy map souvisí s _physically based rendering_ (PBR), kterému se částečně věnuje otázka [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/).
+> Typy map souvisí s _physically based rendering_ (PBR), kterému se částečně věnuje otázka [Pokročilá počítačová grafika](../vph01_pokrocila_grafika/).
 
 - **UV unwrapping**\
   Tvorba 2D reprezentace 3D modelu -- projekce jeho polygonů na 2D plochu. Toto mapování se posléze využívá při texturování. Proces zahrnuje označování _seams_ -- hran, podél kterých se bude model "rozřezávat". Nevhodná volba seams vede k deformaci textur.

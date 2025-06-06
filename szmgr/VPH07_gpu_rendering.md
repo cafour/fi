@@ -38,7 +38,7 @@ description: "TODO"
 ## Souřadnicové systémy
 
 > [!IMPORTANT]
-> Tahle část otázky má značný překryv s otázkou [Modelování a projekce](../modelovani-a-projekce/).
+> Tahle část otázky má značný překryv s otázkou [Modelování a projekce](../szp08_modelovani_a_projekce/).
 
 **Coordinate Systems [coordinate-systems](#coordinate-systems)**
 
@@ -178,7 +178,7 @@ Při zvolání `glDraw*` se používá OpenGL pipeline, která se skládá z ně
 ## Shadow mapy
 
 > [!IMPORTANT]
-> Renderování stínů se věnuje také otázka [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/).
+> Renderování stínů se věnuje také otázka [Pokročilá počítačová grafika](../vph01_pokrocila_grafika/).
 
 1. Vytvoř shadow mapu -- vyrenderuj scénu z pohledu světla a ulož hloubku do Z-bufferu.
 2. Stínování -- vyrenderuj scénu jako obvykle, ale aplikuj shadow mapu

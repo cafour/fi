@@ -194,7 +194,7 @@ description: "TODO"
 ### Modelování
 
 > [!IMPORTANT]
-> Tahle sekce má docela průnik s otázkou [Modelování 3D postav](../modelovani-3d-postav/).
+> Tahle sekce má docela průnik s otázkou [Modelování 3D postav](../vph08_modelovani_3d_postav/).
 
 - **Boundary representation model (B-rep)**\
   Modelování objektů pomocí jejich hranic -- boundaries (hrany, stěny, atd.).
@@ -322,7 +322,7 @@ description: "TODO"
 ### Změna struktury sítě
 
 > [!IMPORTANT]
-> Modifikace meshů mají značný přesah do otázky [Křivky a povrchy](../krivky-a-povrchy/) a taky [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/)
+> Modifikace meshů mají značný přesah do otázky [Křivky a povrchy](../krivky-a-povrchy/) a taky [Pokročilá počítačová grafika](../vph01_pokrocila_grafika/)
 
 - **Překlápění hrany / edge flip**\
   Lokální změna, která nahradí hranu $(b,c)$ hranou $(a,d)$. Trojúhelníky $(a,b,c)$ a $(b,d,c)$ se stanou $(a,d,c)$ a $(a,b,d)$. [pa010-2021](#pa010-2021)

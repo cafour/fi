@@ -17,7 +17,7 @@ description: "TODO"
 3D objekty mohou být definované mnoha miliony polygony či výpočetně náročnými matematickými funkcemi. Pro renderování v reálném čase je tedy žádoucí je zjednodušit a přitom zachovat jejich vzhled -- aproximovat je.
 
 > [!IMPORTANT]
-> Aproximace objektů souvisí s collidery, kterým se částečně věnuje otázka [Grafické a fyzikální principy](../graficke-a-fyzikalni-principy/).
+> Aproximace objektů souvisí s collidery, kterým se částečně věnuje otázka [Grafické a fyzikální principy](../vph02_graficke_a_fyzikalni_principy/).
 
 ### Redukce počtu polygonů
 
@@ -347,7 +347,7 @@ Stíny jsou důležité, jelikož:
   ![width=500rem](./img/vph01_shadow_maps.png)
 
   > [!IMPORTANT]
-  > Shadow mapám se důkladně věnuje otázka [Renderování s využitím GPU](../renderovani-s-vyuzitim-gpu/)
+  > Shadow mapám se důkladně věnuje otázka [Renderování s využitím GPU](../vph07_gpu_rendering/)
 
 - **Shadow volumes**\
   Počítá stíny ve 3D. Shadow volume explicitně popisuje objem prostoru ve stínu nějakého polygonu.

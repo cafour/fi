@@ -207,7 +207,7 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 - Můžeme přidat _potenciál_ -- dodatečnou heuristickou váhu.
 
   > [!IMPORTANT]
-  > Téhle variantě se říká A\* (A star). Věnuje se mu část otázky [Umělá inteligence v počítačových hrách](../umela-inteligence-v-pocitacovych-hrach/).
+  > Téhle variantě se říká A\* (A star). Věnuje se mu část otázky [Umělá inteligence v počítačových hrách](../vph06_ai_ve_hrach/).
 
 ## Kostry
 

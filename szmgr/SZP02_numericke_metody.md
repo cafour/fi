@@ -282,7 +282,7 @@ Numerická diferenciace se využívá pro aproximaci differenciálních rovnic (
   Pokud známe hodnoty $f$ můžeme mezi nimi interpolovat pomocí Lagrangeova polynomu a derivovat ten, protože derivovat polynomy je jednoduché.
 
   > [!IMPORTANT]
-  > Lagrangeovu interpolaci řeší část otázky [Křivky a povrchy](../krivky-a-povrchy/).
+  > Lagrangeovu interpolaci řeší část otázky [Křivky a povrchy](../szp05_krivky_a_povrchy/).
 
 - **Finite difference method**\
   Rodina metod numerické diferenciace, které využívají _konečné diference_. Tedy approximují limitu v definici derivace malými posuny ve vstupních hodnotách diferenciovaných funkcí. [finite-difference-method](#finite-difference-method)

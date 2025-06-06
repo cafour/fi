@@ -50,7 +50,7 @@ Pro řešení můžeme nyní využít Euler-Lagrangeovy rovnice. Pro funkcionál
 0 = u - f - \alpha \text{div}(\Psi'(\lvert \nabla u \rvert^2) \nabla u)
 ```
 
-Nyní můžeme hezky vidět vztah k difuznímu filtrování (otázka [PGV10](../zpracovani_obrazu_pomoci_PDE)):
+Nyní můžeme hezky vidět vztah k difuznímu filtrování (otázka [PGV10](../pgv10_zpracovani_obrazu_pomoci_pde)):
 
 |                          |                                                                                |
 | ------------------------ | ------------------------------------------------------------------------------ |

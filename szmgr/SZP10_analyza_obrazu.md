@@ -163,7 +163,7 @@ Popis objektů je proces, při kterém se počítají vlastnosti segmentovaných
   Vlastnosti objektu nezávislé na jeho deformaci. Např. počet děr.
 
   > [!IMPORTANT]
-  > Pro topologické vlastnosti viz otázka [3D modelování a datové struktury](../3d-modelovani-a-datove-struktury/).
+  > Pro topologické vlastnosti viz otázka [3D modelování a datové struktury](../szp04_3d_modelovani/).
 
 - **Ohraničující obdélník / bounding box**\
   Nejmenší obdélník ohraničující objekt.
@@ -230,7 +230,7 @@ Popis objektů je proces, při kterém se počítají vlastnosti segmentovaných
 Problém zařazení objektů do jedné z předem daných tříd.
 
 > [!IMPORTANT]
-> Detaily přístupů řešení klasifikace lze nalézt v otázce [Strojové učení](../strojove-uceni/).
+> Detaily přístupů řešení klasifikace lze nalézt v otázce [Strojové učení](../szp06_strojove_uceni/).
 
 - **Konstrukce formálního popisu / známý algoritmus**\
   Pokud lze napsat formální popis tříd, lze klasifikátor realizovat přímo pomocí programu.

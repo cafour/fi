@@ -222,7 +222,7 @@ Ray tracing jsou techniky, které trasují paprsky světla napříč scénou.
 ## Fyzikální simulace
 
 > [!IMPORTANT]
-> Renderování založenému na fyzikálních principech se věnuje část otázky [Pokročilá počítačová grafika](../pokrocila-pocitacova-grafika/).
+> Renderování založenému na fyzikálních principech se věnuje část otázky [Pokročilá počítačová grafika](../vph01_pokrocila_grafika/).
 
 - **Rigid body**\
   Aproximace reálného fyzikálního tělesa. Předpokládá uniformní hostotu a **neřeší:**

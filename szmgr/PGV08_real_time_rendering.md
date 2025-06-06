@@ -227,7 +227,7 @@ Stíny jsou důležité, jelikož:
   ![width=500rem](./img/vph01_shadow_maps.png)
 
   > [!IMPORTANT]
-  > Shadow mapám se důkladně věnuje otázka [Renderování s využitím GPU](../renderovani-s-vyuzitim-gpu/)
+  > Shadow mapám se důkladně věnuje otázka [Renderování s využitím GPU](../vph07_gpu_rendering/)
 
 - **Shadow volumes**\
   Počítá stíny ve 3D. Shadow volume explicitně popisuje objem prostoru ve stínu nějakého polygonu.

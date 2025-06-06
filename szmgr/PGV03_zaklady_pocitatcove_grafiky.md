@@ -16,7 +16,7 @@ description: "TODO"
 Blokový diagram je abstraktní, high-level popis fungování OpenGL [pv112](#pv112).
 
 - **_Evaluators_** - aproximace křivek a povrchů
-- **_Per-vertex operations_** - operace prováděné nad každým vrcholem - transformace, projekce z [model space do camera space](../modelovani-a-projekce), osvětlení jednotlivých vrcholů
+- **_Per-vertex operations_** - operace prováděné nad každým vrcholem - transformace, projekce z [model space do camera space](../szp08_modelovani_a_projekce), osvětlení jednotlivých vrcholů
 - **_Primitive assembly_** - sestavení primitiv (body, čáry, trojúhelníky) z vrcholů, projekce do screen space a ořezání
 - **_Rasterization_** - převod primitiv na fragmenty (2D obdélníky s informací o barvě, hloubce, ...) a interpolace hodnot mezi vrcholy
 - **_Per-fragment operations_** - operace prováděné nad každým fragmentem a jejich uložení do frame bufferu - osvětlení, texturování, blending, testy (scissor, alpha, stencil, depth)
