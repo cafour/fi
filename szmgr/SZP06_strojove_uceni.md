@@ -16,7 +16,7 @@ description: "TODO"
 
 - **Machine learning / strojové učení**
 
-  Oblast informatiky zabývající se konstrukcí systémů, které nemají svoji funkcionalitu explicitně naprogramovanou, ale naučí se ji až na základě vstupních dat. [^ml] [^pv021]
+  Oblast informatiky zabývající se konstrukcí systémů, které nemají svoji funkcionalitu explicitně naprogramovanou, ale naučí se ji až na základě vstupních dat. [ml](#ml) [pv021](#pv021)
 
   Používá se např. pro:
 
@@ -28,23 +28,23 @@ description: "TODO"
   - autonomní řízení vozidel.
 
 - **Rozpoznávání vzorů / pattern recognition**\
-  Problém automatizovaného rozpoznávání vzorů v datech (např. číslic v obrázku). Příklady jsou _klasifikace_, _regrese_ a _shluková analýza_. [^pattern-recognition]
+  Problém automatizovaného rozpoznávání vzorů v datech (např. číslic v obrázku). Příklady jsou _klasifikace_, _regrese_ a _shluková analýza_. [pattern-recognition](#pattern-recognition)
 - **Klasifikace**\
-  Problém identifikace kategorie, do které patří vstupní data. Výstupem klasifikace je buď jedna konkrétní kategorie nebo vektor popisující s jakou pravděpodobností vstup do každé kategorie patří. [^classification]
+  Problém identifikace kategorie, do které patří vstupní data. Výstupem klasifikace je buď jedna konkrétní kategorie nebo vektor popisující s jakou pravděpodobností vstup do každé kategorie patří. [classification](#classification)
 - **Regrese**\
-  Problém odhadu hodnoty nějaké proměnné na základě znalosti jiných proměnných. Výstupem regrese je obvykle reálné číslo. [^regression]
+  Problém odhadu hodnoty nějaké proměnné na základě znalosti jiných proměnných. Výstupem regrese je obvykle reálné číslo. [regression](#regression)
 
-  Například při _lineární regresi_ se snažíme data napasovat na přímku -- najít její offset a směrnici. Při _logistické regresi_ chceme to samé ale místo přímky máme logistic sigmoid. A tak dále. [^pv021]
+  Například při _lineární regresi_ se snažíme data napasovat na přímku -- najít její offset a směrnici. Při _logistické regresi_ chceme to samé ale místo přímky máme logistic sigmoid. A tak dále. [pv021](#pv021)
 
 - **Shluková analýza / cluster analysis**\
-  Vicedimenzionální problém rozdělení vstupních dat do skupin (shluků) tak, aby data v jednom shluku byla _podobnější_ sobě než datům v jiných shlucích. [^clustering]
+  Vicedimenzionální problém rozdělení vstupních dat do skupin (shluků) tak, aby data v jednom shluku byla _podobnější_ sobě než datům v jiných shlucích. [clustering](#clustering)
 
   Souvisejícím problémem je vyjádření toho, že jsou si data v nějakém smyslu _podobná_.
 
 - **Supervised learning / učení s učitelem**\
-  Síť se učí na základě množiny trénovacích vstupů ve formátu (vstup, výstup). Supervised learning algoritmy se snaží síť modifikovat tak, aby vracela výstupy co možná nejpodobnější těm trénovacím. [^pv021]
+  Síť se učí na základě množiny trénovacích vstupů ve formátu (vstup, výstup). Supervised learning algoritmy se snaží síť modifikovat tak, aby vracela výstupy co možná nejpodobnější těm trénovacím. [pv021](#pv021)
 - **Unsupervised learning / učení bez učitele**\
-  Síť dostává jen vstupy. Cílem je získat o vstupní množině dat nějakou užitečnou informaci, třeba kde jsou shluky. [^pv021]
+  Síť dostává jen vstupy. Cílem je získat o vstupní množině dat nějakou užitečnou informaci, třeba kde jsou shluky. [pv021](#pv021)
 
 ## Neuronové sítě
 
@@ -92,7 +92,7 @@ description: "TODO"
 - **Perceptron -- jeden neuron**
 
   - Hrubá matematická aproximace biologického neuronu.
-  - Binární klasifikátor -- rozlišuje jestli vstup patří nebo nepatří do nějaké jedné kategorie.[^pv021]
+  - Binární klasifikátor -- rozlišuje jestli vstup patří nebo nepatří do nějaké jedné kategorie.[pv021](#pv021)
   - Linerání klasifikátor -- jeho funkce kombinuje vstupy lineárně.
 
   ![width=400](./img/szp06_perceptron.png)
@@ -274,7 +274,7 @@ Za předpokladu, že $E$ je squared error, pak:
 
 ## Konvoluční sítě
 
-Neuronové sítě uzpůsobené ke zpracování obrazu. Místo násobení matic používají alespoň v jedné vrstvě konvoluci. Konvoluční sítě mají dva nové typy vrstev: _konvoluční_ a _pooling_, ale jinak se od klasických MLP moc neliší. Aktivace a trénink zůstavají v podstatě stejné. [^cnn]
+Neuronové sítě uzpůsobené ke zpracování obrazu. Místo násobení matic používají alespoň v jedné vrstvě konvoluci. Konvoluční sítě mají dva nové typy vrstev: _konvoluční_ a _pooling_, ale jinak se od klasických MLP moc neliší. Aktivace a trénink zůstavají v podstatě stejné. [cnn](#cnn)
 
 > [!IMPORTANT]
 > Pro konvoluci viz otázka [Zpracování rastrového obrazu](../szp09_zpracovani_obrazu/).
@@ -319,7 +319,7 @@ Neuronové sítě uzpůsobené ke zpracování obrazu. Místo násobení matic p
 
 ## Rekurentní sítě
 
-Neuronové sítě, jejichž architektura obsahuje cykly. Tedy výstup v jednom bodě v čase sítě přispívá k výstup v budoucnosti. Jinými slovy, je to neuronka s pamětí. _Recurrent neural networks_ (RNN) konkrétně jsou MLP _minimálně_ rozšířené tak, aby měly paměť. [^rnn]
+Neuronové sítě, jejichž architektura obsahuje cykly. Tedy výstup v jednom bodě v čase sítě přispívá k výstup v budoucnosti. Jinými slovy, je to neuronka s pamětí. _Recurrent neural networks_ (RNN) konkrétně jsou MLP _minimálně_ rozšířené tak, aby měly paměť. [rnn](#rnn)
 
 - **Výhody**
 
@@ -430,17 +430,18 @@ Neuronové sítě, jejichž architektura obsahuje cykly. Tedy výstup v jednom b
 
     ![width=100%](./img/szp06_lstm.png)
 
+## Zdroje
 
-[^pv021]: T. Brázdil: PV021 Neural Networks
-[^ml]: [Wikipedia: Machine learning](https://en.wikipedia.org/wiki/Machine_learning)
-[^classification]: [Wikipedia: Statistical classification](https://en.wikipedia.org/wiki/Statistical_classification)
-[^regression]: [Wikipedia: Regression analysis](https://en.wikipedia.org/wiki/Regression_analysis)
-[^clustering]: [Wikipedia: Cluster analysis](https://en.wikipedia.org/wiki/Cluster_analysis)
-[^pattern]: [Wikipedia: Pattern recognition](https://en.wikipedia.org/wiki/Pattern_recognition)
-[^hopfield]: [Wikipedia: Hopfield network](https://en.wikipedia.org/wiki/Hopfield_network)
-[^hebb]: [Wikipedia: Hebbian theory](https://en.wikipedia.org/wiki/Hebbian_theory)
-[^cnn]: [Wikipedia: Convolutional neural network](https://en.wikipedia.org/wiki/Convolutional_neural_network)
-[^rnn]: [Wikipedia: Recurrent neural network](https://en.wikipedia.org/wiki/Recurrent_neural_network)
-[^som]: [Wikipedia: Self-organizing map](https://en.wikipedia.org/wiki/Self-organizing_map)
-[^som]: [Self-Organizing Maps: Tutorial](https://sites.pitt.edu/~is2470pb/Spring05/FinalProjects/Group1a/tutorial/som.html)
-[^som]: [SDL Component Suite: Kohonen Network](http://www.lohninger.com/helpcsuite/kohonen_network_-_background_information.htm)
+- [[[pv021, 1]]] T. Brázdil: PV021 Neural Networks
+- [[[ml, 2]]] [Wikipedia: Machine learning](https://en.wikipedia.org/wiki/Machine_learning)
+- [[[classification, 3]]] [Wikipedia: Statistical classification](https://en.wikipedia.org/wiki/Statistical_classification)
+- [[[regression, 4]]] [Wikipedia: Regression analysis](https://en.wikipedia.org/wiki/Regression_analysis)
+- [[[clustering, 5]]] [Wikipedia: Cluster analysis](https://en.wikipedia.org/wiki/Cluster_analysis)
+- [[[pattern-recognition, 6]]] [Wikipedia: Pattern recognition](https://en.wikipedia.org/wiki/Pattern_recognition)
+- [[[hopfield, 7]]] [Wikipedia: Hopfield network](https://en.wikipedia.org/wiki/Hopfield_network)
+- [[[hebb, 8]]] [Wikipedia: Hebbian theory](https://en.wikipedia.org/wiki/Hebbian_theory)
+- [[[cnn, 9]]] [Wikipedia: Convolutional neural network](https://en.wikipedia.org/wiki/Convolutional_neural_network)
+- [[[rnn, 10]]] [Wikipedia: Recurrent neural network](https://en.wikipedia.org/wiki/Recurrent_neural_network)
+- [[[som, 11]]] [Wikipedia: Self-organizing map](https://en.wikipedia.org/wiki/Self-organizing_map)
+- [[[som-tutorial, 12]]] [Self-Organizing Maps: Tutorial](https://sites.pitt.edu/~is2470pb/Spring05/FinalProjects/Group1a/tutorial/som.html)
+- [[[som-sdl, 13]]] [SDL Component Suite: Kohonen Network](http://www.lohninger.com/helpcsuite/kohonen_network_-_background_information.htm)

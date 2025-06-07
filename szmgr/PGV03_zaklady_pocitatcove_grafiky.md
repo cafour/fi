@@ -13,7 +13,7 @@ description: "TODO"
 
 ![width=600](./img/pgv03_block_diagram.png)
 
-Blokový diagram je abstraktní, high-level popis fungování OpenGL [^pv112].
+Blokový diagram je abstraktní, high-level popis fungování OpenGL [pv112](#pv112).
 
 - **_Evaluators_** - aproximace křivek a povrchů
 - **_Per-vertex operations_** - operace prováděné nad každým vrcholem - transformace, projekce z [model space do camera space](../szp08_modelovani_a_projekce), osvětlení jednotlivých vrcholů
@@ -266,7 +266,7 @@ Z Primitive assembly dostáváme bod, čáru, nebo trojúhelník, který potřeb
 ![width=300](./img/pgv03_rast_point.png)
 
 - **Úsečka**\
-  Při rasterizaci úsečky použijeme Bresenhamův algoritmus [^pb009]. Poslední bod úsečky zůstane nevykreslený (half-open) kvůli návaznosti na další úsečky.
+  Při rasterizaci úsečky použijeme Bresenhamův algoritmus [pb009](#pb009). Poslední bod úsečky zůstane nevykreslený (half-open) kvůli návaznosti na další úsečky.
 
 ```cpp
 // From the solution of PB009
@@ -320,7 +320,7 @@ void Application::bresenham(glm::vec2 start, glm::vec2 end, Raster& raster, Colo
 
 - **Trojúhelník**
 
-Při rasterizaci trojúhelníku můžeme použít Pinedaův algoritmus [^pb009]. Pro každý trojúhelník zjistíme jeho bounding box a pro každý pixel v bounding boxu pomocí edge function zjistíme, zda leží uvnitř trojúhelníku.
+Při rasterizaci trojúhelníku můžeme použít Pinedaův algoritmus [pb009](#pb009). Pro každý trojúhelník zjistíme jeho bounding box a pro každý pixel v bounding boxu pomocí edge function zjistíme, zda leží uvnitř trojúhelníku.
 
 Edge function využívá vlastností dot-productu: $E_{ABP} = (A - B).x * (P - B).y - (A - B).y * (P - B).x$. Výsledek funkce může být kladný, záporný, nebo nulový. Pokud je výsledek kladný, bod leží vlevo od úsečky AB, pokud je záporný, bod leží vpravo od úsečky AB, pokud je nulový, bod leží na úsečce AB. Edge funkci můžeme zkontrolovat pro všechny hrany trojúhelníka a pokud se znaménka rovnají (akceptujeme 0 pro kladná i záporná), bod leží uvnitř trojúhelníka a vykreslíme ho.
 
@@ -369,12 +369,13 @@ Výhodami syntetizovaných textur je:
 - parametrizovatelnost
 
 > [!NOTE]
-> Není na první pohled jasné, co je zamýšleno pod pojmem "syntéza textur". Pravděpodobně jsou myšleny popsané techniky generování textur pomocí shaderů. Jak ale podotknul Honza Byška, syntéza textur z definice popisuje proces vytváření velké textury z malých fragmentů jiných textur (listnatou louku z jednotlivých listů, kamenou dlažbu z kamenů, ...). Pro více informací koukněte na [^synthesis1] a [^synthesis2].
+> Není na první pohled jasné, co je zamýšleno pod pojmem "syntéza textur". Pravděpodobně jsou myšleny popsané techniky generování textur pomocí shaderů. Jak ale podotknul Honza Byška, syntéza textur z definice popisuje proces vytváření velké textury z malých fragmentů jiných textur (listnatou louku z jednotlivých listů, kamenou dlažbu z kamenů, ...). Pro více informací koukněte na [synthesis1](#synthesis1) a [synthesis2](#synthesis2).
 
 
+## Zdroje
 
-[^pv112]: Byška: PV112 Computer Graphics API
-[^pb009]: Byška: PB009 Principles of Computer Graphics
-[^glsl_tutorial]: https://cgvr.cs.uni-bremen.de/teaching/cg2_07/literatur/glsl_tutorial/index.html
-[^synthesis1]: https://en.wikipedia.org/wiki/Texture_synthesis
-[^synthesis2]: https://diglib.eg.org:8443/server/api/core/bitstreams/90ad4c13-45b1-4ec0-8ef2-76075b2c73ae/content
+- [[[pv112,1]]] Byška: PV112 Computer Graphics API
+- [[[pb009,2]]] Byška: PB009 Principles of Computer Graphics
+- [[[glsl_tutorial,3]]] https://cgvr.cs.uni-bremen.de/teaching/cg2_07/literatur/glsl_tutorial/index.html
+- [[[synthesis1,4]]] https://en.wikipedia.org/wiki/Texture_synthesis
+- [[[synthesis2,5]]] https://diglib.eg.org:8443/server/api/core/bitstreams/90ad4c13-45b1-4ec0-8ef2-76075b2c73ae/content

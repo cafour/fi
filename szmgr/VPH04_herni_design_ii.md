@@ -42,13 +42,13 @@ Obsahuje základní informace o hře v čitelné formě pro negamedesignery (tř
 >
 > — Salen & Zimmerman
 
-Magický kruh je "prostor", ve kterém neplatí obyčejná pravidla reality a místo toho platí sada pravidel "herního světa". Ač magický kruh funguje na jednu stranu jako štít před realitou, je vlastně poměrně průchozí a nechává vnější realitu prosakovat do té herní. [^magic-circle-wiki] [^rules-of-play]
+Magický kruh je "prostor", ve kterém neplatí obyčejná pravidla reality a místo toho platí sada pravidel "herního světa". Ač magický kruh funguje na jednu stranu jako štít před realitou, je vlastně poměrně průchozí a nechává vnější realitu prosakovat do té herní. [magic-circle-wiki](#magic-circle-wiki) [rules-of-play](#rules-of-play)
 
-Byť ten termín zmínil jako první Huizinga, zadefinovali a zpopularizovali ho až Salen a Zimmerman. [^zimmerman-essay]
+Byť ten termín zmínil jako první Huizinga, zadefinovali a zpopularizovali ho až Salen a Zimmerman. [zimmerman-essay](#zimmerman-essay)
 
 ### Kybertext
 
-Kybertext byl popsán Espenem Aarsethem v jeho knize _Cybertext: Perspectives on Ergodic Literature_ (1997). Ergodická literatura je taková, která vyžaduje od čtenáře aktivní účast, aby mohl text vůbec přečíst. Kybertext je podkategorie ergodické literatury, kde čtenář musí dělat rozhodnutí, která ovlivňují, jak se text vyvíjí [^ergodic-literature-wiki].
+Kybertext byl popsán Espenem Aarsethem v jeho knize _Cybertext: Perspectives on Ergodic Literature_ (1997). Ergodická literatura je taková, která vyžaduje od čtenáře aktivní účast, aby mohl text vůbec přečíst. Kybertext je podkategorie ergodické literatury, kde čtenář musí dělat rozhodnutí, která ovlivňují, jak se text vyvíjí [ergodic-literature-wiki](#ergodic-literature-wiki).
 
 In ergodic literature, nontrivial effort is required to allow the reader to traverse the text. If ergodic literature is to make sense as a concept, there must also be nonergodic literature, where the effort to traverse the text is trivial, with no extranoematic responsibilities placed on the reader except (for example) eye movement and the periodic or arbitrary turning of pages.
 
@@ -88,7 +88,7 @@ Balanc mezi nudou a přílišnou obtížností.
 > [!WARNING]
 > Game design != Game theory
 
-Teorie her se na _hry_ dívá jako na matematické modely, které popisují chování nějakých racionálních agentů.[^wiki]
+Teorie her se na _hry_ dívá jako na matematické modely, které popisují chování nějakých racionálních agentů.[wiki](#wiki)
 
 ### Typy her
 
@@ -135,7 +135,7 @@ V dobře vybalancované _Player-vs-Player_ (PvP) hře:
 
 ## Narrative design
 
-Game desiner může využít libovolné herní elementy k tomu, aby komunikoval nějaký příběh. Vytváří ho mixováním game designových a narativních nástrojů. Jsou jimy například: [^pa215-2022]
+Game desiner může využít libovolné herní elementy k tomu, aby komunikoval nějaký příběh. Vytváří ho mixováním game designových a narativních nástrojů. Jsou jimy například: [pa215-2022](#pa215-2022)
 
 - text,
 - video,
@@ -147,7 +147,7 @@ Game desiner může využít libovolné herní elementy k tomu, aby komunikoval 
 - system itself (procedural rhetoric),
 - players themselves (fandom, other texts, ...).
 
-**Interactivity with the narrative game [^zagalo]**
+**Interactivity with the narrative game [zagalo](#zagalo)**
 
 ![width=500rem](./img/vph04_narrative.png)
 
@@ -198,7 +198,7 @@ Game desiner může využít libovolné herní elementy k tomu, aby komunikoval 
 
 ### Emergentní vyprávění
 
-Příběhy, které nenavrhl vývojář, ale vznikají z interakce mezi hráčem (či hráči) a hrou. Liší se tak od _embedded_ vyprávění, kde jsou momenty předem skriptované, i když se větví. [^rules-of-play]
+Příběhy, které nenavrhl vývojář, ale vznikají z interakce mezi hráčem (či hráči) a hrou. Liší se tak od _embedded_ vyprávění, kde jsou momenty předem skriptované, i když se větví. [rules-of-play](#rules-of-play)
 
 V emergentním vyprávění je příběh důsledkem toho, že hra je dostatečně komplexní systém. V takovém systému jsou akce _coupled_ -- vzájemně propojené, rekurzivně se ovlinující. A jsou také závislé na kontextu: hráč se zachová jinak, když narazí na specifický druh nepřítele v závislosti na tom, co se mu stalo posledně.
 
@@ -219,7 +219,7 @@ Jak tutoriál tak onboarding učí hráče, jak hru hrát. Onboarding je širš�
 - **Onboarding**
   - A process of teaching the player how to play a game.
   - A design of goals and obstacles to teach the player how to play a game.
-  - A design of an early gameplay to motivate the player to play a game. [^pa215-2019]
+  - A design of an early gameplay to motivate the player to play a game. [pa215-2019](#pa215-2019)
   - A design of gameplay to motivate the player to achieve mastery.
 
 > [...] it’s incredibly powerful to teach a player how to play the game, in-game, because that way they quickly take ownership over what happens.
@@ -303,13 +303,14 @@ Proces, kdy je game design testován na hráčích po celou dobu vývoje. A to �
 >
 > — Pozzi & Zimmerman
 
+## Zdroje
 
-[^magic]: https://en.wikipedia.org/wiki/Magic_circle_(virtual_worlds)
-[^rules]: Salen, Katie & Zimmerman, Eric. Rules of Play: Game Design Fundamentals. 2003.
-[^zimmerman]: [Eric Zimmerman: Jerked Around by the Magic Circle - Clearing the Air Ten Years Later](https://www.gamedeveloper.com/design/jerked-around-by-the-magic-circle---clearing-the-air-ten-years-later)
-[^ergodic]: https://en.wikipedia.org/wiki/Ergodic_literature
-[^wiki]: https://en.wikipedia.org/wiki/Game_theory
-[^pa215]: https://is.muni.cz/auth/el/fi/podzim2022/PA215/index.qwarp
-[^zagalo]: https://www.slideshare.net/nzagalo/videogame-narrative
-[^pa215]: https://is.muni.cz/auth/el/fi/podzim2019/PA215/um/
-[^fuck]: [Don’t follow these rules!: A Primer for Playtesting, Nathalie Pozzi and Eric Zimmerman](https://static1.squarespace.com/static/579b8aa26b8f5b8f49605c96/t/5962a494bebafbc89ca001b6/1499636884792/A+Primer+for+Playtesting.pdf)
+- [[[magic-circle-wiki,1]]] https://en.wikipedia.org/wiki/Magic_circle_(virtual_worlds)
+- [[[rules-of-play,2]]] Salen, Katie & Zimmerman, Eric. Rules of Play: Game Design Fundamentals. 2003.
+- [[[zimmerman-essay,3]]] [Eric Zimmerman: Jerked Around by the Magic Circle - Clearing the Air Ten Years Later](https://www.gamedeveloper.com/design/jerked-around-by-the-magic-circle---clearing-the-air-ten-years-later)
+- [[[ergodic-literature-wiki,4]]] https://en.wikipedia.org/wiki/Ergodic_literature
+- [[[wiki,5]]] https://en.wikipedia.org/wiki/Game_theory
+- [[[pa215-2022,6]]] https://is.muni.cz/auth/el/fi/podzim2022/PA215/index.qwarp
+- [[[zagalo,7]]] https://www.slideshare.net/nzagalo/videogame-narrative
+- [[[pa215-2019,8]]] https://is.muni.cz/auth/el/fi/podzim2019/PA215/um/
+- [[[fuck-rules,9]]] [Don’t follow these rules!: A Primer for Playtesting, Nathalie Pozzi and Eric Zimmerman](https://static1.squarespace.com/static/579b8aa26b8f5b8f49605c96/t/5962a494bebafbc89ca001b6/1499636884792/A+Primer+for+Playtesting.pdf)

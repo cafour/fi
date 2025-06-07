@@ -10,7 +10,7 @@ description: "TODO"
 
 
 - **Numerická analýza / numerical analysis**\
-  Oblast matematiky / informatiky zabývající se tvorbou numerických metod a algoritmů, které řeší problémy matematické analýzy (např. derivace, integrály a podobný symbolický balast) pomocí numerické aproximace. [^numerical-analysis]
+  Oblast matematiky / informatiky zabývající se tvorbou numerických metod a algoritmů, které řeší problémy matematické analýzy (např. derivace, integrály a podobný symbolický balast) pomocí numerické aproximace. [numerical-analysis](#numerical-analysis)
 
   Je výhodná v situacích, kdy problém nelze řešit analyticky nebo je to příliš složité a není to (výpočetní) čas.
 
@@ -26,12 +26,12 @@ description: "TODO"
 - **Numerická stabilita**\
   Schopnost numerické metody zpracovat chyby vstupních dat a výpočetních operací.
 
-  Desetinná čísla jsou v počítačích nevyhnutelně reprezentována nepřesně. Numericky stabilní metody jsou takové, které tyto nepřesnosti **nezhoršují**. [^numerical-stability]
+  Desetinná čísla jsou v počítačích nevyhnutelně reprezentována nepřesně. Numericky stabilní metody jsou takové, které tyto nepřesnosti **nezhoršují**. [numerical-stability](#numerical-stability)
 
 - **Řád metody / order of accuracy / order of approximation**\
   Hodnota reprezentující, jak rychle metoda konverguje k výsledku, resp. jak přesný je její odhad.
 
-  Numerická metoda obvykle konverguje snižováním nějakého _kroku_ $h$. Pokud ho lze zvolit libovolně malý, a lze-li prohlásit, že pro chybu aproximace $E$ platí: [^rate] [^numericka-metoda] [^order-question]
+  Numerická metoda obvykle konverguje snižováním nějakého _kroku_ $h$. Pokud ho lze zvolit libovolně malý, a lze-li prohlásit, že pro chybu aproximace $E$ platí: [rate](#rate) [numericka-metoda](#numericka-metoda) [order-question](#order-question)
 
   ```math
   \begin{aligned}
@@ -47,16 +47,16 @@ description: "TODO"
 ## Iterativní metody pro řešení nelineárních rovnic
 
 - **Root-finding problem**\
-  Problém nalezení _kořenů_ (root) funkce $f$. T.j. takových parametrů $x, ...$, kde funkce vrací 0: [^root-finding]
+  Problém nalezení _kořenů_ (root) funkce $f$. T.j. takových parametrů $x, ...$, kde funkce vrací 0: [root-finding](#root-finding)
 
   ```math
   f(x, ...) = 0
   ```
 
 - **Iterative methods for root-finding problem**\
-  Metody pro řešení root-finding problemu, které využívají iterativního přístupu. Tedy opakují nějaký výpočet a zpřesňují svůj odhad, dokud nedosáhnou požadované přesnosti. [^ma018] [^root-finding]
+  Metody pro řešení root-finding problemu, které využívají iterativního přístupu. Tedy opakují nějaký výpočet a zpřesňují svůj odhad, dokud nedosáhnou požadované přesnosti. [ma018](#ma018) [root-finding](#root-finding)
 - **Řád metody / rate of convergence**\
-  Hodnota reprezentující, jak rychle metoda konverguje k výsledku. [^rate]
+  Hodnota reprezentující, jak rychle metoda konverguje k výsledku. [rate](#rate)
 - **Prostá iterační metoda / metoda pevného bodu / fixed-point iteration**\
   Používá se pro rovnice typu $x = g(x)$.
 
@@ -88,7 +88,7 @@ description: "TODO"
   ![width=400](./img/szp02_secant_method.png)
 
 - **Metoda regula falsi**\
-  Je _bracketing_ metoda, tedy metoda, která využívá intervalu, ve kterém se nachází kořen. Nemusí se použít iterativně, ale v iterativní podobě tento interval postupně zmenšuje. [^regula-falsi]
+  Je _bracketing_ metoda, tedy metoda, která využívá intervalu, ve kterém se nachází kořen. Nemusí se použít iterativně, ale v iterativní podobě tento interval postupně zmenšuje. [regula-falsi](#regula-falsi)
 
   ```math
   x_{k+1} = x_k - \frac{x_k - x_s}{f(x_k) - f(x_s)} f(x_k)
@@ -100,7 +100,7 @@ description: "TODO"
 
 ### Gaussova eliminace
 
-Systém rovnice je přepsán do matice. Gaussova eliminace je posloupnost operací, jejichž cílem je převést matici do horní trojúhelníkové matice (_row echelon form_). [^gauss-elimination] Povoleny jsou následující operace:
+Systém rovnice je přepsán do matice. Gaussova eliminace je posloupnost operací, jejichž cílem je převést matici do horní trojúhelníkové matice (_row echelon form_). [gauss-elimination](#gauss-elimination) Povoleny jsou následující operace:
 
 - výměna dvou řádků,
 - vynásobení řádku nenulovou konstantou,
@@ -108,7 +108,7 @@ Systém rovnice je přepsán do matice. Gaussova eliminace je posloupnost operac
 
 ### Jacobiho iterační metoda
 
-Iterativní algoritmus pro řešení soustavy lineárních rovnic. Rozděluje vstupní matici lineárních rovnic na matici diagonál $D$, dolní trojúhelníkovou matici $L$ a horní trojúhelníkovou matici $U$. [^jacobi-method]
+Iterativní algoritmus pro řešení soustavy lineárních rovnic. Rozděluje vstupní matici lineárních rovnic na matici diagonál $D$, dolní trojúhelníkovou matici $L$ a horní trojúhelníkovou matici $U$. [jacobi-method](#jacobi-method)
 
 Nechť $A\mathbf{x} = \mathbf{b}$ je systém $n$ lineárních rovnic. Tedy:
 
@@ -178,7 +178,7 @@ Jelikož $L + U = A - D$, dá to zapsat i jako:
 
 ### Gaussova-Seidelova iterační metoda
 
-Iterativní metoda pro řešení soustavy lineárních rovnic. Dělí vstupní matici na spodní trojúhelníkovou matici $L_*$ (včetně diagonály, tedy $L_* = D + L$) a striktně horní trojúhelníkovou matici $U$ (diagonála je nulová). Algoritmus vypadá takto: [^gauss-seidel]
+Iterativní metoda pro řešení soustavy lineárních rovnic. Dělí vstupní matici na spodní trojúhelníkovou matici $L_*$ (včetně diagonály, tedy $L_* = D + L$) a striktně horní trojúhelníkovou matici $U$ (diagonála je nulová). Algoritmus vypadá takto: [gauss-seidel](#gauss-seidel)
 
 1. Zvolíme počáteční odhad $\mathbf{x}^{(0)}$.
 2. Nový odhad získáme ze vztahu:
@@ -203,7 +203,7 @@ T_{gs} &= (D + L)^{-1} U = L_*^{-1} U \\
 
 ### Relaxační iterativní metody
 
-Modifikace Gauss-Seidelovy metody. Využívá parametr $\omega$, který určuje, jak moc se má nový odhad lišit od předchozího. Vztah pro další iteraci se mění na: [^relaxation-method]
+Modifikace Gauss-Seidelovy metody. Využívá parametr $\omega$, který určuje, jak moc se má nový odhad lišit od předchozího. Vztah pro další iteraci se mění na: [relaxation-method](#relaxation-method)
 
 ```math
 \begin{align*}
@@ -274,7 +274,7 @@ Metody podobné Gaussově eliminaci, ale s vlastnostmi, které mohou být vyhodn
 
 ## Numerická diferenciace
 
-Algoritmy numerické diferenciace (derivace) počítají odhady derivace reálných funkcí -- aproximují $f'(x)$. Využívají při tom známé hodnoty této funkce a jiné znalosti a předpoklady. [^differentiation]
+Algoritmy numerické diferenciace (derivace) počítají odhady derivace reálných funkcí -- aproximují $f'(x)$. Využívají při tom známé hodnoty této funkce a jiné znalosti a předpoklady. [differentiation](#differentiation)
 
 Numerická diferenciace se využívá pro aproximaci differenciálních rovnic (převodem na _diferenční rovnice_).
 
@@ -285,7 +285,7 @@ Numerická diferenciace se využívá pro aproximaci differenciálních rovnic (
   > Lagrangeovu interpolaci řeší část otázky [Křivky a povrchy](../szp05_krivky_a_povrchy/).
 
 - **Finite difference method**\
-  Rodina metod numerické diferenciace, které využívají _konečné diference_. Tedy approximují limitu v definici derivace malými posuny ve vstupních hodnotách diferenciovaných funkcí. [^finite-difference-method]
+  Rodina metod numerické diferenciace, které využívají _konečné diference_. Tedy approximují limitu v definici derivace malými posuny ve vstupních hodnotách diferenciovaných funkcí. [finite-difference-method](#finite-difference-method)
 
   Jednotlivým "odstínům" -- konkrétním výpočetním vzorcům -- téhle metody se říká _diferenciační schémata_.
 
@@ -293,7 +293,7 @@ Numerická diferenciace se využívá pro aproximaci differenciálních rovnic (
   > Abych pravdu řekl, nepodařilo se mi najít zdroj pro konkrétní definici pojmu "diferenciační schéma".
 
 - **(Konečné) diference prvního řádu / first-order (finite) differences**\
-  Nejjednodušší schéma numerické diferenciace. Vychází z definice derivace. [^finite-difference]
+  Nejjednodušší schéma numerické diferenciace. Vychází z definice derivace. [finite-difference](#finite-difference)
 
   - _Dopředná diference / forward (finite) difference_
 
@@ -319,23 +319,24 @@ Numerická diferenciace se využívá pro aproximaci differenciálních rovnic (
   > Tečna je tak napodobena sečnou.
 
 - **Richardson extrapolation**\
-  Způsob zlepšení rate of convergence iterativních metod. [^richardson]
+  Způsob zlepšení rate of convergence iterativních metod. [richardson](#richardson)
 
+## Zdroje
 
-[^ma018]: [MA018 Numerical Methods (podzim 2019)](https://is.muni.cz/auth/el/fi/podzim2019/MA018/)
-[^numerical]: [Wikipedia: Numerical analysis](https://en.wikipedia.org/wiki/Numerical_analysis)
-[^root]: [Wikipedia: Root-finding algorithms](https://en.wikipedia.org/wiki/Root-finding_algorithms)
-[^rate]: [Wikipedia: Rate of convergence](https://en.wikipedia.org/wiki/Rate_of_convergence)
-[^regula]: [Wikipedia: Regula falsi](https://en.wikipedia.org/wiki/Regula_falsi)
-[^gauss]: [Wikipedia: Gaussian elimination](https://en.wikipedia.org/wiki/Gaussian_elimination)
-[^jacobi]: [Wikipedia: Jacobi method](https://en.wikipedia.org/wiki/Jacobi_method)
-[^gauss]: [Wikipedia: Gauss-Seidel method](https://en.wikipedia.org/wiki/Gauss%E2%80%93Seidel_method)
-[^relaxation]: [Wikipedia: Relaxation (iterative method)](<https://en.wikipedia.org/wiki/Relaxation_(iterative_method)>)
-[^differentiation]: [Wikipedia: Numerical differentiation](https://en.wikipedia.org/wiki/Numerical_differentiation)
-[^finite]: [Wikipedia: Finite difference](https://en.wikipedia.org/wiki/Finite_difference)
-[^finite]: [Wikipedia: Finite difference method](https://en.wikipedia.org/wiki/Finite_difference_method)
-[^richardson]: [Wikipedia: Richardson extrapolation](https://en.wikipedia.org/wiki/Richardson_extrapolation)
-[^linear]: [Wikipedia: System of linear equations](https://en.wikipedia.org/wiki/System_of_linear_equations)
-[^numerical]: [Wikipedia: Numerical stability](https://en.wikipedia.org/wiki/Numerical_stability)
-[^numericka]: [Wikipedia: Numerická metoda](https://cs.wikipedia.org/wiki/Numerick%C3%A1_metoda)
-[^order]: [What is the intuitive meaning of order of accuracy and order of approximation?](https://math.stackexchange.com/questions/2873291/what-is-the-intuitive-meaning-of-order-of-accuracy-and-order-of-approximation)
+- [[[ma018,1]]] [MA018 Numerical Methods (podzim 2019)](https://is.muni.cz/auth/el/fi/podzim2019/MA018/)
+- [[[numerical-analysis,2]]] [Wikipedia: Numerical analysis](https://en.wikipedia.org/wiki/Numerical_analysis)
+- [[[root-finding,3]]] [Wikipedia: Root-finding algorithms](https://en.wikipedia.org/wiki/Root-finding_algorithms)
+- [[[rate, 4]]] [Wikipedia: Rate of convergence](https://en.wikipedia.org/wiki/Rate_of_convergence)
+- [[[regula-falsi,5]]] [Wikipedia: Regula falsi](https://en.wikipedia.org/wiki/Regula_falsi)
+- [[[gauss-elimination,6]]] [Wikipedia: Gaussian elimination](https://en.wikipedia.org/wiki/Gaussian_elimination)
+- [[[jacobi-method,7]]] [Wikipedia: Jacobi method](https://en.wikipedia.org/wiki/Jacobi_method)
+- [[[gauss-seidel,8]]] [Wikipedia: Gauss-Seidel method](https://en.wikipedia.org/wiki/Gauss%E2%80%93Seidel_method)
+- [[[relaxation-method, 9]]] [Wikipedia: Relaxation (iterative method)](<https://en.wikipedia.org/wiki/Relaxation_(iterative_method)>)
+- [[[differentiation, 10]]] [Wikipedia: Numerical differentiation](https://en.wikipedia.org/wiki/Numerical_differentiation)
+- [[[finite-difference, 11]]] [Wikipedia: Finite difference](https://en.wikipedia.org/wiki/Finite_difference)
+- [[[finite-difference-method, 12]]] [Wikipedia: Finite difference method](https://en.wikipedia.org/wiki/Finite_difference_method)
+- [[[richardson,13]]] [Wikipedia: Richardson extrapolation](https://en.wikipedia.org/wiki/Richardson_extrapolation)
+- [[[linear-eq, 14]]] [Wikipedia: System of linear equations](https://en.wikipedia.org/wiki/System_of_linear_equations)
+- [[[numerical-stability, 15]]] [Wikipedia: Numerical stability](https://en.wikipedia.org/wiki/Numerical_stability)
+- [[[numericka-metoda,16]]] [Wikipedia: Numerická metoda](https://cs.wikipedia.org/wiki/Numerick%C3%A1_metoda)
+- [[[order-question,17]]] [What is the intuitive meaning of order of accuracy and order of approximation?](https://math.stackexchange.com/questions/2873291/what-is-the-intuitive-meaning-of-order-of-accuracy-and-order-of-approximation)

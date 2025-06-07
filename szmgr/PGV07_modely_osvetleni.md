@@ -21,7 +21,7 @@ description: "TODO"
 
 ## Blinn-Phongův osvětlovací model
 
-Blinn-Phongův osvětlovací model je velice jednoduchý model osvětlení, který se skládá ze tří složek: ambientní, difuzní a spekulární. [^pb009-io]
+Blinn-Phongův osvětlovací model je velice jednoduchý model osvětlení, který se skládá ze tří složek: ambientní, difuzní a spekulární. [pb009-io](#pb009-io)
 
 ![width=600](./img/pgv07_phong_overview.png)
 
@@ -127,7 +127,7 @@ Participující média jsou média, která nejsou zcela průhledná, ale nejsou 
 
 ## Physically based rendering (PBR)
 
-Physically based rendering (PBR) je způsob renderování, který se snaží co nejvíce aproximovat realitu pomocí fyzikálních modelů světla, stínů, materiálů, očí, atd. [^pv227-2022] Aproximuje efekty jako absorpci světla nebo jeho rozptyl pod povrchem objektů.
+Physically based rendering (PBR) je způsob renderování, který se snaží co nejvíce aproximovat realitu pomocí fyzikálních modelů světla, stínů, materiálů, očí, atd. [pv227-2022](#pv227-2022) Aproximuje efekty jako absorpci světla nebo jeho rozptyl pod povrchem objektů.
 
 - **Absorption and scattering / absorpce a rozptyl**\
   Materiály mohou světlo buď absorbovat (v takovém případě jsou alespoň částěčně průhledné) nebo odrážet a rozptylovat (objekty jsou matné). Většina materiálů kombinuje oba efekty. Světlo se může rozpylovat i pod povrchem (subsurface scattering).
@@ -242,6 +242,7 @@ Pro výpočet spekulárního osvětlení se používá zrcadlový vektor a Fresn
 
 ![width=600](./img/pgv07_ibr.png)
 
+## Zdroje
 
-[^pv227]: [PV227 GPU Rendering (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PV227/)
-[^pb009]: [Interaktivní osnova PB009 by xrosecky](https://is.muni.cz/auth/el/fi/jaro2023/PB009/index.qwarp)
+- [[[pv227-2022, 1]]] [PV227 GPU Rendering (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PV227/)
+- [[[pb009-io, 2]]] [Interaktivní osnova PB009 by xrosecky](https://is.muni.cz/auth/el/fi/jaro2023/PB009/index.qwarp)

@@ -40,12 +40,12 @@ description: "TODO"
 > [!IMPORTANT]
 > Tahle část otázky má značný překryv s otázkou [Modelování a projekce](../szp08_modelovani_a_projekce/).
 
-**Coordinate Systems [^coordinate-systems]**
+**Coordinate Systems [coordinate-systems](#coordinate-systems)**
 
 ![width=100%](./img/vph07_coordinate_systems.png)
 
 - **Model space / local space / prostor objektu**\
-  Každý vykreslený objekt má svůj lokální souřadnicový prostor daný editorem, ve kterém byl vytvořen, nastavením exportu a formátem, ve kterém byl vyexportován: [^sw-coordinates]
+  Každý vykreslený objekt má svůj lokální souřadnicový prostor daný editorem, ve kterém byl vytvořen, nastavením exportu a formátem, ve kterém byl vyexportován: [sw-coordinates](#sw-coordinates)
 
   | Editor    | Handedness   | $X$     | $Y$        | $Z$        |
   | --------- | ------------ | ------- | ---------- | ---------- |
@@ -66,7 +66,7 @@ description: "TODO"
 - **Clip space**\
   OpenGL očekává, že všechno, co bude vykresleno se nachází v jistém objemu -- clip space. Všechny souřadnice musíme do tohoto objemu převést a zároveň (pokud je to žádané) na ně aplikovat nějakou projekci (perspektivní, ortogonální, atd).
 
-  Pro převod do clip space slouží _projection_ matice ($P$). Ta nám umožňuje objekt nejen posunout ale i otočit a změnit jeho měřítko. [^coordinate-systems]
+  Pro převod do clip space slouží _projection_ matice ($P$). Ta nám umožňuje objekt nejen posunout ale i otočit a změnit jeho měřítko. [coordinate-systems](#coordinate-systems)
 
   Tento prostor stále používá 4-dimenzionální homogenní souřadnice.
 
@@ -81,10 +81,10 @@ description: "TODO"
   OpenGL převádí NDC do window space pomocí _viewport_ transformace.
 
   > [!WARNING]
-  > Počátek (origin) viewport space je **vlevo dole** a má ve výchozím nastavení má souřadnice $(0, 0)$. [^viewport]
+  > Počátek (origin) viewport space je **vlevo dole** a má ve výchozím nastavení má souřadnice $(0, 0)$. [viewport](#viewport)
 
 - **OpenGL handedness**\
-  NDC v OpenGL je **left-handed**. Nicméně v OpenGL panuje konvence, že world space a camera space jsou **right-handed** (např. s `glm`). K přechodu dochází překlopením směru osy $Z$ použitím projekční matice ($P$). [^coordinate-systems] V OpenGL tedy platí:
+  NDC v OpenGL je **left-handed**. Nicméně v OpenGL panuje konvence, že world space a camera space jsou **right-handed** (např. s `glm`). K přechodu dochází překlopením směru osy $Z$ použitím projekční matice ($P$). [coordinate-systems](#coordinate-systems) V OpenGL tedy platí:
 
   | Space    | Handedness             | $X$     | $Y$    | $Z$                        |
   | -------- | ---------------------- | ------- | ------ | -------------------------- |
@@ -96,13 +96,13 @@ description: "TODO"
   | _Window_ | _left-handed_          | doprava | nahoru | **dopředu**                |
 
   > [!TIP]
-  > Fun-fact: ve Vulkanu je NDC $x \in (-1.0, 1.0), y \in (-1.0, 1.0), z \in (\textcolor{red}{0.0}, 1.0)$. A navíc je **right-handed**, takže souřadnice $(-1.0, -1.0, 0.0)$ je vlevo **nahoře**, kdežto v OpenGL je vlevo **dole**. [^vulkan-coords]
+  > Fun-fact: ve Vulkanu je NDC $x \in (-1.0, 1.0), y \in (-1.0, 1.0), z \in (\textcolor{red}{0.0}, 1.0)$. A navíc je **right-handed**, takže souřadnice $(-1.0, -1.0, 0.0)$ je vlevo **nahoře**, kdežto v OpenGL je vlevo **dole**. [vulkan-coords](#vulkan-coords)
 
 ## Pipeline (typy shaderů)
 
-Při zvolání `glDraw*` se používá OpenGL pipeline, která se skládá z několika fází: [^pipeline]
+Při zvolání `glDraw*` se používá OpenGL pipeline, která se skládá z několika fází: [pipeline](#pipeline)
 
-**Diagram of the Rendering Pipeline [^pipeline]**
+**Diagram of the Rendering Pipeline [pipeline](#pipeline)**
 
 ![vph07_pipeline](./img/vph07_pipeline.png)
 
@@ -119,7 +119,7 @@ Při zvolání `glDraw*` se používá OpenGL pipeline, která se skládá z ně
 - **Geometry shader (GS)**\
   Volitně umožňuje upravit / dogenerovat (teselovat) data per primitive. Je spušten jednou per primitive. Je mocnější než tesselation, ale tím pádem i méně efektivní.
 - **Vertex post-processing**\
-  OpenGL následně: [^post-process]
+  OpenGL následně: [post-process](#post-process)
 
   1. sestaví primitives,
   2. ořeže je podle **user** clip space (nastavené programátorem v VS nebo GS pomocí `gl_ClipDistance`),
@@ -186,7 +186,7 @@ Při zvolání `glDraw*` se používá OpenGL pipeline, která se skládá z ně
    2. Porovnej aktuální hloubku s hloubkou v shadow mapě.
    3. Změň osvětlení na základě porovnání.
 
-**The Shadow Mapping Depth Comparison [^shadow-maps]**
+**The Shadow Mapping Depth Comparison [shadow-maps](#shadow-maps)**
 
 ![width=500rem](./img/vph07_shadow_maps.jpg)
 
@@ -218,12 +218,12 @@ Při zvolání `glDraw*` se používá OpenGL pipeline, která se skládá z ně
   ![width=500rem](./img/vph07_cascaded_shadow_maps.png)
 
 - **Soft shadow maps -- Percentage-Closer Filtering (PCF)**\
-  Rozmazává stíny uniformě fixním kernelem. [^pa010-2021]
+  Rozmazává stíny uniformě fixním kernelem. [pa010-2021](#pa010-2021)
 
   ![width=500rem](./img/vph07_soft_shadows_pcf.png)
 
 - **Soft shadow maps -- Percentage-Closer Soft Shadows (PCSS)**\
-  Počítá šíři penumbry pomocí velikosti světla, odhadu vzdálenosti blockeru (světlo-blokujícího objektu) od světla, a vzdálenosti mezi recieverem (objektem na který světlo dopadá) a blockerem. [^pa010-2021]
+  Počítá šíři penumbry pomocí velikosti světla, odhadu vzdálenosti blockeru (světlo-blokujícího objektu) od světla, a vzdálenosti mezi recieverem (objektem na který světlo dopadá) a blockerem. [pa010-2021](#pa010-2021)
 
   ```math
   w_\text{penumbra} = \frac{p_z^s - z_\text{avg}}{z_\text{avg}} w_\text{light}
@@ -233,7 +233,7 @@ Při zvolání `glDraw*` se používá OpenGL pipeline, která se skládá z ně
 
 ## Deferred shading / odložené stínování
 
-Místo renderování přímo na obrazovku, vykreslíme scénu nejprve do textur (_geometry pass_), které označujeme jako **G-buffer** -- pozice, normály, barvy atd. Osvětlení je počítáno v odděleném průchodu (_lighting pass_) a vykresleno na obrazovku. [^pv227]
+Místo renderování přímo na obrazovku, vykreslíme scénu nejprve do textur (_geometry pass_), které označujeme jako **G-buffer** -- pozice, normály, barvy atd. Osvětlení je počítáno v odděleném průchodu (_lighting pass_) a vykresleno na obrazovku. [pv227](#pv227)
 
 Tuto techniku použijeme např. když máme ve scéně fakt hodně světel.
 
@@ -264,7 +264,7 @@ Tuto techniku použijeme např. když máme ve scéně fakt hodně světel.
 - **Aliasing**\
   Aliasing vzniká, když je sample rate nižší než Nyquist frequency. Projevuje se jako nová nízko-frekvenční informace, která v obrazu neexistuje. Při renderování se projevuje jako "schody" na hranách objektů.
 
-  **Aliasing [^anti-aliasing]**
+  **Aliasing [anti-aliasing](#anti-aliasing)**
 
   ![width=500rem](./img/vph07_aliasing.png)
 
@@ -275,7 +275,7 @@ Tuto techniku použijeme např. když máme ve scéně fakt hodně světel.
 - **Multisample anti-aliasing (MSAA)**\
   Pro každý pixel máme 2/4/8/... subsamply. Každý fragment počítáme jen jednou, ale podle toho, kolik subsamplů ho pokrývá, ho blendujeme s již existují barvou.
 
-  **MSAA [^anti-aliasing]**
+  **MSAA [anti-aliasing](#anti-aliasing)**
 
   ![width=500rem](./img/vph07_msaa.png)
 
@@ -290,24 +290,25 @@ Ambient occlusion approximuje, jak moc je objekt vystaven ambientním světlu. J
 - **Screen-Space Ambient Occlusion (SSAO)**\
   Dívá se na okolí daného pixelu (v G-bufferu) a odhaduje tak jeho okluzi.
 
-  **SSAO [^ssao]**
+  **SSAO [ssao](#ssao)**
 
   ![width=500rem](./img/vph07_ssao.png)
 
+## Zdroje
 
-[^pipeline]: [Rendering Pipeline Overview](https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview)
-[^post]: [Vertex Post-Processing](https://www.khronos.org/opengl/wiki/Vertex_Post-Processing)
-[^coordinate]: [LearnOpenGL: Coordinate Systems](https://learnopengl.com/Getting-started/Coordinate-Systems)
-[^sw]: [Verge3D Wiki: Coordinate Systems](https://www.soft8soft.com/wiki/index.php/Coordinate_Systems)
-[^viewport]: [`glViewport`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glViewport.xhtml)
-[^depth]: [`glDepthRange`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glDepthRange.xhtml)
-[^vulkan]: [Vulkan’s coordinate system](http://anki3d.org/vulkan-coordinate-system/)
-[^pv227]: [PV227 GPU Rendering (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PV227/)
-[^anti]: [LearnOpenGL: Anti-Aliasing](https://learnopengl.com/Advanced-OpenGL/Anti-Aliasing)
-[^ambient]: [Wikipedia: Ambient occlusion](https://en.wikipedia.org/wiki/Ambient_occlusion)
-[^ssao]: [LearnOpenGL: SSAO](https://learnopengl.com/Advanced-Lighting/SSAO)
-[^shadow]: [The Cg Tutorial: Shadow Mapping](https://developer.download.nvidia.com/CgTutorial/cg_tutorial_chapter09.html)
-[^pa010]: Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)
+- [[[pipeline,1]]] [Rendering Pipeline Overview](https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview)
+- [[[post-process,2]]] [Vertex Post-Processing](https://www.khronos.org/opengl/wiki/Vertex_Post-Processing)
+- [[[coordinate-systems,3]]] [LearnOpenGL: Coordinate Systems](https://learnopengl.com/Getting-started/Coordinate-Systems)
+- [[[sw-coordinates,4]]] [Verge3D Wiki: Coordinate Systems](https://www.soft8soft.com/wiki/index.php/Coordinate_Systems)
+- [[[viewport,5]]] [`glViewport`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glViewport.xhtml)
+- [[[depth-range,6]]] [`glDepthRange`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glDepthRange.xhtml)
+- [[[vulkan-coords,7]]] [Vulkan’s coordinate system](http://anki3d.org/vulkan-coordinate-system/)
+- [[[pv227,8]]] [PV227 GPU Rendering (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PV227/)
+- [[[anti-aliasing,9]]] [LearnOpenGL: Anti-Aliasing](https://learnopengl.com/Advanced-OpenGL/Anti-Aliasing)
+- [[[ambient-occlusion,10]]] [Wikipedia: Ambient occlusion](https://en.wikipedia.org/wiki/Ambient_occlusion)
+- [[[ssao,11]]] [LearnOpenGL: SSAO](https://learnopengl.com/Advanced-Lighting/SSAO)
+- [[[shadow-maps,12]]] [The Cg Tutorial: Shadow Mapping](https://developer.download.nvidia.com/CgTutorial/cg_tutorial_chapter09.html)
+- [[[pa010-2021,13]]] Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)
 
 ## Další zdroje
 
