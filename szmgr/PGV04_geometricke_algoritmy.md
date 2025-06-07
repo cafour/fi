@@ -58,7 +58,7 @@ Tento algoritmus má složitost $O(n h)$, kde n je počet bodů a h je počet bo
 
 ### Konvexní obal v 3D
 
-Problém konvexního obalu ve 3D je výrazně komplikovanější (a popravdě se na FI ani v jednom předmětu neučí...). Pro jeho konstrukci můžeme použít například algoritmus _QuickHull_ [^so_hull_3d].
+Problém konvexního obalu ve 3D je výrazně komplikovanější (a popravdě se na FI ani v jednom předmětu neučí...). Pro jeho konstrukci můžeme použít například algoritmus _QuickHull_ [so_hull_3d](#so_hull_3d).
 
 1. Zvolíme trojúhelník 3 bodů
    - Bod s minimálními souřadnicemi $(x, y, z)$
@@ -273,5 +273,6 @@ Range trees jsou paměťově náročnější, zato jsou rychlejší.
 - Konstrukce: $O(n \log^{d-1} n)$
 - Vyhledávání: $O(\log^{d} n + k)$
 
+## Zdroje
 
-[^so_hull_3d]: https://stackoverflow.com/a/74968910/22953817
+- [[[so_hull_3d,1]]] https://stackoverflow.com/a/74968910/22953817

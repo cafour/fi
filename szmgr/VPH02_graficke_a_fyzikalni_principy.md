@@ -15,7 +15,7 @@ description: "TODO"
 ## Příprava a vývoj scény
 
 > [!NOTE]
-> Poznámky o grayboxingu, iterování, modulárním workflow, atd. jsou z přednášky Lukáše Medka v rámci PV255. [^medek]
+> Poznámky o grayboxingu, iterování, modulárním workflow, atd. jsou z přednášky Lukáše Medka v rámci PV255. [medek](#medek)
 
 - **Iterace**\
   Práce v iteracích pomáhá:
@@ -38,7 +38,7 @@ description: "TODO"
   - Umožňuje implementovat mechaniky bez nutnosti čekat na assety.
   - Limituje odpad -- nevyužité assety -- při změnách nebo škrtech.
 - **Modulární workflow**\
-  Využití malého množství assetů pro vytvoření rozsáhlého prostředí. Nutná promyšlená preprodukce. [^modular]
+  Využití malého množství assetů pro vytvoření rozsáhlého prostředí. Nutná promyšlená preprodukce. [modular](#modular)
 - **Modulární textury**\
   Textury aplikovatelné na více modelů. Je potřeba na všechna využití myslet při vytváření textury.
 - **Placeholders**\
@@ -47,7 +47,7 @@ description: "TODO"
 ## Optimizalizace výkonu vykreslování
 
 - **Level-of-detail (LOD) / úrovně detailů**\
-  Čím větší vzdálenost, tím méně detailů. [^pv255-2022]
+  Čím větší vzdálenost, tím méně detailů. [pv255-2022](#pv255-2022)
 
   Pro každý model máme hierarchii modelů s různým počtem polygonů. V závislosti na vzdálenosti od pozorovatele vybíráme vhodný LOD.
 
@@ -69,7 +69,7 @@ description: "TODO"
 - **Hierarchical LOD**\
   Seskupuje objekty ve scéně do hierarchie a zjednodušuje celé skupiny objektů najednou. Vede k lepšímu výkonu.
 - **Texture filtering**\
-  Popisuje, jakým způsobem se pixely textury (texely) mapují na pixely obrazovky / daného polygonu. [^texture-mapping]
+  Popisuje, jakým způsobem se pixely textury (texely) mapují na pixely obrazovky / daného polygonu. [texture-mapping](#texture-mapping)
 
   Součástí problému je potřeba odhadnout, jak velkou plochu polygon zabere na obrazovce.
 
@@ -97,7 +97,7 @@ description: "TODO"
   - _RenderDoc:_ debuggování OpenGL, DirectX a Vulkan
 
 - **Object culling / ostřelování objektů**\
-  Nalézání podmnožiny objektů ve scéně, která může být vynechána, aniž by viditelně ovlivnila výsledný obraz. Počítání přesné viditelnosti je příliš náročné, proto se používají aproximace známé jako _potentially visible set_ (PVS). [^pa010-2021]
+  Nalézání podmnožiny objektů ve scéně, která může být vynechána, aniž by viditelně ovlivnila výsledný obraz. Počítání přesné viditelnosti je příliš náročné, proto se používají aproximace známé jako _potentially visible set_ (PVS). [pa010-2021](#pa010-2021)
 - **Back-face culling**\
   Vykreslování pouze předních stran polygonů.
 - **View frustum culling**\
@@ -124,23 +124,23 @@ description: "TODO"
 ## Využití shaderů pro efekty ve hrách
 
 - **Toon / cel shading**\
-  Toon shading používá jen několik ruzných "kroků" intezity barev. Cel shading prý přidává kontury, ale zdá se, že ty termíny jsou spíš synonyma. [^pa010-2020] [^cel]
+  Toon shading používá jen několik ruzných "kroků" intezity barev. Cel shading prý přidává kontury, ale zdá se, že ty termíny jsou spíš synonyma. [pa010-2020](#pa010-2020) [cel](#cel)
 
   **Cel-shaded Utah Teapot by [NicolasSourd](https://commons.wikimedia.org/w/index.php?curid=1788125)**
 
   ![width=500rem](./img/vph02_cel.png)
 
 - **Color grading**\
-  Využívá se look-up table (LUT) pro jednotnou barevnou korekci. [^zeleny] [^color-grading]
+  Využívá se look-up table (LUT) pro jednotnou barevnou korekci. [zeleny](#zeleny) [color-grading](#color-grading)
 - **Marschner Hair**\
-  Shader, co používá Pixar pro vlasy a chlupy postavený na výzkumu Steva Marschnera. Má tři složky: odraz \(R), průchod skrz (TT), vnitřní odraz (TRT). [^zeleny] [^hair]
+  Shader, co používá Pixar pro vlasy a chlupy postavený na výzkumu Steva Marschnera. Má tři složky: odraz \(R), průchod skrz (TT), vnitřní odraz (TRT). [zeleny](#zeleny) [hair](#hair)
 - **Hloubka obrazu / depth of field**\
-  Fyzikálně korektní bokeh. Simuluje fotoaparát včetně clony (F-stop), velikosti snímače (full-frame, APS-C, atd.), ohniskové vzdálenosti, počtu lamel, atd. [^zeleny]
+  Fyzikálně korektní bokeh. Simuluje fotoaparát včetně clony (F-stop), velikosti snímače (full-frame, APS-C, atd.), ohniskové vzdálenosti, počtu lamel, atd. [zeleny](#zeleny)
 
   ![width=500rem](./img/vph02_dof.png)
 
   > [!TIP]
-  > Circle of Confusion (CoC) je kruh způsobený imperfektním zaostřením. Měřením CoC foťáky určují depth of field. [^coc]
+  > Circle of Confusion (CoC) je kruh způsobený imperfektním zaostřením. Měřením CoC foťáky určují depth of field. [coc](#coc)
 
 ## Ray tracing / sledování paprsků
 
@@ -165,12 +165,12 @@ Ray tracing jsou techniky, které trasují paprsky světla napříč scénou.
   - Architektonické vizualizace
   - Hry
 - **Spatial data structure**\
-  Datové struktury popisujicí objekty v prostoru. Volba vhodné struktury je klíčová pro efektivitu ray tracingu, ale je fajn i pro všední průchod scénou. [^bvh-rt]
+  Datové struktury popisujicí objekty v prostoru. Volba vhodné struktury je klíčová pro efektivitu ray tracingu, ale je fajn i pro všední průchod scénou. [bvh-rt](#bvh-rt)
 
   ![width=500rem](./img/vph02_spatial_data_structure.png)
 
 - **Bounding volume hierarchy (BVH)**\
-  Hierarchická reprezentace scény, díky které průchod scénou zredukován z $\mathcal{O}(n)$ na $\mathcal{O}(\log n)$ ($n$ je počet objektů ve scéně). Dá se stavět top-down nebo bottom-up. [^bvh-rt]
+  Hierarchická reprezentace scény, díky které průchod scénou zredukován z $\mathcal{O}(n)$ na $\mathcal{O}(\log n)$ ($n$ je počet objektů ve scéně). Dá se stavět top-down nebo bottom-up. [bvh-rt](#bvh-rt)
 
   Chceme od ní dvě věci:
 
@@ -246,7 +246,7 @@ Ray tracing jsou techniky, které trasují paprsky světla napříč scénou.
 
 ## Objekty pro detekci kolizí
 
-V principu funguje detekce kolizí tak, že v každém kroku fyzikální simulace: [^pa199-2022]
+V principu funguje detekce kolizí tak, že v každém kroku fyzikální simulace: [pa199-2022](#pa199-2022)
 
 1. dojde ke kontrole, zda se dva objekty dotýkají -- či mají společný průnik,
 2. pokud ano a kolize jsou pro dané objekty povoleny, dojde k výpočtu kolizních dat (normála, hloubka průniku, atd.),
@@ -297,28 +297,29 @@ Specifický pohyb postav bezvědomí. Kombinuje animace a fyziku. Je založená 
 - rozdělení postavy na skupiny rigid bodies,
 - springs and dampers -- pružiny a tlumiče.
 
-**The first "ragdoll falling downstairs" (1997) [^ragdolls]**
+**The first "ragdoll falling downstairs" (1997) [ragdolls](#ragdolls)**
 
 ![width=500rem](./img/vph02_ragdoll.jpg)
 
 - **Featherstone’s algorithm**\
   Algoritmus pro výpočet dynamiky stromovité struktury propojených článků.
 
+## Zdroje
 
-[^medek]:: [Lukáš Medek (CBE), Základní postupy při tvorbě assetů a herního vizuálu](++http://decibel.fi.muni.cz/pv255/2018/slides/PV255_-_06_-_Zakladni_postupy_pri_tvorbe_assetu_a_herniho_vizualu.pdf++)
-[^modular]:: http://wiki.polycount.com/wiki/Modular_environments
-[^pa010]: Sochor: PA010 Intermediate Computer Graphics (podzim 2020)
-[^cel]: https://en.wikipedia.org/wiki/Cel_shading
-[^zeleny]: [Jan Zelený, Grafické efekty](++http://decibel.fi.muni.cz/pv255/2018/slides/PV255_-_09_-_Graficke_efekty.pdf++)
-[^hair]: https://www.fxguide.com/fxfeatured/pixars-renderman-marschner-hair/
-[^color]: [Using Look-up Tables for Color Grading](https://docs.unrealengine.com/5.2/en-US/using-look-up-tables-for-color-grading-in-unreal-engine/)
-[^coc]: https://en.wikipedia.org/wiki/Circle_of_confusion
-[^pa199]: [Chmelík, Trtík, PA199 Advanced Game Development](https://is.muni.cz/auth/el/fi/podzim2022/PA199/um/)
-[^quickhull]: [Barber, Dopkin, Huhdanpaa: The Quickhull Algorithm for Convex Hulls](https://dl.acm.org/doi/pdf/10.1145/235815.235821)
-[^ragdolls]: http://www.animats.com/
-[^bvh]: [Bittner: Bounding Volume Hierarchies for Ray Tracing](https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/BoundingVolumeHierarchiesforRayTracing.pdf)
-[^path]: [Path Tracing vs. Ray Tracing, Explained](https://www.techspot.com/article/2485-path-tracing-vs-ray-tracing/)
-[^bvh]: [Pharr, Jakob, Humphreys; Physically Based Rendering: From Theory To Implementation; Chapter 4: Bounding Volume Hierarchies](https://www.pbr-book.org/3ed-2018/Primitives_and_Intersection_Acceleration/Bounding_Volume_Hierarchies)
-[^pv255]: [Chmelík, PV255 Game Development I](https://is.muni.cz/auth/el/fi/podzim2022/PV255/um/)
-[^pa010]: [Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)](https://is.muni.cz/auth/el/fi/podzim2021/PA010/um/)
-[^texture]: [Wikipedia: Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
+- [[[medek,1]]]: [Lukáš Medek (CBE), Základní postupy při tvorbě assetů a herního vizuálu](++http://decibel.fi.muni.cz/pv255/2018/slides/PV255_-_06_-_Zakladni_postupy_pri_tvorbe_assetu_a_herniho_vizualu.pdf++)
+- [[[modular,2]]]: http://wiki.polycount.com/wiki/Modular_environments
+- [[[pa010-2020,3]]] Sochor: PA010 Intermediate Computer Graphics (podzim 2020)
+- [[[cel,4]]] https://en.wikipedia.org/wiki/Cel_shading
+- [[[zeleny,5]]] [Jan Zelený, Grafické efekty](++http://decibel.fi.muni.cz/pv255/2018/slides/PV255_-_09_-_Graficke_efekty.pdf++)
+- [[[hair,6]]] https://www.fxguide.com/fxfeatured/pixars-renderman-marschner-hair/
+- [[[color-grading,7]]] [Using Look-up Tables for Color Grading](https://docs.unrealengine.com/5.2/en-US/using-look-up-tables-for-color-grading-in-unreal-engine/)
+- [[[coc,8]]] https://en.wikipedia.org/wiki/Circle_of_confusion
+- [[[pa199-2022,9]]] [Chmelík, Trtík, PA199 Advanced Game Development](https://is.muni.cz/auth/el/fi/podzim2022/PA199/um/)
+- [[[quickhull,10]]] [Barber, Dopkin, Huhdanpaa: The Quickhull Algorithm for Convex Hulls](https://dl.acm.org/doi/pdf/10.1145/235815.235821)
+- [[[ragdolls,11]]] http://www.animats.com/
+- [[[bvh-rt,12]]] [Bittner: Bounding Volume Hierarchies for Ray Tracing](https://is.muni.cz/auth/el/fi/jaro2022/PA213/um/slides/BoundingVolumeHierarchiesforRayTracing.pdf)
+- [[[path-tracing,13]]] [Path Tracing vs. Ray Tracing, Explained](https://www.techspot.com/article/2485-path-tracing-vs-ray-tracing/)
+- [[[bvh,14]]] [Pharr, Jakob, Humphreys; Physically Based Rendering: From Theory To Implementation; Chapter 4: Bounding Volume Hierarchies](https://www.pbr-book.org/3ed-2018/Primitives_and_Intersection_Acceleration/Bounding_Volume_Hierarchies)
+- [[[pv255-2022,15]]] [Chmelík, PV255 Game Development I](https://is.muni.cz/auth/el/fi/podzim2022/PV255/um/)
+- [[[pa010-2021,16]]] [Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)](https://is.muni.cz/auth/el/fi/podzim2021/PA010/um/)
+- [[[texture-mapping, 17]]] [Wikipedia: Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)

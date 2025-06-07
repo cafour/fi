@@ -218,22 +218,22 @@ Křivka $Q$ patří do třídy $C^n$, pokud má ve všech bodech $t$ spojitou de
 
 ### Geometrická spojitost stupně stem:[n] (stem:[G^n])
 
-Je podobná parametrické spojitosti, ale vyžaduje jen "geometrickou" spojitost. Vyžaduje, aby si derivace byly **sobě úměrné**. [^mallinus] [^geometric-continuity]
+Je podobná parametrické spojitosti, ale vyžaduje jen "geometrickou" spojitost. Vyžaduje, aby si derivace byly **sobě úměrné**. [mallinus](#mallinus) [geometric-continuity](#geometric-continuity)
 
 - $G^0$ -- koncový bod prvního segmentu je totožný s počátečním bodem druhého segmentu ($C^0 = G^0$).
 - $G^1$ -- platí $G^0$ a navíc je **směr** tečny na konci prvního segmentu shodný s **směrem** tečny na začátku druhého segmentu. **Velikost tečného vektoru (rychlost) se však může prudce změnit.**
-- $G^2$ -- platí $G^1$ a navíc mají stejný **střed křivosti** (center of curvature). [^smoothness]
+- $G^2$ -- platí $G^1$ a navíc mají stejný **střed křivosti** (center of curvature). [smoothness](#smoothness)
 
 Platí, že $C^n \Rightarrow G^n$, ale obráceně $G^n \not\Rightarrow C^n$.
 
 > [!NOTE]
-> Podle slidů z PB009 musí faktor úměrnosti být různý od 0. [^pb009-2019] Podle Barskyho a DeRoseho musí v první derivaci být $> 0$ a v dalších už je to šumák. [^geometric-continuity] Co je správně? Kdo ví. Nemám dost častu to zjistit, takže to ponechávám jako cvičení čtenáři.
+> Podle slidů z PB009 musí faktor úměrnosti být různý od 0. [pb009-2019](#pb009-2019) Podle Barskyho a DeRoseho musí v první derivaci být $> 0$ a v dalších už je to šumák. [geometric-continuity](#geometric-continuity) Co je správně? Kdo ví. Nemám dost častu to zjistit, takže to ponechávám jako cvičení čtenáři.
 
 ## Křivky
 
 ### Lagrangeův interpolační polynom
 
-Základní metoda interpolace funkce, jejíž hodnotu známe jen v $n + 1$ diskrétních bodech $P_0, P_1, ... P_n$. Sestává se z pomocných polynomů $\ell_i$: [^lagrange]
+Základní metoda interpolace funkce, jejíž hodnotu známe jen v $n + 1$ diskrétních bodech $P_0, P_1, ... P_n$. Sestává se z pomocných polynomů $\ell_i$: [lagrange](#lagrange)
 
 ```math
 \ell_i(x) = \prod_{0 \le k \le n, k \neq i}^n \frac{x - x_k}{x_i - x_k}
@@ -259,7 +259,7 @@ P(x) = \sum_{i=0}^n P_i \ell_i(x)
 Blbé je, že musíme všechny pomocné polynomy přepočítat, když přidáme nový bod.
 
 - **Hornerovo schéma / Horner’s method**\
-  Metoda evaluace polynomů. Vychází z myšlenky, že násobení se dá nestovat: [^horner]
+  Metoda evaluace polynomů. Vychází z myšlenky, že násobení se dá nestovat: [horner](#horner)
 
   ```math
   \begin{aligned}
@@ -279,7 +279,7 @@ Asi nejznámnější interpolační křivky v počítačové grafice. Jsou urče
 Je jednoduché je na sebe navázat v $C^1$, neboť tečné vektory jsou přímo součástí definice.
 
 - **Cubic Hermite spline / Ferguson curve**\
-  Pro Hermitovskou kubiku platí: [^hermite-spline] [^ferguson]
+  Pro Hermitovskou kubiku platí: [hermite-spline](#hermite-spline) [ferguson](#ferguson)
 
   ```math
   \begin{aligned}
@@ -365,12 +365,12 @@ Mezi jejich vlastnosti patří:
 ### B-spline
 
 - **Splajn / spline**\
-  Splajn stupně $n$ po částech definovaná polynomiální funkce stupně $n-1$ proměnné $x$. [^bspline]
+  Splajn stupně $n$ po částech definovaná polynomiální funkce stupně $n-1$ proměnné $x$. [bspline](#bspline)
 
   _Po částech definovaná / piecewise_ znamená, že má několik intervalů a pro každý z nich jiný polynom.
 
   - Místa, kde se části polynomu dotýkají jsou _uzly_ a jsou značeny pomocí $t_0, t_1, ..., t_n$ a řazeny v neklesajícím pořadí.
-  - Pokud jsou uzly unikátní, pak je splajn v uzlech $C^{n-2}$ spojitý. [^bspline]
+  - Pokud jsou uzly unikátní, pak je splajn v uzlech $C^{n-2}$ spojitý. [bspline](#bspline)
   - Pokud je $r$ uzlů shodných, je v tomto místě pouze $C^{n-r-1}$ spojitý.
 
 ---
@@ -428,7 +428,7 @@ S(x) = \sum_{i=0} c_i B_{i,n}(x)
   ```
 
 - **Coonsova kubika**\
-  Kubika $P$ daná 4 řídícími body $P_0, P_1, P_2, P_3$. Neprochází ani jedním z kontrolních bodů. [^coons]
+  Kubika $P$ daná 4 řídícími body $P_0, P_1, P_2, P_3$. Neprochází ani jedním z kontrolních bodů. [coons](#coons)
 
   ```math
   \begin{aligned}
@@ -606,7 +606,7 @@ Aproximační plochy analogické B-spline křivkám, ale se dvěma parametry.
 
 - **NURBS plochy**
 
-  Standard v průmyslovém modelování. Umožňují definovat velké množstí ploch: free-form surfaces, plochy založené na přímkách a kuželosečkách, atd. [^nurbs] Jsou invariantní k lineárním transformacím i k perspektivní projekci.
+  Standard v průmyslovém modelování. Umožňují definovat velké množstí ploch: free-form surfaces, plochy založené na přímkách a kuželosečkách, atd. [nurbs](#nurbs) Jsou invariantní k lineárním transformacím i k perspektivní projekci.
 
   ```math
   S(u,v) = \sum_{i=1}^k \sum_{j=1}^l R_{i,j}(u,v) \mathbf{P}_{i,j}
@@ -621,7 +621,7 @@ Aproximační plochy analogické B-spline křivkám, ale se dvěma parametry.
   $N_{i,n}(u)$ a $N_{j,m}(v)$ jsou B-spline bázové funkce stupně $n$ a $m$. $w_{i,j}$ jsou váhy.
 
 > [!TIP]
-> NURBS plochy se využívají v modelovací technice _sweeping_ (šablonování), kdy se množina bodů pohybuje (posunuje, rotuje, ...) prostorem za vniku tělesa. [^sweeping]
+> NURBS plochy se využívají v modelovací technice _sweeping_ (šablonování), kdy se množina bodů pohybuje (posunuje, rotuje, ...) prostorem za vniku tělesa. [sweeping](#sweeping)
 
 ## Surface subdivision / rekurzivní dělení polygonů
 
@@ -659,22 +659,23 @@ Polygonové povrchy dělíme v případě, kdy chceme je zjemnit, vyhladit.
 
   **Interpoluje** původní mesh. Funguje jen na trojúhelníkové síti.
 
+## Zdroje
 
-[^pa010]: Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)
-[^pa010]: Sochor: PA010 Intermediate Computer Graphics (podzim 2020)
-[^pb009]: Sochor: PB009 Principles of Computer Graphics (jaro 2019)
-[^smoothness]: [Wikipedia: Smoothness](https://en.wikipedia.org/wiki/Smoothness)
-[^mallinus]: [Jaakko Kurhila and Matti Mäkelä: Parametric Curves](https://www.cs.helsinki.fi/group/goa/mallinnus/curves/curves.html)
-[^geometric]: [Geometric Continuity of Parametric Curves: Three Equivalent Characterizations](https://ieeexplore.ieee.org/document/41470)
-[^lagrange]: [Wikipedia: Lagrange polynomial](https://en.wikipedia.org/wiki/Lagrange_polynomial)
-[^bspline]: [Wikipedia: B-spline](https://en.wikipedia.org/wiki/B-spline)
-[^hermite]: [Wikipedia: Cubic Hermite spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline)
-[^ferguson]: [ČVUT: Ferguson curve](https://marian.fsik.cvut.cz/~kongo/download/pcgr/lectures/01%20crv_ferg.pdf)
-[^coons]: [ČVUT: Coons curve](https://marian.fsik.cvut.cz/~kongo/download/pcgr/lectures/03%20crv_coons.pdf)
-[^coons]: [Wikipedia: Coons patch](https://en.wikipedia.org/wiki/Coons_patch)
-[^nurbs]: [Wikipedia: Non-uniform rational B-spline](https://en.wikipedia.org/wiki/Non-uniform_rational_B-spline)
-[^sweeping]: [Wikipedia: Solid modeling](https://en.wikipedia.org/wiki/Solid_modeling#Sweeping)
-[^horner]: [Wikipedia: Horner’s method](https://en.wikipedia.org/wiki/Horner%27s_method)
+- [[[pa010-2021,1]]] Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)
+- [[[pa010-2020,2]]] Sochor: PA010 Intermediate Computer Graphics (podzim 2020)
+- [[[pb009-2019,3]]] Sochor: PB009 Principles of Computer Graphics (jaro 2019)
+- [[[smoothness,4]]] [Wikipedia: Smoothness](https://en.wikipedia.org/wiki/Smoothness)
+- [[[mallinus,5]]] [Jaakko Kurhila and Matti Mäkelä: Parametric Curves](https://www.cs.helsinki.fi/group/goa/mallinnus/curves/curves.html)
+- [[[geometric-continuity,6]]] [Geometric Continuity of Parametric Curves: Three Equivalent Characterizations](https://ieeexplore.ieee.org/document/41470)
+- [[[lagrange, 7]]] [Wikipedia: Lagrange polynomial](https://en.wikipedia.org/wiki/Lagrange_polynomial)
+- [[[bspline, 8]]] [Wikipedia: B-spline](https://en.wikipedia.org/wiki/B-spline)
+- [[[hermite-spline, 9]]] [Wikipedia: Cubic Hermite spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline)
+- [[[ferguson, 10]]] [ČVUT: Ferguson curve](https://marian.fsik.cvut.cz/~kongo/download/pcgr/lectures/01%20crv_ferg.pdf)
+- [[[coons, 11]]] [ČVUT: Coons curve](https://marian.fsik.cvut.cz/~kongo/download/pcgr/lectures/03%20crv_coons.pdf)
+- [[[coons-path, 12]]] [Wikipedia: Coons patch](https://en.wikipedia.org/wiki/Coons_patch)
+- [[[nurbs, 13]]] [Wikipedia: Non-uniform rational B-spline](https://en.wikipedia.org/wiki/Non-uniform_rational_B-spline)
+- [[[sweeping,14]]] [Wikipedia: Solid modeling](https://en.wikipedia.org/wiki/Solid_modeling#Sweeping)
+- [[[horner,15]]] [Wikipedia: Horner’s method](https://en.wikipedia.org/wiki/Horner%27s_method)
 
 ## Další zdroje
 
