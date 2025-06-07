@@ -258,7 +258,7 @@ Binding 2 => Attribute 2 (uv souřadnice)
 
 ## Princip rasterizace
 
-Z Primitive assembly dostáváme bod, čáru, nebo trojúhelník, který potřebujeme převést na fragmenty (pixely, typicky čtvercové). Každému fragmentu přidělíme barvu a hloubku (Z-value) = fragment’s associated data. Fragment definujeme integerovými souřadnicemi jeho levého dolního bodu (pozor na 0.5 offset).
+Z Primitive assembly dostáváme bod, čáru, nebo trojúhelník, který potřebujeme převést na fragmenty (pixely, typicky čtvercové). Každému fragmentu přidělíme barvu a hloubku (Z-value) = fragment's associated data. Fragment definujeme integerovými souřadnicemi jeho levého dolního bodu (pozor na 0.5 offset).
 
 - **Bod**\
   Při rasterizaci bodu vykreslíme čtverec o hraně `gl_PointSize` zaokrouhlený na celé pixely.

@@ -258,7 +258,7 @@ P(x) = \sum_{i=0}^n P_i \ell_i(x)
 
 Blbé je, že musíme všechny pomocné polynomy přepočítat, když přidáme nový bod.
 
-- **Hornerovo schéma / Horner’s method**\
+- **Hornerovo schéma / Horner's method**\
   Metoda evaluace polynomů. Vychází z myšlenky, že násobení se dá nestovat: [^horner]
 
   ```math
@@ -674,7 +674,7 @@ Polygonové povrchy dělíme v případě, kdy chceme je zjemnit, vyhladit.
 [^coons-path]: [Wikipedia: Coons patch](https://en.wikipedia.org/wiki/Coons_patch)
 [^nurbs]: [Wikipedia: Non-uniform rational B-spline](https://en.wikipedia.org/wiki/Non-uniform_rational_B-spline)
 [^sweeping]: [Wikipedia: Solid modeling](https://en.wikipedia.org/wiki/Solid_modeling#Sweeping)
-[^horner]: [Wikipedia: Horner’s method](https://en.wikipedia.org/wiki/Horner%27s_method)
+[^horner]: [Wikipedia: Horner's method](https://en.wikipedia.org/wiki/Horner%27s_method)
 
 ## Další zdroje
 
