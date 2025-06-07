@@ -4,7 +4,7 @@ description: "TODO"
 ---
 
 > [!NOTE]
-> Implicitní a parametrické reprezentace. Interpolace a aproximace. Cn, Gn spojitost, podmínky spojitosti pro po částech definované funkce. Bézierovy křivky, B-spline křivky, pass:[&lt;s>NURBS, &lt;/s>]Coonsovy pass:[&lt;s>křivky a &lt;/s>]pláty. Povrchy tvořené rekurzivním dělením polygonů.
+> Implicitní a parametrické reprezentace. Interpolace a aproximace. Cn, Gn spojitost, podmínky spojitosti pro po částech definované funkce. Bézierovy křivky, B-spline křivky,  ~NURBS,~ Coonsovy  ~křivky a~ pláty. Povrchy tvořené rekurzivním dělením polygonů.
 > <br>
 > _PB009, PA010_
 
