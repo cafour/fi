@@ -324,12 +324,12 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 
   - $E_f = \{ e \in E : f(e)  < c(e) \} \cup \{ e^R : f(e) > 0 \}$,
   - pokud $e = (u, v) \in E$, $e^R = (v, u)$,
-  - stem:[
+  - $$
     c_f(e) = \begin{cases}
     c(e) - f(e) & \text{ pokud } e \in E \\
     f(e) & \text{ pokud } e^R \in E
     \end{cases}
-    ]
+    $$
 
 - **Augmenting path $P$**\
   Jednoduchá $s \rightsquigarrow t$ cesta v residuální síti $G_f$.
@@ -394,9 +394,10 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
   Funkce $f$ taková, že
 
   - platí _kapacitní podmínka_: $(\forall e \in E)(0 \le f(e) \le c(e))$,
-  - platí _relaxováné zachování toku_: stem:[
+  - platí _relaxováné zachování toku_:
+    $$
     (\forall v \in V - \{ s, t \})(\sum_{e \text{ do } v} f(e) \ge \sum_{e \text{ ven z } v} f(e))
-    ].
+    $$
 
 - **Overflowing vertex**\
   Takový vertex $v \in V - \{ s, t \}$, do kterého více přitéká než odtéká.
