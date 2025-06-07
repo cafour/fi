@@ -121,9 +121,9 @@ description: "TODO"
     > <br>
     > Každý trojúhelník má 3 hrany a každá hrana je sdílena dvěma trojúhelníky, takže $E = \frac{3}{2} F$.
     > <br>
-    > **💡 TIP**\
+    > > [!TIP]
     > > Intuitivně: pokud jsme neúsporní, pak máme tři hrany pro každý trojúhelník ($3F$), každou hranu ale "přilepíme" k nějakému dalšímu trojúhelníku, takže každou hranu máme zbytečně dvakrát ($2E$), proto $3F = 2E$, tedy $E = \frac{3}{2} F$.
-    > <br>
+    > 
     > Z Euler-Poincaré plyne, že
     > <br>
     > ```math
