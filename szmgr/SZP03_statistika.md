@@ -411,9 +411,9 @@ Platí presumpce nevinny. Předpokládáme, že člověk zločin nespáchal, dok
 
   Pravděpodobnost, že došlo k chybě typu I -- zavrhnuli jsme $H_0$, ačkoli platí.
 
-  stem:[
+  $$
   p = P(\text{type I error}) = P(\text{we reject } H_0 \;|\; H_0)
-  ]
+  $$
 
   > [!TIP]
   > Pokud $p$-value vyjde menší než požadovaná hladina významnosti $\alpha$, pak pravděpodobnost, že došlo k chybě typu I je dostatečně malá na to, abychom mohli tvrdit, že zavrhujeme $H_0$, protože $H_0$ neplatí, a tedy akceptujeme $H_1$.

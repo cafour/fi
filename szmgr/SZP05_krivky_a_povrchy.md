@@ -203,7 +203,7 @@ Pro zbytek otázky je podstatné znát několik termínů:
 
 Představme si, že máme dva segmenty křivky: $Q_1$ a $Q_2$, spojené v bodě $t$, tedy $Q_1(t) = Q_2(t)$. Tento bod nazýváme _uzlem_ (knot). _Spojitost_ je zjednodušeně způsob, jakým jsou tyhle segmenty spojeny v uzlu.
 
-### Parametrická spojitost stupně stem:[n] (stem:[C^n])
+### Parametrická spojitost stupně $n$ ($C^n$)
 
 Křivka $Q$ patří do třídy $C^n$, pokud má ve všech bodech $t$ spojitou derivaci až do řádu $n$.
 
@@ -216,7 +216,7 @@ Křivka $Q$ patří do třídy $C^n$, pokud má ve všech bodech $t$ spojitou de
 - V případě $C^1$ křivky se při průchodu uzlem směr ani rychlost prudce **nezmění**, může se však změnit zrychlení.
 - V případě $C^2$ křivky se při průchodu uzlem **nezmění** už ani zrychlení.
 
-### Geometrická spojitost stupně stem:[n] (stem:[G^n])
+### Geometrická spojitost stupně $n$ ($G^n$)
 
 Je podobná parametrické spojitosti, ale vyžaduje jen "geometrickou" spojitost. Vyžaduje, aby si derivace byly **sobě úměrné**. [^mallinus] [^geometric-continuity]
 
