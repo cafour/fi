@@ -776,7 +776,7 @@ Inverzní funkce je velice užitečná, ale poměrně složitá, takže doufám,
 [^edge-detection]: [Wikipedia: Edge detection](https://en.wikipedia.org/wiki/Edge_detection)
 [^fourier]: [Wikipedia: Fourier transform](https://en.wikipedia.org/wiki/Fourier_transform)
 [^fft]: [Wikipedia: Fast Fourier transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform)
-[^samping]: [Wikipedia: Sampling (signal processing)](<https://en.wikipedia.org/wiki/Sampling_(signal_processing)>)
+[^sampling]: [Wikipedia: Sampling (signal processing)](<https://en.wikipedia.org/wiki/Sampling_(signal_processing)>)
 [^scaling]: [Wikipedia: Image scaling](https://en.wikipedia.org/wiki/Image_scaling)
 [^n-s]: [Wikipedia: Nyquist–Shannon sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem)
 [^geometric-transform]: [Wikipedia: Geometric transformation](https://en.wikipedia.org/wiki/Geometric_transformation)
