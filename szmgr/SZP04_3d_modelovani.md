@@ -4,7 +4,7 @@ description: "TODO"
 ---
 
 > [!NOTE]
-> Mnohoúhelníkové a trojúhelníkové sítě: datové struktury, modelování, pass:[&lt;s>filtrování&lt;/s>], změna struktury sítě, **\*zjednodušování sítě\*\***. Implicitní **a parametrické\*** reprezentace a modelování **_(SDF, CSG, B-Rep)_**.
+> Mnohoúhelníkové a trojúhelníkové sítě: datové struktury, modelování,  ~filtrování~ , změna struktury sítě, **\*zjednodušování sítě\*\***. Implicitní **a parametrické\*** reprezentace a modelování **_(SDF, CSG, B-Rep)_**.
 > <br>
 > _PA010_
 

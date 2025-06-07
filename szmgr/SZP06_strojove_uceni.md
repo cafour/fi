@@ -4,7 +4,7 @@ description: "TODO"
 ---
 
 > [!NOTE]
-> Strojové učení a rozpoznávání vzorů: problém klasifikace a regrese, shluková analýza, učení s učitelem a bez učitele. Vícevrstvé neuronové sítě, vícevrstvé perceptrony, ztrátové funkce, zpětná propagace. pass:[&lt;s>Hopfieldova síť, &lt;/s>]konvoluční sítě, rekurentní sítěpass:[&lt;s>, samo-organizující mapy&lt;/s>].
+> Strojové učení a rozpoznávání vzorů: problém klasifikace a regrese, shluková analýza, učení s učitelem a bez učitele. Vícevrstvé neuronové sítě, vícevrstvé perceptrony, ztrátové funkce, zpětná propagace.  ~Hopfieldova síť,~ konvoluční sítě, rekurentní sítě ~, samo-organizující mapy~ .
 > <br>
 > _PV021_
 
