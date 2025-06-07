@@ -22,17 +22,17 @@ Obsahuje základní informace o hře v čitelné formě pro negamedesignery (tř
 
 - target audience, žánr, target platform, pro kolik bude hráčů...
 - high concept statement - krátký popis hry
-  ** What does the player do?
-  ** Why do they do it?
-  ** Where do they do it?
-  ** What are the constraints on the player?
-  ** What sort of emotion is this game trying to evoke in the player?
-  ** How is this game unique? What differentiates it from other games?
+  - What does the player do?
+  - Why do they do it?
+  - Where do they do it?
+  - What are the constraints on the player?
+  - What sort of emotion is this game trying to evoke in the player?
+  - How is this game unique? What differentiates it from other games?
 - feature set
 - competition - podobné hry
 - inovation - co hra přináší nového (art, design, technologie, ...)
 - scope management - omezení rozsahu hry tak aby se zvládla vyrobit
-  \*\* must have, should have, could have, won’t have
+  \*\* must have, should have, could have, won't have
 
 ## Teoretické koncepty herní analýzy
 
@@ -101,7 +101,7 @@ V teorii her se hry dělí na:
 - **Symetrická**\
   V symetrických hrách mají všichni hráči stejné možnosti. Jinými slovy, nezáleží na tom, **kým** hráč je, ale jakou strategii zvolí. Většina symetrických her je krátká, jelikož při delším hraní mají hráči různé strategické možnosti, a tak se hra stává _de facto_ asymetrickou.
 
-  Příkladem symetrické hry jsou například kámen-nůžky-papír, prisoner’s dilema.
+  Příkladem symetrické hry jsou například kámen-nůžky-papír, prisoner's dilema.
 
   Z pohledu game designu stačí, že mají hráči stejné možnosti. Tedy například šachy jsou symetrické z pohledu game designéra, ale z pohledu teorie her ne, protože bílý začíná a má tedy výhodu.
 
@@ -179,13 +179,13 @@ Game desiner může využít libovolné herní elementy k tomu, aby komunikoval 
 
 ### Struktura
 
-- **Lineární (3-bodová struktura, Monomyth / Hero’s journey)**
+- **Lineární (3-bodová struktura, Monomyth / Hero's journey)**
 
   1. Setup -- expozice, počáteční incident.
   2. Konfrontace -- překážky, krize.
   3. Rozuzlení -- vyvrcholení, závěr.
 
-     > [The] hero’s journey, or the monomyth, is the common template of stories that involve a hero who goes on an adventure, is victorious in a decisive crisis, and comes home changed or transformed.
+     > [The] hero's journey, or the monomyth, is the common template of stories that involve a hero who goes on an adventure, is victorious in a decisive crisis, and comes home changed or transformed.
      >
      > — Wikipedia: Hero's journey
 
@@ -222,7 +222,7 @@ Jak tutoriál tak onboarding učí hráče, jak hru hrát. Onboarding je širš�
   - A design of an early gameplay to motivate the player to play a game. [^pa215-2019]
   - A design of gameplay to motivate the player to achieve mastery.
 
-> [...] it’s incredibly powerful to teach a player how to play the game, in-game, because that way they quickly take ownership over what happens.
+> [...] it's incredibly powerful to teach a player how to play the game, in-game, because that way they quickly take ownership over what happens.
 >
 > — Miyamoto
 
@@ -296,7 +296,7 @@ Proces, kdy je game design testován na hráčích po celou dobu vývoje. A to �
 ---
 
 > - Playtest before you think you are ready.
-> - Don’t explain.
+> - Don't explain.
 > - Take notes.
 > - Shut Up.
 > - Notice everything.
@@ -312,4 +312,4 @@ Proces, kdy je game design testován na hráčích po celou dobu vývoje. A to �
 [^pa215-2022]: https://is.muni.cz/auth/el/fi/podzim2022/PA215/index.qwarp
 [^zagalo]: https://www.slideshare.net/nzagalo/videogame-narrative
 [^pa215-2019]: https://is.muni.cz/auth/el/fi/podzim2019/PA215/um/
-[^fuck-rules]: [Don’t follow these rules!: A Primer for Playtesting, Nathalie Pozzi and Eric Zimmerman](https://static1.squarespace.com/static/579b8aa26b8f5b8f49605c96/t/5962a494bebafbc89ca001b6/1499636884792/A+Primer+for+Playtesting.pdf)
+[^fuck-rules]: [Don't follow these rules!: A Primer for Playtesting, Nathalie Pozzi and Eric Zimmerman](https://static1.squarespace.com/static/579b8aa26b8f5b8f49605c96/t/5962a494bebafbc89ca001b6/1499636884792/A+Primer+for+Playtesting.pdf)

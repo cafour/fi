@@ -58,7 +58,7 @@ A z této rovnice už vyjádříme $u_{ij}^{k + 1}$. ($\Delta t$ je časový kro
 
 ### Nelineární izotropní difuze
 
-Zobecníme funkci pro difuzi kombinací Fick’s law a Mass preservation: $\partial_t u = \text{div} (g \cdot \nabla u)$, kde $\div$ je divergence.
+Zobecníme funkci pro difuzi kombinací Fick's law a Mass preservation: $\partial_t u = \text{div} (g \cdot \nabla u)$, kde $\div$ je divergence.
 
 - **Lineární**
   - $g = 1$

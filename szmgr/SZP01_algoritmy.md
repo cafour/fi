@@ -137,7 +137,7 @@ Greedy algoritmy nachází řešení globálního problému tak, že volí loká
 
 #### Problémy
 
-- **Cashier’s algorithm (mince)**\
+- **Cashier's algorithm (mince)**\
   Jak zaplatit danou částku s co nejmenším počtem mincí různých hodnot?
 
   - **Řešení**\

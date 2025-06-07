@@ -14,9 +14,9 @@ _PA215, PA216_
 
 > Game design is like a recipe...
 >
-> It looks fine, but you can’t eat it...
+> It looks fine, but you can't eat it...
 >
-> Well it can be eaten, but it doesn’t fill you up.
+> Well it can be eaten, but it doesn't fill you up.
 >
 > — Taky ZZ
 
@@ -107,9 +107,9 @@ Lidi jsou různí a různí lidi hrají různé hry různě.
 - **Explorer**\
   Snaží se objevovat a poznávat svět. Je hrdý na hloubku svých znalostí o světě.
 
-  > I haven’t tried that one, what’s it do?
+  > I haven't tried that one, what's it do?
 
-**Bartle’s Taxonomy of Players [^pa215-2022]**
+**Bartle's Taxonomy of Players [^pa215-2022]**
 
 ![width=500rem](./img/vph03_bartle.png)
 
@@ -142,7 +142,7 @@ Hry dovedou navodit řadu různých herních zážitků, které můžeme různý
 > [!IMPORTANT]
 > Herní zážitky souvisí s pojmem obtížnost, kterému se věnuje část otázky [Herní design II](../vph04_herni_design_ii/).
 
-#### LeBlanc’s Eight Kinds of Fun
+#### LeBlanc's Eight Kinds of Fun
 
 > [!TIP]
 > Taky označované jako _Taxonomy of Game Pleasures_ a _herní "pošušňáníčka"_. [^pa215-2019]
@@ -242,9 +242,9 @@ Game designer produkuje taky hromady abstraktních teorií o herním designu.
 > Design theory is like coffee.
 >
 > - You can get it on **every corner**.
-> - It’s expensive whether it’s **high or low quality**.
-> - It’s a **fuel for magic**.
-> - **Without doing something with it it’s useless**.
+> - It's expensive whether it's **high or low quality**.
+> - It's a **fuel for magic**.
+> - **Without doing something with it it's useless**.
 
 > — Ano&comma; stále ZZ
 
@@ -288,9 +288,9 @@ Lehký slovník pro popis her. [^cgo] Hodí se při komunikaci s klienty, nevyvo
 - **Audio**\
   Includes background music such as a fully orchestrated soundtrack, sound effects, rewarding sounds and voice-acted dialogue.
 - **Narrative**\
-  Contains the interactive story of a game which makes up the game’s plot.
+  Contains the interactive story of a game which makes up the game's plot.
 - **Game Design**\
-  Contains all the game’s mechanics that define the game’s rules, which provide the structures and frames for play (for example winning and losing conditions) and actions available to the player.
+  Contains all the game's mechanics that define the game's rules, which provide the structures and frames for play (for example winning and losing conditions) and actions available to the player.
 - **Level Design**\
   Includes the architecture of the spatial navigation of levels which determine how the player agent can progress from one point in the game to another.
 - **Gameplay**\

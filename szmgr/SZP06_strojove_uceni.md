@@ -423,7 +423,7 @@ Neuronové sítě, jejichž architektura obsahuje cykly. Tedy výstup v jednom b
   ```
 
   > [!TIP]
-  > Pokud $\textcolor{red}{\sigma' \cdot W_{k’k}} \not\approx 1$, pak gradient buď vybouchne nebo se ztratí.
+  > Pokud $\textcolor{red}{\sigma' \cdot W_{k'k}} \not\approx 1$, pak gradient buď vybouchne nebo se ztratí.
 
   - **Long Short-Term Memory (LSTM)**\
     LSTM řeší problém s vanishing a exploding gradientem, kterým RNN. V RNN je $\sigma$ typicky $\tanh$. V LSTM obsahuje jeden hidden neuron vlastně čtyři "podvrstvy", které mimo jiné umožňují část paměti zapomenout:

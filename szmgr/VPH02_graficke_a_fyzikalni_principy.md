@@ -301,7 +301,7 @@ Specifický pohyb postav bezvědomí. Kombinuje animace a fyziku. Je založená 
 
 ![width=500rem](./img/vph02_ragdoll.jpg)
 
-- **Featherstone’s algorithm**\
+- **Featherstone's algorithm**\
   Algoritmus pro výpočet dynamiky stromovité struktury propojených článků.
 
 

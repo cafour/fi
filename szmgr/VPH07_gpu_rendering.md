@@ -301,7 +301,7 @@ Ambient occlusion approximuje, jak moc je objekt vystaven ambientním světlu. J
 [^sw-coordinates]: [Verge3D Wiki: Coordinate Systems](https://www.soft8soft.com/wiki/index.php/Coordinate_Systems)
 [^viewport]: [`glViewport`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glViewport.xhtml)
 [^depth-range]: [`glDepthRange`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glDepthRange.xhtml)
-[^vulkan-coords]: [Vulkan’s coordinate system](http://anki3d.org/vulkan-coordinate-system/)
+[^vulkan-coords]: [Vulkan's coordinate system](http://anki3d.org/vulkan-coordinate-system/)
 [^pv227]: [PV227 GPU Rendering (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PV227/)
 [^anti-aliasing]: [LearnOpenGL: Anti-Aliasing](https://learnopengl.com/Advanced-OpenGL/Anti-Aliasing)
 [^ambient-occlusion]: [Wikipedia: Ambient occlusion](https://en.wikipedia.org/wiki/Ambient_occlusion)

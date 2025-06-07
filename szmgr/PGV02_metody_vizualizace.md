@@ -79,7 +79,7 @@ Node-link diagram, Tree (Klasické zobrazení), Radial Tree (Sunburst, ale strom
 Tyto interakce můžeme aplikovat na různé operandy. Operand interakce je prostor, na který interakci aplikujeme.
 
 > [!TIP]
-> Rozdělení mi není úplně 100% jasné, takže budu rád za opravy. Celé slidy čerpají z knihy Interactive Data Visualization: Foundations, Techniques, and Applications, Second Edition (dostupné z [Anna’s Archive](https://annas-archive.org/md5/0bf49e061a8b82167d0e05a5d2b50476))
+> Rozdělení mi není úplně 100% jasné, takže budu rád za opravy. Celé slidy čerpají z knihy Interactive Data Visualization: Foundations, Techniques, and Applications, Second Edition (dostupné z [Anna's Archive](https://annas-archive.org/md5/0bf49e061a8b82167d0e05a5d2b50476))
 
 
 ### Techniky pro prostor obrazovky (Pixely)

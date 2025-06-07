@@ -155,7 +155,7 @@ Pathfinding vnímá scénu jako graf, ve kterém hledá (obvykle nejkratší) ce
   Prozkoumej jednoho souseda, pak jeho souseda, pak souseda toho souseda atd. dokud jsi tak hluboko, že nemáš kam jít. Pak se teprve vynoř o úroveň výš a zkus prozkoumat jiného souseda.
 - **Shortest path algorithms / algoritmy pro nejkratší cestu**\
   Hledají nejkratší cestu mezi dvěma uzly. Používají nějakou heuristiku $f$ pro výběr dalšího uzlu k prozkoumání.
-- **Dijkstra’s algorithm / Dijkstrův algoritmus**\
+- **Dijkstra's algorithm / Dijkstrův algoritmus**\
   Podobný BFS, ale snaží se najít nejkratší cestu, ne nutně prozkoumat celý graf. Hranám přiřazuje cenu a vybírá ty s nejnižší cenou -- $f$ je nejnižší vzdálenost od počátečního uzlu.
 
 ### A\* algoritmus
@@ -274,7 +274,7 @@ Agenti nevidí herní svět stejně jako hráči, vidí ho spíš jako graf s uz
 - **Tile-based / dlaždicové**\
   Některé hry, např real-time strategie (RTS), mají svět rozdělen do čtvercových / hexagonálních dlaždic. Díky tomu je jednoduché je převést na graf, neboť co dlaždice to uzel.
 
-  **Sid Meier’s Civilization V [^civ5]**
+  **Sid Meier's Civilization V [^civ5]**
 
   ![width=400](./img/vph06_civilization.jpg)
 
@@ -480,7 +480,7 @@ Typicky turn-based hry pro dva hráče, často s perfektní informací.
 - **Zero-sum games**\
   Hra, kde výhra jednoho hráče je prohrou druhého (např. šachy).
 - **Non-zero-sum games**\
-  Výhra jednoho hráče nemusí být prohra druhého, stejně tak prohra jednoho hráče nemusí být výhra druhého (např. kooperativní hry, prisoner’s dilemma).
+  Výhra jednoho hráče nemusí být prohra druhého, stejně tak prohra jednoho hráče nemusí být výhra druhého (např. kooperativní hry, prisoner's dilemma).
 
 ### AI turn-based algoritmy
 
@@ -546,7 +546,7 @@ Minmax i alpha-beta pruning se chápe nejlíp s vizualizací. Můžete kouknout 
 [^steering]: [Steering Behaviors](https://slsdo.github.io/steering-behaviors/)
 [^navmesh]: [Navigation System in Unity](https://docs.unity3d.com/Manual/nav-NavigationSystem.html)
 [^astar]: [Introduction to the A\* Algorithm](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
-[^civ5]: [Sid Meier’s Civilization V](https://store.steampowered.com/app/8930/Sid_Meiers_Civilization_V/)
+[^civ5]: [Sid Meier's Civilization V](https://store.steampowered.com/app/8930/Sid_Meiers_Civilization_V/)
 [^monte-carlo]: [Wikipedia: Monte Carlo method](https://en.wikipedia.org/wiki/Monte_Carlo_method)
 [^mcts]: [Wikipedia: Monte Carlo tree search](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search)
 [^ida-star]: [Wikipedia: Iterative deepening A\*](https://en.wikipedia.org/wiki/Iterative_deepening_A*)
