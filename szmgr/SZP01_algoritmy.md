@@ -161,19 +161,13 @@ Technika hledání řešení problému postupným sestavováním _kandidátního
 
 **Porovnání s dynamickým programováním**
 
-| Dynamické programování                                       |
-| ------------------------------------------------------------ |
-| Backtracking                                                 |
-| Hledá řešení _překrývajících se podproblémů_.                |
-| Hledá _všechna_ řešení.                                      |
-| Hledá _optimální_ řešení.                                    |
-| Hledá všechna, _libovolná_ řešení, _hrubou silou_.           |
-| Má blíž k BFS -- staví "vrstvy".                             |
-| Má blíž k DFS -- zanoří se do jednoho řešení a pak se vrátí. |
-| Typicky zabírá víc paměti kvůli memoizaci.                   |
-| Typicky trvá déle, protože hledá _všechna_ řešení.           |
-| Mívá cykly.                                                  |
-| Mívá rekurzi.                                                |
+| Dynamické programování                        | Backtracking                                                 |
+| --------------------------------------------- | ------------------------------------------------------------ |
+| Hledá řešení _překrývajících se podproblémů_. | Hledá _všechna_ řešení.                                      |
+| Hledá _optimální_ řešení.                     | Hledá všechna, _libovolná_ řešení, _hrubou silou_.           |
+| Má blíž k BFS -- staví "vrstvy".              | Má blíž k DFS -- zanoří se do jednoho řešení a pak se vrátí. |
+| Typicky zabírá víc paměti kvůli memoizaci.    | Typicky trvá déle, protože hledá _všechna_ řešení.           |
+| Mívá cykly.                                   | Mívá rekurzi.                                                |
 
 #### Problémy
 
@@ -265,21 +259,11 @@ Pro každou operaci v posloupnosti:
 
 **Zásobník (kredity)**
 
-| Operace         |
-| --------------- |
-| Skutečná cena   |
-| Kreditová cena  |
-| `Push`          |
-| 1               |
-| 2               |
-| `Pop`           |
-| 1               |
-| 0               |
-| `Multi-Pop`     |
-| stem:[\min(k,\  |
-| S\              |
-| )]              |
-| 0               |
+| Operace         | Skutečná cena           | Kreditová cena  |
+| --------------- | ----------------------- | --------------- |
+| `Push`          | 1                       | 2               |
+| `Pop`           | 1                       | 0               |
+| `Multi-Pop`     | $min(k, \vert S \vert)$ | 0               |
 
 - **Invariant**\
   Počet kreditů na účtu je rovný počtu prvků na zásobníku.
@@ -327,29 +311,12 @@ Hraje si s představou toho, že struktura je fyzikální systém s nějakou ene
 
 $\Phi(S) = |S|$ (počet prvků na zásobníku)
 
-| Operace                   |
-| ------------------------- |
-| Skutečná cena             |
-| Amortizovaná cena         |
-| `Push`                    |
-| 1                         |
-| stem:[\hat{c_i} = 1 + (\  |
-| S\                        |
-| + 1) - \                  |
-| S\                        |
-| = 2]                      |
-| `Pop`                     |
-| 1                         |
-| stem:[\hat{c_i} = 1 + \   |
-| S\                        |
-| - (\                      |
-| S\                        |
-| + 1) = 0]                 |
-| `Multi-Pop`               |
-| stem:[\min(k,\            |
-| S\                        |
-| )]                        |
-|                           |
+
+| Operace         | Skutečná cena | Kreditová cena  |
+| --------------- | ------------- | --------------- |
+| `Push`          | 1             | $\hat{c_i} = 1 + (\vert S \vert + 1) - \vert S \vert = 2$ |
+| `Pop`           | 1             | $\hat{c_i} = 1 + \vert S \vert - (\vert S \vert + 1) = 0$ |
+| `Multi-Pop`     | $min(k, \vert S \vert )$ | _(následující formule)_ |
 
 ```math
 \hat{c_i} =
@@ -434,29 +401,13 @@ Většinou je řetězec polem znaků z konečné abecedy $\Sigma$. String matchi
 
 Vzorek $P$ se vyskytuje v textu $T$ s posunem $s$, pokud $0 \le s \le n - m$ a zároveň $T\lbrack (s+1) .. (s + m) \rbrack = P$. Pro nalezení platných posunů lze použít řadu algoritmů, které se liší složitostí předzpracování i samotného vyhledávání: [^iv003-strings]
 
-| Algoritmus                          |
-| ----------------------------------- |
-| Preprocessing                       |
-| Searching                           |
-| Brute force / naivní                |
-| $0$                                 |
-| $\mathcal{O}((n - m + 1) \cdot m)$  |
-| Karp-Rabin                          |
-| $\Theta(m)$                         |
-| $\mathcal{O}((n - m + 1) \cdot m)$  |
-| finite automata                     |
-| stem:[\Theta(m \cdot \              |
-| \Sigma\                             |
-| )]                                  |
-| $\Theta(n)$                         |
-| Knuth-Morris-Pratt                  |
-| $\Theta(m)$                         |
-| $\Theta(m)$                         |
-| Boyer-Moore                         |
-| stem:[\Theta(m + \                  |
-| \Sigma\                             |
-| )]                                  |
-| $\mathcal{O}((n - m  + 1) \cdot m)$ |
+| Algoritmus                          | Preprocessing                        | Searching                           |
+| ----------------------------------- | ------------------------------------ | ----------------------------------- |
+| Brute force / naivní                | $0$                                  | $\mathcal{O}((n - m + 1) \cdot m)$  |
+| Karp-Rabin                          | $\Theta(m)$                          | $\mathcal{O}((n - m + 1) \cdot m)$  |
+| finite automata                     | $\Theta(m \cdot \vert \Sigma \vert)$ | $\Theta(n)$                         |
+| Knuth-Morris-Pratt                  | $\Theta(m)$                          | $\Theta(m)$                         |
+| Boyer-Moore                         | $\Theta(m + \vert \Sigma \vert)$     | $\mathcal{O}((n - m  + 1) \cdot m)$ |
 
 - $T$ nebo $T\lbrack 1..n \rbrack$ -- text.
 - $P$ nebo $P\lbrack 1..m \rbrack$ -- pattern.

@@ -759,17 +759,12 @@ Inverzní funkce je velice užitečná, ale poměrně složitá, takže doufám,
 
 **Radon vs Hough**
 
-| Radon                                                                   |
-| ----------------------------------------------------------------------- |
-| Hough                                                                   |
-| Vyvinuta v 1917                                                         |
-| Vyvinuta v 1962                                                         |
-| Nejčastěji hledá přímky                                                 |
-| Hledá nějaký tvar zadaný parametricky (přímky, kružnice, elipsy, ...)   |
-| Dopředná transformace nás moc nezajímá tu provádí CT skener kontinuálně |
-| Dopředná transformace je implementovaná diskrétně                       |
-| Hlavním cílem je rekonstrukce obrazu -- inverzní transformace           |
-| Hlavním cílem je detekce tvarů                                          |
+| Radon                                                                   | Hough                                                                   |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Vyvinuta v 1917                                                         | Vyvinuta v 1962                                                         |
+| Nejčastěji hledá přímky                                                 | Hledá nějaký tvar zadaný parametricky (přímky, kružnice, elipsy, ...)   |
+| Dopředná transformace nás moc nezajímá tu provádí CT skener kontinuálně | Dopředná transformace je implementovaná diskrétně                       |
+| Hlavním cílem je rekonstrukce obrazu -- inverzní transformace           | Hlavním cílem je detekce tvarů                                          |
 
 
 [^pb130]: [PB130 Úvod do digitálního zpracování obrazu (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PB130/)
