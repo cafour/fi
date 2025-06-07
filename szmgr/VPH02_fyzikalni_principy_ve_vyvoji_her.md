@@ -33,7 +33,7 @@ description: "TODO"
 
 ## Objekty pro detekci kolizí
 
-V principu funguje detekce kolizí tak, že v každém kroku fyzikální simulace: [pa199-2022](#pa199-2022)
+V principu funguje detekce kolizí tak, že v každém kroku fyzikální simulace: [^pa199-2022]
 
 1. dojde ke kontrole, zda se dva objekty dotýkají -- či mají společný průnik,
 2. pokud ano a kolize jsou pro dané objekty povoleny, dojde k výpočtu kolizních dat (normála, hloubka průniku, atd.),
@@ -75,6 +75,5 @@ V principu funguje detekce kolizí tak, že v každém kroku fyzikální simulac
 - **Continous collision detection (CCD)**\
   Kolize se detekují v "průběhu pohybu" objektů -- pomocí supersamplingu, raycastingu, swept spheres, atd. Výpočetně náročné.
 
-## Zdroje
 
-- [[[pa199-2022,9]]] [Chmelík, Trtík, PA199 Advanced Game Development](https://is.muni.cz/auth/el/fi/podzim2022/PA199/um/)
+[^pa199-2022]: [Chmelík, Trtík, PA199 Advanced Game Development](https://is.muni.cz/auth/el/fi/podzim2022/PA199/um/)

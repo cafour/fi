@@ -91,7 +91,7 @@ description: A guide in my new Starlight docs site.
 
 ### Ortografická projekce
 
-Používáme především k vykreslení 2D scén. Osu Z můžeme využít, abychom jeden sprite schovali za jiný. Nicméně objekty dál od kamery jsou stejně velké jako ty blízko kamery. [camera](#camera)
+Používáme především k vykreslení 2D scén. Osu Z můžeme využít, abychom jeden sprite schovali za jiný. Nicméně objekty dál od kamery jsou stejně velké jako ty blízko kamery. [^camera]
 
 ![width=500](./img/szp08_orthographic_projection.png)
 

@@ -21,7 +21,7 @@ description: "TODO"
 
 ### Redukce počtu polygonů
 
-Slučování polygonů (merging) či odstranění polygonů (culling), které nejsou vidět. [pa010-2021](#pa010-2021)
+Slučování polygonů (merging) či odstranění polygonů (culling), které nejsou vidět. [^pa010-2021]
 
 - **Variational Shape Approximation**
 
@@ -88,35 +88,35 @@ Množina bodů v prostoru, které nemají žádnou strukturu. Nejjednodušší p
 Ze získaných dat se snažíme vytvořit mesh. Ten lze vyrenderovat tradičním způsobem.
 
 - **Marching cubes**\
-  Rozděluje prostor na mřížku voxelů. V každém voxelu se pak vyhodnocuje, zda je povrch objektu překročen. Pokud ano, je třeba přidat triangle mesh pro daný voxel. [pa010-2020](#pa010-2020) [marching-cubes](#marching-cubes)
+  Rozděluje prostor na mřížku voxelů. V každém voxelu se pak vyhodnocuje, zda je povrch objektu překročen. Pokud ano, je třeba přidat triangle mesh pro daný voxel. [^pa010-2020] [^marching-cubes]
 
   **Marching cubes by [Ryoshoru](https://commons.wikimedia.org/wiki/File:MarchingCubesEdit.svg)**
 
   ![width=500rem](./img/vph01_marching_cubes.svg)
 
 - **Marching tetrahedra**\
-  Analogický k marching cubes, ale používá místo krychlí čtyřstěny. Řeší problém s některými nejednoznačnými konfiguracemi v marching cubes, a taky nikdy nebyl patentován (kdežto marching cubes ano). [marching-tetrahedra](#marching-tetrahedra)
+  Analogický k marching cubes, ale používá místo krychlí čtyřstěny. Řeší problém s některými nejednoznačnými konfiguracemi v marching cubes, a taky nikdy nebyl patentován (kdežto marching cubes ano). [^marching-tetrahedra]
 - **Vertex clustering**\
-  Metoda podobná _iterative decimation_ (viz výše), nejprve vytvoříme clustery bodů, poté pro každý vybereme vhodného reprezentanta (např. průměrem, mediánem, quadric error minimization, atd.), pak už jen zbývá mesh "sešít" např. pomocí triangulace. [pa010-2020](#pa010-2020)
+  Metoda podobná _iterative decimation_ (viz výše), nejprve vytvoříme clustery bodů, poté pro každý vybereme vhodného reprezentanta (např. průměrem, mediánem, quadric error minimization, atd.), pak už jen zbývá mesh "sešít" např. pomocí triangulace. [^pa010-2020]
 - **Dual contouring**\
-  Z voxelů se stanou vrcholy (tedy využíváme dualního grafu). Tyto vrcholy jsou ale posunuty tak, že povrch může obsahovat jak ostré hrany tak zaoblené plochy. [dual-contouring](#dual-contouring)
+  Z voxelů se stanou vrcholy (tedy využíváme dualního grafu). Tyto vrcholy jsou ale posunuty tak, že povrch může obsahovat jak ostré hrany tak zaoblené plochy. [^dual-contouring]
 - **Delaunay triangulation**\
-  Vytváří trojúhelníkovou síť, tak že žádný bod se nenáchází ve vepsané kružnici žádného trojúhelníku. Maximalizuje nejmenší úhel trojúhelníků. [delaunay-triangulation](#delaunay-triangulation)
+  Vytváří trojúhelníkovou síť, tak že žádný bod se nenáchází ve vepsané kružnici žádného trojúhelníku. Maximalizuje nejmenší úhel trojúhelníků. [^delaunay-triangulation]
 
   ![width=300](./img/vph01_delaunay.svg)
 
 ### Direct volume rendering (přímé renderování objemu)
 
-Nerekonstruujeme povrch, ale mapujeme data na _optické_ vlastnosti jako je barva a průhlednost. Během renderování se pak využívá path tracing, a tyto vlastnosti se akumulují podél jednotlivých paprsků. [gpugems](#gpugems)
+Nerekonstruujeme povrch, ale mapujeme data na _optické_ vlastnosti jako je barva a průhlednost. Během renderování se pak využívá path tracing, a tyto vlastnosti se akumulují podél jednotlivých paprsků. [^gpugems]
 
 V realitě tohle chování paprsku popisujeme integrály. V počítačové grafice se ale využívá aproximace pomocí sumy.
 
-**The Process of Volume Rendering [gpugems](#gpugems)**
+**The Process of Volume Rendering [^gpugems]**
 
 ![width=500rem](./img/vph01_direct_volume_rendering.jpg)
 
 - **Emmission-absorption model**\
-  Paprsek vstupuje do objemu, kde je absorbován a emitován. Výsledná barva je pak výsledkem akumulace těchto vlastností. V notaci používáme: [pa213](#pa213)
+  Paprsek vstupuje do objemu, kde je absorbován a emitován. Výsledná barva je pak výsledkem akumulace těchto vlastností. V notaci používáme: [^pa213]
 
   - $\kappa$ je funkce absorpce,
   - $q$ je emise.
@@ -140,7 +140,7 @@ V realitě tohle chování paprsku popisujeme integrály. V počítačové grafi
   ```
 
 - **Volume rendering integral**\
-  Intenzitu světla $I$ v místě paprsku $s$ počítáme pomocí: [pa213](#pa213)
+  Intenzitu světla $I$ v místě paprsku $s$ počítáme pomocí: [^pa213]
 
   ```math
   \begin{aligned}
@@ -171,7 +171,7 @@ V realitě tohle chování paprsku popisujeme integrály. V počítačové grafi
   Dá se utnout dřív, když víme jistě, že už je výsledek neprůhledný a tedy už se nic nezmění.
 
 - **Transfer function**\
-  Funkce $T$, která mapuje hodnoty voxelů na barvu a průhlednost. Klasifikuje voxely. [pa213](#pa213)
+  Funkce $T$, která mapuje hodnoty voxelů na barvu a průhlednost. Klasifikuje voxely. [^pa213]
 
 ## Modely nasvícení (illumination models)
 
@@ -191,7 +191,7 @@ V realitě tohle chování paprsku popisujeme integrály. V počítačové grafi
 
 ## Physically based rendering (PBR)
 
-Physically based rendering (PBR) je způsob renderování, který se snaží co nejvíce aproximovat realitu pomocí fyzikálních modelů světla, stínů, materiálů, očí, atd. [pv227-2022](#pv227-2022) Aproximuje efekty jako absorpci světla nebo jeho rozptyl pod povrchem objektů.
+Physically based rendering (PBR) je způsob renderování, který se snaží co nejvíce aproximovat realitu pomocí fyzikálních modelů světla, stínů, materiálů, očí, atd. [^pv227-2022] Aproximuje efekty jako absorpci světla nebo jeho rozptyl pod povrchem objektů.
 
 - **Absorption and scattering / absorpce a rozptyl**\
   Materiály mohou světlo buď absorbovat (v takovém případě jsou alespoň částěčně průhledné) nebo odrážet a rozptylovat (objekty jsou matné). Většina materiálů kombinuje oba efekty. Světlo se může rozpylovat i pod povrchem (subsurface scattering).
@@ -362,21 +362,20 @@ Stíny jsou důležité, jelikož:
 - **Soft shadows**\
   Existuje množství algoritmů. Například shadow mapy s Percentage Closer Filtering (PCF). Jsou ale výpočetně náročnější než hard shadows.
 
-## Zdroje
 
-- [[[pa010-2021,1]]] Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)
-- [[[pa010-2020,2]]] Sochor: PA010 Intermediate Computer Graphics (podzim 2020)
-- [[[pa213, 3]]] PA213 Advanced Computer Graphics
-- [[[notes-pa010,4]]] [Moje poznámky z PA010 (podzim 2020)](/fi/pa010/)
-- [[[manifold-wiki,5]]] [Wikipedia: Topological manifold](https://en.wikipedia.org/wiki/Topological_manifold)
-- [[[klein-bottle,6]]] [Konrad Polthier: Imaging maths - Inside the Klein bottle ](https://plus.maths.org/content/imaging-maths-inside-klein-bottle)
-- [[[genus,7]]] [Saul Schleimer: Notes on the complex of curves](https://www.researchgate.net/publication/228393582_Notes_on_the_complex_of_curves)
-- [[[gpugems,8]]] [GPU Gems: Volume Rendering Techniques](https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-39-volume-rendering-techniques)
-- [[[marching-cubes,9]]] [Marching cubes: A high resolution 3D surface construction algorithm](https://dl.acm.org/doi/10.1145/37402.37422)
-- [[[marching-tetrahedra,10]]] [Wikipedia: Marching tetrahedra](https://en.wikipedia.org/wiki/Marching_tetrahedra)
-- [[[dual-contouring,11]]] [Dual Contouring Tutorial](https://www.boristhebrave.com/2018/04/15/dual-contouring-tutorial/)
-- [[[delaunay-triangulation,12]]] [Wikipedia: Delaunay triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation)
-- [[[pv227-2022, 13]]] [PV227 GPU Rendering (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PV227/)
+[^pa010-2021]: Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)
+[^pa010-2020]: Sochor: PA010 Intermediate Computer Graphics (podzim 2020)
+[^pa213]: PA213 Advanced Computer Graphics
+[^notes-pa010]: [Moje poznámky z PA010 (podzim 2020)](/fi/pa010/)
+[^manifold-wiki]: [Wikipedia: Topological manifold](https://en.wikipedia.org/wiki/Topological_manifold)
+[^klein-bottle]: [Konrad Polthier: Imaging maths - Inside the Klein bottle ](https://plus.maths.org/content/imaging-maths-inside-klein-bottle)
+[^genus]: [Saul Schleimer: Notes on the complex of curves](https://www.researchgate.net/publication/228393582_Notes_on_the_complex_of_curves)
+[^gpugems]: [GPU Gems: Volume Rendering Techniques](https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-39-volume-rendering-techniques)
+[^marching-cubes]: [Marching cubes: A high resolution 3D surface construction algorithm](https://dl.acm.org/doi/10.1145/37402.37422)
+[^marching-tetrahedra]: [Wikipedia: Marching tetrahedra](https://en.wikipedia.org/wiki/Marching_tetrahedra)
+[^dual-contouring]: [Dual Contouring Tutorial](https://www.boristhebrave.com/2018/04/15/dual-contouring-tutorial/)
+[^delaunay-triangulation]: [Wikipedia: Delaunay triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation)
+[^pv227-2022]: [PV227 GPU Rendering (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PV227/)
 
 ## Další zdroje
 
