@@ -38,7 +38,7 @@ Před samotnou rekonstrukcí je často potřeba provézt ještě předzpracován
   - **Billboarding**\
     Vykreslujeme pouze body, nebo obdélníky na místech, kde se body nacházejí. Body mohou být billboardované (otočené ke kameře), nebo využít normálnových dat v bodech (= Splatting).
   - **Surface Splatting**\
-    Normála povrchu odpovídá normále tečné plochy v každém bodě. Pro každý bod najdeme k bodů v okolí, které minimalizuje vzdálenost těchto bodů od naší roviny $n = \arg \min*{|n| = 1} \sum*{i=1}^k ((p_i - p) \cdot n)^2 $. [pa213](#pa213)
+    Normála povrchu odpovídá normále tečné plochy v každém bodě. Pro každý bod najdeme k bodů v okolí, které minimalizuje vzdálenost těchto bodů od naší roviny $n = \arg \min*{|n| = 1} \sum*{i=1}^k ((p_i - p) \cdot n)^2 $. [^pa213]
 
     Pro nalezení normál využijeme PCA (Principal Component Analysis), normála poté odpovídá vlastnímu vektoru s nejmenší vlastní hodnotou. PCA však vrátí nekonzistentně otočené normály, které můžeme opravit buď otočením všech normál ke kameře, nebo iterativně opravováním sousedství.
 
@@ -51,7 +51,7 @@ Před samotnou rekonstrukcí je často potřeba provézt ještě předzpracován
 ### Rekonstrukce povrchu
 
 - **Delaunay triangulation**\
-  Vytváří trojúhelníkovou síť, tak že žádný bod se nenáchází ve vepsané kružnici žádného trojúhelníku. Maximalizuje nejmenší úhel trojúhelníků. [delaunay-triangulation](#delaunay-triangulation)
+  Vytváří trojúhelníkovou síť, tak že žádný bod se nenáchází ve vepsané kružnici žádného trojúhelníku. Maximalizuje nejmenší úhel trojúhelníků. [^delaunay-triangulation]
 
   ![width=300](./img/vph01_delaunay.svg)
 
@@ -60,9 +60,9 @@ Před samotnou rekonstrukcí je často potřeba provézt ještě předzpracován
 - **Alpha shapes**\
   Obecnější metoda než delaunay triangulation, která umožňuje vytvářet i díry ve výsledném meshi. Alpha shapes jsou definovány pomocí parametru alpha, který určuje, jak moc se mohou body "vytahovat" z objemu.
 
-  [pa213](#pa213) má hezkou metaforu se zmrzlinou s čokoládovými kousky a sférickou naběračkou. Hodnota parametru alpha určuje, jak velká je naběračka, kterou se snažíme vybírat zmrzlinu tak, abychom se nedotkli čokoládových kousků.
+  [^pa213] má hezkou metaforu se zmrzlinou s čokoládovými kousky a sférickou naběračkou. Hodnota parametru alpha určuje, jak velká je naběračka, kterou se snažíme vybírat zmrzlinu tak, abychom se nedotkli čokoládových kousků.
 
-  V podstatě zobecnění delaunay triangulation, kde akceptujeme pouze takové trojúhelníky, které mají opsanou kružnici s poloměrem menším než alpha. [pa213](#pa213)
+  V podstatě zobecnění delaunay triangulation, kde akceptujeme pouze takové trojúhelníky, které mají opsanou kružnici s poloměrem menším než alpha. [^pa213]
 
   **Příklady meshe pro různé hodnoty Alpha**
 
@@ -103,14 +103,14 @@ Před samotnou rekonstrukcí je často potřeba provézt ještě předzpracován
 
   ![width=500rem](./img/vph01_marching_cubes.svg)
 
-  Díky tomu jsme schopní tyto kombinace předpočítat a pro každý voxel vykreslit odpovídající trojúhelníky. Výsledkem je mesh, který reprezentuje povrch objemu. [marching-cubes](#marching-cubes)
+  Díky tomu jsme schopní tyto kombinace předpočítat a pro každý voxel vykreslit odpovídající trojúhelníky. Výsledkem je mesh, který reprezentuje povrch objemu. [^marching-cubes]
 
   Je možné tyto předpočítané body interpolovat podél hran, na kterých leží a tím zlepšit výsledný mesh.
 
   Nevýhodou je tzv. Schodišťový efekt, kdy je výsledný mesh velmi hranatý. Zároveň výsledná mesh obsahuje obrovské množství trojúhelníků, což může být neefektivní.
 
 - **Marching tetrahedra**\
-  Analogický k marching cubes, ale používá místo krychlí čtyřstěny. Řeší problém s některými nejednoznačnými konfiguracemi v marching cubes, a taky nikdy nebyl patentován (kdežto marching cubes ano). [marching-tetrahedra](#marching-tetrahedra)
+  Analogický k marching cubes, ale používá místo krychlí čtyřstěny. Řeší problém s některými nejednoznačnými konfiguracemi v marching cubes, a taky nikdy nebyl patentován (kdežto marching cubes ano). [^marching-tetrahedra]
 - **Flying edges**\
   Optimalizovaný algoritmus pro marching cubes, který prochází každou hranu pouze jednou.
 - **Surface nets**\
@@ -119,22 +119,22 @@ Před samotnou rekonstrukcí je často potřeba provézt ještě předzpracován
   ![width=500](./img/pgv06_surface_nets.png)
 
 - **Dual contouring**\
-  Z voxelů se stanou vrcholy (tedy využíváme dualního grafu). Tyto vrcholy jsou ale posunuty tak, že povrch může obsahovat jak ostré hrany tak zaoblené plochy. [dual-contouring](#dual-contouring)
+  Z voxelů se stanou vrcholy (tedy využíváme dualního grafu). Tyto vrcholy jsou ale posunuty tak, že povrch může obsahovat jak ostré hrany tak zaoblené plochy. [^dual-contouring]
 
   ![width=500](./img/pgv06_dual_contouring.png)
 
 ### Direct volume rendering (přímé renderování objemu)
 
-Nerekonstruujeme povrch, ale mapujeme data na _optické_ vlastnosti jako je barva a průhlednost. Během renderování se pak využívá path tracing, a tyto vlastnosti se akumulují podél jednotlivých paprsků. [gpugems](#gpugems)
+Nerekonstruujeme povrch, ale mapujeme data na _optické_ vlastnosti jako je barva a průhlednost. Během renderování se pak využívá path tracing, a tyto vlastnosti se akumulují podél jednotlivých paprsků. [^gpugems]
 
 V realitě tohle chování paprsku popisujeme integrály. V počítačové grafice se ale využívá aproximace pomocí sumy.
 
-**The Process of Volume Rendering [gpugems](#gpugems)**
+**The Process of Volume Rendering [^gpugems]**
 
 ![width=500rem](./img/vph01_direct_volume_rendering.jpg)
 
 - **Emmission-absorption model**\
-  Paprsek vstupuje do objemu, kde je absorbován a emitován. Výsledná barva je pak výsledkem akumulace těchto vlastností. V notaci používáme: [pa213](#pa213)
+  Paprsek vstupuje do objemu, kde je absorbován a emitován. Výsledná barva je pak výsledkem akumulace těchto vlastností. V notaci používáme: [^pa213]
 
   - $\kappa$ je funkce absorpce,
   - $q$ je emise.
@@ -158,7 +158,7 @@ V realitě tohle chování paprsku popisujeme integrály. V počítačové grafi
   ```
 
 - **Volume rendering integral**\
-  Intenzitu světla $I$ v místě paprsku $s$ počítáme pomocí: [pa213](#pa213)
+  Intenzitu světla $I$ v místě paprsku $s$ počítáme pomocí: [^pa213]
 
   ```math
   \begin{aligned}
@@ -189,14 +189,13 @@ V realitě tohle chování paprsku popisujeme integrály. V počítačové grafi
   Dá se utnout dřív, když víme jistě, že už je výsledek neprůhledný a tedy už se nic nezmění.
 
 - **Transfer function**\
-  Funkce $T$, která mapuje hodnoty voxelů na barvu a průhlednost. Klasifikuje voxely. [pa213](#pa213)
+  Funkce $T$, která mapuje hodnoty voxelů na barvu a průhlednost. Klasifikuje voxely. [^pa213]
 
-## Zdroje
 
-- [[[pa010-2020,1]]] Sochor: PA010 Intermediate Computer Graphics (podzim 2020)
-- [[[pa213, 2]]] PA213 Advanced Computer Graphics
-- [[[marching-cubes,3]]] [Marching cubes: A high resolution 3D surface construction algorithm](https://dl.acm.org/doi/10.1145/37402.37422)
-- [[[marching-tetrahedra,4]]] [Wikipedia: Marching tetrahedra](https://en.wikipedia.org/wiki/Marching_tetrahedra)
-- [[[dual-contouring,5]]] [Dual Contouring Tutorial](https://www.boristhebrave.com/2018/04/15/dual-contouring-tutorial/)
-- [[[delaunay-triangulation,6]]] [Wikipedia: Delaunay triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation)
-- [[[gpugems,7]]] [GPU Gems: Volume Rendering Techniques](https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-39-volume-rendering-techniques)
+[^pa010-2020]: Sochor: PA010 Intermediate Computer Graphics (podzim 2020)
+[^pa213]: PA213 Advanced Computer Graphics
+[^marching-cubes]: [Marching cubes: A high resolution 3D surface construction algorithm](https://dl.acm.org/doi/10.1145/37402.37422)
+[^marching-tetrahedra]: [Wikipedia: Marching tetrahedra](https://en.wikipedia.org/wiki/Marching_tetrahedra)
+[^dual-contouring]: [Dual Contouring Tutorial](https://www.boristhebrave.com/2018/04/15/dual-contouring-tutorial/)
+[^delaunay-triangulation]: [Wikipedia: Delaunay triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation)
+[^gpugems]: [GPU Gems: Volume Rendering Techniques](https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-39-volume-rendering-techniques)

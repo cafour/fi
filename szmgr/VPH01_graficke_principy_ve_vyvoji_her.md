@@ -12,7 +12,7 @@ description: "TODO"
 ## Příprava a vývoj scény
 
 > [!NOTE]
-> Poznámky o grayboxingu, iterování, modulárním workflow, atd. jsou z přednášky Lukáše Medka v rámci PV255. [medek](#medek)
+> Poznámky o grayboxingu, iterování, modulárním workflow, atd. jsou z přednášky Lukáše Medka v rámci PV255. [^medek]
 
 - **Iterace**\
   Práce v iteracích pomáhá:
@@ -35,7 +35,7 @@ description: "TODO"
   - Umožňuje implementovat mechaniky bez nutnosti čekat na assety.
   - Limituje odpad -- nevyužité assety -- při změnách nebo škrtech.
 - **Modulární workflow**\
-  Využití malého množství assetů pro vytvoření rozsáhlého prostředí. Nutná promyšlená preprodukce. [modular](#modular)
+  Využití malého množství assetů pro vytvoření rozsáhlého prostředí. Nutná promyšlená preprodukce. [^modular]
 - **Modulární textury**\
   Textury aplikovatelné na více modelů. Je potřeba na všechna využití myslet při vytváření textury.
 - **Placeholders**\
@@ -59,7 +59,7 @@ description: "TODO"
 
 ## Physically based rendering (PBR)
 
-Physically based rendering (PBR) je způsob renderování, který se snaží co nejvíce aproximovat realitu pomocí fyzikálních modelů světla, stínů, materiálů, očí, atd. [pv227-2022](#pv227-2022) Aproximuje efekty jako absorpci světla nebo jeho rozptyl pod povrchem objektů.
+Physically based rendering (PBR) je způsob renderování, který se snaží co nejvíce aproximovat realitu pomocí fyzikálních modelů světla, stínů, materiálů, očí, atd. [^pv227-2022] Aproximuje efekty jako absorpci světla nebo jeho rozptyl pod povrchem objektů.
 
 - **Absorption and scattering / absorpce a rozptyl**\
   Materiály mohou světlo buď absorbovat (v takovém případě jsou alespoň částěčně průhledné) nebo odrážet a rozptylovat (objekty jsou matné). Většina materiálů kombinuje oba efekty. Světlo se může rozpylovat i pod povrchem (subsurface scattering).
@@ -177,7 +177,7 @@ BRDF je řešena pomocí ray tracingu, radiosity, nebo nějakým hybridním ře�
 ## Optimizalizace výkonu vykreslování
 
 - **Level-of-detail (LOD) / úrovně detailů**\
-  Čím větší vzdálenost, tím méně detailů. [pv255-2022](#pv255-2022)
+  Čím větší vzdálenost, tím méně detailů. [^pv255-2022]
 
   Pro každý model máme hierarchii modelů s různým počtem polygonů. V závislosti na vzdálenosti od pozorovatele vybíráme vhodný LOD.
 
@@ -199,7 +199,7 @@ BRDF je řešena pomocí ray tracingu, radiosity, nebo nějakým hybridním ře�
 - **Hierarchical LOD**\
   Seskupuje objekty ve scéně do hierarchie a zjednodušuje celé skupiny objektů najednou. Vede k lepšímu výkonu.
 - **Texture filtering**\
-  Popisuje, jakým způsobem se pixely textury (texely) mapují na pixely obrazovky / daného polygonu. [texture-mapping](#texture-mapping)
+  Popisuje, jakým způsobem se pixely textury (texely) mapují na pixely obrazovky / daného polygonu. [^texture-mapping]
 
   Součástí problému je potřeba odhadnout, jak velkou plochu polygon zabere na obrazovce.
 
@@ -227,7 +227,7 @@ BRDF je řešena pomocí ray tracingu, radiosity, nebo nějakým hybridním ře�
   - _RenderDoc:_ debuggování OpenGL, DirectX a Vulkan
 
 - **Object culling / ostřelování objektů**\
-  Nalézání podmnožiny objektů ve scéně, která může být vynechána, aniž by viditelně ovlivnila výsledný obraz. Počítání přesné viditelnosti je příliš náročné, proto se používají aproximace známé jako _potentially visible set_ (PVS). [pa010-2021](#pa010-2021)
+  Nalézání podmnožiny objektů ve scéně, která může být vynechána, aniž by viditelně ovlivnila výsledný obraz. Počítání přesné viditelnosti je příliš náročné, proto se používají aproximace známé jako _potentially visible set_ (PVS). [^pa010-2021]
 - **Back-face culling**\
   Vykreslování pouze předních stran polygonů.
 - **View frustum culling**\
@@ -251,11 +251,10 @@ BRDF je řešena pomocí ray tracingu, radiosity, nebo nějakým hybridním ře�
   - Minimalizovat počet materiálů (např. spojováním textur).
   - Vypéct všechni nedynamické (statická světla, stíny, atd.)
 
-## Zdroje
 
-- [[[medek,1]]]: [Lukáš Medek (CBE), Základní postupy při tvorbě assetů a herního vizuálu](++http://decibel.fi.muni.cz/pv255/2018/slides/PV255_-_06_-_Zakladni_postupy_pri_tvorbe_assetu_a_herniho_vizualu.pdf++)
-- [[[modular,2]]]: http://wiki.polycount.com/wiki/Modular_environments
-- [[[pv227-2022, 3]]] [PV227 GPU Rendering (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PV227/)
-- [[[pv255-2022,4]]] [Chmelík, PV255 Game Development I](https://is.muni.cz/auth/el/fi/podzim2022/PV255/um/)
-- [[[texture-mapping, 5]]] [Wikipedia: Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
-- [[[pa010-2021,6]]] [Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)](https://is.muni.cz/auth/el/fi/podzim2021/PA010/um/)
+[^medek]:: [Lukáš Medek (CBE), Základní postupy při tvorbě assetů a herního vizuálu](++http://decibel.fi.muni.cz/pv255/2018/slides/PV255_-_06_-_Zakladni_postupy_pri_tvorbe_assetu_a_herniho_vizualu.pdf++)
+[^modular]:: http://wiki.polycount.com/wiki/Modular_environments
+[^pv227-2022]: [PV227 GPU Rendering (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/PV227/)
+[^pv255-2022]: [Chmelík, PV255 Game Development I](https://is.muni.cz/auth/el/fi/podzim2022/PV255/um/)
+[^texture-mapping]: [Wikipedia: Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
+[^pa010-2021]: [Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)](https://is.muni.cz/auth/el/fi/podzim2021/PA010/um/)

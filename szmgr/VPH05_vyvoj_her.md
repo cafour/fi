@@ -46,7 +46,7 @@ I přes to, že je game engine obecný, neznamená to, že v něm dokážeme (ro
 
 ## Herní rozhraní
 
-Herní rozhraní je to, co přijímá od hráče nějaký vstup (input device) nebo mu vrací nějaký výstup (output device). Někdy zvládá zařízení obě funkce zaráz - např. volant je jistě vstupní zařízení, ale může zároveň podporovat force feedback, tedy výstup. [pv255](#pv255)
+Herní rozhraní je to, co přijímá od hráče nějaký vstup (input device) nebo mu vrací nějaký výstup (output device). Někdy zvládá zařízení obě funkce zaráz - např. volant je jistě vstupní zařízení, ale může zároveň podporovat force feedback, tedy výstup. [^pv255]
 
 ### Fyzická rozhraní
 
@@ -69,7 +69,7 @@ Na _virtuální rozhraní_ si hráč nesáhne. Jsou to všemožná menu, invent�
 - **HUD -- head-up display**\
   Virtuální rozhraní, která má hráč neustále na očích, ale nejsou (často) součástí herních objektů. Např. životy, zásoby munice, minimapa, atd.
 - **Diegetická (dynamická) rozhraní**\
-  UI prvky, které jsou součástí herního světa. Např. interaktivní terminál, který ovládá hráč, nebo hologramy, které se zobrazují v prostoru. Dopomáhají k imerzi, ale mohou hráče frustrovat jelikož bývají pomalejší (protože animace) a mohou být obtížně čitelné. [ui](#ui)
+  UI prvky, které jsou součástí herního světa. Např. interaktivní terminál, který ovládá hráč, nebo hologramy, které se zobrazují v prostoru. Dopomáhají k imerzi, ale mohou hráče frustrovat jelikož bývají pomalejší (protože animace) a mohou být obtížně čitelné. [^ui]
 
   **Fallout 3**
 
@@ -112,7 +112,7 @@ BCI je technologie, která umožňuje ovládat počítač přímo pomocí myšle
 Zjednodušeně, UI řeší vizuální stránku rozhraní, kdežto UX tu funkční. Realita je ale složitější, neboť vizuál a funkčnost se mnohdy vzájemně ovlivňují.
 
 - **UI -- user interface**\
-  UI řeší vizuální prvky, které se zobrazují na obrazovce. Konkrétně se zaobírá jejich vzhledem, umístěním, "feelem". Zahrnuje například: [figma](#figma)
+  UI řeší vizuální prvky, které se zobrazují na obrazovce. Konkrétně se zaobírá jejich vzhledem, umístěním, "feelem". Zahrnuje například: [^figma]
 
   - Layout
   - Typografii
@@ -120,7 +120,7 @@ Zjednodušeně, UI řeší vizuální stránku rozhraní, kdežto UX tu funkčn�
   - Interaktivní prvky: tlačítka, checkboxy, radio buttony, comboboxy, selecty, dropdowny, nebo nedejbože datetimepickery.
 
 - **UX -- user experience**\
-  UX řeší prvky, které se zobrazují na obrazovce, ale zabývá se tím, _jak_ je uživatelé používají, a jestli splňují svůj účel. Zahrnuje třeba: [figma](#figma)
+  UX řeší prvky, které se zobrazují na obrazovce, ale zabývá se tím, _jak_ je uživatelé používají, a jestli splňují svůj účel. Zahrnuje třeba: [^figma]
 
   - Průzkum uživatelských očekávání a konkurence
   - Wireframy a prototypování
@@ -221,7 +221,7 @@ Síťová hra nemusí být multiplayer, a multiplayer hra nemusí být síťová
 
 Stav hry u jednotlivých hráčů a na serveru jsou desynchronizovány kvůli latenci. Jako "správný" stav hry se bere typicky stav na serveru.
 
-**State inconsistency due to latency [netwok-delay](#netwok-delay).**
+**State inconsistency due to latency [^netwok-delay].**
 
 ![width=400](./img/vph05_network_delay.jpg)
 
@@ -268,7 +268,7 @@ TCP má spoustu skvělých vlastností které ho ale zpomalují. Hry proto čast
 
 ### 1. Pre-produkce
 
-Během _pre-produkce_, která obvykle trvá týdny až měsíce (nebo roky v nejmenovaných případech) jde o to příjít na: [cg](#cg)
+Během _pre-produkce_, která obvykle trvá týdny až měsíce (nebo roky v nejmenovaných případech) jde o to příjít na: [^cg]
 
 - O čem hra má být.
 - Kdo je její cílovka.
@@ -292,7 +292,7 @@ Během pre-produkce typicky vzniká řada věcí:
 
 ### 2. Produkce
 
-_Produkce_ je nejdelší fáze vývoje, kdy je potřeba všechno vyrobit a složit dohromady. Může trvat až několik (desítek) let. Jelikož ne všechno se v pre-produkci dá předvídat, hra je během produkce stále testována a upravována. [cg](#cg)
+_Produkce_ je nejdelší fáze vývoje, kdy je potřeba všechno vyrobit a složit dohromady. Může trvat až několik (desítek) let. Jelikož ne všechno se v pre-produkci dá předvídat, hra je během produkce stále testována a upravována. [^cg]
 
 Produkce prochází mnoha milníky:
 
@@ -319,7 +319,7 @@ Jakmile hra vyjde, malý tým vývojářů se stará o opravování chyb, vydáv
 
 ## Principy monetizace
 
-Monetizace je proces extrakce finančních prostředků z videoherního, interaktivního produktu či služby. Zkrátka, když už má někdo hru, chce ji nějakým způsobem prodat. [monetization](#monetization)
+Monetizace je proces extrakce finančních prostředků z videoherního, interaktivního produktu či služby. Zkrátka, když už má někdo hru, chce ji nějakým způsobem prodat. [^monetization]
 
 - **Premium**\
   Tradiční jednorázová platba buď v kamenném obchodě (retail) nebo online (digital download). Hra je poté hráči k dispozici "navždy". Vývojáři mohou vydávat DLCčka, která se prodávají zvlášť. Speciální případ je crowdfunding, kdy hráči platí za hru ještě předtím, než je hotová, a mnohdy dostanou nějaké bonusy.
@@ -349,9 +349,9 @@ Procedurální generování je technika, která umožňuje generovat herní asse
 - **Noise**\
   Množina funkcí generujících pseudo-náhodné hodnoty, které jsou spojité. Používá se při generování terénu, obláčků, všemožných textur, zkrátka všude.
 - **Perlin noise**\
-  Noise, který vymyslel Ken Perlin, když pracoval na filmu Tron (1982) v Disney. Má tu krásnou vlastnost, že není patentovaný. [perlin](#perlin)
+  Noise, který vymyslel Ken Perlin, když pracoval na filmu Tron (1982) v Disney. Má tu krásnou vlastnost, že není patentovaný. [^perlin]
 - **Simplex noise**\
-  Vylepšený Perlin noise, který taky vymyslel Ken Pelin. Tenhle už si patentovat nechal. [perlin](#perlin)
+  Vylepšený Perlin noise, který taky vymyslel Ken Pelin. Tenhle už si patentovat nechal. [^perlin]
 - **L-systém**\
   Něco, co náramně připomíná formální gramatiku, ale aplikuje to pravidla v jedné iteraci "paralelně" na všechny aplikovatelné symboly. Používá se při generování stromů, rostlin, a obecně věcí, co mají větvě.
 
@@ -385,19 +385,18 @@ Serious games se dají dělit podle jejich cíle:
 
 _Gamifikace_ je o použití designových principů a mechanik, které se osvědčily v "obyčejných" hrách cílících na zábavu, v jiných oblastech. Úmyslem je zpříjemnit činnosti, které by jinak byly nudné, a tak zvýšit produktivitu práce.
 
-Gamifikace ale mnohdy zůstává u jednoduchých herních prvků, jako jsou achievementy, leaderboardy, nebo jiné formy odměňování. Naopak, serious games se snaží využít herních principů do hloubky, aby hráč musel k získání odměny vynaložit nějakou snahu. [serious-terminology](#serious-terminology) Gamifikace je proto často brána jako manipulativní a opovrženihodná.
+Gamifikace ale mnohdy zůstává u jednoduchých herních prvků, jako jsou achievementy, leaderboardy, nebo jiné formy odměňování. Naopak, serious games se snaží využít herních principů do hloubky, aby hráč musel k získání odměny vynaložit nějakou snahu. [^serious-terminology] Gamifikace je proto často brána jako manipulativní a opovrženihodná.
 
-## Zdroje
 
 - Nové části otázky je vypracována dle prezentací z předmětu [PV255](https://is.muni.cz/auth/el/fi/podzim2022/PV255/um/lec/).
-- [[[netwok-delay,1]]] https://is.muni.cz/auth/el/fi/podzim2022/PV255/um/lec/Networking_in_computer_games.ppsx
-- [[[cg,2]]] https://www.cgspectrum.com/blog/game-development-process
-- [[[g2,3]]] https://www.g2.com/articles/stages-of-game-development
-- [[[monetization,4]]] https://en.wikipedia.org/wiki/Video_game_monetization
-- [[[pv255, 5]]] https://www.fi.muni.cz/~xchmeli1/PV255/materials.cgi
-- [[[ui,6]]] https://www.gamedeveloper.com/design/user-interface-design-in-video-games
-- [[[figma, 7]]] https://www.figma.com/resource-library/difference-between-ui-and-ux/
-- [[[perlin, 8]]] https://en.wikipedia.org/wiki/Perlin_noise
-- [[[serious, 9]]] https://grendelgames.com/what-are-serious-games/
-- [[[serious-terminology, 10]]] https://grendelgames.com/serious-games-terminology/
-- [[[serious-types, 11]]] https://grendelgames.com/what-are-the-five-types-of-serious-games/
+[^netwok-delay]: https://is.muni.cz/auth/el/fi/podzim2022/PV255/um/lec/Networking_in_computer_games.ppsx
+[^cg]: https://www.cgspectrum.com/blog/game-development-process
+[^g2]: https://www.g2.com/articles/stages-of-game-development
+[^monetization]: https://en.wikipedia.org/wiki/Video_game_monetization
+[^pv255]: https://www.fi.muni.cz/~xchmeli1/PV255/materials.cgi
+[^ui]: https://www.gamedeveloper.com/design/user-interface-design-in-video-games
+[^figma]: https://www.figma.com/resource-library/difference-between-ui-and-ux/
+[^perlin]: https://en.wikipedia.org/wiki/Perlin_noise
+[^serious]: https://grendelgames.com/what-are-serious-games/
+[^serious-terminology]: https://grendelgames.com/serious-games-terminology/
+[^serious-types]: https://grendelgames.com/what-are-the-five-types-of-serious-games/

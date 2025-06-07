@@ -46,7 +46,7 @@ description: "TODO"
   Vývojáři často zaměňují "postava" a "model".
 
 - **Avatar**\
-  Grafická reprezentace uživatele či uživatelovy postavy. [avatar](#avatar) Ve hrách je typicky implementován skrze 3D mesh (obsažený v modelu) či 2D sprite obohacený o animace, collidery, apod.
+  Grafická reprezentace uživatele či uživatelovy postavy. [^avatar] Ve hrách je typicky implementován skrze 3D mesh (obsažený v modelu) či 2D sprite obohacený o animace, collidery, apod.
 
 ## Mnohoúhelníkové sítě
 
@@ -91,20 +91,20 @@ description: "TODO"
 - **Quad topologie**\
   Při modelování (nejen postav) se snažíme, aby všechny polygony byly quady (čtyřúhelníky). Je to zejména proto, že subdivision na nich funguje lépe, a _3D artisti_ dokáží lépe odhadnout, co se s nimi při takových operacích stane.
 - **Organic modeling**\
-  Při modelování postav většinou vycházíme z nějaké anatomie z reálného světa. Snažíme se vyjít z toho, jak jsou v reálném světě kosti, svaly, apod. umístěny. V důsledku toho je například důležité mít edge loops okolo ramen, úst, a boků. [vv036-2023](#vv036-2023)
+  Při modelování postav většinou vycházíme z nějaké anatomie z reálného světa. Snažíme se vyjít z toho, jak jsou v reálném světě kosti, svaly, apod. umístěny. V důsledku toho je například důležité mít edge loops okolo ramen, úst, a boků. [^vv036-2023]
 
   Nejde jen o to vyrobit anatomicky věrný model, ale i o to, aby se model dobře rigoval a animoval. Správná topologie přispívá k tomu, aby se model plynule deformoval při animaci, aniž by se některé části modelu pohybovaly nerealisticky a rozbily _imerzi_.
 
-  **Flowing edge loops and good topology are crucial for rigging and animation [organic](#organic)**
+  **Flowing edge loops and good topology are crucial for rigging and animation [^organic]**
 
   ![width=500rem](./img/vph08_organic_modeling.jpg)
 
 - **Retopologie**\
-  Postup, kdy začneme s high-poly modelem, který jsme nejspíš vysculptovali bez ohledu na topologii, a ručně / automaticky na něm postavíme nový low-poly model se správnou topologií. Tohle nám umožňuje se nejprve soustředit na to, co za model chceme, a pak teprve na jeho technické provedení. [vv036-2023](#vv036-2023)
+  Postup, kdy začneme s high-poly modelem, který jsme nejspíš vysculptovali bez ohledu na topologii, a ručně / automaticky na něm postavíme nový low-poly model se správnou topologií. Tohle nám umožňuje se nejprve soustředit na to, co za model chceme, a pak teprve na jeho technické provedení. [^vv036-2023]
 - **Box modeling**\
-  Proces, kdy začneme od [default cube](https://www.youtube.com/watch?v=SDeVyxtdSUk), subdividneme ji a pokračujeme odtamtaď. [vv036-2023](#vv036-2023)
+  Proces, kdy začneme od [default cube](https://www.youtube.com/watch?v=SDeVyxtdSUk), subdividneme ji a pokračujeme odtamtaď. [^vv036-2023]
 - **Point to point modeling**\
-  Začneme od jediného bodu / polygonu. Tahle metoda je užitečná, když očekáváme, že retopologie modelu bude náročná, jelikož nám dává větší kontrolu nad meshflow. [vv036-2023](#vv036-2023)
+  Začneme od jediného bodu / polygonu. Tahle metoda je užitečná, když očekáváme, že retopologie modelu bude náročná, jelikož nám dává větší kontrolu nad meshflow. [^vv036-2023]
 
 ## Textury
 
@@ -116,7 +116,7 @@ Typický 3D model se skládá nejen z meshe, ale i z materiálů, které jsou v 
 - **UV unwrapping**\
   Tvorba 2D reprezentace 3D modelu -- projekce jeho polygonů na 2D plochu. Toto mapování se posléze využívá při texturování. Proces zahrnuje označování _seams_ -- hran, podél kterých se bude model "rozřezávat". Nevhodná volba seams vede k deformaci textur.
 
-  **Result of unwrapping Suzanne [uv-unwrap](#uv-unwrap)**
+  **Result of unwrapping Suzanne [^uv-unwrap]**
 
   ![width=500rem](./img/vph08_uv_unwrapping.png)
 
@@ -140,7 +140,7 @@ Typický 3D model se skládá nejen z meshe, ale i z materiálů, které jsou v 
 - **Light map**\
   Zapečené statické osvětlení. Typicky se týká spíš celých scén než postav.
 - **Texture baking**\
-  Proces přenosu detailů z (typicky high-poly) modelu na jiný (typicky low-poly) model. High-poly detaily jsou "zapečeny" do textur. Modelovací software typicky vrhá po modelu velké množství paprsků a výsledek ukládá do textur. [texture-baking](#texture-baking)
+  Proces přenosu detailů z (typicky high-poly) modelu na jiný (typicky low-poly) model. High-poly detaily jsou "zapečeny" do textur. Modelovací software typicky vrhá po modelu velké množství paprsků a výsledek ukládá do textur. [^texture-baking]
 
 ## Kostra modelu
 
@@ -159,9 +159,9 @@ Typický 3D model se skládá nejen z meshe, ale i z materiálů, které jsou v 
   > — Josh Petty
 
 - **Forward kinematics (FK)**\
-  Animace se řetězí od parent kosti k child kosti. Pohneme-li rodičovskou kostí, pohnou se i její děcka. Klouby se hýbou po křivkách. [fk-ik](#fk-ik)
+  Animace se řetězí od parent kosti k child kosti. Pohneme-li rodičovskou kostí, pohnou se i její děcka. Klouby se hýbou po křivkách. [^fk-ik]
 - **Inverse kinematics (IK)**\
-  Animujeme jen koncové kosti. Pohyb rodičovských kostí je dopočítán. Klouby se hýbou po přímkách. [fk-ik](#fk-ik)
+  Animujeme jen koncové kosti. Pohyb rodičovských kostí je dopočítán. Klouby se hýbou po přímkách. [^fk-ik]
 - **T-pose / reference pose**\
   Defaultní póza pro charakter při riggování.
 
@@ -170,18 +170,17 @@ Typický 3D model se skládá nejen z meshe, ale i z materiálů, které jsou v 
   ![width=300](./img/vph08_tpose.jpg)
 
 - **Skinning**\
-  Úprava kostry tak, aby se povrch modelu správně deformoval při animaci. [vv036-2023](#vv036-2023) Například v Blenderu se skinning dá provést automaticky nebo nastavením _envelopes_ -- objemů obsahujících ovlivněné vertexy -- a jejich vah.
+  Úprava kostry tak, aby se povrch modelu správně deformoval při animaci. [^vv036-2023] Například v Blenderu se skinning dá provést automaticky nebo nastavením _envelopes_ -- objemů obsahujících ovlivněné vertexy -- a jejich vah.
 
-## Zdroje
 
-- [[[avatar,1]]] https://en.wikipedia.org/wiki/Avatar_(computing)
-- [[[vv036-2023,2]]] [VV036 3D Character Modeling (jaro 2023)](https://is.muni.cz/auth/el/fi/jaro2023/VV036/)
-- [[[quads,3]]] [Why are quads used in filmmaking and triangle in gaming?](https://computergraphics.stackexchange.com/questions/5465/why-are-quads-used-in-filmmaking-and-triangle-in-gaming)
-- [[[organic,4]]] [Tips and tricks for organic modelling](https://www.creativebloq.com/tips-and-tricks-organic-modelling-7123070)
-- [[[texture-baking,5]]] [Texture Baking](http://wiki.polycount.com/wiki/Texture_Baking)
-- [[[fk-ik,6]]] [FK and IK Explained - Which One to Use and When?](https://www.youtube.com/watch?v=0a9qIj7kwiA)
-- [[[envelopes,7]]] [Blender: Deform](https://docs.blender.org/manual/en/latest/animation/armatures/bones/properties/deform.html)
-- [[[uv-unwrap,8]]] [Blender: Unwrapping > Mapping Types](https://docs.blender.org/manual/en/2.79/editors/uv_image/uv/editing/unwrapping/mapping_types.html)
+[^avatar]: https://en.wikipedia.org/wiki/Avatar_(computing)
+[^vv036-2023]: [VV036 3D Character Modeling (jaro 2023)](https://is.muni.cz/auth/el/fi/jaro2023/VV036/)
+[^quads]: [Why are quads used in filmmaking and triangle in gaming?](https://computergraphics.stackexchange.com/questions/5465/why-are-quads-used-in-filmmaking-and-triangle-in-gaming)
+[^organic]: [Tips and tricks for organic modelling](https://www.creativebloq.com/tips-and-tricks-organic-modelling-7123070)
+[^texture-baking]: [Texture Baking](http://wiki.polycount.com/wiki/Texture_Baking)
+[^fk-ik]: [FK and IK Explained - Which One to Use and When?](https://www.youtube.com/watch?v=0a9qIj7kwiA)
+[^envelopes]: [Blender: Deform](https://docs.blender.org/manual/en/latest/animation/armatures/bones/properties/deform.html)
+[^uv-unwrap]: [Blender: Unwrapping > Mapping Types](https://docs.blender.org/manual/en/2.79/editors/uv_image/uv/editing/unwrapping/mapping_types.html)
 
 ## Další zdroje
 

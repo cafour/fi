@@ -153,7 +153,7 @@ Greedy algoritmy nachází řešení globálního problému tak, že volí loká
 
 _Inteligentní brute-force nad prostorem řešení._
 
-Technika hledání řešení problému postupným sestavováním _kandidátního_ řešení. [backtracking](#backtracking)
+Technika hledání řešení problému postupným sestavováním _kandidátního_ řešení. [^backtracking]
 
 - Částečný kandidát může být zavrhnut, pokud nemůže být dokončen.
 - Můžeme dokonce zavrhnout kompletní řešení, pokud je chceme najít všechna.
@@ -399,7 +399,7 @@ _String matching_ označuje rodinu problémů obsahující třeba:
 
 Většinou je řetězec polem znaků z konečné abecedy $\Sigma$. String matching algoritmy se ale dají použít na ledacos.
 
-Vzorek $P$ se vyskytuje v textu $T$ s posunem $s$, pokud $0 \le s \le n - m$ a zároveň $T\lbrack (s+1) .. (s + m) \rbrack = P$. Pro nalezení platných posunů lze použít řadu algoritmů, které se liší složitostí předzpracování i samotného vyhledávání: [iv003-strings](#iv003-strings)
+Vzorek $P$ se vyskytuje v textu $T$ s posunem $s$, pokud $0 \le s \le n - m$ a zároveň $T\lbrack (s+1) .. (s + m) \rbrack = P$. Pro nalezení platných posunů lze použít řadu algoritmů, které se liší složitostí předzpracování i samotného vyhledávání: [^iv003-strings]
 
 | Algoritmus                          | Preprocessing                        | Searching                           |
 | ----------------------------------- | ------------------------------------ | ----------------------------------- |
@@ -469,7 +469,7 @@ int KarpRabin(string text, string pattern)
 - **Hashování**\
   Trik spočívá v použití _rolling_ hashovacího algoritmu. Ten je schopný při výpočtu hashe pro $T\lbrack s .. (s + m) \rbrack$ použít hash $T\lbrack s .. (s + m - 1) \rbrack$ s využitím pouze jednoho dalšího znaku $T\lbrack s + m \rbrack$. Přepočet hashe je tedy $\mathcal{O}(1)$.
 
-  Jeden takový algoritmus lze získat použitím Hornerova schématu pro evaluaci polynomu. [horner](#horner) Předpokládejme, že $\Sigma = \{0, 1, ..., 9\}$ (velikost může být libovolná), pak pro hash $h$ platí
+  Jeden takový algoritmus lze získat použitím Hornerova schématu pro evaluaci polynomu. [^horner] Předpokládejme, že $\Sigma = \{0, 1, ..., 9\}$ (velikost může být libovolná), pak pro hash $h$ platí
 
   ```math
   \begin{align*}
@@ -552,7 +552,7 @@ Jinými slovy na indexu druhého `D` je `abcD` nejdelší prefix $P$, který je 
 - **Složitost**\
   Vytvoření automatu vyžaduje $\Theta(m^3 \cdot |\Sigma|)$ času, dá se však provést efektivněji než v `CreateAutomaton` a to v čase $\Theta(m \cdot |\Sigma|)$.
 
-  Složitost hledání je pak v $\Theta(n)$. [iv003-strings](#iv003-strings)
+  Složitost hledání je pak v $\Theta(n)$. [^iv003-strings]
 
 ### Knuth-Morris-Pratt (KMP)
 
@@ -623,15 +623,14 @@ int KnuthMorrisPratt(string text, string pattern)
 > Nejsem si jistý, že ty indexy v kódu výše mám dobře.
 
 > [!NOTE]
-> "In other words we can amortize character mismatches against earlier character matches." [iv003-strings](#iv003-strings)
+> "In other words we can amortize character mismatches against earlier character matches." [^iv003-strings]
 
 - **Složitost**\
   Amortizací neúspěšných porovnání vůči úspěšným získáme $\mathcal{O}(m)$ pro `ComputeFailure` a $\mathcal{O}(n)$ pro `KnuthMorrisPratt`.
 
-## Zdroje
 
-- [[[iv003, 1]]] [IV003 Algoritmy a datové struktury II (jaro 2021)](https://is.muni.cz/auth/el/fi/jaro2021/IV003/)
-- [[[iv003-strings,2]]] https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/stringmatching.pdf
-- [[[rabin-karp-wiki,3]]] https://en.wikipedia.org/wiki/Rabin%E2%80%93Karp_algorithm
-- [[[horner,4]]] https://en.wikipedia.org/wiki/Horner%27s_method
-- [[[backtracking,5]]] https://betterprogramming.pub/the-technical-interview-guide-to-backtracking-e1a03ca4abad
+[^iv003]: [IV003 Algoritmy a datové struktury II (jaro 2021)](https://is.muni.cz/auth/el/fi/jaro2021/IV003/)
+[^iv003-strings]: https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/slides/stringmatching.pdf
+[^rabin-karp-wiki]: https://en.wikipedia.org/wiki/Rabin%E2%80%93Karp_algorithm
+[^horner]: https://en.wikipedia.org/wiki/Horner%27s_method
+[^backtracking]: https://betterprogramming.pub/the-technical-interview-guide-to-backtracking-e1a03ca4abad

@@ -8,7 +8,7 @@ Hra, videohra, desková hra, digitální hra, počítačová hra, hračka, háda
 
 _PA215, PA216_
 
-> Game design is an idea. An idea is worthless. An idea is not playable.[pa215-2022](#pa215-2022) [pa215-2019](#pa215-2019)
+> Game design is an idea. An idea is worthless. An idea is not playable.[^pa215-2022] [^pa215-2019]
 >
 > — ZZ
 
@@ -40,7 +40,7 @@ Definice hry je stále aktivní proces, ale zjednodušeně je to něco, co se d�
 >
 > — ZZ? Asi.
 
-**Vlastnosti her [schell](#schell)**
+**Vlastnosti her [^schell]**
 
 1. Games are **entered willfully**.
 2. Games have **goals**.
@@ -77,7 +77,7 @@ Useless fun fact: _Xbox_ je zkratka pro _DirectX Box_. DirectX zastřešuje něk
 Takže _Xbox X_ je vlastně _DirectX Box X_. Microsoft fakt neumí pojmenovávat věci.
 
 - **Hádanka**\
-  Hádanka je drobný slovesný projev v podobě hříčky, která v náznaku předkládá určitý problém, k jehož řešení lze dospět důvtipem nebo logickou úvahou [hadanka](#hadanka).
+  Hádanka je drobný slovesný projev v podobě hříčky, která v náznaku předkládá určitý problém, k jehož řešení lze dospět důvtipem nebo logickou úvahou [^hadanka].
 - **Puzzle**\
   V češtině se slovo _puzzle_ používá pro označení skládaček, ale v herním průmyslu se pod tímto slovem rozumí hlavolam - problém, který musí hráč vyřešit.
 - **Divadelní hra**\
@@ -109,7 +109,7 @@ Lidi jsou různí a různí lidi hrají různé hry různě.
 
   > I haven’t tried that one, what’s it do?
 
-**Bartle’s Taxonomy of Players [pa215-2022](#pa215-2022)**
+**Bartle’s Taxonomy of Players [^pa215-2022]**
 
 ![width=500rem](./img/vph03_bartle.png)
 
@@ -118,7 +118,7 @@ Neexistuje hra, která by se líbila všem. Cílová skupina je skupina lidí, k
 
 ## Komponenty hry
 
-Na hru se dá dívat z mnoha různých perspektiv: [pa215-2019](#pa215-2019)
+Na hru se dá dívat z mnoha různých perspektiv: [^pa215-2019]
 
 
 | Component             | Type                                       | Example                        |
@@ -145,9 +145,9 @@ Hry dovedou navodit řadu různých herních zážitků, které můžeme různý
 #### LeBlanc’s Eight Kinds of Fun
 
 > [!TIP]
-> Taky označované jako _Taxonomy of Game Pleasures_ a _herní "pošušňáníčka"_. [pa215-2019](#pa215-2019)
+> Taky označované jako _Taxonomy of Game Pleasures_ a _herní "pošušňáníčka"_. [^pa215-2019]
 
-Game designer Marc LeBlanc rozdělil herní zážitky do osmi kategorií: [leblanc](#leblanc)[mda](#mda)
+Game designer Marc LeBlanc rozdělil herní zážitky do osmi kategorií: [^leblanc][^mda]
 
 - **Sensation**\
   Game as sense-pleasure: beautiful visuals, good audio, tactile pleasure.
@@ -219,7 +219,7 @@ Designér iterativně vytváří hrubé verze hry, které testuje a upravuje. Pr
   - ~~Cílem game designera je vytvořit hru.~~
   - ~~Cílem game designera je vytvořit nějaký zážitek.~~
   - Cílem game designera je vytvořit artefakt (hru), která vytváří nějaký zážitek.
-  - Game designer není zodpovědný za celou hru. Je jen jednou z mnoha rolí, které se na tvorbě hry podílejí. [badges](#badges)
+  - Game designer není zodpovědný za celou hru. Je jen jednou z mnoha rolí, které se na tvorbě hry podílejí. [^badges]
 - **Role**
   - Analyzuje hru jako systém objektů, relací, příčin a následků.
   - Designuje změny, modeluje následky, rozhoduje, posuzuje produkční rizika.
@@ -260,7 +260,7 @@ Ale bacha na mylné závěry. Game designeři mají často zvláštní chutě.
 
 ### Systematická činnost -- game balancing
 
-Při balancování hry designer úmyslně ničí svoji hru, aby odhalil její hranice. [pa215-2022](#pa215-2022)
+Při balancování hry designer úmyslně ničí svoji hru, aby odhalil její hranice. [^pa215-2022]
 
 **Doporučení**
 
@@ -277,9 +277,9 @@ Zjednodušit a předat informace o tom co fungeje a co ne ostatním. Musí umět
 > [!NOTE]
 > Ontologie -- disciplína zabývající se bytím a základními pojmy jako je realita, existence, atp.
 
-Lehký slovník pro popis her. [cgo](#cgo) Hodí se při komunikaci s klienty, nevyvojáři a nehráči. [pa216-2020](#pa216-2020)
+Lehký slovník pro popis her. [^cgo] Hodí se při komunikaci s klienty, nevyvojáři a nehráči. [^pa216-2020]
 
-**The Core Game Ontology [cgo](#cgo)**
+**The Core Game Ontology [^cgo]**
 
 ![width=100%](./img/vph03_cgo.svg)
 
@@ -298,7 +298,7 @@ Lehký slovník pro popis her. [cgo](#cgo) Hodí se při komunikaci s klienty, n
 
 ## Žánry
 
-Herní žánry jsou jednoduchou, byť ne zcela přesnou, klasifikací her podle jejich herních mechanik a herních smyček. [genre](#genre) Hrá může zapadat do jednoho nebo více žánrů. Jsou jimi například:
+Herní žánry jsou jednoduchou, byť ne zcela přesnou, klasifikací her podle jejich herních mechanik a herních smyček. [^genre] Hrá může zapadat do jednoho nebo více žánrů. Jsou jimi například:
 
 - **Platformer**\
   Hra, ve které se hráč pohybuje po platformách a překonává překážky.
@@ -325,16 +325,16 @@ Herní žánry jsou jednoduchou, byť ne zcela přesnou, klasifikací her podle 
 - [Greg Costikyan: I Have No Words & I Must Design: Toward a Critical Vocabulary for Game](http://www.costik.com/nowords2002.pdf)
 
 
-- [[[pa215-2022,1]]] https://is.muni.cz/auth/el/fi/podzim2022/PA215/index.qwarp
-- [[[pa215-2019,2]]] https://is.muni.cz/auth/el/fi/podzim2019/PA215/um/
-- [[[schell,3]]] Jesse Schell, _The Art of Game Design: A Book of Lenses_
-- [[[hadanka,4]]] https://cs.wikipedia.org/wiki/H%C3%A1danka
-- [[[leblanc,5]]] http://algorithmancy.8kindsoffun.com/
-- [[[mda,6]]] https://users.cs.northwestern.edu/~hunicke/pubs/MDA.pdf
-- [[[badges,7]]] https://kumu.io/gamebadges/gamebadges
-- [[[cgo,8]]] https://autosemanticgame.institutedigitalgames.com/ontologies/core-game-ontology/
-- [[[pa216-2020,9]]] https://is.muni.cz/auth/el/fi/jaro2020/PA216/index.qwarp
-- [[[genre,10]]] https://en.wikipedia.org/wiki/Video_game_genre
+[^pa215-2022]: https://is.muni.cz/auth/el/fi/podzim2022/PA215/index.qwarp
+[^pa215-2019]: https://is.muni.cz/auth/el/fi/podzim2019/PA215/um/
+[^schell]: Jesse Schell, _The Art of Game Design: A Book of Lenses_
+[^hadanka]: https://cs.wikipedia.org/wiki/H%C3%A1danka
+[^leblanc]: http://algorithmancy.8kindsoffun.com/
+[^mda]: https://users.cs.northwestern.edu/~hunicke/pubs/MDA.pdf
+[^badges]: https://kumu.io/gamebadges/gamebadges
+[^cgo]: https://autosemanticgame.institutedigitalgames.com/ontologies/core-game-ontology/
+[^pa216-2020]: https://is.muni.cz/auth/el/fi/jaro2020/PA216/index.qwarp
+[^genre]: https://en.wikipedia.org/wiki/Video_game_genre
 
 == Další zdroje
 
