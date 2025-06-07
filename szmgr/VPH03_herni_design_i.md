@@ -3,7 +3,7 @@ title: "Herní design I"
 description: "TODO"
 ---
 
-====
+####
 Hra, videohra, desková hra, digitální hra, počítačová hra, hračka, hádanka, puzzle, divadelní hra. Typologie typů hráče, cílová skupina. Herní zážitek, herní smyčka, herní dynamika, herní mechanika. Herní zaháčkování (hook), herní kotva (anchor). Proces prototypování her, ověřování herního designu. Činnosti herní/ho designérky/a (kreativní, abstraktní, analytické, systematické, komunikační).
 
 _PA215, PA216_
@@ -20,7 +20,7 @@ _PA215, PA216_
 >
 > — Taky ZZ
 
-== Hra
+## Hra
 
 > Hra... je zbytečný termín.
 >
@@ -83,7 +83,7 @@ Takže _Xbox X_ je vlastně _DirectX Box X_. Microsoft fakt neumí pojmenovávat
 - **Divadelní hra**\
   Stejně jako hra se odehrává ve fiktivním světě, obsahuje konflikt a cíl. Většinou ale nemá interaktivní prvky.
 
-== Typy hráčů
+## Typy hráčů
 
 Lidi jsou různí a různí lidi hrají různé hry různě.
 
@@ -113,24 +113,25 @@ Lidi jsou různí a různí lidi hrají různé hry různě.
 
 ![width=500rem](./img/vph03_bartle.png)
 
-=== Cílová skupina
+### Cílová skupina
 Neexistuje hra, která by se líbila všem. Cílová skupina je skupina lidí, které se snažíme oslovit. Může být definována věkem, zájmy, zkušenostmi, atp.
 
-== Komponenty hry
+## Komponenty hry
 
 Na hru se dá dívat z mnoha různých perspektiv: [^pa215-2019]
 
-| Component                   |
-| --------------------------- | ------------------- | --------------------- |
-| Type                        | Example             | Experience            |
-| Outer layer / aesthetic     | Fear                | Loops                 |
-| Gameplay / motivation / ... | Opening doors       | Dynamics / strategies |
-| Gameplay depth              | Hiding in the light | Actions               |
-| Game mechanics              | Lantern / light     | Goals                 |
-| Motivation                  | To survive          | Elements              |
-| Components / aesthetic      | Castle              | System(s)             |
 
-=== Herní zážitek (Experience)
+| Component             | Type                                       | Example                        |
+| --------------------- | ------------------------------------------ | ------------------------------ |
+| Experience            | Outer layer / aesthetic                    | Fear                           |
+| Loops                 | Gameplay / motivation / ...                | Opening doors                  |
+| Dynamics / strategies | Gameplay depth                             | Hiding in the light            |
+| Actions               | Game mechanics                             | Lantern / light                |
+| Goals                 | Motivation                                 | To survive                     |
+| Elements              | Components / aesthetic                     | Castle                         |
+| System(s)             | Behaviour of system / rules of interaction | SFX, enemy AI, narration, ...​ |
+
+### Herní zážitek (Experience)
 
 Games are only means for a greater goal - creating experience.
 
@@ -141,7 +142,7 @@ Hry dovedou navodit řadu různých herních zážitků, které můžeme různý
 > [!IMPORTANT]
 > Herní zážitky souvisí s pojmem obtížnost, kterému se věnuje část otázky [Herní design II](../vph04_herni_design_ii/).
 
-==== LeBlanc’s Eight Kinds of Fun
+#### LeBlanc’s Eight Kinds of Fun
 
 > [!TIP]
 > Taky označované jako _Taxonomy of Game Pleasures_ a _herní "pošušňáníčka"_. [^pa215-2019]
@@ -165,42 +166,42 @@ Game designer Marc LeBlanc rozdělil herní zážitky do osmi kategorií: [^lebl
 - **Submission / masochism**\
   Game as mindless pastime: submission to game structures, mutual agreement to "play".
 
-=== Herní smyčky (Loops)
+### Herní smyčky (Loops)
 _Herní smyčka_ je opakovatelná posloupnost akcí / částí gameplaye. Většina velkých her má víc než jednu smyčku různých žánrů, které jsou vágně (a nebo vůbec) propojené.
 
-=== Herní dynamika (Dynamics)
+### Herní dynamika (Dynamics)
 Strategie, způsoby hraní. Chování hráče, které se noří z toho, jak používá mechaniky.
 
-=== Element / Ludeme
+### Element / Ludeme
 Základní jednotka hry. Třeba L-pohyb koně v šachu.
 
-=== Herní mechaniky
+### Herní mechaniky
 Podobně jako termín _hra_, ani _herní mechanika_ nemá jednoznačnou definici.
 
 - Základní herní elementy, se kterými hráč interaguje úmyslně.
 - Pravidla, která řídí, co za akce hráč může dělat, a jak hra na jeho akce reaguje.
 
-=== Game goals
+### Game goals
 
 - _Konkrétní_: Hráč musí pochopit a být schopný jasně vysvětlit, co jsou zač a jak jich chce dosáhnout.
 - _Dosažitelné_: Hráč musí mít pocit, že je schopný cíl dosáhnout.
 - _Naplňující_: Hráč musí mít pocit, že cíl má smysl, a to ještě předtím, než ho dosáhne, aby měl motivaci.
 
-== Game Design Anchor and Hook
+## Game Design Anchor and Hook
 
-=== Herní zaháčkování (Hook)
+### Herní zaháčkování (Hook)
 Něco nové, co hru odlišuje od ostatních her. Taky lze nazvat unique selling point.
 
-=== Herní kotva (Anchor)
+### Herní kotva (Anchor)
 Něco známeho, povědomého pro hráče.
 
-== Prototypování her
+## Prototypování her
 Designér iterativně vytváří hrubé verze hry, které testuje a upravuje. Prototyp je osekaná verze hry, která obsahuje mechaniky, ale ne nutně grafiku. Prototyp lze využít k ověření herního designu - je hra zábavná?
 
 > [!IMPORTANT]
 > Testováním se více zabývá otázka [Herní design II](../vph04_herni_design_ii/).
 
-== Game Designer
+## Game Designer
 
 > Artist = inner calling = intimate.
 >
@@ -224,7 +225,7 @@ Designér iterativně vytváří hrubé verze hry, které testuje a upravuje. Pr
   - Designuje změny, modeluje následky, rozhoduje, posuzuje produkční rizika.
   - Komunikuje. Hájí hru před ne-designery.
 
-=== Kreativní činnost
+### Kreativní činnost
 
 Nejlepším nástrojem game designera je tužka a papír. Papírový prototyp je pro začátek dost.
 
@@ -234,7 +235,7 @@ Kromě nich ale existuje:
 - [Bitsy](http://www.bitsy.org/#0,0),
 - [Flickgame](https://www.flickgame.org/).
 
-=== Abstraktní činnost
+### Abstraktní činnost
 
 Game designer produkuje taky hromady abstraktních teorií o herním designu.
 
@@ -247,7 +248,7 @@ Game designer produkuje taky hromady abstraktních teorií o herním designu.
 
 > — Ano&comma; stále ZZ
 
-=== Analytická činnost
+### Analytická činnost
 
 ...je tak trochu psychoanalýza.
 
@@ -257,7 +258,7 @@ Game designer produkuje taky hromady abstraktních teorií o herním designu.
 
 Ale bacha na mylné závěry. Game designeři mají často zvláštní chutě.
 
-=== Systematická činnost -- game balancing
+### Systematická činnost -- game balancing
 
 Při balancování hry designer úmyslně ničí svoji hru, aby odhalil její hranice. [^pa215-2022]
 
@@ -268,10 +269,10 @@ Při balancování hry designer úmyslně ničí svoji hru, aby odhalil její hr
 - **Zapisuj** si co děláš, protože pamatovat si to fakt nebudeš.
 - Chápej **numerické / elementální atributy** svojí hry.
 
-=== Komunikační činnost
+### Komunikační činnost
 Zjednodušit a předat informace o tom co fungeje a co ne ostatním. Musí umět obhájit své návrhy.
 
-== The Core Game Ontology
+## The Core Game Ontology
 
 > [!NOTE]
 > Ontologie -- disciplína zabývající se bytím a základními pojmy jako je realita, existence, atp.
@@ -295,7 +296,7 @@ Lehký slovník pro popis her. [^cgo] Hodí se při komunikaci s klienty, nevyvo
 - **Gameplay**\
   Consists of the players strategies whilst playing a game.
 
-== Žánry
+## Žánry
 
 Herní žánry jsou jednoduchou, byť ne zcela přesnou, klasifikací her podle jejich herních mechanik a herních smyček. [^genre] Hrá může zapadat do jednoho nebo více žánrů. Jsou jimi například:
 
@@ -318,7 +319,11 @@ Herní žánry jsou jednoduchou, byť ne zcela přesnou, klasifikací her podle 
 - **Rogue-like**\
   Hra, ve které hráč prochází náhodně generovanými úrovněmi a snaží se přežít co nejdéle. Po smrti začíná znovu.
 
-== Zdroje
+
+## Další zdroje
+
+- [Greg Costikyan: I Have No Words & I Must Design: Toward a Critical Vocabulary for Game](http://www.costik.com/nowords2002.pdf)
+
 
 [^pa215]: https://is.muni.cz/auth/el/fi/podzim2022/PA215/index.qwarp
 [^pa215]: https://is.muni.cz/auth/el/fi/podzim2019/PA215/um/
@@ -330,7 +335,3 @@ Herní žánry jsou jednoduchou, byť ne zcela přesnou, klasifikací her podle 
 [^cgo]: https://autosemanticgame.institutedigitalgames.com/ontologies/core-game-ontology/
 [^pa216]: https://is.muni.cz/auth/el/fi/jaro2020/PA216/index.qwarp
 [^genre]: https://en.wikipedia.org/wiki/Video_game_genre
-
-== Další zdroje
-
-- [Greg Costikyan: I Have No Words & I Must Design: Toward a Critical Vocabulary for Game](http://www.costik.com/nowords2002.pdf)

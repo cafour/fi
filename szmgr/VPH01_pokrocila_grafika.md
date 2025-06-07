@@ -4,7 +4,7 @@ description: "TODO"
 ---
 
 > [!WARNING]
-> Tato je stará verze otázky. Nová verze: [Grafické principy ve vývoji her](./VPH01_graficke_principy_ve_vyvoji_her.ad).
+> Tato je stará verze otázky. Nová verze: [Grafické principy ve vývoji her](../VPH01_graficke_principy_ve_vyvoji_her).
 
 > [!NOTE]
 > Techniky aproximace objektů. Renderování objemových dat (bodový mrak, techniky rekonstrukce povrchů, přímé renderování objemu). Lokální a globální modely nasvícení. Renderování založené na fyzikálních modelech (PBR). Techniky renderování stínů.

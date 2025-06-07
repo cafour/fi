@@ -4,7 +4,7 @@ description: "TODO"
 ---
 
 > [!WARNING]
-> Tato je stará verze otázky. Nová verze: [Fyzikální principy ve vývoji her](./VPH02_fyzikalni_principy_ve_vyvoji_her.ad).
+> Tato je stará verze otázky. Nová verze: [Fyzikální principy ve vývoji her](../VPH02_fyzikalni_principy_ve_vyvoji_her).
 
 > [!NOTE]
 > Příprava a vývoj scény, grayboxing, zástupné modely (placeholders). Optimalizace výkonu vykreslování (úrovně detailů, odstřelování objektů, MIP mapy). Využití shaderů pro efekty ve hrách. Sledování paprsků, objekty pro detekci kolizí, fyzika hadrové panenky.

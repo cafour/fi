@@ -5,9 +5,7 @@ description: "TODO"
 
 > [!NOTE]
 > Reprezentace grafů. Souvislost grafu, rovinné grafy. Prohledávání grafu do šířky a do hloubky, nejkratší vzdálenosti, kostry, toky v sítích. Algoritmy: Bellman-Ford, Dijkstra, Ford-Fulkerson, Push-Relabel, maximální párování v bipartitních grafech.
-> <br>
-> _IB000, IB002, IV003_
-
+> <br> > _IB000, IB002, IV003_
 
 > [!TIP]
 > Tahle otázka má solidní překryv s bakalářskými otázkami [Grafy](../../szb/grafy/) a [Grafové problémy](../../szb/grafove-problemy/).
@@ -286,12 +284,12 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 
 **Složitosti algoritmů**
 
-| Algoritmus                                                             |
-| ---------------------------------------------------------------------- | --------------------------------- | ---------------------------------- |
-| Časová složitost                                                       | Prostorová složitost              | Jarník (Prim) s prioritní frontou  |
-| $\mathcal{O}(\lvert E \rvert \log \lvert V \rvert )$                   | $\mathcal{O}( \lvert  V \rvert )$ | Jarník (Prim) s Fibonacciho haldou |
-| $\mathcal{O}(\lvert E \rvert + \lvert V \rvert \log \lvert V \rvert )$ | $\mathcal{O}( \lvert  V \rvert )$ | Kruskal                            |
-| $\mathcal{O}(\lvert E \rvert \log \lvert V \rvert )$                   | $\mathcal{O}( \lvert  V \rvert )$ | Borůvka                            |
+| Algoritmus                         | Časová složitost                                                       | Prostorová složitost              |
+| ---------------------------------- | ---------------------------------------------------------------------- | --------------------------------- |
+| Jarník (Prim) s prioritní frontou  | $\mathcal{O}(\lvert E \rvert \log \lvert V \rvert )$                   | $\mathcal{O}( \lvert  V \rvert )$ |
+| Jarník (Prim) s Fibonacciho haldou | $\mathcal{O}(\lvert E \rvert + \lvert V \rvert \log \lvert V \rvert )$ | $\mathcal{O}( \lvert  V \rvert )$ |
+| Kruskal                            | $\mathcal{O}(\lvert E \rvert \log \lvert V \rvert )$                   | $\mathcal{O}( \lvert  V \rvert )$ |
+| Borůvka                            | $\mathcal{O}(\lvert E \rvert \log \lvert V \rvert )$                   | $\mathcal{O}( \lvert  V \rvert )$ |
 
 ## Toky v sítích
 
@@ -556,7 +554,6 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
   5. Spusť algoritmus Ford-Fulkerson.
 
      ![width=300](./img/szp07_mcm_03.png)
-
 
 [^ib000]: [IB000 Matematické základy informatiky (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/IB000/um/)
 [^ib002]: [IB002 Algoritmy a datové struktury (jaro 2020)](https://is.muni.cz/auth/el/fi/jaro2020/IB002/um/)
