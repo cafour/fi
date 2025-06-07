@@ -908,7 +908,7 @@ Inverzní funkce je velice užitečná, ale poměrně složitá, takže doufám,
 * [[[edge-detection,7]]] link:https://en.wikipedia.org/wiki/Edge_detection[Wikipedia: Edge detection]
 * [[[fourier, 8]]] link:https://en.wikipedia.org/wiki/Fourier_transform[Wikipedia: Fourier transform]
 * [[[fft, 9]]] link:https://en.wikipedia.org/wiki/Fast_Fourier_transform[Wikipedia: Fast Fourier transform]
-* [[[samping, 10]]] link:https://en.wikipedia.org/wiki/Sampling_(signal_processing)[Wikipedia: Sampling (signal processing)]
+* [[[sampling, 10]]] link:https://en.wikipedia.org/wiki/Sampling_(signal_processing)[Wikipedia: Sampling (signal processing)]
 * [[[scaling, 11]]] link:https://en.wikipedia.org/wiki/Image_scaling[Wikipedia: Image scaling]
 * [[[n-s, 12]]] link:https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem[Wikipedia: Nyquist–Shannon sampling theorem]
 * [[[geometric-transform,13]]] link:https://en.wikipedia.org/wiki/Geometric_transformation[Wikipedia: Geometric transformation]
