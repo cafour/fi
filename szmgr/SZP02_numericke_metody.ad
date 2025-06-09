@@ -105,7 +105,11 @@ x_{k+1} = x_k - \frac{x_k - x_s}{f(x_k) - f(x_s)} f(x_k)
 ++++
 +
 kde stem:[s] je největší index takový, že stem:[f(x_k)f(x_s) < 0].
++
+image::./img/szp02_regula_falsi.png[width=400]
 
+Metoda Binary search::
+Prvotní interval stem:[(x_0, x_1)] musí obsahovat kořen funkce stem:[f], tj. stem:[x_0] a stem:[x_1] mají různé znaménka. V každém kroku se rozdělí interval na dvě poloviny a dál hledáme v polovině která obsahuje kořen funkce. Metoda _regula falsi_ se pokouší o rychlejší kovergenci sofistikovanějším dělením intervalu.
 
 == Přímé metody pro řešení systému lineárních rovnic
 
