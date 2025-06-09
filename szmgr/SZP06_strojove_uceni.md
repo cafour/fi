@@ -190,9 +190,9 @@ Neuronka je model, kde váhy neuronů jsou parametry. Při učení neuronek je n
 
     ```math
     \begin{aligned}
-
+    
     E(\vec{w}) = -\frac{1}{p} \sum_{k=1}^p \sum_{j \in Y} d_{kj} \ln(y_j)
-
+    
     \end{aligned}
     ```
 
@@ -286,6 +286,7 @@ Neuronové sítě uzpůsobené ke zpracování obrazu. Místo násobení matic p
 - **Konvoluční vrstva**
   - Každý neuron je napojen jen na malý _receptive field_ neuronů o vrstvu níže, který se posouvá o daný stride.
   - Výstup z neuronu v konvoluční vrstvě je dán konvolucí jeho receptive field s váhami a přičtením biasu.
+    $f(i,j) = \sum_{q}^{K} \sum_{b}^{L} f(i-q, j-b) \cdot k(a,b)$
   - Všechny neurony v konvoluční vrstvě sdílí stejné váhy a biasy dané velikostí receptive field, což jim umožňuje naučit se nějaký vzor o velikosti receptive field -- říkáme, že taková vrstva je feature mapa.
   - Vzorů se chceme zpravidla naučit více, máme vícero vzájemně nezávislých feature map napojených na stejnou vstupní vrstvu.
 - **Pooling vrstva**\
@@ -324,13 +325,14 @@ Neuronové sítě, jejichž architektura obsahuje cykly. Tedy výstup v jednom b
 - **Výhody**
 
   - Umí zpracovat vstupy s variabilní, předem neznámou délkou.
+  - Vhodné pro time-series data (třeba akciový trh)
   - Velikost modelu (množiny vah) je fixní nezávisle na velikosti vstupu.
   - Váhy se sdílí mezi vstupy (např. slova ve větě), což umožňuje naučit se nějaký kontext.
 
 - **Nevýhody**
   - Trénování je složitější, protože se vyskytuje zpětná vazba.
   - Výpočetně náročnější.
-  - Gradient může explodovat (exploding) nebo zaniknout (diminishing).
+  - Gradient může explodovat (exploding) nebo zaniknout (diminishing). ReLU je náchylná k explozi hodnoty neuronu. Třeba sigmoid je v tomto lepší. [V RNN se typicky používá tanh.](#LTSM)
 
 ![width=100%](./img/szp06_rnn.png)
 
@@ -381,11 +383,11 @@ Neuronové sítě, jejichž architektura obsahuje cykly. Tedy výstup v jednom b
 
   ```math
   \begin{aligned}
-
+  
   U_{kk'}^{(l+1)} &= U_{kk'}^{(l)} - \varepsilon(l) \cdot \frac{\partial E_{(x, d)}}{\partial U_{kk'}} \\
   V_{kk'}^{(l+1)} &= V_{kk'}^{(l)} - \varepsilon(l) \cdot \frac{\partial E_{(x, d)}}{\partial V_{kk'}} \\
   W_{kk'}^{(l+1)} &= W_{kk'}^{(l)} - \varepsilon(l) \cdot \frac{\partial E_{(x, d)}}{\partial W_{kk'}} \\
-
+  
   \frac{\partial E_{(x, d)}}{\partial U_{kk'}} &= \sum_{t=1}^T
       \textcolor{brown}{\frac{\partial E_{(x, d)}}{\partial h_{tk}}}
       \cdot \sigma'
@@ -398,7 +400,7 @@ Neuronové sítě, jejichž architektura obsahuje cykly. Tedy výstup v jednom b
       \textcolor{brown}{\frac{\partial E_{(x, d)}}{\partial h_{tk}}}
       \cdot \sigma'
       \cdot h_{(t-1)k'} \\
-
+  
   \end{aligned}
   ```
 
@@ -408,7 +410,7 @@ Neuronové sítě, jejichž architektura obsahuje cykly. Tedy výstup v jednom b
   \begin{aligned}
   \textcolor{darkgreen}{\frac{\partial E_{(x, d)}}{\partial y_{tk}}}
   &= y_{tk} - d_{tk} \\
-
+  
   \textcolor{brown}{\frac{\partial E_{(x, d)}}{\partial h_{tk}}}
   &= \sum_{k'=1}^N
       \textcolor{darkgreen}{\frac{\partial E_{(x, d)}}{\partial y_{tk'}}}
@@ -426,7 +428,7 @@ Neuronové sítě, jejichž architektura obsahuje cykly. Tedy výstup v jednom b
   > Pokud $\textcolor{red}{\sigma' \cdot W_{k'k}} \not\approx 1$, pak gradient buď vybouchne nebo se ztratí.
 
   - **Long Short-Term Memory (LSTM)**\
-    LSTM řeší problém s vanishing a exploding gradientem, kterým RNN. V RNN je $\sigma$ typicky $\tanh$. V LSTM obsahuje jeden hidden neuron vlastně čtyři "podvrstvy", které mimo jiné umožňují část paměti zapomenout:
+    LSTM řeší problém s vanishing a exploding gradientem, kterým RNN. V RNN je $\sigma$ typicky $\tanh$. V LSTM obsahuje jeden hidden neuron vlastně čtyři "podvrstvy", které mimo jiné umožňují část paměti zapomenout: <a id="LTSM"></a>
 
     ![width=100%](./img/szp06_lstm.png)
 
