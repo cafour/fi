@@ -118,8 +118,7 @@ description: "TODO"
   ![width=400](./img/szp02_regula_falsi.png)
 
 - **Metoda Binary search**\
-  Podobný princip jako _regula falsi_. Vybereš si interval $(x_0, x_1)$ kde kořen funkce leží v tomto intervalu ($f(x_{0,1})$ mají jiné znaménka).
-  Interval zmenšuješ binárním dělením - nový bod vybereš přímo uprostřed a interval upravíš aby kořen stále ležel v něm. Regula falsi se snaží zlepšit rychlost konvergence sofistikovanějším výběrem nového bodu, než jen střed.
+  Prvotní interval $(x_0, x_1)$ musí obsahovat kořen funkce $f$, tj. $x_0$ a $x_1$ mají různé znaménka. V každém kroku se rozdělí interval na dvě poloviny a dál hledáme v polovině která obsahuje kořen funkce. Metoda _regula falsi_ se pokouší o rychlejší kovergenci sofistikovanějším dělením intervalu.
 
 ## Přímé metody pro řešení systému lineárních rovnic
 
