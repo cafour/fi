@@ -96,6 +96,8 @@ description: "TODO"
 
   kde $s$ je největší index takový, že $f(x_k)f(x_s)  < 0$.
 
+  ![width=400](./img/szp02_regula_falsi.png)
+
 ## Přímé metody pro řešení systému lineárních rovnic
 
 ### Gaussova eliminace
