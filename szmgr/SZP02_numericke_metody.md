@@ -77,6 +77,22 @@ description: "TODO"
   3. Opakujeme 2. dokud nedosáhneme požadované přesnosti odhadu.
 
      ![width=400](./img/szp02_newton_method.png)
+  
+
+  > [!NOTE]
+  > How to derive Newton approximation method:
+  > 1. Start with Taylor $f(x)=\sum_{n=0}^{1} \frac{f_n(a)}{n!} \cdot (x-a)^n$
+  > 2. Substitute $a = x_n$
+  > 
+  > $f(x) \approx f(x_n) + f'(x_n)(x-x_n)$
+  > 
+  > Now, we want to find $x_{n+1}$ such that $f(x) = f(x_{n+1}) = 0$.
+  > 
+  > $0 \approx f(x_n) + f'(x_n)(x_{n+1}-x_n)$
+  > 
+  > $0 \approx \frac{f(x_n)}{f'(x_n)} + x_{n+1} - x_n$
+  > 
+  > $x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$
 
 - **Metoda sečen / secant method**\
   Používá k odhadu kořene funkce $f$ sečny, resp. _finite difference_, které aproximují derivaci funkce $f$. Díky tomu není potřeba znát derivaci funkce $f$. Iterační funkce je:
@@ -97,6 +113,10 @@ description: "TODO"
   kde $s$ je největší index takový, že $f(x_k)f(x_s)  < 0$.
 
   ![width=400](./img/szp02_regula_falsi.png)
+
+- **Metoda Binary search**
+  Podobný princip jako _regula falsi_. Vybereš si interval $(x_0, x_1)$ kde kořen funkce leží v tomto intervalu ($f(x_{0,1})$ mají jiné znaménka).
+  Interval zmenšuješ binárním dělením - nový bod vybereš přímo uprostřed a interval upravíš aby kořen stále ležel v něm. Regula falsi se snaží zlepšit rychlost konvergence sofistikovanějším výběrem nového bodu, než jen střed.
 
 ## Přímé metody pro řešení systému lineárních rovnic
 
