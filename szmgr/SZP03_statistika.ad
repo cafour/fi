@@ -387,23 +387,9 @@ S rostoucím počtem sample výsledků stem:[X_i] se jejich distribuce blíží 
 
 Popisuje chování _výběrového průměru_ pro velké soubory vzorků a umožňuje tak sestrojení intervalových odhadů.
 
-Moivreova-Laplacova věta::
-+
---
-Mějme NV stem:[X]. Pokud je stem:[X] součtem stem:[n] vzájemně nezávislých NV stem:[X_1, X_2, ..., X_n] s Bernoulliho rozdělením s parametrem stem:[\pi], má stem:[X] binomické rozdělení s parametry stem:[n] a stem:[\pi], pak s stem:[n \to \infty]:
-
-[stem]
-++++
-\frac{X - n \pi}{\sqrt{n \pi (1 - \pi)}} \approx N(0, 1)
-++++
-
---
 
 Lévyho-Lindenbergova věta::
 +
---
-TIP: Zobecnění Moivreovy-Laplacovy věty.
-
 Mějme NV stem:[X]. Pokud je stem:[X] součtem stem:[n] vzájemně nezávislých NV stem:[X_1, X_2, ..., X_n] se shodným rozdělením libovolného typu, s konečnou střední hodnotou stem:[E(X_i) = \mu] a konečným rozptylem stem:[D(X_i) = \sigma^2], pak pro normovanou NV stem:[U] asymptoticky s stem:[n \to \infty] platí:
 
 [stem]
@@ -450,6 +436,18 @@ P(X < 16) = P(X \leq 15.5) \doteq F(15.5) = 0.377
 ++++
 ====
 
+Moivreova-Laplacova věta::
++
+--
+TIP: Specializace Lévyho-Lindenbergovy věty - rychlejší pro Bernoulliho rozdělení
+
+Mějme NV stem:[X]. Pokud je stem:[X] součtem stem:[n] vzájemně nezávislých NV stem:[X_1, X_2, ..., X_n] s Bernoulliho rozdělením s parametrem stem:[\pi], má stem:[X] binomické rozdělení s parametry stem:[n] a stem:[\pi], pak s stem:[n \to \infty]:
+
+[stem]
+++++
+\frac{X - n \pi}{\sqrt{n \pi (1 - \pi)}} \approx N(0, 1)
+++++
+
 --
 
 == Odhady
@@ -476,7 +474,8 @@ Náhodná veličina dána funkcí, která bere výběrový soubor a vrací čís
 +
 --
 * _Výběrový průměr / sample mean_,
-* _Výběrový rozptyl / sample variance_,
+* _Výběrový rozptyl / sample variance_, unbiased varianta:\
+    stem:[\frac{1}{1-n} \sum_{i = 0}^{n}(x_i - \bar{x})^2]
 * _Výběrovou směrodatnou odchylku / sample standard deviation_,
 * _Výběrovou (empirickou) distribuční funkci / sample distribution function_.
 --
@@ -514,9 +513,9 @@ Hladina významnosti a spolehlivosti / significance and confidence level::
 * Hladina spolehlivosti stem:[1 - \alpha] je pravděpodobnost, že parametr *spadá* do intervalového odhadu.
 
 Levostranný, pravostranný a oboustranný interval / left-tailed, right-tailed and two-tailed interval::
-* _Levostranný (dolní)_: stem:[P(\theta \le \theta_L) = 1 - \alpha].
-* _Pravostranný (horní)_: stem:[P(\theta \ge \theta_U) = 1 - \alpha].
-* _Oboustranný_: stem:[P(\theta \le \theta_L) = P(\theta \ge \theta_U) = \frac{\alpha}{2}].
+* _Levostranný (dolní)_: stem:[P(\theta_L \le \theta) = 1 - \alpha].
+* _Pravostranný (horní)_: stem:[P(\theta_U \ge \theta) = 1 - \alpha].
+* _Oboustranný_: stem:[P(\theta_L < \theta) = P(\theta < \theta) = \frac{\alpha}{2}].
 
 .Tvorba intervalového odhadu
 ====
