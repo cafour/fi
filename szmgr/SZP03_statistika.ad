@@ -513,9 +513,9 @@ Hladina významnosti a spolehlivosti / significance and confidence level::
 * Hladina spolehlivosti stem:[1 - \alpha] je pravděpodobnost, že parametr *spadá* do intervalového odhadu.
 
 Levostranný, pravostranný a oboustranný interval / left-tailed, right-tailed and two-tailed interval::
-* _Levostranný (dolní)_: stem:[P(\theta \le \theta_L) = 1 - \alpha].
-* _Pravostranný (horní)_: stem:[P(\theta \ge \theta_U) = 1 - \alpha].
-* _Oboustranný_: stem:[P(\theta \le \theta_L) = P(\theta \ge \theta_U) = \frac{\alpha}{2}].
+* _Levostranný (dolní)_: stem:[P(\theta_L \le \theta) = 1 - \alpha].
+* _Pravostranný (horní)_: stem:[P(\theta_U \ge \theta) = 1 - \alpha].
+* _Oboustranný_: stem:[P(\theta_L < \theta) = P(\theta < \theta) = \frac{\alpha}{2}].
 
 .Tvorba intervalového odhadu
 ====
