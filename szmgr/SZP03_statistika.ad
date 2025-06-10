@@ -476,7 +476,8 @@ Náhodná veličina dána funkcí, která bere výběrový soubor a vrací čís
 +
 --
 * _Výběrový průměr / sample mean_,
-* _Výběrový rozptyl / sample variance_,
+* _Výběrový rozptyl / sample variance_, unbiased varianta:\
+    stem:[\frac{1}{1-n} \sum_{i = 0}^{n}(x_i - \bar{x})^2]
 * _Výběrovou směrodatnou odchylku / sample standard deviation_,
 * _Výběrovou (empirickou) distribuční funkci / sample distribution function_.
 --
