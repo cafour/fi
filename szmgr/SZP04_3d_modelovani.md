@@ -322,7 +322,7 @@ description: "TODO"
 ### Změna struktury sítě
 
 > [!IMPORTANT]
-> Modifikace meshů mají značný přesah do otázky [Křivky a povrchy](../krivky-a-povrchy/) a taky [Pokročilá počítačová grafika](../vph01_pokrocila_grafika/)
+> Modifikace meshů mají značný přesah do otázky [Křivky a povrchy](../szp05_krivky_a_povrchy/) a taky [Pokročilá počítačová grafika](../vph01_pokrocila_grafika/)
 
 - **Překlápění hrany / edge flip**\
   Lokální změna, která nahradí hranu $(b,c)$ hranou $(a,d)$. Trojúhelníky $(a,b,c)$ a $(b,d,c)$ se stanou $(a,d,c)$ a $(a,b,d)$. [^pa010-2021]
