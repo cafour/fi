@@ -135,6 +135,9 @@ Hledá nejkratší cesty z jednoho vrcholu do všech ostatních.
 - Využívá relaxaci hran.
 - Funguje i na grafech se zápornými hranami.
 - Má časovou složitost $\mathcal{O}(\lvert V \rvert \cdot \lvert E \rvert)$.
+- Udělá max $V-1$ iterací, protože nejdelší cesta může mít max $V-1$ hran (přes žádný vertex nepůjdeš dvakrát).
+- _Modifikace_: Po $V-1$ by už nejkratší cesty měly být nalezeny. Udělejme ještě jednu iteraci - pokud se hodnoty změní, pak nejkratší cesta obsahuje negativní cyklus. Viz python kód dole.
+- _Modifikace_: Early stop - pokud se 2 interace po sobě hodnoty vrcholů nezmění, pak jsme našli nejkratší cesty.
 
 ```python
 def bellmanford(graph: List[List[Tuple[int, int]]], s: int) \
@@ -226,9 +229,9 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 - **Fundamental cutset / řez**\
   Fundamental cutset je množina hran $D$ v grafu $G$ taková, že přidáním libovolné hrany $e \in D$ získáme kostru.
 - **Red rule**\
-  Najdi cyklus bez červených hran, vyber v něm **neobarvenou** hranu s **nejvyšší** cenou a obarvi ji červeně.
+  Najdi cyklus bez červených hran, vyber v něm **neobarvenou** hranu s **nejvyšší** cenou a obarvi ji červeně. Červená hrana znamená odebrání z finální kostry.
 - **Blue rule**\
-  Najdi řez bez modrých hran, vyber v něm **neobarvenou** hranu s **nejmenší** cenou a obarvi ji modře.
+  Najdi řez bez modrých hran, vyber v něm **neobarvenou** hranu s **nejmenší** cenou a obarvi ji modře. Modrá hrana znamená přidání do finální kostry.
 - **Greedy algoritmus**\
   Nedeterministicky aplikuj red rule a blue rule, dokud to jde (stačí $n-1$ iterací). Modré hrany tvoří MST.
 - **Jarníkův / Primův algoritmus**\
@@ -305,7 +308,7 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
   Je funkce $f: E \rightarrow \mathbb{R}^+$, která splňuje:
 
   - podmínku kapacity: $(\forall e \in E)(f(e) \ge 0 \land f(e) \leq c(e))$
-    - _tok hranou je nezáporný a nepřevyšuje povolennou kapacitu_
+    - _tok hranou je nezáporný a nepřevyšuje povolenou kapacitu_
   - podmínku kontinuity: $(\forall v \in V \setminus \{s, t\})(\sum_{e \in \delta^+(v)} f(e) = \sum_{e \in \delta^-(v)} f(e))$
     - _tok do vrcholu je stejný jako tok z vrcholu_
 
@@ -332,7 +335,7 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
     $$
 
 - **Augmenting path $P$**\
-  Jednoduchá $s \rightsquigarrow t$ cesta v residuální síti $G_f$.
+  Jednoduchá $s \rightsquigarrow t$ cesta v residuální síti $G_f$. Cesty hledáš buď BFS nebo DFS - každou iteraci si prostě nějakou vybereš.
 
   > [!NOTE]
   > T.j. cesta která může jít i proti směru toku $f$.
@@ -518,11 +521,11 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 
 **Srovnání algoritmů Ford-Fulkerson a Push-Relabel**
 
-| Ford-Fulkerson          |
-| ----------------------- | ------------------------------------ |
-| Push-Relabel (Goldberg) | global character                     |
-| local character         | update flow along an augmenting path |
-| update flow on edges    | flow conservation                    |
+| Ford-Fulkerson                       | Push-Relabel (Goldberg) |
+| ------------------------------------ | ----------------------- |
+| global character                     | local character         |
+| update flow along an augmenting path | update flow on edges    |
+| flow conservation                    | preflow                 |
 
 ## Maximální párování v bipartitních grafech
 
@@ -556,14 +559,13 @@ Dijkstrův algoritmus lze optimalizovat, pokud nás zajímá jen nejkratší ces
 
      ![width=300](./img/szp07_mcm_03.png)
 
-
-[^ib000]: [IB000 Matematické základy informatiky (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/IB000/um/)
-[^ib002]: [IB002 Algoritmy a datové struktury (jaro 2020)](https://is.muni.cz/auth/el/fi/jaro2020/IB002/um/)
-[^ib003]: [IV003 Algoritmy a datové struktury II (jaro 2021)](https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/)
 [^matching]: [Wikipedia: Párování grafu](https://cs.wikipedia.org/wiki/P%C3%A1rov%C3%A1n%C3%AD_grafu)
 [^mcm]: [Wikipedia: Maximum cardinality matching](https://en.wikipedia.org/wiki/Maximum_cardinality_matching)
 
 ## Další zdroje
 
+- [IB000 Matematické základy informatiky (podzim 2022)](https://is.muni.cz/auth/el/fi/podzim2022/IB000/um/)
+- [IB002 Algoritmy a datové struktury (jaro 2020)](https://is.muni.cz/auth/el/fi/jaro2020/IB002/um/)
+- [IV003 Algoritmy a datové struktury II (jaro 2021)](https://is.muni.cz/auth/el/fi/jaro2021/IV003/um/)
 - [Vizualizace max-flow algoritmů](https://visualgo.net/en/maxflow)
 - [Vizualizace push-relabel](http://www.adrian-haarbach.de/idp-graph-algorithms/implementation/maxflow-push-relabel/index_en.html)
