@@ -157,7 +157,7 @@ Vytvoříme povrch, kde hodnota je konstantní. Na vytvoření isosurface může
 ### Direct volume rendering
 
 Vykreslíme objemová data přímo. Můžeme použít různé techniky, jako např. ray casting, nebo splatting.
-Detailní fungování je popsané v otázce [PGV06](../PGV06_vykreslovani_objemovych_dat).
+Detailní fungování je popsané v otázce [PGV06](../pgv06_vykreslovani_objemovych_dat).
 
 ## Geovizualizace
 
