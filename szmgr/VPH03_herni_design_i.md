@@ -72,9 +72,10 @@ Hry se dají (poměrně hnidopišsky a rozhodně ne jednoznačně) rozdělit na:
 - **Konzolová hra (console game)**\
   Digitální videohra určená pro herní konzoli (PlayStation, Xbox, Nintendo Switch, ...).
 
-Useless fun fact: _Xbox_ je zkratka pro _DirectX Box_. DirectX zastřešuje několik API jako je _Direct3D_, _DirectPlay_, _DirectSound_, _DirectInput_ atd.
-
-Takže _Xbox X_ je vlastně _DirectX Box X_. Microsoft fakt neumí pojmenovávat věci.
+> [!NOTE]
+> Useless fun fact: _Xbox_ je zkratka pro _DirectX Box_. DirectX zastřešuje několik API jako je _Direct3D_, _DirectPlay_, _DirectSound_, _DirectInput_ atd.
+> 
+> Takže _Xbox X_ je vlastně _DirectX Box X_. Microsoft fakt neumí pojmenovávat věci.
 
 - **Hádanka**\
   Hádanka je drobný slovesný projev v podobě hříčky, která v náznaku předkládá určitý problém, k jehož řešení lze dospět důvtipem nebo logickou úvahou [^hadanka].
@@ -92,17 +93,17 @@ Lidi jsou různí a různí lidi hrají různé hry různě.
 - **Socializer**\
   Interaguje s ostatními hráči. Je pyšný na to, že se s ostatními hráči přátelí, že má kontakty a vliv.
 
-  What happened? I missed it, I was talking.
+  > What happened? I missed it, I was talking.
 
 - **Killer**\
   Působí na ostatní hráče. Záleží mu na jeho skillech a reputaci.
 
-  Die!
+  > Die!
 
 - **Achiever**\
   Snaží se dosáhnout cílů ve světě. Záleží mu na jeho postavení v rámci herní hierarchie a na tom, jak rychle se tam dostal.
 
-  Only 4211 points to go!
+  > Only 4211 points to go!
 
 - **Explorer**\
   Snaží se objevovat a poznávat svět. Je hrdý na hloubku svých znalostí o světě.
