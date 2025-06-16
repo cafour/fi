@@ -377,6 +377,9 @@ Mezi jejich vlastnosti patří:
 
 **Basis spline / B-spline** stupně $n$ je aproximační křivka / splajn daná sekvencí $n$ uzlů. Jako funkce vrací užitečné hodnoty jen mezi prvním a posledním uzlem, všude jinde je nulová. Svůj název dostala podle toho, že B-splajny slouží jako bázové funkce pro splajnové křivky.
 
+![width=400](./img/spz05_bspline.png)
+
+
 Lze ji definovat pomocí **Cox-de Boorovy** rekurzivní formule:
 
 > [!TIP]
