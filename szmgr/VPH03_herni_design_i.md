@@ -246,7 +246,7 @@ Game designer produkuje taky hromady abstraktních teorií o herním designu.
 > - It's expensive whether it's **high or low quality**.
 > - It's a **fuel for magic**.
 > - **Without doing something with it it's useless**.
-
+>
 > — Ano&comma; stále ZZ
 
 ### Analytická činnost
@@ -271,7 +271,7 @@ Při balancování hry designer úmyslně ničí svoji hru, aby odhalil její hr
 - Chápej **numerické / elementální atributy** svojí hry.
 
 ### Komunikační činnost
-Zjednodušit a předat informace o tom co fungeje a co ne ostatním. Musí umět obhájit své návrhy.
+Zjednodušit a předat informace o tom co funguje a co ne ostatním. Musí umět obhájit své návrhy.
 
 ## The Core Game Ontology
 

@@ -37,7 +37,7 @@ I přes to, že je game engine obecný, neznamená to, že v něm dokážeme (ro
     - Crash reporty
     - Debug gizmos (debug ray, box, sphere...)
     - Debug menu a konzole
-- **Zvkuk**\
+- **Zvuk**\
   Speciální engine pro zvuk, často middleware jako FMOD nebo Wwise.
 - **Graphics**\
   Zařizuje vykreslování grafiky, osvětlení, stíny, postprocessing, atd.
