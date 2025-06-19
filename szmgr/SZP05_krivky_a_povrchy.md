@@ -684,5 +684,4 @@ Polygonové povrchy dělíme v případě, kdy chceme je zjemnit, vyhladit.
 - [NURBS Calculator](http://nurbscalculator.in/)
 - [ČVUT: Computer Graphics](https://mat.fs.cvut.cz/computer-graphics/)
 
-&lt;div class="fortunate-brain">
-&lt;/div>
+<div class="fortunate-brain"></div>
