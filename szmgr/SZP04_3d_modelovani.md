@@ -219,42 +219,18 @@ description: "TODO"
 
   Ač Eulerových operátorů se dá zadefinovat mnoho, v praxi stačí:
 
-  |====
-  | Operátor
-  | Popis
-
-| `MSFV`
-| make shell, face, vertex
-
-| `MEV`
-| make edge, vertex
-
-| `MFE`
-| make face, edge
-
-| `MSH`
-| make shell, hole
-
-| `MEKL`
-| make edge, kill loop
-
-2+|
-
-| `KEV`
-| kill edge, vertex
-
-| `KFE`
-| kill face, edge
-
-| `KSFV`
-| kill shell, face, vertex
-
-| `KSH`
-| kill shell, hole
-
-| `KEML`
-| kill edge, make loop
-|====
+  | Operátor | Popis                    |
+  | -------- | ------------------------ |
+  | MSFV     | make shell, face, vertex |
+  | MEV      | make edge, vertex        |
+  | MFE      | make face, edge          |
+  | MSH      | make shell, hole         |
+  | MEKL     | make edge, kill loop     |
+  | KEV      | kill edge, vertex        |
+  | KFE      | kill face, edge          |
+  | KSFV     | kill shell, face, vertex |
+  | KSH      | kill shell, hole         |
+  | KEML     | kill edge, make loop     |
 
 - **Regularizované booleovské operátory / regularized boolean operators**\
   Reprezentace těles pomocí booleovských operací. _Regularizované_ značí, že výsledek je vždy platné 2-manifold těleso.
