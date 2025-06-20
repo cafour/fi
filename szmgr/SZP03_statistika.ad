@@ -54,7 +54,7 @@ Rozdělení pravděpodobnosti::
 Funkce stem:[P(X) : \mathbb{E} \to \R], která každé hodnotě popsané veličinou stem:[X] přiřazuje pravděpodobnost jejího výskytu.
 
 --
-* Každá stem:[x_i] má nenulovou pravděpodobnost:
+* Každá stem:[x_i] má nenulovou pravděpodobnost. Jinými slovy - nějaká *určitě* nastane.
 +
 [stem]
 ++++
@@ -212,7 +212,7 @@ P(a \leq X \leq b) = F(b) - F(a)
         0 & x < 0 \\
     \end{cases}
 ]
-| Čas mezi jevy v Poissonově procesu.
+| Čas mezi jevy v Poissonově procesu. Časovou jednotku si můžeme zvolit, ale musí být pak stejná všude.
 | Jak dlouho budeš čekat na šalinu.
 
 | Normální / Gaussovo
@@ -223,7 +223,7 @@ P(a \leq X \leq b) = F(b) - F(a)
                 {2\sigma^2}
         }
 ]
-| Používá se jako default, když nevíš, jakou má proměnná distribuci, kvůli centrální limitní větě. (stem:[\mu] je mean, stem:[\sigma^2] je rozptyl).
+| Používá se jako default, když nevíš, jakou má proměnná distribuci, kvůli centrální limitní větě. (stem:[\mu] je mean, stem:[\sigma^2] je rozptyl). (95% obsahu je v intervalu stem:[\mu \pm \sigma] of stem:[\mu])
 | Výška lidí.
 
 | Standardní normální
@@ -324,7 +324,7 @@ Percentil::
 Výběrový kvantil (stem:[p]-tý kvantil, kde stem:[0 < p < 1]) stem:[Q_p].
 
 Modus::
-Hodnota s největší četností.
+Hodnota s největší četností. Je akceptovatelné, že je _modů_ vícero (bimodální - až multimodální).
 
 ==== Míry variability
 
@@ -630,14 +630,14 @@ Studentův T-test::
 Umožňuje ověřit zda normální rozdělení má danou střední hodnotu. Taky umožňuje ověřit zda dvě normální rozdělení mají stejnou střední hodnotu, za předpokladu, že mají stejný (byť neznámý) rozptyl. <<t-test>>
 
 Analysis of variance (ANOVA)::
-Testuje rozdíly mezi středními hodnotami dvou a více skupin. Používá se k ověření, zda rozptyly dvou nebo více množin dat jsou stejné až na konstantní posun a škálování. <<anova>>
+Testuje rozdíly mezi středními hodnotami dvou a více skupin. Používá se k ověření, zda rozptyly dvou nebo více množin dat jsou stejné až na konstantní posun a škálování. <<anova>> Je to alternativa k dělání testů _každý s každým_.
 
 === Neparametrické testy
 
 Neparametrické testy nejsou založené (jen) na parametrech pravděpodobnostních rozdělení. Používají se, když neznáme rozdělení dat, nebo je těžké splnit předpoklady parametrických testů.
 
 Sign test::
-Testuje, zda se dvě náhodné veličiny při pozorování liší konzistentně. Jinými slovy, zda stření hodnota jejich rozdílu má nulový medián.
+Testuje, zda se dvě náhodné veličiny (= párový test!) při pozorování liší konzistentně. Jinými slovy, zda střední hodnota jejich rozdílu má nulový medián.
 
 One-sample Wilcoxon signed-rank test::
 Testuje, zda vzorky patří do symetrického rozdělení s daným mediánem.

@@ -87,7 +87,7 @@ g(x_{k+1}) = x_k - \frac{f(x_k)}{f'(x_k)}
 image::./img/szp02_newton_method.png[width=400]
 
 Metoda sečen / secant method::
-Používá k odhadu kořene funkce stem:[f] sečny, resp. _finite difference_, které aproximují derivaci funkce stem:[f]. Díky tomu není potřeba znát derivaci funkce stem:[f]. Iterační funkce je:
+Používá k odhadu kořene funkce stem:[f] sečny, resp. _finite difference_, které aproximují derivaci funkce stem:[f]. Díky tomu není potřeba znát derivaci funkce stem:[f]. Volí se dva počáteční body. Iterační funkce je:
 +
 [stem]
 ++++
@@ -97,14 +97,14 @@ g(x_{k+1}) = x_k - \frac{f(x_k)(x_k - x_{k-1})}{f(x_k) - f(x_{k-1})}
 image::./img/szp02_secant_method.png[width=400]
 
 Metoda regula falsi::
-Je _bracketing_ metoda, tedy metoda, která využívá intervalu, ve kterém se nachází kořen. Nemusí se použít iterativně, ale v iterativní podobě tento interval postupně zmenšuje. <<regula-falsi>>
+Je _bracketing_ metoda, tedy metoda, která využívá intervalu, ve kterém se nachází kořen. Nemusí se použít iterativně, ale v iterativní podobě tento interval postupně zmenšuje. Narozdíl od metody sečen si _vybereš_, který z předchozích bodů se ti hodí víc (stem:[x_s]), nemusí to být striktně ten předchozí. <<regula-falsi>> 
 +
 [stem]
 ++++
 x_{k+1} = x_k - \frac{x_k - x_s}{f(x_k) - f(x_s)} f(x_k)
 ++++
 +
-kde stem:[s] je největší index takový, že stem:[f(x_k)f(x_s) < 0].
+kde stem:[s] je největší index takový, že stem:[f(x_k)f(x_s) < 0]. (mají různé znaménka)
 +
 image::./img/szp02_regula_falsi.png[width=400]
 
@@ -332,7 +332,7 @@ Rodina metod numerické diferenciace, které využívají _konečné diference_.
 +
 Jednotlivým "odstínům" -- konkrétním výpočetním vzorcům -- téhle metody se říká _diferenciační schémata_.
 +
-TIP: Abych pravdu řekl, nepodařilo se mi najít zdroj pro konkrétní definici pojmu "diferenciační schéma".
+TIP: Různá _diferenciační schémata_ (dopředná / zpětná / centrální) dávají mnohem větší smysl na diskrétních případech, jako například na obraze. Viz link:../zpracovani-rastroveho-obrazu/[Zpracování rastrového obrazu]. Je to složitý způsob jak říct, že odečteš vedlejší pixel.
 
 (Konečné) diference prvního řádu / first-order (finite) differences::
 Nejjednodušší schéma numerické diferenciace. Vychází z definice derivace. <<finite-difference>>
