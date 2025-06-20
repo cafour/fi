@@ -39,7 +39,7 @@ Low-level moduly::
 ** Debug gizmos (debug ray, box, sphere...)
 ** Debug menu a konzole
 
-Zvkuk::
+Zvuk::
 Speciální engine pro zvuk, často middleware jako FMOD nebo Wwise.
 
 Graphics::
@@ -148,24 +148,24 @@ Distance attenuation::
 Zvuk se zeslabuje s vzdáleností. V reálném světě je zeslabení kvadratické, ve hrách se pro aproximaci používá i lineární zeslabení.
 
 Propagation::
-Oběkty ve scéně mohou zvuk blokovat, odrážet a zeslabovat.
+Objekty ve scéně mohou zvuk blokovat, odrážet a zeslabovat.
 +
 * Occlusion - zvuk je blokován překážkou.
 * Attenuation - zvuk je zeslaben překážkou.
 * Obstruction - přímá cesta zvuku je blokována, ale zvuk se může dostat k posluchači přes odraz. Zvuk přichází z jiného směru, než je zdroj.
-* Exclusion - existuje jen přímá cesta, nepříme cesty jsou blokovány.
+* Exclusion - existuje jen přímá cesta, nepřímé cesty jsou blokovány.
 
 Ozvěna a dozvuk::
 Zvuk se odráží od překážek a dostává se k uchu několikrát po sobě. Tomuto efektu se říká také "wet sound".
 +
-* Přímí zvuk - zvuk, který přijde přímo od zdroje.
-* Dozvuk - zvuk, který se odráží od blízkých překážek. Člověk jej vnímá jakou souvyslý zvuk.
+* Přímý zvuk - zvuk, který přijde přímo od zdroje.
+* Dozvuk - zvuk, který se odráží od blízkých překážek. Člověk jej vnímá jakou souvislý zvuk.
 * Ozvěna - zvuk, který se odráží od vzdálených překážek. Člověk ji vnímá jako zopakování původního zvuku.
 
 Dopplerův efekt::
 Výška tónu se mění podle relativní rychlosti zdroje a posluchače. V praxi si tohoto jevu můžete všimnout například při projíždění sanitky - když se blíží, je slyšet vyšší tón, než když se vzdaluje.
 
-Spoždění::
+Zpoždění::
 Zvuk se šíří určitou rychlostí. Čím dál je zdroj, tím déle trvá, než zvuk dorazí k posluchači. 
 
 === Digitální zvuk
@@ -187,7 +187,7 @@ Zvuková karta dostává data v bufferu a až poté zvuk přehraje. Latence je d
 Mixování::
 Mixování je třeba, pokud chceme přehrát několik zvuků naráz (např. výstřel za běhu při epické hudbě). Jednotlivé zvuky se sčítají, ale může tak dojít k přetečení z intervalu [-1, 1] => musí se nějak opravit.
 +
-Při mixování lze aplikovat i různé efekty (např. změna hlasitosti, ozvěna, změna frekvence). Efekty lze aplikovat na jednotlivé kanály nebo na celý mix. Vznikne tak přímí acyklický graf efektů a mixérů.
+Při mixování lze aplikovat i různé efekty (např. změna hlasitosti, ozvěna, změna frekvence). Efekty lze aplikovat na jednotlivé kanály nebo na celý mix. Vznikne tak přímý (=orientovaný) acyklický graf efektů a mixérů.
 
 
 == Síťová vrstva
@@ -264,7 +264,7 @@ Snaží se vyřešit problém, kdy hráč střílí na místo, kde byl protihrá
 Data compression::
 Méně dat = rychlejší přenos a zpracování.
 +
-* Delta compression - server posílá jen věci, co se změnili. 
+* Delta compression - server posílá jen věci, co se změnily. 
 * Interest management - server posílá jen věci, které hráči zajímají. Navíc může prioritizovat data podle toho, jak důležitá jsou (na základě vzdálenosti, viditelnosti, rychlosti pohybu).
 * Komprese vlastností objektů - např. rotace jako 3 floaty místo čtyř, pozice s nižší přesností, atd.
 
