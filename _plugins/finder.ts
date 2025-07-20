@@ -1,4 +1,4 @@
-import * as path from "std/path/posix/mod.ts";
+import * as path from "@std/path/posix";
 export class Finder {
     #site: Lume.Site;
     #currentPage: Lume.Page;
