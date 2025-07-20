@@ -2,6 +2,7 @@ import lume from "lume/mod.ts";
 import markdown from "lume/plugins/markdown.ts";
 import remark from "lume/plugins/remark.ts";
 import remarkAlert from "./_plugins/remark-alerts.ts";
+import { remarkDefinitionList, defListHastHandlers } from "npm:remark-definition-list";
 import jsx from "lume/plugins/jsx.ts";
 import sass from "lume/plugins/sass.ts";
 import postcss from "lume/plugins/postcss.ts";
@@ -63,8 +64,14 @@ site.use(remark({
                 "IMPORTANT": "Důležitost",
                 "CAUTION": "Bacha!"
             }
-        }]
-    ]
+        }],
+        [remarkDefinitionList]
+    ],
+    rehypeOptions: {
+        handlers: {
+            ...defListHastHandlers
+        }
+    }
 }));
 // site.use(toc({
 //     tabIndex: false,
