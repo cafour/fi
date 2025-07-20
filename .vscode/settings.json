@@ -1,8 +1,0 @@
-{
-    "workbench.colorCustomizations": {
-        "activityBar.background": "#102050",
-        "titleBar.activeBackground": "#665100",
-        "titleBar.inactiveBackground": "#332800"
-    },
-    "asciidoc.antora.enableAntoraSupport": true
-}
