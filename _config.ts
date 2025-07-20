@@ -1,6 +1,6 @@
 import lume from "lume/mod.ts";
 import markdown from "lume/plugins/markdown.ts";
-import jsx from "lume/plugins/jsx_preact.ts";
+import jsx from "lume/plugins/jsx.ts";
 import sass from "lume/plugins/sass.ts";
 import postcss from "lume/plugins/postcss.ts";
 import transformImages from "lume/plugins/transform_images.ts";
@@ -18,7 +18,6 @@ import esbuild from "lume/plugins/esbuild.ts";
 
 import { AsciidoctorEngine, asciidocLoader } from "./_plugins/asciidoc.ts";
 import { default as markdownItAlerts } from "npm:markdown-it-github-alerts";
-import modules from "lume/plugins/modules.ts";
 import finder from "./_plugins/finder.ts";
 
 const site = lume({
@@ -26,108 +25,103 @@ const site = lume({
     location: new URL("https://fi.cafour.cz"),
 });
 
-site
-    .ignore("readme.md", "contributing.md", "public", "deps.ts", "_plugins")
-    .use(markdown({
-        plugins: [[markdownItAlerts, {
-            titles: {
-                "tip": "",
-                "note": "",
-                "important": "",
-                "warning": "",
-                "caution": ""
-            },
-            icons: {
-                "tip": " ",
-                "note": " ",
-                "important": " ",
-                "warning": " ",
-                "caution": " "
-            },
-            classPrefix: "alert"
-        }]]
-    }))
-    .use(toc({
-        tabIndex: false,
-        // anchor: false,
-        anchor: linkInsideHeader({
-            placement: "before"
-        })
-    }))
-    .use(jsx())
-    .use(sass())
-    .use(postcss())
-    .use(metas())
-    .use(resolveUrls())
-    .use(sitemap({
-        query: "indexable=true"
-    }))
-    .use(inline())
-    .use(picture())
-    .use(transformImages({
-        extensions: [".png", ".jpg", ".jpeg", ".gif"],
-        functions: {
-            async resizeCrop(img, size) {
-                const metadata = await img.metadata();
-                let width = -1;
-                let height = -1;
-
-                if (typeof (size) == "number") {
-                    width = size;
-                    height = size;
-                }
-                else {
-                    width = size[0];
-                    height = size[1];
-                }
-
-                if (metadata.width! < metadata.height!) {
-                    img.resize(width, null);
-                } else {
-                    img.resize(null, height);
-                }
-
-                img.extract({
-                    width: width,
-                    height: height,
-                    left: Math.floor((metadata.width! - width) / 2),
-                    top: Math.floor((metadata.height! - height) / 2)
-                });
-            }
-        }
-    }))
-    .use(katex({
-        options: {
-            fleqn: true,
-            throwOnError: false,
-            output: "html",
-            strict: false
-        }
-    }))
-    .use(await codeHighlight())
-    .use(esbuild({
-        options: {
-            bundle: true,
-            format: "iife",
-            minify: false,
-            platform: "browser",
-            target: "esnext",
-            entryPoints: ["./scripts/main.ts"],
-            globalName: "fi"
-        }
-    }))
-    .loadPages([".ad"], { loader: asciidocLoader, engine: new AsciidoctorEngine() })
-    .copy([".svg"])
-    .copy("fonts")
-    .copy("icons")
-    .use(finder())
-    .use(pagefind({
-        indexing: {
-            rootSelector: "main"
+site.ignore("readme.md", "contributing.md", "public", "deps.ts", "_plugins");
+site.use(markdown({
+    plugins: [[markdownItAlerts, {
+        titles: {
+            "tip": "",
+            "note": "",
+            "important": "",
+            "warning": "",
+            "caution": ""
         },
-        ui: {
-            showSubResults: true
+        icons: {
+            "tip": " ",
+            "note": " ",
+            "important": " ",
+            "warning": " ",
+            "caution": " "
+        },
+        classPrefix: "alert"
+    }]]
+}));
+site.use(toc({
+    tabIndex: false,
+    // anchor: false,
+    anchor: linkInsideHeader({
+        placement: "before"
+    })
+}));
+site.use(jsx());
+site.use(esbuild({
+    options: {
+        bundle: true,
+        format: "iife",
+        minify: false,
+        platform: "browser",
+        target: "esnext",
+        entryPoints: ["./scripts/main.ts"],
+        globalName: "fi"
+    }
+}));
+site.use(sass());
+site.use(postcss());
+site.use(metas());
+site.use(resolveUrls());
+site.use(sitemap({
+    query: "indexable=true"
+}));
+site.use(picture());
+site.use(transformImages({
+    functions: {
+        resizeCrop(img, size) {
+            let width = -1;
+            let height = -1;
+
+            if (typeof (size) == "number") {
+                width = size;
+                height = size;
+            }
+            else {
+                width = size[0];
+                height = size[1];
+            }
+
+            img.resize({
+                width: width,
+                height: height,
+                fit: "cover",
+                position: "centre"
+            });
         }
-    }));
+    }
+}));
+site.use(inline());
+site.use(katex({
+    options: {
+        fleqn: true,
+        throwOnError: false,
+        output: "html",
+        strict: false
+    }
+}));
+// .use(await codeHighlight())
+site.loadPages([".ad"], { loader: asciidocLoader, engine: new AsciidoctorEngine() })
+site.copy("fonts");
+site.add("icons");
+site.add("index.md");
+site.add("scripts");
+site.add("styles");
+site.add([".md", ".ad"]);
+site.add([".png", ".jpg", ".jpeg", ".gif", ".svg"])
+site.use(finder());
+site.use(pagefind({
+    indexing: {
+        rootSelector: "main"
+    },
+    ui: {
+        showSubResults: true
+    }
+}));
 
 export default site;

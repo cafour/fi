@@ -3,7 +3,9 @@ export interface FrontPageData extends Lume.Data {
   useNewStyle?: boolean;
 }
 
-export default ({ title, children, styles, useNewStyle }: FrontPageData) => {
+export default function (
+  { title, children, styles, useNewStyle }: FrontPageData,
+) {
   return (
     // dark theme is not ready yet
     <html data-theme="light">
@@ -11,11 +13,22 @@ export default ({ title, children, styles, useNewStyle }: FrontPageData) => {
         <meta charSet="utf-8" />
         <link rel="icon" sizes="16x16" href="/icons/fi_16.ico" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#faf2eb" />
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#3a322b" />
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: light)"
+          content="#faf2eb"
+        />
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: dark)"
+          content="#3a322b"
+        />
         <title>{title ? `${title} | Poznámky z FI` : "Poznámky z FI"}</title>
 
-        {!useNewStyle && (styles ?? []).map((style) => <link href={`/styles/${style}.css`} rel="stylesheet" />)}
+        {!useNewStyle &&
+          (styles ?? []).map((style) => (
+            <link href={`/styles/${style}.css`} rel="stylesheet" />
+          ))}
         {useNewStyle && <link href="/styles/main.css" rel="stylesheet" />}
 
         <link href="/katex.css" rel="stylesheet" />
@@ -25,6 +38,4 @@ export default ({ title, children, styles, useNewStyle }: FrontPageData) => {
       <body className={styles?.join(" ")}>{children}</body>
     </html>
   );
-};
-
-
+}

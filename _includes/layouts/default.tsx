@@ -39,7 +39,7 @@ export default ({ children, search, course, showtitle, title, comp, nav, finder 
           <a href="https://github.com/cafour/fi" class="btn" target="_blank">
             <i class="icon icon-github"></i>
           </a>
-          <comp.Empty html={comp.ThemeToggle()} />
+          {/* <comp.Empty html={comp.ThemeToggle()} /> */}
           {/* <div dangerouslySetInnerHTML={{ __html: comp.ThemeToggle() }}></div> */}
         </div>
       </div>

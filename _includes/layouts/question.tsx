@@ -1,5 +1,3 @@
-import * as path from "std/path/mod.ts";
-
 export const layout = "layouts/base.tsx";
 
 interface QuestionGroup {
