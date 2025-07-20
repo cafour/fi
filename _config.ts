@@ -1,5 +1,7 @@
 import lume from "lume/mod.ts";
 import markdown from "lume/plugins/markdown.ts";
+import remark from "lume/plugins/remark.ts";
+import remarkAlert from "./_plugins/remark-alerts.ts";
 import jsx from "lume/plugins/jsx.ts";
 import sass from "lume/plugins/sass.ts";
 import postcss from "lume/plugins/postcss.ts";
@@ -26,32 +28,51 @@ const site = lume({
 });
 
 site.ignore("readme.md", "contributing.md", "public", "deps.ts", "_plugins");
-site.use(markdown({
-    plugins: [[markdownItAlerts, {
-        titles: {
-            "tip": "",
-            "note": "",
-            "important": "",
-            "warning": "",
-            "caution": ""
-        },
-        icons: {
-            "tip": " ",
-            "note": " ",
-            "important": " ",
-            "warning": " ",
-            "caution": " "
-        },
-        classPrefix: "alert"
-    }]]
+// site.use(markdown({
+//     plugins: [[markdownItAlerts, {
+//         titles: {
+//             "tip": "",
+//             "note": "",
+//             "important": "",
+//             "warning": "",
+//             "caution": ""
+//         },
+//         icons: {
+//             "tip": " ",
+//             "note": " ",
+//             "important": " ",
+//             "warning": " ",
+//             "caution": " "
+//         },
+//         classPrefix: "alert"
+//     }]]
+// }));
+site.use(remark({
+    remarkPlugins: [
+        [remarkAlert, {
+            classPrefix: "alert",
+            icons: {
+                "TIP": "",
+                "NOTE": "",
+                "WARNING": ""
+            },
+            titles: {
+                "TIP": "Tip",
+                "NOTE": "Poznámka",
+                "WARNING": "Varování",
+                "IMPORTANT": "Důležitost",
+                "CAUTION": "Bacha!"
+            }
+        }]
+    ]
 }));
-site.use(toc({
-    tabIndex: false,
-    // anchor: false,
-    anchor: linkInsideHeader({
-        placement: "before"
-    })
-}));
+// site.use(toc({
+//     tabIndex: false,
+//     // anchor: false,
+//     anchor: linkInsideHeader({
+//         placement: "before"
+//     })
+// }));
 site.use(jsx());
 site.use(esbuild({
     options: {
