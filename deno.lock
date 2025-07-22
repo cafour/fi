@@ -59,6 +59,7 @@
     "npm:@asciidoctor/core@3": "3.0.2",
     "npm:@js-temporal/polyfill@0.4.4": "0.4.4",
     "npm:@types/estree@1.0.6": "1.0.6",
+    "npm:@types/hast@*": "3.0.4",
     "npm:@types/mdast@*": "4.0.4",
     "npm:@types/node@*": "18.16.19",
     "npm:@types/react@18.2.47": "18.2.47",
@@ -67,6 +68,10 @@
     "npm:autoprefixer@10.4.20": "10.4.20_postcss@8.4.32",
     "npm:autoprefixer@10.4.21": "10.4.21_postcss@8.4.32",
     "npm:estree-walker@3.0.3": "3.0.3",
+    "npm:h@*": "1.0.0",
+    "npm:ha@*": "0.0.17",
+    "npm:has@*": "1.0.4",
+    "npm:hast@*": "1.0.0",
     "npm:html-react-parser@*": "5.1.1_react@18.2.0",
     "npm:ico-endec@0.1.6": "0.1.6",
     "npm:katex@0.16.15": "0.16.15",
@@ -101,8 +106,10 @@
     "npm:react-dom@18.2.0": "18.2.0_react@18.2.0",
     "npm:react@*": "18.2.0",
     "npm:react@18.2.0": "18.2.0",
+    "npm:rehype-autolink-headings@*": "7.1.0",
     "npm:rehype-raw@7.0.0": "7.0.0",
     "npm:rehype-sanitize@6.0.0": "6.0.0",
+    "npm:rehype-slug@*": "6.0.0",
     "npm:rehype-stringify@10.0.1": "10.0.1",
     "npm:remark-definition-list@*": "2.0.0",
     "npm:remark-gfm@4.0.1": "4.0.1",
@@ -1400,6 +1407,9 @@
     "function-bind@1.1.2": {
       "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="
     },
+    "github-slugger@2.0.0": {
+      "integrity": "sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw=="
+    },
     "glob-parent@5.1.2": {
       "integrity": "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==",
       "dependencies": [
@@ -1416,6 +1426,19 @@
         "once"
       ],
       "deprecated": true
+    },
+    "h@1.0.0": {
+      "integrity": "sha512-nxC1orTrM/gMBsMyWnFqLe2kzqD/iVIVoBIdpOtQc9hyKzWWPuuCiXGwi0o3TwC+3SyhIR5d73WGg6KlcokWzw==",
+      "dependencies": [
+        "cssesc",
+        "html-escape"
+      ]
+    },
+    "ha@0.0.17": {
+      "integrity": "sha512-AH+nKNS1xGIZwVE4kuPpmOeh7zXZYQMm6jixPAQN9qiEVrWvb5CddmZvY8jQghIt3MwGn3ueUp3jOwxj6Sq2Qg=="
+    },
+    "has@1.0.4": {
+      "integrity": "sha512-qdSAmqLF6209RFj4VVItywPMbm3vWylknmB3nvNiUIs72xAimcM8nVYxYr7ncvZq5qzk9MKIZR8ijqD/1QuYjQ=="
     },
     "hasown@2.0.0": {
       "integrity": "sha512-vUptKVTpIJhcczKBbgnS+RtcuYMB8+oNzPK2/Hp3hanz8JmpATdmmgLgSaadVREkDm+e2giHwY3ZRkyjSIDDFA==",
@@ -1456,6 +1479,12 @@
     },
     "hast-util-has-property@3.0.0": {
       "integrity": "sha512-MNilsvEKLFpV604hwfhVStK0usFY/QmM5zX16bo7EjnAEGofr5YyI37kzopBlZJkHD4t887i+q/C8/tr5Q94cA==",
+      "dependencies": [
+        "@types/hast"
+      ]
+    },
+    "hast-util-heading-rank@3.0.0": {
+      "integrity": "sha512-EJKb8oMUXVHcWZTDepnr+WNbfnXKFNf9duMesmr4S8SXTJBJ9M4Yok08pu9vxdJwdlGRhVumk9mEhkEvKGifwA==",
       "dependencies": [
         "@types/hast"
       ]
@@ -1571,6 +1600,12 @@
         "zwitch"
       ]
     },
+    "hast-util-to-string@3.0.1": {
+      "integrity": "sha512-XelQVTDWvqcl3axRfI0xSeoVKzyIFPwsAGSLIsKdJKQMXDYJS4WYrBNF/8J7RdhIcFI2BOHgAifggsvsxp/3+A==",
+      "dependencies": [
+        "@types/hast"
+      ]
+    },
     "hast-util-to-text@4.0.2": {
       "integrity": "sha512-KK6y/BN8lbaq654j7JgBydev7wuNMcID54lkRav1P0CaE1e47P72AWWPiGKXTJU271ooYzcvTAn/Zt0REnvc7A==",
       "dependencies": [
@@ -1585,6 +1620,10 @@
       "dependencies": [
         "@types/hast"
       ]
+    },
+    "hast@1.0.0": {
+      "integrity": "sha512-vFUqlRV5C+xqP76Wwq2SrM0kipnmpxJm7OfvVXpB35Fp+Fn4MV+ozr+JZr5qFvyR1q/U+Foim2x+3P+x9S1PLA==",
+      "deprecated": true
     },
     "hastscript@9.0.1": {
       "integrity": "sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==",
@@ -1602,6 +1641,9 @@
         "domhandler",
         "htmlparser2"
       ]
+    },
+    "html-escape@2.0.0": {
+      "integrity": "sha512-BYh0wceM2Vm4/Q8TNfnKaHXs4DCv2DuYVS87DR40elSvFc+8a6B9mE9ej+8nCOkdqPx7puEx9+hm+GoJ3f9PzA=="
     },
     "html-react-parser@5.1.1_react@18.2.0": {
       "integrity": "sha512-L5VK0rKN3VM7uzRH+4wxAL9elvHuCNDjyWKKjcCDR+YWW5Qr7WWSK7+e627DcePVAFi5IMqc+rAU8j/1DpC/Tw==",
@@ -2457,6 +2499,17 @@
     "readdirp@4.0.2": {
       "integrity": "sha512-yDMz9g+VaZkqBYS/ozoBJwaBhTbZo3UNYQHNRw1D3UFQB8oHB4uS/tAODO+ZLjGWmUbKnIlOWO+aaIiAxrUWHA=="
     },
+    "rehype-autolink-headings@7.1.0": {
+      "integrity": "sha512-rItO/pSdvnvsP4QRB1pmPiNHUskikqtPojZKJPPPAVx9Hj8i8TwMBhofrrAYRhYOOBZH9tgmG5lPqDLuIWPWmw==",
+      "dependencies": [
+        "@types/hast",
+        "@ungap/structured-clone",
+        "hast-util-heading-rank",
+        "hast-util-is-element",
+        "unified",
+        "unist-util-visit"
+      ]
+    },
     "rehype-minify-whitespace@6.0.2": {
       "integrity": "sha512-Zk0pyQ06A3Lyxhe9vGtOtzz3Z0+qZ5+7icZ/PL/2x1SHPbKao5oB/g/rlc6BCTajqBb33JcOe71Ye1oFsuYbnw==",
       "dependencies": [
@@ -2477,6 +2530,16 @@
       "dependencies": [
         "@types/hast",
         "hast-util-sanitize"
+      ]
+    },
+    "rehype-slug@6.0.0": {
+      "integrity": "sha512-lWyvf/jwu+oS5+hL5eClVd3hNdmwM1kAC0BUvEGD19pajQMIzcNUd/k9GsfQ+FfECvX+JE+e9/btsKH0EjJT6A==",
+      "dependencies": [
+        "@types/hast",
+        "github-slugger",
+        "hast-util-heading-rank",
+        "hast-util-to-string",
+        "unist-util-visit"
       ]
     },
     "rehype-stringify@10.0.1": {
@@ -4327,6 +4390,7 @@
     "https://deno.land/x/xml@2.1.3/utils/streamable.ts": "1603a5f10c859b95d4e9502365a0fba0b19d5d068356e20d5a6813cd37fee780",
     "https://deno.land/x/xml@2.1.3/utils/stringifier.ts": "c701b506835237c0c6c0a08fd94e0a012b644def3f4c819c64788daf2e649ea3",
     "https://deno.land/x/xml@2.1.3/utils/types.ts": "ecaf7785e54a6f1da6f8e56da2bce9853407ceb7d5b3b70f0a60a0890151fe4c",
+    "https://deno.land/x/xml@7.0.0/_types.ts": "203f97a91686f1aa9423ef07abe646da7caa07a2cf13b27897ffc4f43fdeae8f",
     "https://deno.land/x/xml@7.0.0/mod.ts": "ca2bb5a9a90d236a2b6242c8643717e0c53f645092d2407792dad728e1367f9a",
     "https://deno.land/x/xml@7.0.0/parse.ts": "8ae0d8339f589c29ab203dd7887e06325e2064efedfe9c61e2cd6d907443b664",
     "https://deno.land/x/xml@7.0.0/stringify.ts": "f604d3d88b8bdaff11dbc9d57a6e98fd9b353e3bfbafcaa3f421e6b470ea0e02",

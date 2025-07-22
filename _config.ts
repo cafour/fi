@@ -3,7 +3,9 @@ import markdown from "lume/plugins/markdown.ts";
 import remark from "lume/plugins/remark.ts";
 import remarkAlert from "./_plugins/remark-alerts.ts";
 import { remarkDefinitionList, defListHastHandlers } from "npm:remark-definition-list";
-import smartypants from "npm:remark-smartypants";
+import remarkSmartypants from "npm:remark-smartypants";
+import rehypeSlug from "npm:rehype-slug";
+import rehypeAutolinkHeadings from "npm:rehype-autolink-headings";
 import jsx from "lume/plugins/jsx.ts";
 import sass from "lume/plugins/sass.ts";
 import postcss from "lume/plugins/postcss.ts";
@@ -19,6 +21,7 @@ import pagefind from "lume/plugins/pagefind.ts";
 import { linkInsideHeader } from "lume_markdown_plugins/toc/anchors.ts";
 import toc from "lume_markdown_plugins/toc.ts";
 import esbuild from "lume/plugins/esbuild.ts";
+import { ElementContent } from "npm:@types/hast";
 
 import { AsciidoctorEngine, asciidocLoader } from "./_plugins/asciidoc.ts";
 import { default as markdownItAlerts } from "npm:markdown-it-github-alerts";
@@ -71,11 +74,27 @@ site.use(remark({
         ],
         [remarkDefinitionList],
         [
-            smartypants,
+            remarkSmartypants,
             {
                 dashes: "oldschool",
                 openingQuotes: "„",
                 closingQuotes: "“"
+            }
+        ]
+    ],
+    rehypePlugins: [
+        [rehypeSlug],
+        [
+            rehypeAutolinkHeadings,
+            {
+                content: {
+                    type: "text",
+                    value: "#"
+                },
+                properties: {
+                    tabIndex: -1,
+                    class: "header-anchor"
+                }
             }
         ]
     ],
@@ -166,6 +185,7 @@ site.add("styles");
 site.add([".md", ".ad"]);
 site.add([".png", ".jpg", ".jpeg", ".gif", ".svg"])
 site.use(finder());
+site.ignore("szmgr");
 site.use(pagefind({
     indexing: {
         rootSelector: "main"
