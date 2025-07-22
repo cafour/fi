@@ -3,6 +3,7 @@ import markdown from "lume/plugins/markdown.ts";
 import remark from "lume/plugins/remark.ts";
 import remarkAlert from "./_plugins/remark-alerts.ts";
 import { remarkDefinitionList, defListHastHandlers } from "npm:remark-definition-list";
+import smartypants from "npm:remark-smartypants";
 import jsx from "lume/plugins/jsx.ts";
 import sass from "lume/plugins/sass.ts";
 import postcss from "lume/plugins/postcss.ts";
@@ -50,22 +51,33 @@ site.ignore("readme.md", "contributing.md", "public", "deps.ts", "_plugins");
 // }));
 site.use(remark({
     remarkPlugins: [
-        [remarkAlert, {
-            classPrefix: "alert",
-            icons: {
-                "TIP": "",
-                "NOTE": "",
-                "WARNING": ""
-            },
-            titles: {
-                "TIP": "Tip",
-                "NOTE": "Poznámka",
-                "WARNING": "Varování",
-                "IMPORTANT": "Důležitost",
-                "CAUTION": "Bacha!"
+        [
+            remarkAlert,
+            {
+                classPrefix: "alert",
+                icons: {
+                    "TIP": "",
+                    "NOTE": "",
+                    "WARNING": ""
+                },
+                titles: {
+                    "TIP": "Tip",
+                    "NOTE": "Poznámka",
+                    "WARNING": "Varování",
+                    "IMPORTANT": "Důležitost",
+                    "CAUTION": "Bacha!"
+                }
             }
-        }],
-        [remarkDefinitionList]
+        ],
+        [remarkDefinitionList],
+        [
+            smartypants,
+            {
+                dashes: "oldschool",
+                openingQuotes: "„",
+                closingQuotes: "“"
+            }
+        ]
     ],
     rehypeOptions: {
         handlers: {
