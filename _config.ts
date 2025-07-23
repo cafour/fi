@@ -1,5 +1,11 @@
 import lume from "lume/mod.ts";
 import markdown from "lume/plugins/markdown.ts";
+import remark from "lume/plugins/remark.ts";
+import remarkAlert from "./_plugins/remark-alerts.ts";
+import { remarkDefinitionList, defListHastHandlers } from "npm:remark-definition-list";
+import remarkSmartypants from "npm:remark-smartypants";
+import rehypeSlug from "npm:rehype-slug";
+import rehypeAutolinkHeadings from "npm:rehype-autolink-headings";
 import jsx from "lume/plugins/jsx.ts";
 import sass from "lume/plugins/sass.ts";
 import postcss from "lume/plugins/postcss.ts";
@@ -15,6 +21,7 @@ import pagefind from "lume/plugins/pagefind.ts";
 import { linkInsideHeader } from "lume_markdown_plugins/toc/anchors.ts";
 import toc from "lume_markdown_plugins/toc.ts";
 import esbuild from "lume/plugins/esbuild.ts";
+import { ElementContent } from "npm:@types/hast";
 
 import { AsciidoctorEngine, asciidocLoader } from "./_plugins/asciidoc.ts";
 import { default as markdownItAlerts } from "npm:markdown-it-github-alerts";
@@ -26,32 +33,84 @@ const site = lume({
 });
 
 site.ignore("readme.md", "contributing.md", "public", "deps.ts", "_plugins");
-site.use(markdown({
-    plugins: [[markdownItAlerts, {
-        titles: {
-            "tip": "",
-            "note": "",
-            "important": "",
-            "warning": "",
-            "caution": ""
-        },
-        icons: {
-            "tip": " ",
-            "note": " ",
-            "important": " ",
-            "warning": " ",
-            "caution": " "
-        },
-        classPrefix: "alert"
-    }]]
+// site.use(markdown({
+//     plugins: [[markdownItAlerts, {
+//         titles: {
+//             "tip": "",
+//             "note": "",
+//             "important": "",
+//             "warning": "",
+//             "caution": ""
+//         },
+//         icons: {
+//             "tip": " ",
+//             "note": " ",
+//             "important": " ",
+//             "warning": " ",
+//             "caution": " "
+//         },
+//         classPrefix: "alert"
+//     }]]
+// }));
+site.use(remark({
+    remarkPlugins: [
+        [
+            remarkAlert,
+            {
+                classPrefix: "alert",
+                icons: {
+                    "TIP": "",
+                    "NOTE": "",
+                    "WARNING": ""
+                },
+                titles: {
+                    "TIP": "Tip",
+                    "NOTE": "Poznámka",
+                    "WARNING": "Varování",
+                    "IMPORTANT": "Důležitost",
+                    "CAUTION": "Bacha!"
+                }
+            }
+        ],
+        [remarkDefinitionList],
+        // [
+        //     remarkSmartypants,
+        //     {
+        //         dashes: "oldschool",
+        //         openingQuotes: "„",
+        //         closingQuotes: "“"
+        //     }
+        // ]
+    ],
+    rehypePlugins: [
+        [rehypeSlug],
+        [
+            rehypeAutolinkHeadings,
+            {
+                content: {
+                    type: "text",
+                    value: "#"
+                },
+                properties: {
+                    tabIndex: -1,
+                    class: "header-anchor"
+                }
+            }
+        ]
+    ],
+    rehypeOptions: {
+        handlers: {
+            ...defListHastHandlers
+        }
+    }
 }));
-site.use(toc({
-    tabIndex: false,
-    // anchor: false,
-    anchor: linkInsideHeader({
-        placement: "before"
-    })
-}));
+// site.use(toc({
+//     tabIndex: false,
+//     // anchor: false,
+//     anchor: linkInsideHeader({
+//         placement: "before"
+//     })
+// }));
 site.use(jsx());
 site.use(esbuild({
     options: {
@@ -102,7 +161,18 @@ site.use(katex({
         fleqn: true,
         throwOnError: false,
         output: "html",
-        strict: false
+        strict: false,
+        delimiters: [
+            { left: "$", right: "$", display: false },
+            { left: "$$", right: "$$", display: true },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\begin{equation}", right: "\\end{equation}", display: true },
+            { left: "\\begin{align}", right: "\\end{align}", display: true },
+            { left: "\\begin{alignat}", right: "\\end{alignat}", display: true },
+            { left: "\\begin{gather}", right: "\\end{gather}", display: true },
+            { left: "\\begin{CD}", right: "\\end{CD}", display: true },
+            { left: "\\[", right: "\\]", display: true }
+        ]
     }
 }));
 // .use(await codeHighlight())

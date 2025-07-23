@@ -1,5 +1,5 @@
 import Site from "lume/core/site.ts";
-import katex from "lume/plugins/katex.ts";
+import katex from "./katex.vanilla.ts";
 import { Options } from "lume/plugins/katex.ts";
 
 const BASE = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/";
