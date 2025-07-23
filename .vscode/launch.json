@@ -6,7 +6,7 @@
     "configurations": [
         {
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Debug",
             "type": "node",
             "cwd": "${workspaceFolder}",
             "runtimeExecutable": "C:\\Users\\Adam\\scoop\\shims\\deno.EXE",

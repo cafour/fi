@@ -73,14 +73,14 @@ site.use(remark({
             }
         ],
         [remarkDefinitionList],
-        [
-            remarkSmartypants,
-            {
-                dashes: "oldschool",
-                openingQuotes: "„",
-                closingQuotes: "“"
-            }
-        ]
+        // [
+        //     remarkSmartypants,
+        //     {
+        //         dashes: "oldschool",
+        //         openingQuotes: "„",
+        //         closingQuotes: "“"
+        //     }
+        // ]
     ],
     rehypePlugins: [
         [rehypeSlug],
@@ -185,7 +185,6 @@ site.add("styles");
 site.add([".md", ".ad"]);
 site.add([".png", ".jpg", ".jpeg", ".gif", ".svg"])
 site.use(finder());
-site.ignore("szmgr");
 site.use(pagefind({
     indexing: {
         rootSelector: "main"
