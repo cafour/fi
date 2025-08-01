@@ -26,5 +26,9 @@
     "plugins": [
       "https://deno.land/x/lume@v3.0.5/lint.ts"
     ]
+  },
+  "fmt": {
+    "lineWidth": 120,
+    "indentWidth": 4
   }
 }

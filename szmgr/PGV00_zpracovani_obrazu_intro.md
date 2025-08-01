@@ -1,6 +1,6 @@
 ---
 title: Zpracování obrazu - intro
-description: "TODO"
+description: Úvod do státnicových otázek specializace Zpracování obrazu (PGV).
 ---
 
 > [!TIP]
