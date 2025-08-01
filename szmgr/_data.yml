@@ -1,57 +1,20 @@
-layout: layouts/question.tsx
-styles: ["question"]
-mergedKeys:
-  styles: noop
-
-# layout: layouts/default.tsx
-# useNewStyle: true
-
+layout: layouts/default.tsx
+useNewStyle: true
 tags: [szmgr]
 course: SZMGR
 home: /szmgr/
+discriminator: szmgr
+
 groups:
-  - name: szp
+  - name: SZP
     display: Společný základ programu
-  - name: vph
+  - name: VPH
     display: Vývoj počítačových her
-  - name: pgv
+  - name: PGV
     display: Počítačová grafika a vizualizace
-  # - name: gd
-  #   display: Grafický design
+  - name: GD
+    display: Grafický design
+
 nav:
   - title: Zpět na seznam předmětů
     href: /
-  - title: Společný základ programu
-    children:
-      - href: SZP01_algoritmy.ad
-      - href: SZP02_numericke_metody.ad
-      - href: SZP03_statistika.ad
-      - href: SZP04_3d_modelovani.ad
-      - href: SZP05_krivky_a_povrchy.ad
-      - href: SZP06_strojove_uceni.ad
-      - href: SZP07_grafy.ad
-      - href: SZP08_modelovani_a_projekce.ad
-      - href: SZP09_zpracovani_obrazu.ad
-      - href: SZP10_analyza_obrazu.ad
-  - title: Vývoj počítačových her
-    children:
-      - href: VPH01_pokrocila_grafika.ad
-      - href: VPH02_graficke_a_fyzikalni_principy.ad
-      - href: VPH03_herni_design_i.ad
-      - href: VPH04_herni_design_ii.ad
-      - href: VPH05_vyvoj_her.ad
-      - href: VPH06_ai_ve_hrach.ad
-      - href: VPH07_gpu_rendering.ad
-      - href: VPH08_modelovani_3d_postav.ad
-  - title: Počítačová grafika a vizualizace
-    children:
-      - href: PGV01_zaklady_vizualizace.ad
-      - href: PGV02_metody_vizualizace.ad
-      - href: PGV03_zaklady_pocitatcove_grafiky.ad
-      - href: PGV04_geometricke_algoritmy.ad
-      - href: PGV05_deleni_prostoru_a_sceny.ad
-      - href: PGV06_vykreslovani_objemovych_dat.ad
-      - href: PGV07_modely_osvetleni.ad
-      - href: PGV08_real_time_rendering.ad
-      - href: PGV09_minimalizace_energie.ad
-      - href: PGV10_zpracovani_obrazu_pomoci_PDE.ad
