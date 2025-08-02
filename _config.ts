@@ -1,9 +1,8 @@
 import lume from "lume/mod.ts";
-import markdown from "lume/plugins/markdown.ts";
 import remark from "lume/plugins/remark.ts";
 import remarkAlert from "./_plugins/remark-alerts.ts";
 import { remarkDefinitionList, defListHastHandlers } from "npm:remark-definition-list";
-import remarkSmartypants from "npm:remark-smartypants";
+import remarkTextr from "npm:remark-textr";
 import rehypeSlug from "npm:rehype-slug";
 import rehypeAutolinkHeadings from "npm:rehype-autolink-headings";
 import jsx from "lume/plugins/jsx.ts";
@@ -14,17 +13,15 @@ import picture from "lume/plugins/picture.ts";
 import katex from "./_plugins/katex.ts";
 import metas from "lume/plugins/metas.ts";
 import resolveUrls from "lume/plugins/resolve_urls.ts";
-import codeHighlight from "./_plugins/shiki.ts";
+import shiki from "./_plugins/shiki.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import inline from "lume/plugins/inline.ts";
 import pagefind from "lume/plugins/pagefind.ts";
-import { linkInsideHeader } from "lume_markdown_plugins/toc/anchors.ts";
 import toc from "lume_markdown_plugins/toc.ts";
 import esbuild from "lume/plugins/esbuild.ts";
-import { ElementContent } from "npm:@types/hast";
+import typographicBase from "npm:typographic-base";
 
 import { AsciidoctorEngine, asciidocLoader } from "./_plugins/asciidoc.ts";
-import { default as markdownItAlerts } from "npm:markdown-it-github-alerts";
 import finder from "./_plugins/finder.ts";
 
 const site = lume({
@@ -33,25 +30,6 @@ const site = lume({
 });
 
 site.ignore("readme.md", "contributing.md", "public", "deps.ts", "_plugins");
-// site.use(markdown({
-//     plugins: [[markdownItAlerts, {
-//         titles: {
-//             "tip": "",
-//             "note": "",
-//             "important": "",
-//             "warning": "",
-//             "caution": ""
-//         },
-//         icons: {
-//             "tip": " ",
-//             "note": " ",
-//             "important": " ",
-//             "warning": " ",
-//             "caution": " "
-//         },
-//         classPrefix: "alert"
-//     }]]
-// }));
 site.use(remark({
     remarkPlugins: [
         [
@@ -73,14 +51,17 @@ site.use(remark({
             }
         ],
         [remarkDefinitionList],
-        // [
-        //     remarkSmartypants,
-        //     {
-        //         dashes: "oldschool",
-        //         openingQuotes: "„",
-        //         closingQuotes: "“"
-        //     }
-        // ]
+        [
+            remarkTextr,
+            {
+                options: {
+                    locale: "cs"
+                },
+                plugins: [
+                    typographicBase
+                ]
+            }
+        ]
     ],
     rehypePlugins: [
         [rehypeSlug],
@@ -175,7 +156,7 @@ site.use(katex({
         ]
     }
 }));
-// .use(await codeHighlight())
+site.use(shiki())
 site.loadPages([".ad"], { loader: asciidocLoader, engine: new AsciidoctorEngine() })
 site.copy("fonts");
 site.add("icons");
