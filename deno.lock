@@ -118,6 +118,7 @@
     "npm:remark-parse@11.0.0": "11.0.0",
     "npm:remark-rehype@11.1.2": "11.1.2",
     "npm:remark-smartypants@*": "3.0.2",
+    "npm:remark-textr@*": "6.1.0",
     "npm:remark@*": "15.0.1",
     "npm:remove-markdown@0.6.2": "0.6.2",
     "npm:sass@1.69.6": "1.69.6",
@@ -129,7 +130,16 @@
     "npm:sharp@0.33.5": "0.33.5",
     "npm:sharp@0.34.3": "0.34.3",
     "npm:shiki@*": "0.14.7",
+    "npm:shiki@3": "3.9.1",
+    "npm:shiki@3.9": "3.9.1",
+    "npm:shiki@3.9.1": "3.9.1",
     "npm:svg2png-wasm@1.4.1": "1.4.1",
+    "npm:t@*": "0.5.1",
+    "npm:tr@*": "1.1.2",
+    "npm:try@*": "1.0.0-beta.10",
+    "npm:typographic-base@*": "1.0.4",
+    "npm:typographic-ellipses@*": "1.0.11",
+    "npm:typographic-quotes@*": "2.0.1",
     "npm:unidecode@0.1.8": "0.1.8",
     "npm:unidecode@1.1.0": "1.1.0",
     "npm:unified@*": "11.0.5",
@@ -1034,6 +1044,52 @@
         "@parcel/watcher-win32-x64"
       ],
       "scripts": true
+    },
+    "@shikijs/core@3.9.1": {
+      "integrity": "sha512-W5Vwen0KJCtR7KFRo+3JLGAqLUPsfW7e+wZ4yaRBGIogwI9ZlnkpRm9ZV8JtfzMxOkIwZwMmmN0hNErLtm3AYg==",
+      "dependencies": [
+        "@shikijs/types",
+        "@shikijs/vscode-textmate",
+        "@types/hast",
+        "hast-util-to-html"
+      ]
+    },
+    "@shikijs/engine-javascript@3.9.1": {
+      "integrity": "sha512-4hGenxYpAmtALryKsdli2K58F0s7RBYpj/RSDcAAGfRM6eTEGI5cZnt86mr+d9/4BaZ5sH5s4p3VU5irIdhj9Q==",
+      "dependencies": [
+        "@shikijs/types",
+        "@shikijs/vscode-textmate",
+        "oniguruma-to-es"
+      ]
+    },
+    "@shikijs/engine-oniguruma@3.9.1": {
+      "integrity": "sha512-WPlL/xqviwS3te4unSGGGfflKsuHLMI6tPdNYvgz/IygcBT6UiwDFSzjBKyebwi5GGSlXsjjdoJLIBnAplmEZw==",
+      "dependencies": [
+        "@shikijs/types",
+        "@shikijs/vscode-textmate"
+      ]
+    },
+    "@shikijs/langs@3.9.1": {
+      "integrity": "sha512-Vyy2Yv9PP3Veh3VSsIvNncOR+O93wFsNYgN2B6cCCJlS7H9SKFYc55edsqernsg8WT/zam1cfB6llJsQWLnVhA==",
+      "dependencies": [
+        "@shikijs/types"
+      ]
+    },
+    "@shikijs/themes@3.9.1": {
+      "integrity": "sha512-zAykkGECNICCMXpKeVvq04yqwaSuAIvrf8MjsU5bzskfg4XreU+O0B5wdNCYRixoB9snd3YlZ373WV5E/g5T9A==",
+      "dependencies": [
+        "@shikijs/types"
+      ]
+    },
+    "@shikijs/types@3.9.1": {
+      "integrity": "sha512-rqM3T7a0iM1oPKz9iaH/cVgNX9Vz1HERcUcXJ94/fulgVdwqfnhXzGxO4bLrAnh/o5CPLy3IcYedogfV+Ns0Qg==",
+      "dependencies": [
+        "@shikijs/vscode-textmate",
+        "@types/hast"
+      ]
+    },
+    "@shikijs/vscode-textmate@10.0.2": {
+      "integrity": "sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg=="
     },
     "@types/debug@4.1.12": {
       "integrity": "sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==",
@@ -2301,6 +2357,17 @@
         "wrappy"
       ]
     },
+    "oniguruma-parser@0.12.1": {
+      "integrity": "sha512-8Unqkvk1RYc6yq2WBYRj4hdnsAxVze8i7iPfQr8e4uSP3tRv0rpZcbGUDvxfQQcdwHt/e9PrMvGCsa8OqG9X3w=="
+    },
+    "oniguruma-to-es@4.3.3": {
+      "integrity": "sha512-rPiZhzC3wXwE59YQMRDodUwwT9FZ9nNBwQQfsd1wfdtlKEyCdRV0avrTcSZ5xlIvGRVPd/cx6ZN45ECmS39xvg==",
+      "dependencies": [
+        "oniguruma-parser",
+        "regex",
+        "regex-recursion"
+      ]
+    },
     "pagefind@1.0.4": {
       "integrity": "sha512-oRIizYe+zSI2Jw4zcMU0ebDZm27751hRFiSOBLwc1OIYMrsZKk+3m8p9EVaOmc6zZdtqwwdilNUNxXvBeHcP9w==",
       "optionalDependencies": [
@@ -2499,6 +2566,21 @@
     "readdirp@4.0.2": {
       "integrity": "sha512-yDMz9g+VaZkqBYS/ozoBJwaBhTbZo3UNYQHNRw1D3UFQB8oHB4uS/tAODO+ZLjGWmUbKnIlOWO+aaIiAxrUWHA=="
     },
+    "regex-recursion@6.0.2": {
+      "integrity": "sha512-0YCaSCq2VRIebiaUviZNs0cBz1kg5kVS2UKUfNIx8YVs1cN3AV7NTctO5FOKBA+UT2BPJIWZauYHPqJODG50cg==",
+      "dependencies": [
+        "regex-utilities"
+      ]
+    },
+    "regex-utilities@2.3.0": {
+      "integrity": "sha512-8VhliFJAWRaUiVvREIiW2NXXTmHs4vMNnSzuJVhscgmGav3g9VDxLrQndI3dZZVVdp0ZO/5v0xmX516/7M9cng=="
+    },
+    "regex@6.0.1": {
+      "integrity": "sha512-uorlqlzAKjKQZ5P+kTJr3eeJGSVroLKoHmquUj4zHWuR+hEyNqlXsSKlYYF5F4NI6nl7tWCs0apKJ0lmfsXAPA==",
+      "dependencies": [
+        "regex-utilities"
+      ]
+    },
     "rehype-autolink-headings@7.1.0": {
       "integrity": "sha512-rItO/pSdvnvsP4QRB1pmPiNHUskikqtPojZKJPPPAVx9Hj8i8TwMBhofrrAYRhYOOBZH9tgmG5lPqDLuIWPWmw==",
       "dependencies": [
@@ -2617,6 +2699,14 @@
         "@types/mdast",
         "mdast-util-to-markdown",
         "unified"
+      ]
+    },
+    "remark-textr@6.1.0": {
+      "integrity": "sha512-3A61/6Dn8x5wS7f9BubnIjwZfttEw9+PWVFtwOvRzKXLmZDV1mgi9MJeaQ9BNzWhojsSRHWLNa2JHKCOOI5DfA==",
+      "dependencies": [
+        "@types/mdast",
+        "textr",
+        "unist-util-visit"
       ]
     },
     "remark@15.0.1": {
@@ -2871,6 +2961,19 @@
         "vscode-textmate"
       ]
     },
+    "shiki@3.9.1": {
+      "integrity": "sha512-HogZ8nMnv9VAQMrG+P7BleJFhrKHm3fi6CYyHRbUu61gJ0lpqLr6ecYEui31IYG1Cn9Bad7N2vf332iXHnn0bQ==",
+      "dependencies": [
+        "@shikijs/core",
+        "@shikijs/engine-javascript",
+        "@shikijs/engine-oniguruma",
+        "@shikijs/langs",
+        "@shikijs/themes",
+        "@shikijs/types",
+        "@shikijs/vscode-textmate",
+        "@types/hast"
+      ]
+    },
     "simple-swizzle@0.2.2": {
       "integrity": "sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==",
       "dependencies": [
@@ -2912,11 +3015,20 @@
       "integrity": "sha512-ZFy1NtwZVAsslaTQoI+/QqX2sg0vjmgJ/jGAuLZZvYcRlndI54hLPiwLC9JzXlFBerfxN5JiS7kpEUG0mrXS3Q==",
       "deprecated": true
     },
+    "t@0.5.1": {
+      "integrity": "sha512-VPWkKwJPOldeqDKesRwOLhKNbVRUbzh8yoFWqwMTXqQ2BpdY7SHJqPbIRb6qfidlFhh2LBNBDJQGjPnqQcwSgg=="
+    },
+    "textr@0.3.0": {
+      "integrity": "sha512-yQrF3w9ThyNvyJjkpFTwBpsVxRQ4870xHg2fue1xeK1J1EZIx5cV7XPW6Fwi/XNC0du/3t9CNWZvlHUfCxPpPg=="
+    },
     "to-regex-range@5.0.1": {
       "integrity": "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==",
       "dependencies": [
         "is-number"
       ]
+    },
+    "tr@1.1.2": {
+      "integrity": "sha512-yFo1C5dvhkvQjU80dzXF23BaWwr2F/lnZCI0Jv68M7xAdEpOJDilETPE57xnJnVgbnpHngxsGj6f1cuC4f0H6A=="
     },
     "trim-lines@3.0.1": {
       "integrity": "sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg=="
@@ -2927,11 +3039,91 @@
     "trough@2.2.0": {
       "integrity": "sha512-tmMpK00BjZiUyVyvrBK7knerNgmgvcV/KLVyuma/SC+TQN167GrMRciANTz09+k3zW8L8t60jWO1GpfkZdjTaw=="
     },
+    "try@1.0.0-beta.10": {
+      "integrity": "sha512-g/I/r0keF5pnxdMO4PJ1K7+c+N1U0Q0xtNDfrI/1UQz6q/85ipgbL4bSnowAy1DSAIfHkDiaARihADoqGM2qeA=="
+    },
     "ts-dedent@2.2.0": {
       "integrity": "sha512-q5W7tVM71e2xjHZTlgfTDoPF/SmqKG5hddq9SzR49CH2hayqRKJtQ4mtRlSxKaJlR/+9rEM+mnBHf7I2/BQcpQ=="
     },
     "tslib@2.6.2": {
       "integrity": "sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q=="
+    },
+    "typographic-apostrophes-for-possessive-plurals@1.0.5": {
+      "integrity": "sha512-sBUA/sFTAFFjd/ey9Xtld1cq2fXCZJ0tQHmlDovttMC9D1WJDOt2f49b9DxA0Yk2iK3yoDFm0HQAs/mKO24sDg=="
+    },
+    "typographic-apostrophes@1.1.1": {
+      "integrity": "sha512-3/05j0vg9osPy4whnihGaudPLwNxuyczO3AYmsVeLUBUq/aKhbSfbjVPx1VzV7Rwpkbl0vf9qOwOLP6CgfRWZg=="
+    },
+    "typographic-arrows@1.0.3": {
+      "integrity": "sha512-RlmhHjxOSQ9QjWQbdHFPb+B54hVQLxwWvbO+liqy5NN0naLUzqnZumYH3V/RrR9Xf6cpAZvxKdmwYzpozlx2Ug==",
+      "deprecated": true
+    },
+    "typographic-base@1.0.4": {
+      "integrity": "sha512-R2ABy+ohOfZAKumZkkTmP11NWqj0AG7nZg3yyvnuzzl+D0GL9Gu8jO2+D/oAD+04z+/z0AesMO/rncBooHUs7g==",
+      "dependencies": [
+        "textr",
+        "typographic-apostrophes",
+        "typographic-apostrophes-for-possessive-plurals",
+        "typographic-arrows",
+        "typographic-copyright",
+        "typographic-currency",
+        "typographic-ellipses",
+        "typographic-em-dashes",
+        "typographic-en-dashes",
+        "typographic-math-symbols",
+        "typographic-quotes@1.2.2",
+        "typographic-registered-trademark",
+        "typographic-single-spaces",
+        "typographic-trademark"
+      ]
+    },
+    "typographic-copyright@1.0.1": {
+      "integrity": "sha512-DSx9fojOVoBhtYw5Zh0r9ShFWgjuMwUH615l21OXDbi3m2Fl/bBT5yMoZjbZzuJ51kiF66CnTTfJP5Zu5zVZMg=="
+    },
+    "typographic-currency-db@1.0.0": {
+      "integrity": "sha512-jWu0u9P4mmpZ+e62f/GHrSKUpwS4WmNxGsSI3ZrZZYmfJlmtjA+WkIt+RvpmM0H8ZzyyFzOYRifV5UbxoeTcAw=="
+    },
+    "typographic-currency@1.1.2": {
+      "integrity": "sha512-adlN4VO5DwYSx2kxfj1AMmx+FGHn6ShFS3qip0Q3VwBD7tSENE4XUbs22b9hlK9g4thw8mZsLyXS3ca799gYhQ==",
+      "dependencies": [
+        "typographic-currency-db"
+      ]
+    },
+    "typographic-ellipses@1.0.11": {
+      "integrity": "sha512-TN83hcvDfvPFxqyWTe4ascexSj1wxuzafnXrLS7cZZq5ZEeHYQPE4UXP15mZnsNg71ysnOJxdNXWckxqeTVMAQ=="
+    },
+    "typographic-em-dashes@1.0.2": {
+      "integrity": "sha512-9aCk1Crubx0YCWsj2PJCD7PIIpx6dBdyOogPL5lOQuH2gIyZtSMp7OGt7SCcpn0BxbToIal2t38SnSOhsagU9A=="
+    },
+    "typographic-en-dashes@1.0.1": {
+      "integrity": "sha512-/Zaf64q0tCJZ4yxAbBVUmogPB1pV2upiQ6v3aU3kvU+HxEC8szXmRFA6wDTUkAP6YVrnDYgHlUaLzUvKcFUSiw=="
+    },
+    "typographic-math-symbols@1.1.5": {
+      "integrity": "sha512-GBYbJzZbERHZJ9eflsqFQMfZDBJGCkguMXVbWerG1PkyndNFOA6fYR1H+jUh9JSobr7ir/C92QJ+7LrcBsAbVw=="
+    },
+    "typographic-quotes-l10n-db@1.0.0": {
+      "integrity": "sha512-E9/XSBJWtmax9XkFlLwqbNW5wNFBbLhL2CDYShmQ/Kw87wL9TwKU36j8SON7Ro0K2GF+RjfcYb/SdUN3XqZkvg=="
+    },
+    "typographic-quotes@1.2.2": {
+      "integrity": "sha512-rdbJx2ho7ovckr+Yd+zccU3UnTyS0U+lwEzBl0FoMMECewQn7ZM0tLMBWPEvOOHPHCiYaP2C0Wx9Lq1F+Ou8yg==",
+      "dependencies": [
+        "typographic-quotes-l10n-db"
+      ]
+    },
+    "typographic-quotes@2.0.1": {
+      "integrity": "sha512-ebXALmr22j1ttpwbfBXrBov9uOrQKUTKs29dOz1nF+vLVX228X0ol8dD+549yIJG7gjC0Pj/tUahdb0xYKve5g==",
+      "dependencies": [
+        "typographic-quotes-l10n-db"
+      ]
+    },
+    "typographic-registered-trademark@1.0.1": {
+      "integrity": "sha512-pxjY5hicdCH+VPEzqgoYlQD9ZXMqaJZgOLrAweIzBl19hs6SLLdf8CD0kXF6jv9s4QRCjTl/uiaoVkid6paI9Q=="
+    },
+    "typographic-single-spaces@1.0.2": {
+      "integrity": "sha512-OTfrg6zmAx2XXaaXywdFfFIJ/w2e2/DZdRwBK+IqJHjEEzN0C1QtQ7kkOCW/Rdf04S1K639Wcb3y5OPVlP4zew=="
+    },
+    "typographic-trademark@1.0.1": {
+      "integrity": "sha512-d+vFEiagUVltY/cFD2wzATb1YZvOvx+SmxHtCq1QLc22mImkpAccOD826d6eRCUFx75eGhsE3nWjNKOsis2Ibg=="
     },
     "uc.micro@2.0.0": {
       "integrity": "sha512-DffL94LsNOccVn4hyfRe5rdKa273swqeA5DJpMOeFmEn1wCDc7nAbbB0gXlgBCL7TNzeTv6G7XVWzan7iJtfig=="

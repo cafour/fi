@@ -85,8 +85,8 @@ export default function (
                     </a>
                     {/* <div id="search"></div> */}
                     <button class="btn flex flex-row">
-                        <i class="icon icon-search"></i>
-                        <span class="grow-1">Search...</span>
+                        <i class="icon"></i>
+                        <span class="grow-1">Hledat...</span>
                         <kbd>Ctrl</kbd>
                         <kbd>K</kbd>
                     </button>
