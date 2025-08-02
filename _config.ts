@@ -17,7 +17,6 @@ import shiki from "./_plugins/shiki.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import inline from "lume/plugins/inline.ts";
 import pagefind from "lume/plugins/pagefind.ts";
-import toc from "lume_markdown_plugins/toc.ts";
 import esbuild from "lume/plugins/esbuild.ts";
 import typographicBase from "npm:typographic-base";
 
@@ -85,13 +84,6 @@ site.use(remark({
         }
     }
 }));
-// site.use(toc({
-//     tabIndex: false,
-//     // anchor: false,
-//     anchor: linkInsideHeader({
-//         placement: "before"
-//     })
-// }));
 site.use(jsx());
 site.use(esbuild({
     options: {
