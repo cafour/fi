@@ -2,6 +2,7 @@ import { Node as TocNode } from "lume_markdown_plugins/toc/mod.ts";
 import { Finder } from "../../_plugins/finder.ts";
 import { NavItem } from "../../_components/NavLevel.tsx";
 import * as path from "@std/path";
+import { GitMetadata } from "../../_plugins/git.ts";
 
 export const layout = "layouts/base.tsx";
 
@@ -14,6 +15,8 @@ export interface NotePageData extends Lume.Data {
     nav?: NavItem[];
     groups?: NotePageGroup[];
     finder: Finder;
+    git: GitMetadata;
+    home?: string;
 }
 
 export interface NotePageGroup {
@@ -33,6 +36,9 @@ export default function (
         finder,
         discriminator,
         groups,
+        git,
+        page,
+        home,
     }: NotePageData,
 ) {
     let groupNav: NavItem[] = [];
@@ -80,7 +86,7 @@ export default function (
                 <input type="checkbox" id="sidebar-toggle" />
                 <label id="darkness" for="sidebar-toggle"></label>
                 <div class="sidebar">
-                    <a class="logo" href="/">
+                    <a class="logo" href={home ?? "/"}>
                         {course ?? "Poznámky z FI"}
                     </a>
                     {/* <div id="search"></div> */}
@@ -95,15 +101,20 @@ export default function (
                         finder={finder}
                     />
                     <div class="sidebar-links">
-                        <a href="https://github.com/cafour/fi" class="btn" target="_blank">
-                            <i class="icon icon-github"></i>
-                        </a>
                         {/* <comp.Empty html={comp.ThemeToggle()} /> */}
                         {/* <div dangerouslySetInnerHTML={{ __html: comp.ThemeToggle() }}></div> */}
                     </div>
                 </div>
             </nav>
             <main>
+                <a
+                    href={`https://github.com/cafour/fi/blob/${git.shortSha}${page.sourcePath}`}
+                    class="btn"
+                    target="_blank"
+                >
+                    <i class="icon icon-github"></i>
+                </a>
+                <code>{git.shortSha}</code>
                 <article>
                     {(showtitle === true || showtitle === undefined) && <h1>{title}</h1>}
                     {children}

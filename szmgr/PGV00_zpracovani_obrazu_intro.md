@@ -1,7 +1,8 @@
 ---
-title: Zpracování obrazu - intro
 description: Úvod do státnicových otázek specializace Zpracování obrazu (PGV).
 ---
+
+# Zpracování obrazu -- Intro
 
 > [!TIP]
 > Doporučuju kouknout na shrnutí v [zápiscích z předmětu PA166 od xrosecky](https://xrosecky.notion.site/PA166-Image-analysis-II-b2875a07366c404dabbf20a8b75a6e2e?pvs=74)

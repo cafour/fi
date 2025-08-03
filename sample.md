@@ -21,7 +21,8 @@ Second term
     ...and also some $m \cdot \text{ath}$.
     
 Third term
-:   - With a couple of
+:
+    - With a couple of
     - Bullet points
 
 ### h3 -- 3rd level heading
