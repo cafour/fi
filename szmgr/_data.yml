@@ -4,6 +4,7 @@ tags: [szmgr]
 course: SZMGR
 home: /szmgr/
 discriminator: szmgr
+showtitle: false
 
 groups:
   - name: SZP
