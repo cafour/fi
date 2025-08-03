@@ -1,7 +1,8 @@
 ---
-title: "Analýza rastrového obrazu"
 description: "TODO"
 ---
+
+# Analýza rastrového obrazu
 
 > [!NOTE]
 > Segmentace obrazu, algoritmy značení komponent, popis objektů, klasifikace objektů. Výpočet mapy vzdáleností. Základy matematické morfologie (dilatace a eroze, otevření a uzavření, hit-or-miss, top-hat, watershed).

@@ -1,7 +1,8 @@
 ---
-title: "Vývoj her"
 description: "TODO"
 ---
+
+# Vývoj her
 
 > [!NOTE]
 > Architektura herního engine (jednotlivé moduly a jejich význam). Herní rozhraní (fyzická, virtuální, typy vstupních a výstupních zařízení, mapování). Audio ve hrách (propagace zvuku ve scéně, digitální zvuk, PCM, latence, mixování zvuků). Síťová vrstva (přenosová rychlost, latence, obousměrné zpoždění, jitter a ztráta dat), metody redukce latence, TCP vs. UDP.

@@ -1,7 +1,8 @@
 ---
-title: "Základy počítačové grafiky"
 description: "TODO"
 ---
+
+# Základy počítačové grafiky
 
 > [!NOTE]
 > OpenGL blokový diagram, GLSL – vertex a fragment shader. Vytvoření GLSL programu. Základní typy vstupních a výstupních proměnných. Druhy grafických primitiv. Vertex Buffer Objects a Vertex Array Objects. Princip rasterizace, framebuffer. Textury: mapování, filtrování, syntéza.

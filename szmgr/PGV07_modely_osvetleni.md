@@ -1,7 +1,8 @@
 ---
-title: "Lokální a globální modely osvětlení"
 description: "TODO"
 ---
+
+# Lokální a globální modely osvětlení
 
 > [!NOTE]
 > Blinn-Phongův osvětlovací model, BRDF, sledování paprsků, radiosita, fotonové mapy, participující média. Vykreslování založené na fyzikálních modelech (PBR). Osvětlení založené na obrázku (IBL).

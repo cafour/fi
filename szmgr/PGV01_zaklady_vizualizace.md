@@ -1,7 +1,8 @@
 ---
-title: "Základy vizualizace"
 description: "TODO"
 ---
+
+# Základy vizualizace
 
 > [!NOTE]
 > Základní metriky pro hodnocení kvality vizualizace, vizuální proměnné. Základní vizualizační techniky pro 1D, 2D, 3D a 4D data. Objemová data – vizualizace explicitních a implicitních povrchů. Geovizualizace – choropletové mapy, kartogramy.

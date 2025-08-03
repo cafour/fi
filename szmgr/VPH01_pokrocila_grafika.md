@@ -1,7 +1,8 @@
 ---
-title: "Pokročilá počítačová grafika (2023)"
 description: "TODO"
 ---
+
+# Pokročilá počítačová grafika (2023)
 
 > [!WARNING]
 > Tato je stará verze otázky. Nová verze: [Grafické principy ve vývoji her](../vph01_graficke_principy_ve_vyvoji_her).

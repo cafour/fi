@@ -1,7 +1,8 @@
 ---
-title: "Zpracování obrazu pomocí PDE"
 description: "TODO"
 ---
+
+# Zpracování obrazu pomocí PDE
 
 > [!NOTE]
 > Difúzní filtrování (lineární difuze, nelineární izotropní a nelineární anizotropní difuze). Level set metody (pohyb ve směru normály, pohyb řízený křivostí a pohyb ve vnějším vektorovém poli). Fast marching algoritmus.

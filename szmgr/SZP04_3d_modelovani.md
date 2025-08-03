@@ -1,7 +1,8 @@
 ---
-title: "3D modelování a datové struktury"
 description: "TODO"
 ---
+
+# 3D modelování a datové struktury
 
 > [!NOTE]
 > Mnohoúhelníkové a trojúhelníkové sítě: datové struktury, modelování,  ~filtrování~ , změna struktury sítě, **\*zjednodušování sítě\*\***. Implicitní **a parametrické\*** reprezentace a modelování **_(SDF, CSG, B-Rep)_**.

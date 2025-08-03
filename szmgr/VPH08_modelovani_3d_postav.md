@@ -1,7 +1,8 @@
 ---
-title: "Modelování 3D postav (2023)"
 description: "TODO"
 ---
+
+# Modelování 3D postav (2023)
 
 > [!WARNING]
 > Tato otázka zatím nebyla aktualizována. Nová varze obsahuje pár věcí navíc!

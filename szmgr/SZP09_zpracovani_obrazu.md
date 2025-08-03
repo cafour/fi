@@ -1,7 +1,8 @@
 ---
-title: "Zpracování rastrového obrazu"
 description: "TODO"
 ---
+
+# Zpracování rastrového obrazu
 
 > [!NOTE]
 > Bodové transformace. Histogram, vyrovnání histogramu, analýza histogramu. Lineární a nelineární filtry. Detekce hran. Fourierova transformace. Vzorkovací teorém, převzorkování, geometrické transformace. Vlnková transformace. Houghova/Radonova transformace.

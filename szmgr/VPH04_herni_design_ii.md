@@ -1,7 +1,8 @@
 ---
-title: "Herní design II"
 description: "TODO"
 ---
+
+# Herní design II
 
 > [!NOTE]
 > Jednotka herního designu, návrh designu hry, designový dokument hry. Teoretické koncepty herní analýzy - magický kruh (Huizinga), kybertext (Aarseth), plynutí (flow; Csikszentmihalyi). Symetrické a nesymetrické (kompetitivní) hry, dominantní strategie. Narativ, vyprávění, příběh, hraní (gameplay). Tutoriál (návod/naučení), onboarding (organické/neinvazivní naučení hry), foreshadowing (před-naznačování). Testování herního zážitku (cílové skupiny (focus), obecné testování hry (play)).

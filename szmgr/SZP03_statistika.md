@@ -1,7 +1,8 @@
 ---
-title: "Statistika"
 description: "TODO"
 ---
+
+# Statistika
 
 > [!NOTE]
 > Diskrétní a spojité náhodné veličiny (NV), základní rozložení. Číselné charakteristiky NV. Centrální limitní věta. Bodové odhady, intervaly spolehlivosti, testování statistických hypotéz, hladina významnosti. Základní parametrické a neparametrické testy, ANOVA, testy nezávislosti NV. Lineární regrese, celkový F-test, dílčí t-testy.

@@ -1,7 +1,8 @@
 ---
-title: "Grafické a fyzikální principy (2023)"
 description: "TODO"
 ---
+
+# Grafické a fyzikální principy (2023)
 
 > [!WARNING]
 > Tato je stará verze otázky. Nová verze: [Fyzikální principy ve vývoji her](../vph02_fyzikalni_principy_ve_vyvoji_her).

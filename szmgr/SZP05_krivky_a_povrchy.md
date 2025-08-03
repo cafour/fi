@@ -1,7 +1,8 @@
 ---
-title: "Křivky a povrchy"
 description: "TODO"
 ---
+
+# Křivky a povrchy
 
 > [!NOTE]
 > Implicitní a parametrické reprezentace. Interpolace a aproximace. Cn, Gn spojitost, podmínky spojitosti pro po částech definované funkce. Bézierovy křivky, B-spline křivky,  ~NURBS,~ Coonsovy  ~křivky a~ pláty. Povrchy tvořené rekurzivním dělením polygonů.

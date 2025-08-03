@@ -1,7 +1,8 @@
 ---
-title: "Geometrické algoritmy"
 description: "TODO"
 ---
+
+# Geometrické algoritmy
 
 > [!NOTE]
 > Konvexní obaly, konstrukce ve 2D a 3D. Voroného diagramy, Delaunayova triangulace, dualita, triangulace, triangulace s omezením. Prostorové vyhledávání (datové struktury, algoritmy).

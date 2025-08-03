@@ -1,7 +1,8 @@
 ---
-title: "Renderování s využitím GPU (2023)"
 description: "TODO"
 ---
+
+# Renderování s využitím GPU (2023)
 
 > [!WARNING]
 > Tato otázka zatím nebyla aktualizována. Nová varze obsahuje pár termínů navíc!

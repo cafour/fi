@@ -1,7 +1,8 @@
 ---
-title: "Herní design I"
 description: "TODO"
 ---
+
+# Herní design I
 
 ####
 Hra, videohra, desková hra, digitální hra, počítačová hra, hračka, hádanka, puzzle, divadelní hra. Typologie typů hráče, cílová skupina. Herní zážitek, herní smyčka, herní dynamika, herní mechanika. Herní zaháčkování (hook), herní kotva (anchor). Proces prototypování her, ověřování herního designu. Činnosti herní/ho designérky/a (kreativní, abstraktní, analytické, systematické, komunikační).

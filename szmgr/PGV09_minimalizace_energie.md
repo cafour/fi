@@ -1,7 +1,8 @@
 ---
-title: "Zpracování obrazu pomocí minimalizace energie"
 description: "TODO"
 ---
+
+# Zpracování obrazu pomocí minimalizace energie
 
 > [!NOTE]
 > Variační filtrování. Aktivní křivky a plochy (geodetický model, Chan-Vese model). Minimalizace pomocí grafových řezů. Variační optický tok.

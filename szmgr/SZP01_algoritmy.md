@@ -1,7 +1,8 @@
 ---
-title: "Algoritmy a datové struktury"
 description: "TODO"
 ---
+
+# Algoritmy a datové struktury
 
 > [!NOTE]
 > Pokročilé techniky návrhu algoritmů: dynamické programování, hladové strategie, backtracking. Amortizovaná analýza. Vyhledávání řetězců: naivní algoritmus pro hledání řetězců, Karp-Rabinův algoritmus, hledání řetězců pomocí konečných automatů. Algoritmus Knuth-Morris-Pratt.
