@@ -1,7 +1,8 @@
 ---
-title: Guidelines
 description: Guidelines for contributing notes
 ---
+
+# Guidelines
 
 Při psaní těchhle poznámek jsem se snažil (s proměnlivou mírou uspěšnosti) držet několika pravidel:
 

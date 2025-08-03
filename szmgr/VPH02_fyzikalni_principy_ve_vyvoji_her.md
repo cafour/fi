@@ -1,7 +1,8 @@
 ---
-title: "Fyzikální principy ve vývoji her (2024)"
 description: "TODO"
 ---
+
+# Fyzikální principy ve vývoji her (2024)
 
 > [!NOTE]
 > Typy fyzikálních simulací a jejich využití ve hrách (tuhá tělesa, deformovatelná tělesa, částice). Dynamika tuhých těles (síly, tření). Objekty pro detekci kolizí (“colliders”, typy, limity), kolizní vrstvy. Detekce kolizí (diskrétní a spojitá detekce, obvyklé problémy, využití v herních mechanikách).

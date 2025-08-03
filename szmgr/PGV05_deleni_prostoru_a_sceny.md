@@ -1,7 +1,8 @@
 ---
-title: "Techniky dělení prostoru a scény"
 description: "TODO"
 ---
+
+# Techniky dělení prostoru a scény
 
 > [!NOTE]
 > Datové struktury (oct-, quad-, BSP-, k-d stromy), jejich konstrukce a údržba, používané heuristiky. Objemem ohraničující tělesa a jejich hierarchie, způsob konstrukce a použití. Detekce kolizí, vykreslování.

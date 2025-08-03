@@ -1,7 +1,8 @@
 ---
-title: "Metody vizualizace"
 description: "TODO"
 ---
+
+# Metody vizualizace
 
 > [!NOTE]
 > Vizualizace multidimenzionálních dat – scatterplot matrix, paralelní souřadnice, skládání dimenzí. Vizualizace hierarchických struktur – treemaps, radiální techniky. Základní třídy interakčních technik, techniky používané v prostoru obrazovky, objektu, dat, datových struktur.

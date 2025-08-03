@@ -1,7 +1,8 @@
 ---
-title: "Umělá inteligence v počítačových hrách"
 description: "TODO"
 ---
+
+# Umělá inteligence v počítačových hrách
 
 > [!NOTE]
 > Pohyb, kinematický a dynamický pohyb. Hledání cest, algoritmy prohledávání grafu, A\* s jeho datovými strukturami a heuristikami, reprezentace herního světa, hierarchické hledání cest. Rozhodování, rozhodovací stromy, stavové automaty, stromy chování, cílem orientované chování. Taktická a strategická umělá inteligence, navigační body a taktika, taktická analýza. Deskové hry, minimax algoritmy, Monte Carlo prohledávání.

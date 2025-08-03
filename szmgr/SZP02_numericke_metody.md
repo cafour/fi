@@ -1,7 +1,8 @@
 ---
-title: "Numerické metody"
 description: "TODO"
 ---
+
+# Numerické metody
 
 > [!NOTE]
 > Iterativní metody pro řešení nelineárních rovnic (Newtonova metoda a její modifikace). Přímé metody pro řešení systému lineárních rovnic (Gaussova eliminace, Jacobi, Gauss-Seidel, relaxační metody). Numerická diferenciace, diferenciační schémata.

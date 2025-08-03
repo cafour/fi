@@ -1,7 +1,8 @@
 ---
-title: "Grafy a grafové algoritmy"
 description: "TODO"
 ---
+
+# Grafy a grafové algoritmy
 
 > [!NOTE]
 > Reprezentace grafů. Souvislost grafu, rovinné grafy. Prohledávání grafu do šířky a do hloubky, nejkratší vzdálenosti, kostry, toky v sítích. Algoritmy: Bellman-Ford, Dijkstra, Ford-Fulkerson, Push-Relabel, maximální párování v bipartitních grafech.

@@ -1,7 +1,8 @@
 ---
-title: Magisterské státnice 2024+
-description: "SZMGR"
+description: Vypracované otázky k magisterským statnicím některých oborů na FI MU.
 ---
+
+# Magisterské státnice 2024+
 
 Poznámky k magisterským státnicím oboru _Vývoj počítačových her_ v červnu 2024. Otázky prošly mezi rokem 2023 a 2024 velkými změnami. Poznámky jsou z větší části aktualizované a přeorganizované podle státnic 2024, ale nejsou nutně kompletní, korektní ani nezaujaté, proto by vás mohly zajímat i následující zdroje:
 

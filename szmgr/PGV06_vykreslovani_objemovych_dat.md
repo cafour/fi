@@ -1,7 +1,8 @@
 ---
-title: "Vykreslování objemových dat"
 description: "TODO"
 ---
+
+# Vykreslování objemových dat
 
 > [!NOTE]
 > Rekonstrukce povrchu - kontury, objem, bodový mrak. Algoritmus pochodujících kostek. Přímé vykreslování objemových dat.

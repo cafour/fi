@@ -1,7 +1,8 @@
 ---
-title: "Strojové učení"
 description: "TODO"
 ---
+
+# Strojové učení
 
 > [!NOTE]
 > Strojové učení a rozpoznávání vzorů: problém klasifikace a regrese, shluková analýza, učení s učitelem a bez učitele. Vícevrstvé neuronové sítě, vícevrstvé perceptrony, ztrátové funkce, zpětná propagace.  ~Hopfieldova síť,~ konvoluční sítě, rekurentní sítě ~, samo-organizující mapy~ .

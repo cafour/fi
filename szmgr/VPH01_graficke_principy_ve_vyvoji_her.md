@@ -1,7 +1,8 @@
 ---
-title: "Grafické principy ve vývoji her (2024)"
 description: "TODO"
 ---
+
+# Grafické principy ve vývoji her (2024)
 
 > [!NOTE]
 > Příprava a vývoj scény (grayboxing, zástupné modely (placeholders)). Lokální a globální modely nasvícení. Vykreslování založené na fyzikálních modelech (PBR). Techniky optimalizace výkonu vykreslování (úrovně detailů, řešení viditelnosti objektů (culling), MIP mapy).

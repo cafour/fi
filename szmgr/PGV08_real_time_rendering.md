@@ -1,7 +1,8 @@
 ---
-title: "Vykreslování v reálném čase"
 description: "TODO"
 ---
+
+# Vykreslování v reálném čase
 
 > [!NOTE]
 > Ořezávání, techniky založené na viditelnosti, vykreslování s různou úrovní detailů (LOD rendering), vykreslování terénu. Stíny: tvrdé stíny, měkké stíny, techniky vykreslování stínů v prostoru scény a v obrazovém prostoru.

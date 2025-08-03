@@ -1,7 +1,8 @@
 ---
-title: Modelování a projekce
-description: A guide in my new Starlight docs site.
+description: TODO
 ---
+
+# Modelování a projekce
 
 > [!NOTE]
 > Homogenní souřadnice, modelovací, pohledová a projekční matice, perspektivní a ortografická projekce. Základní afinní transformace.
