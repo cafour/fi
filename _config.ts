@@ -100,7 +100,15 @@ site.use(esbuild({
         globalName: "fi"
     }
 }));
-site.use(sass());
+site.use(sass({
+    options: {
+        silenceDeprecations: [
+            "mixed-decls",
+            "color-functions",
+            "global-builtin"
+        ]
+    }
+}));
 site.use(tailwindcss());
 site.use(postcss());
 site.use(metas());
