@@ -89,7 +89,6 @@ export default function (
                     <a class="logo" href={home ?? "/"}>
                         {course ?? "Poznámky z FI"}
                     </a>
-                    {/* <div id="search"></div> */}
                     <button class="btn flex flex-row">
                         <i class="icon"></i>
                         <span class="grow-1">Hledat...</span>
@@ -101,7 +100,7 @@ export default function (
                         finder={finder}
                     />
                     <div class="sidebar-links">
-                        {/* <comp.Empty html={comp.ThemeToggle()} /> */}
+                        <comp.ThemeToggle />
                         {/* <div dangerouslySetInnerHTML={{ __html: comp.ThemeToggle() }}></div> */}
                     </div>
                 </div>
@@ -114,12 +113,13 @@ export default function (
                 >
                     <i class="icon icon-github"></i>
                 </a>
-                <code>{git.shortSha}</code>
-                <article>
+                <code class="text-test">{git.shortSha}</code>
+                <article data-pagefind-body>
                     {(showtitle === true || showtitle === undefined) && <h1>{title}</h1>}
                     {children}
                 </article>
             </main>
+            <div id="search" class="absolute"></div>
         </>
     );
 }
