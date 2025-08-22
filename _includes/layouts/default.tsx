@@ -113,7 +113,7 @@ export default function (
                 >
                     <i class="icon icon-github"></i>
                 </a>
-                <code class="text-test">{git.shortSha}</code>
+                <code class="text-dark dark:text-light">{git.shortSha}</code>
                 <article data-pagefind-body>
                     {(showtitle === true || showtitle === undefined) && <h1>{title}</h1>}
                     {children}
