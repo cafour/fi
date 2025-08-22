@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@theme inline {
+    --color-test: var(--test);
+}
+
+:root {
+    @media(prefers-color-scheme: light),
+    [data-theme=light], [data-theme=light] *):not(.\9):not(.\9) {
+        --test: #202020;
+    }
+    @media(prefers-color-scheme: dark),
+    &:where([data-theme=dark], [data-theme=dark] *):not(.\9):not(.\9) {
+        --test: #faf2eb;
+    }
+}

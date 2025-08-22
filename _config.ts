@@ -173,12 +173,11 @@ site.add([".png", ".jpg", ".jpeg", ".gif", ".svg"])
 site.use(finder());
 site.use(git());
 site.use(pagefind({
-    indexing: {
-        rootSelector: "main"
-    },
     ui: {
-        showSubResults: true
-    }
+        showSubResults: true,
+        autofocus: true,
+        containerId: "search"
+    },
 }));
 
 export default site;
