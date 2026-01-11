@@ -1,0 +1,13 @@
+layout: layouts/question.tsx
+styles: ["question"]
+mergedKeys:
+  styles: noop
+
+tags: [dszk]
+course: DSZK
+home: /dszk/
+groups:
+  - name: fa
+    display: Frequency Analysis
+  - name: vri
+    display: Interaction in Virtual Reality

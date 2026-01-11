@@ -64,7 +64,15 @@ site.use(esbuild({
         globalName: "fi"
     }
 }));
-site.use(sass());
+site.use(sass({
+    options: {
+        silenceDeprecations: [
+            "global-builtin",
+            "color-functions",
+            "mixed-decls"
+        ]
+    }
+}));
 site.use(postcss());
 site.use(metas());
 site.use(resolveUrls());

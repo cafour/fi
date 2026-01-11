@@ -16,6 +16,7 @@ Source files are available on [GitHub](https://github.com/cafour/fi). Contributi
 - [SZB Státní zkouška (bakalářský studijní program)](./szb/)
 - [SZMGR Státní zkouška (magisterský studijní program)](./szmgr/)
 - [PA217 Artificial Intelligence for Computer Games](./pa217/)
+- [DSZK Státní doktorská zkouška](./dszk/)
 
 ## Thesis checklist
 

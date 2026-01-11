@@ -9,7 +9,7 @@
             "name": "Launch Program",
             "type": "node",
             "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "C:\\Users\\Adam\\scoop\\shims\\deno.EXE",
+            "runtimeExecutable": "deno",
             "runtimeArgs": [
                 "task",
                 "debug"
