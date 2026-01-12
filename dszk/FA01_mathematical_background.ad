@@ -1,0 +1,25 @@
+= Mathematical Background
+:url: ./fa/mathematical_background/
+:page-group: fa
+:page-order: FA01
+
+// TODO: Vector spaces intro
+
+Dot product::
+- v komplexních číslech, se druhá složka konjuguje -> Proč?
+- míra projekce jednoho vektoru do druhého
+
+Vektorové prostory::
+- ortonormální báze lze vyjádřit maticí
+- unitární matice - z ortonormální báze
+- inverzní -> transponovaná a komplexně konjugovaná
+- vektor projektujeme do báze === vector rozkládáme lineární kombinací bázových vektorů
+- N-složkový vektor lze vyjádřit diskrétní funkcí o mohutnosti N
+
+Funkční prostory::
+- dekompozice (1d diskrétní) funkce (s N vzorky => N-dimenzionální prostor) pomocí předem zadefinované množiny funkcí
+- chceme jednoznačný, rychlý a numericky stabilní dekompozici funkce
+- dekomponují se úplně stejně jako vektory: do n-dimenzionální, ortogonální báze (je potřeba normovat, pokud není ortonormální)
+- projekce funkcí (inner product) je stejná jako dot produkt u vektorů -> součin po složkách + součet
+- sin a cos jsou vůči sobě ortogonální
+- snahou je získat dokonalý rozklad na bázové funkce (abychom se mohli vrátit), ale občas se musíme smířit s aproximací

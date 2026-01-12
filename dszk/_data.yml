@@ -8,6 +8,6 @@ course: DSZK
 home: /dszk/
 groups:
   - name: fa
-    display: Frequency Analysis
+    display: Fourier Analysis
   - name: vri
     display: Interaction in Virtual Reality

@@ -1,0 +1,76 @@
+= Compression
+:url: ./fa/compression/
+:page-group: fa
+:page-order: FA03
+
+LZW coding (Lempel-Ziv-Welch)::
+- GIF, TIFF, PDF, ZIP
+- nevyžaduje přenášet celý slovník, protože se generuje deterministicky, je potřeba poslat jen základní sadu
+- není potřeba posílat ani pravděpodobnostní tabulku
+- když naplníme slovník, zahodíme ho a začneme nový
+- bylo navrženo na text
+
+Lossless Predictive Encoding::
+8 preprocess před Huffmanem nebo něčím jiným
+
+Lossy compression::
+* Quantizer - zahazuje informaci
+
+Transform coding::
+* DFT nebo DCT - zahazujeme typicky vysoké frekvence
+
+
+== Image Compression Standards
+
+Run length encoding (RLE)::
+- Lossless.
+- Stores repeated _runs_ of data as a single occurrence along with the number of occurrences.
+- `green green green green green` => (`green`, 5)
+
+CCITT Group 3::
+- _Consultative Committee for International Telephony and Telegraphy_
+- Used for **transmission** fax machines for black-and-white bitmaps.
+- A combination of Huffman and RLE.
+- Also called _Modified Huffman coding_.
+
+CCITT Group 4::
+- Used for **storage** on disk drives.
+
+Chroma subsampling::
+- Using less bandwidth for chroma than for luma.
+- Humans are more likely to notice difference in black-white, than in color.
+
+YCbCr::
+- Y = Luma, Cb = blue-difference chroma, Cr = red-difference chroma
+
+Subsampling scheme:: 
+* Describes the number of samples for each channel in a 2-pixel-high conceptual region.
+* stem:[J:a:b] where
+** stem:[J] = width of the conceptual region (thus the number of luma samples)
+** stem:[a] = number of chroma samples (Cb, Cr) in the first row of stem:[J] pixels
+** stem:[b] = number of chroma changes (Cb, Cr) between the two rows of stem:[J] pixels (typically 0 or same as stem:[a])
+
+JPEG::
+- _Joint Photographic Experts Group_
+- The image format is actually _JPEG File Interchange Format (JFIF)_
+- Relies on _Discrete Cosine Transform (DCT)_.
+
+JPEG 2000 (J2K)::
+- Hierarchical
+- Relies on _Discrete Wavelet Transform (DWT)_.
+
+MPEG-1, MPEG-2::
+- _Moving Pictures Experts Group_
+- DCT and predictive coding
+
+MPEG-4::
+- DWT
+- I-frames
+- P-frames
+- B-frames
+
+Advanced Video Coding (AVC, h.264, x.264, MPEG-4 Part 10)::
+- DCT
+
+High Efficiency Video Coding (HEVC, h.265, x.265)::
+- Successor to AVC

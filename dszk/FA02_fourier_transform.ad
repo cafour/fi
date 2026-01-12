@@ -1,0 +1,133 @@
+= Fourier Transform
+:url: ./fa/fourier_analysis/
+:page-group: fa
+:page-order: FA02
+
+Fourier analysis::
+Study of how general functions (e.g., on stem:[\Reals]) can be approximated by sums of simpler (e.g., trigonometric) functions.
+
+Fourier series::
+Series expansion (CZ: rozvinutí nekonečné řady) of a periodic function into a sum of trigonometric functions.
++
+* Uses stem:[\sin] and stem:[\cos]
+* Foundation for _Fourier analysis_ and expansion of periodic functions in general
+* Simple mathematical tool for approximation of periodic functions
+
+Fourier series (DS)::
+- Jako intro používá vzorečky, které má 3blue1brown na konci druhého videa jako challenge (ty dvousložkové).
+- Komplexní čísla zjednodušují notaci
+  - stem:[cos(kx) + i * sin(kx) = e^(ikx)]
+- koeficienty F(k) jsou frequency spectrum / frekvenční spektrum
+- různé vzorečky pro 2PI-periodické a L-periodické (L in |R) funkce
+- proof of orthogonality
+- typicky se amplitudy vizualizují na logarithmické škále
+  - co je y osa, velikost toho komplexního číslo nebo maximum z toho páru?
+
+13Blue1Brown::
+- "wrapping signal around a circle"
+- two different frequencies => of the signal, of the circle-winding
+- používáme komplexní čísla místo vektoru o dvou složkách, protože komplexní čísla mají hodně co společného s otáčením a kruhy (Euler's formula)
+- konvence je clockwise, proto mínus v exponentu
+- winding a function around a circle === funkce * eulerova formule 
+- "center of mass" => máme samples té funkce (v limitě, takže integrál) a průměrujeme je
+  - opravdová Fourierka nepočítá s "center of mass", ale s jeho násobkem, protože neprůměruje
+  - takže čím déle je jedna bázová funkce aplikována, tím intenzivněji bude "započítána"
+- cosine functions with a whole number multiplication of a given frequency
+- complex exponential is at the heart of this 
+
+Fourier transform::
+- spojujeme sin a cos pomocí komplexní jednotky do exponenciální funkce
+- jeden koeficient F(x) === projekce f(x) na danou bázovou funkci, "Jak důležitá je tahle bázová funkce pro tu velkou funkci?"
+- vstupem je signál a výstupem je signál převedený do frekvenční domény
+- většina věcí, které vnímáme jsou nízkofrekvenční
+- transformace gaussianu je (jiný) gaussian
+- Convolution theorem / věta o konvoluci 
+- fourierka je plnohodnotná, nic nezahazuje, je invertibilní, v podstatě bijekce
+- TODO: vlastnosti z prezentace
+- heat flow -- původní use case pro FT
+- fourierova transformace je zobecnění fourierových řad
+- analýza frekvenčních charakteristik
+- nástroj pro řešení diferenciálních rovnic (PDE)
+- je to linéarní zobrazení
+- fourier series řeší periodický signál, fourier transform řeší aperiodický signál
+
+DTFT::
+- discrete time fourier transform - nekonečný signál, ale vzorkovaný
+
+DFT::
+- DTFT s omezeným rozsahem
+- používáme komplexní čísla (resp. bázové funkce sin a cos), aby byla ta transformace linární a tedy vyjádřitelná maticovým násobením
+- kdybychom nepoužívali reálná čísla, byli bychom nuceni použít k numerické metody ke hledání alpha_k
+- F(0) = "direct current (DC)" = normalizovaný součet / "průměr"
+- prakticky má omezený rozsah, matematicky je periodická a dokonečna se opakuje
+
+Vlastnostni DFT::
+- V diskrétním světě nefunguje škálování, máme jen převzorkování.
+- Periodicita
+  + můžeme sáhnout mimo a bude tam hodnota
+  - vstupní signál se tváří periodicky, takže může vzniknout "falešná hrana"
+    * řešení - rozmažeme hraje - Hammingovo okno (děláme konvoluci ve frekvenční doméně, takže násobíme v původní doméně)
+- zajímají nás nízké frekvence, proto v praxi je ve vizualizacích nula uprostřed
+- hermitovská symetrie
+- konvoluční teorém - platí, ale potřeba přidat normalizaci
+  - kronekrovo delta
+  - DFT a IDFT je efektivnější než konvoluce, ale musíme mít signál rozumné délky (na délce třeba 5 se to nevyplatí)
+- stretch
+  - TODO: proč musím snížit amplitudu o 1/sqrt(p)?
+- u piana a hlasů je v té vizualizaci vpravo dole jen amplituda?
+- mixážní pulty umožňují omezit/zvýšit konkrétní rozsahy frekvencí
+- fast fourier transform
+  - rekurzivní, rozděl a panuj
+  - využívá vlastnosti DFT (stretch, shift, linearity), vlastně vůbec nepočítá vzoreček DFT
+  - ...ale postupů je víc
+  - na dně vracím vstup
+
+== Přednáška 4
+
+Low-pass filter::
+* lineární
+* propouští nízké frekvence
+
+High-pass filter::
+* lineární
+* propouští vysoké frekvence
+
+Sampling::
+- Abych mohl vzorkovat, musí mít spojitá funkce omezenou nejvyšší frekvenci. (Jinak se frekvenční spektrum ořízne.)
+- Vzorkovací frekvence je zespodu omezená tím, že nechceme ztratit informace, a seshora smysluplností - nechceme plýtvat místem a výkonem.
+- Vzorkováním vzniká omezený ale periodický frekvenční prostor.
+- Nyquist-Shannon theorem
+- Prefiltering jako řešení aliasingu
+- Resampling
+  - Warping
+- Post-filtering - supersampling
+
+Discrete Cosine Transform::
+- používám jen cosinus
+- upravujeme původní signál, aby byl sudý a vypadly z něj siny
+- nepotřebuju komplexní čísla
+- některé vlastnosti ztrácím
+- hodí se na kompresi, ale už to není tak pěkný nástroj na frekvenční analýzu
+- F-DCT - implementovaná pomocí FDFT
+
+== Question suggestions
+
+* What is a vector space generated by the given basis?
+* What are the orthogonal vectors?
+* What is the orthonormal basis?
+* How can we simply convert a vector from one basis to another basis?
+* What is the unitary/orthogonal matrix?
+* What is the difference between basis vector and basis function?
+* Explain the meaning of expansion coefficients.
+* TODO: Existuje někdy praktický důvod, proč bych chtěl dělat konvoluci ve frekvenční doméně?
+
+
+[bibliography]
+== References
+
+* [[[pv291,1]]] David Svoboda, link:https://is.muni.cz/predmet/fi/jaro2025/PV291[PV291 -- Introduction to Digital Signal Processing], 2025
+* [[[yt3b1b-ft,2]]] 3Blue1Brown, link:https://www.youtube.com/watch?v=spUNpyF58BY[But what is the Fourier Transform? A visual introduction.], 2018
+* [[[yt3b1b-fs,3]]] 3Blue1Brown, link:https://www.youtube.com/watch?v=r6sGWTCMz2k[But what is a Fourier series? From heat flow to drawing with circles], 2019
+* https://dsprelated.com/
+* https://www.youtube.com/playlist?list=PLMrJAkhIeNNT_Xh3Oy0Y4LTj0Oxo8GqsC
+
