@@ -17,6 +17,15 @@ LZW coding (Lempel-Ziv-Welch)::
 Arithmetic coding::
 TODO
 
+Huffman coding::
+TODO
+
+Entropy coding::
+TODO
+
+Context-Adaptive Binary Arithmetic Coding (CABAC)::
+TODO
+
 Lossless predictive encoding::
 +
 --
@@ -66,9 +75,11 @@ CCITT Group 3::
 * Used for **transmission** fax machines for black-and-white bitmaps.
 * A combination of Huffman and RLE.
 * Also called _Modified Huffman coding_.
+TODO
 
 CCITT Group 4::
 * Used for **storage** on disk drives.
+TODO
 
 Chroma subsampling::
 * Using less bandwidth for chroma than for luma.
@@ -89,13 +100,31 @@ Subsampling scheme::
 ** stem:[b] = number of chroma changes (Cb, Cr) between the two rows of stem:[J] pixels (typically 0 or same as stem:[a])
 
 JPEG::
++
+--
 - _Joint Photographic Experts Group_
 - The image format is actually _JPEG File Interchange Format (JFIF)_
 - Relies on _Discrete Cosine Transform (DCT)_.
+--
++
+--
+1. Convert RGB to YCbCr
+2. Reduce resolution of Cb and Cr by 2 (i.e., subsampling scheme 4:2:0)
+3. Process each of Y, Cb, Cr independently.
+4. Split into 8x8 _blocks_.
+5. Apply 8x8 forward DCT on each block.
+6. Quantize each block by dividing it with a constant _quantization matrix_.
+** One matrix for Y, different for Cb and Cr. Both empirically derived and emphasizing lower frequencies, resulting in many zeroes in lower right corner.
+** The quantization matrix is multiplied by the stem:[Q]-scale (1-100 %) quality factor.
+7. Use lossless predictive coding on the quantized DC coefficient of each block.
+8. Store quantized AC coefficients in a zigzag pattern and use RLE.
+9. Use Huffman/arithmetic codingon zero run-lengths and magnitude of AC values.
+--
 
 JPEG 2000 (J2K)::
 - Hierarchical
 - Relies on _Discrete Wavelet Transform (DWT)_.
+TODO
 
 
 == Video Compression
@@ -161,23 +190,28 @@ MPEG-1, MPEG-2::
 - _Moving Pictures Experts Group_
 - DCT and predictive coding
 
-MPEG-4::
-- DWT
-- I-frames
-- P-frames
-- B-frames
-
-Advanced Video Coding (AVC, h.264, x.264, MPEG-4 Part 10)::
+Advanced Video Coding (AVC, h.264, MPEG-4 Part 10)::
 * Published in 2004.
 * DCT
 * Macroblocks (maximum 16x16)
+* Intra-/independent frames (I-frames)
+** Relatively few (e.g., 1/30 depending on framerate).
+** Frequency varies. One is typically at the start of a scene.
+** Uses a JPEG-like compression.
+* Predicted frames (P-frames)
+** Difference to a previous P- or I-frame.
+* Bidirectional frames (B-frames)
+** Most common
+** Difference between the current frame and a prediction of it based on the previous I- or P-frame and the next P-frame.
+* Seemingly can also use DWT for specific purposes, such as encoding of textures and watermarking.
 
-High Efficiency Video Coding (HEVC, h.265, x.265)::
+High Efficiency Video Coding (HEVC, h.265, MPEG-H Part 2)::
 * Published in 2013.
 * Successor to AVC
 * More prediction modes than AVC (9 -> 35)
 * Macroblocks renamed to _Coding Tree Units_
 * Costly licensing.
+* Relies on both DCT and DST (discrete sine transform).
 
 VP9::
 * Published in 2013.
@@ -204,4 +238,4 @@ Why invent newer and newer image/video compression methods?::
 * Christian Feldmann, link:https://www.youtube.com/watch?v=LDeL7-49qm4[Video Coding Basics - How is this so efficient?], 2022
 * https://www.retrosix.wiki/yuv-vs-ycbcr-vs-rgb-color-space
 * https://ieeexplore.ieee.org/document/6316136
-* H.264 and MPEG-4 Video Compression: Video Coding for Next-generation Multimedia
+* https://www.youtube.com/watch?v=Kv1Hiv3ox8I
