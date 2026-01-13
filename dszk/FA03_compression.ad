@@ -3,48 +3,76 @@
 :page-group: fa
 :page-order: FA03
 
-The main goal of compression is to remove redundancy.
+Compression::
+* Encoding data to take up less storage space / bandwidth at the cost of additional decoding calculations.
+* Algorithmical perspective: The goal is to remove redundancy.
 
 LZW coding (Lempel-Ziv-Welch)::
-- GIF, TIFF, PDF, ZIP
-- nevyžaduje přenášet celý slovník, protože se generuje deterministicky, je potřeba poslat jen základní sadu
-- není potřeba posílat ani pravděpodobnostní tabulku
-- když naplníme slovník, zahodíme ho a začneme nový
-- bylo navrženo na text
+* GIF, TIFF, PDF, ZIP
+* Doesn't need to transmit a dictionary, only the base set. 
+* není potřeba posílat ani pravděpodobnostní tabulku
+* když naplníme slovník, zahodíme ho a začneme nový
+* bylo navrženo na text
 
-Lossless Predictive Encoding::
-8 preprocess před Huffmanem nebo něčím jiným
+Arithmetic coding::
+TODO
 
-Lossy compression::
-* Quantizer - zahazuje informaci
+Lossless predictive encoding::
++
+--
+* _Input_ stem:[f] -- the original signal to be encoded.
+* _Predictor_ stem[p] -- function that estimates the next piece of data based on predecessors (e.g., weighted average).
+** Example: stem:[p(f(n)) = \text{round}\left(\sum_{i=1}^M \alpha(i) \cdot f(n-i)\right)]
+* _Error_ stem:[e(n) = f(n) - p(f(n))]
+* Can be used as a preprocess stage before Huffman or some other _symbol encoder_.
+* Best when we know what "trends" in the data we can expect.
+--
++
+image::./img/fa03_lossless_predictive_encoder.png[]
++
+The decoder must know what the predictor is!
++
+image::./img/fa03_lossless_predictive_decoder.png[]
+
+Lossy predictive coding::
++
+--
+* Has much higher compression ratio than lossless.
+* Decoded data is not the same as the original (before encoding) data.
+* _Quantizer_ -- reduces the amount of bits required to express the value but loses information (i.e., division).
+* The first value of _input_ is passed as is (i.e., its predicted value is 0). It is then quantized, and then fed to the predictor to get the predicted value for the next value of _f_.
+* The predictor is used on its own output (i.e., in a feedback loop) so that it can be used the same way in the encoder as well as the decoder. If it were used only on the original input values, decoder would quickly accumulate undesired error.
+* Example: Delta modulation (DM) -- error is always either a positive or negative stem:[\xi]
+** stem:[p(f(n)) = \alpha f(n-1)], where stem:[\alpha] is a prediction coefficient (stem:[\leq 1])
+** stem:[q(e(n)) = \begin{cases} +\xi & \text{for } e(n) > 0 \\ -\xi & \text{otherwise} \end{cases}], where stem:[\xi] is a positive constant.
+--
++
+image::./img/fa03_lossy_predictive_coding.png[]
+
 
 Transform coding::
 * DFT nebo DCT - zahazujeme typicky vysoké frekvence
 
-
-== Image Compression Standards
-
-Redundancy::
-* Spatial -- large areas of homogenous color
-* Temporal -- many pixels unchanged between consecutive frames
-
 Run length encoding (RLE)::
-- Lossless.
-- Stores repeated _runs_ of data as a single occurrence along with the number of occurrences.
-- `green green green green green` => (`green`, 5)
+* Lossless.
+* Stores repeated _runs_ of data as a single occurrence along with the number of occurrences.
+* `green green green green green` => (`green`, 5)
+
+
+== Image Compression
 
 CCITT Group 3::
-- _Consultative Committee for International Telephony and Telegraphy_
-- Used for **transmission** fax machines for black-and-white bitmaps.
-- A combination of Huffman and RLE.
-- Also called _Modified Huffman coding_.
+* _Consultative Committee for International Telephony and Telegraphy_
+* Used for **transmission** fax machines for black-and-white bitmaps.
+* A combination of Huffman and RLE.
+* Also called _Modified Huffman coding_.
 
 CCITT Group 4::
-- Used for **storage** on disk drives.
+* Used for **storage** on disk drives.
 
 Chroma subsampling::
-- Using less bandwidth for chroma than for luma.
-- Humans are more likely to notice difference in black-white, than in color.
+* Using less bandwidth for chroma than for luma.
+* Humans are more likely to notice difference in black-white, than in color.
 
 YUV::
 * Y = luma, U, V = chroma
@@ -59,6 +87,22 @@ Subsampling scheme::
 ** stem:[J] = width of the conceptual region (thus the number of luma samples)
 ** stem:[a] = number of chroma samples (Cb, Cr) in the first row of stem:[J] pixels
 ** stem:[b] = number of chroma changes (Cb, Cr) between the two rows of stem:[J] pixels (typically 0 or same as stem:[a])
+
+JPEG::
+- _Joint Photographic Experts Group_
+- The image format is actually _JPEG File Interchange Format (JFIF)_
+- Relies on _Discrete Cosine Transform (DCT)_.
+
+JPEG 2000 (J2K)::
+- Hierarchical
+- Relies on _Discrete Wavelet Transform (DWT)_.
+
+
+== Video Compression
+
+Video Data Redundancy::
+* Spatial -- large areas of homogenous color
+* Temporal -- many pixels unchanged between consecutive frames
 
 Hybrid Block Based Video Coding::
 * Each video frame is split into (square) blocks.
@@ -88,7 +132,7 @@ The processed block is reconstructed and used for encoding the next block:
 ** Deblocking filter -- smoothing filter on block borders to make their boundaries less visible.
 --
 +
-image::./img/fa03_encoder.png[]
+image::./img/fa03_hybrid_block_encoder.png[]
 +
 Decoder would do the same except the part in the upper left corner of the image. (It wouldn't subtract the input because there is no input to be encoded.) The entropy coding is reversed. The picture buffer contains the decoded video.
 
@@ -112,15 +156,6 @@ Bad artifacts resulting from encoder and decoder not using the same prediction m
 
 Wavefront decoding::
 Decoding as many block as parallel, provided block to the top and left have been processed. The effect looks like a diagonal "wave".
-
-JPEG::
-- _Joint Photographic Experts Group_
-- The image format is actually _JPEG File Interchange Format (JFIF)_
-- Relies on _Discrete Cosine Transform (DCT)_.
-
-JPEG 2000 (J2K)::
-- Hierarchical
-- Relies on _Discrete Wavelet Transform (DWT)_.
 
 MPEG-1, MPEG-2::
 - _Moving Pictures Experts Group_
@@ -163,6 +198,8 @@ Why invent newer and newer image/video compression methods?::
 * Better quality for the same bandwidth.
 
 == References
+* https://benchpartner.com/q/explain-about-lossy-predictive-coding
+* https://www.cmlab.csie.ntu.edu.tw/cml/dsp/training/coding/jpeg/jpeg/encoder.htm
 * HandyAndy Tech Tips, link:https://www.youtube.com/watch?v=Fawcboio6g4[H.265 (HEVC) vs H.264 (AVC) Compression: Explained!], 2016
 * Christian Feldmann, link:https://www.youtube.com/watch?v=LDeL7-49qm4[Video Coding Basics - How is this so efficient?], 2022
 * https://www.retrosix.wiki/yuv-vs-ycbcr-vs-rgb-color-space

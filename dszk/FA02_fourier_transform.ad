@@ -82,8 +82,6 @@ Vlastnostni DFT::
   - ...ale postupů je víc
   - na dně vracím vstup
 
-== Přednáška 4
-
 Low-pass filter::
 * lineární
 * propouští nízké frekvence
@@ -102,13 +100,13 @@ Sampling::
   - Warping
 - Post-filtering - supersampling
 
-Discrete Cosine Transform::
-- používám jen cosinus
-- upravujeme původní signál, aby byl sudý a vypadly z něj siny
-- nepotřebuju komplexní čísla
-- některé vlastnosti ztrácím
-- hodí se na kompresi, ale už to není tak pěkný nástroj na frekvenční analýzu
-- F-DCT - implementovaná pomocí FDFT
+Discrete Cosine Transform (DCT)::
+* Uses just stem:[\cos] functions.
+* We modify the input signal to make it even so that the stem:[\sin] coefficients turn into zeroes.
+* We don't use complex numbers anymore, but we also lose some of the nice properties of the transform.
+* Good tool for compression, not so much for signal analysis.
+* Fast DCT (F-DCT) -- uses FDFT under the hood.
+* Coefficients are divided into "DC" (zero frequency) and "AC" (other frequencies).
 
 DCT in 2D::
 +
@@ -134,4 +132,3 @@ image::./da02_dct_2d_basis_functions.png[]
 * [[[yt3b1b-fs,3]]] 3Blue1Brown, link:https://www.youtube.com/watch?v=r6sGWTCMz2k[But what is a Fourier series? From heat flow to drawing with circles], 2019
 * https://dsprelated.com/
 * https://www.youtube.com/playlist?list=PLMrJAkhIeNNT_Xh3Oy0Y4LTj0Oxo8GqsC
-
