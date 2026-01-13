@@ -3,6 +3,8 @@
 :page-group: fa
 :page-order: FA03
 
+The main goal of compression is to remove redundancy.
+
 LZW coding (Lempel-Ziv-Welch)::
 - GIF, TIFF, PDF, ZIP
 - nevyžaduje přenášet celý slovník, protože se generuje deterministicky, je potřeba poslat jen základní sadu
@@ -22,6 +24,10 @@ Transform coding::
 
 == Image Compression Standards
 
+Redundancy::
+* Spatial -- large areas of homogenous color
+* Temporal -- many pixels unchanged between consecutive frames
+
 Run length encoding (RLE)::
 - Lossless.
 - Stores repeated _runs_ of data as a single occurrence along with the number of occurrences.
@@ -40,8 +46,12 @@ Chroma subsampling::
 - Using less bandwidth for chroma than for luma.
 - Humans are more likely to notice difference in black-white, than in color.
 
+YUV::
+* Y = luma, U, V = chroma
+
 YCbCr::
-- Y = Luma, Cb = blue-difference chroma, Cr = red-difference chroma
+* Y = luma, Cb = blue-difference chroma (B-Y), Cr = red-difference chroma (R-Y)
+* YUV expressed differently
 
 Subsampling scheme:: 
 * Describes the number of samples for each channel in a 2-pixel-high conceptual region.
@@ -49,6 +59,59 @@ Subsampling scheme::
 ** stem:[J] = width of the conceptual region (thus the number of luma samples)
 ** stem:[a] = number of chroma samples (Cb, Cr) in the first row of stem:[J] pixels
 ** stem:[b] = number of chroma changes (Cb, Cr) between the two rows of stem:[J] pixels (typically 0 or same as stem:[a])
+
+Hybrid Block Based Video Coding::
+* Each video frame is split into (square) blocks.
+* Called _superblocks_, _macroblocks_, _coding units_ depending on the codec.
+* Size depends on the codec.
+* Can be processed line-by-line, or sliced/tiled and processed in parallel.
+* Hybrid = combines _inter & intra prediction_ with transform coding (e.g., DCT + quantization + entropy coding).
+* Blocks can be split in various ways, much like in a quadtree.
+
+Encoding loop::
+Each block in the block tree is processed:
++
+--
+1. Subtract prediction (_intra_ or _inter_) from the _input_ block, resulting in an _error_ signal.
+2. Transform the signal (e.g., using DCT or DST).
+3. Quantize the signal ("round" the coefficients to fewer levels).
+** This is where a lot of the information in an image is lost.
+** Quantized coefficients are put into the bitstream.
+4. Entropy coding (e.g., arithmetic coding)
+** Includes also motion information, prediction modes, block sizes, etc.
++
+The processed block is reconstructed and used for encoding the next block:
++ 
+5. Inverse quantization
+6. Inverse transformation
+7. Prediction and all of the motion information and other data is used in _loop filtering_
+** Deblocking filter -- smoothing filter on block borders to make their boundaries less visible.
+--
++
+image::./img/fa03_encoder.png[]
++
+Decoder would do the same except the part in the upper left corner of the image. (It wouldn't subtract the input because there is no input to be encoded.) The entropy coding is reversed. The picture buffer contains the decoded video.
+
+Intra prediction::
+* Predicting the contents of a block using surrounding pixels.
+* Has a _direction_ associated.
+* Many different prediction modes (mathematical formulas).
+** Different sets for different codecs.
+
+Inter prediction / motion compensation::
+* Predicting the contents of a block based on the previous reference frame.
+* Typically associated with a _direction_ and an _offset_.
+
+Frame coding order::
+* The order in which frames are encoded is not the same as the order in which they are diplayed (chronological).
+* Allows for _bidirectional motion compensation_ -- predicting the frame based on the temporally past and temporally future frames.
+** Weighted combination of motion vectors from the two frames.
+
+Drift::
+Bad artifacts resulting from encoder and decoder not using the same prediction methods and other implementation details.
+
+Wavefront decoding::
+Decoding as many block as parallel, provided block to the top and left have been processed. The effect looks like a diagonal "wave".
 
 JPEG::
 - _Joint Photographic Experts Group_
@@ -70,7 +133,38 @@ MPEG-4::
 - B-frames
 
 Advanced Video Coding (AVC, h.264, x.264, MPEG-4 Part 10)::
-- DCT
+* Published in 2004.
+* DCT
+* Macroblocks (maximum 16x16)
 
 High Efficiency Video Coding (HEVC, h.265, x.265)::
-- Successor to AVC
+* Published in 2013.
+* Successor to AVC
+* More prediction modes than AVC (9 -> 35)
+* Macroblocks renamed to _Coding Tree Units_
+* Costly licensing.
+
+VP9::
+* Published in 2013.
+* Royalty-free.
+
+AOMedia Video 1 (AV1)::
+* Published in 2018.
+* AOMedia = _Alliance for Open Media_
+** Industry consortium with Amazon, Apple, Cisco, Google, Intel, Meta, Microsoft, etc.
+* Open standard, royalty-free (h.265 is not).
+* Macroblocks of up to 128x128.
+
+== Questions
+
+Why invent newer and newer image/video compression methods?::
+* Resolution and computation capabilities goe up, but network bandwidth is limiting.
+* Storage is also costly.
+* Better quality for the same bandwidth.
+
+== References
+* HandyAndy Tech Tips, link:https://www.youtube.com/watch?v=Fawcboio6g4[H.265 (HEVC) vs H.264 (AVC) Compression: Explained!], 2016
+* Christian Feldmann, link:https://www.youtube.com/watch?v=LDeL7-49qm4[Video Coding Basics - How is this so efficient?], 2022
+* https://www.retrosix.wiki/yuv-vs-ycbcr-vs-rgb-color-space
+* https://ieeexplore.ieee.org/document/6316136
+* H.264 and MPEG-4 Video Compression: Video Coding for Next-generation Multimedia
