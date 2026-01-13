@@ -1,5 +1,5 @@
 = Fourier Transform
-:url: ./fa/fourier_analysis/
+:url: ./fa/fourier_transform/
 :page-group: fa
 :page-order: FA02
 
@@ -51,12 +51,12 @@ Fourier transform::
 - je to linéarní zobrazení
 - fourier series řeší periodický signál, fourier transform řeší aperiodický signál
 
-DTFT::
-- discrete time fourier transform - nekonečný signál, ale vzorkovaný
+Discrete time Fourier Transform (DTFT)::
+* Infinite, but sampled, signal.
 
-DFT::
-- DTFT s omezeným rozsahem
-- používáme komplexní čísla (resp. bázové funkce sin a cos), aby byla ta transformace linární a tedy vyjádřitelná maticovým násobením
+Discrete Fourier transform (DFT)::
+* DTFT with a limited range
+* We use complex numbers (i.e., the stem:[\sin] and stem:[\cos] basis functions), so that the transformation is linear and thus expressable with matrix multiplication.
 - kdybychom nepoužívali reálná čísla, byli bychom nuceni použít k numerické metody ke hledání alpha_k
 - F(0) = "direct current (DC)" = normalizovaný součet / "průměr"
 - prakticky má omezený rozsah, matematicky je periodická a dokonečna se opakuje
@@ -83,12 +83,12 @@ Vlastnostni DFT::
   - na dně vracím vstup
 
 Low-pass filter::
-* lineární
-* propouští nízké frekvence
+* Linear filter
+* Low frequencies pass through
 
 High-pass filter::
-* lineární
-* propouští vysoké frekvence
+* Linear filter
+* High frequences pass through
 
 Sampling::
 - Abych mohl vzorkovat, musí mít spojitá funkce omezenou nejvyšší frekvenci. (Jinak se frekvenční spektrum ořízne.)
@@ -116,6 +116,10 @@ Wavelet transform (WT)::
 * Uses wavelets -- functions with a peak at zero and brief, diminishing oscillations.
 ** Parametrized both by **frequency and time**.
 * Compared to FT, which captures global frequency information, WT provides temporal information as well.
+
+Discrete Wavelet transform (DWT)::
+* First DWT invented by Alfréd Haar. Haar wavelets are the most educational.
+TODO
 
 == Questions
 
