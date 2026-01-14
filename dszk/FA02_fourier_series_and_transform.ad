@@ -1,5 +1,5 @@
-= Fourier Transform
-:url: ./fa/fourier_transform/
+= Fourier Series and Transform
+:url: ./fa/fourier_series_and_transform/
 :page-group: fa
 :page-order: FA02
 
@@ -15,14 +15,16 @@ Fourier series (FS)::
 Series expansion (CZ: rozvinutí nekonečné řady) of a periodic function into a sum of basis functions.
 +
 --
-* For basis functions, it uses stem:[\sin] and stem:[\cos] functions with an whole number frequency.
+* For basis functions, it uses stem:[\sin] and stem:[\cos] functions with a whole number frequency.
 * Foundation for _Fourier analysis_ and expansion of periodic functions in general.
 * Simple mathematical tool for approximation of periodic functions.
+* The stem:[F(k)] coefficients are called _frequency spectrum_.
 * Each stem:[F(k)] coefficient is the projection of the stem:[k]-th basis function onto stem:[f].
 * It answers the question: "How important is this basis function in the grand scheme of stem:[f]?"
+* Typically, we use a stem:[\log] scale for visualization of the coefficients.
 --
 
-FS on stem:[\pi]-periodic functions::
+Fourier series on stem:[\pi]-periodic functions::
 Any stem:[\pi]-period function stem:[f] can be expanded in the following way:
 +
 [stem]
@@ -46,7 +48,7 @@ f(x) &= \sum_{k=0}^\infty (\textcolor{blue}{a_k} \cos(kx) + \textcolor{red}{b_k}
 * stem:[b_k] -- coefficients of odd parts of stem:[f]
 --
 
-FS on L-periodic functions::
+Fourier series on L-periodic functions::
 Similar to stem:[\pi]-periodic functions, but we multiply stem:[k] by stem:[\frac{2\pi}{L}], where stem:[L \in \reals]:
 +
 [stem]
@@ -66,16 +68,7 @@ f(x) &= \sum_{k=0}^\infty \left( \textcolor{blue}{a_k} \cos\left( \frac{2\pi}{L}
 \end{aligned}
 ++++
 
-Complex numbers in FS::
-+
---
-1. They simplify the formula:
-  * stem:[\cos(kx) + i \cdot \sin(kx) = e^{ikx}] (Euler's formula)
-2. With them, FT is can be solved linearly. Without them, it's an optimization problem that must be solved numerically.
-TODO
-3. Complex numbers also symbolize rotation, which makes for a nice intuitive explanation (see below).
---
-+
+Complex Fourier series on stem:[2\pi]-periodic functions::
 With complex numbers the formula becomes:
 +
 [stem]
@@ -86,52 +79,86 @@ f(x) &= \sum_{k=-\infty}^\infty F(k) \cdot e^{ikx} \\
 
 & \text{where} \\
 
+x &\in \langle -\pi, \pi \rangle \\
+
 F(x) &= \frac{\langle f(x), e^{ikx} \rangle}{\langle e^{ikx}, e^{ikx} \rangle}
 
 \end{aligned}
 ++++
 +
---
-* stem:[x \in \langle -\pi, \pi \rangle]
-* The stem:[F(k)] coefficients are called _frequency spectrum_.
---
-+
-When used to express stem:[F(k)], it converts a function of time into a function of frequency:
+When we express stem:[F(k)] out of the above formula, it converts time into frequency:
 +
 [stem]
 ++++
 F(k) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) \cdot e^{-ikx} dx
+
+~~\text{where}~~
+
+k \in \Z
+++++
+
+Complex Fourier series on L-periodic functions::
+We multiply stem:[k] by stem:[\frac{2\pi}{L}] and adjust the scaling factor and integral boundaries, where stem:[L \in \reals]:
++
+Expansion/Frequency -> Time:
++
+[stem]
+++++
+f(x) = \sum_{k=-\infty}^{\infty} F(k) \cdot e^{-\frac{2\pi}{L} ikx}
+
+~~\text{where}~~
+
+x \in \left\langle -\frac{L}{2}, \frac{L}{2} \right\rangle
 ++++
 +
+Time -> Frequency:
++
+[stem]
+++++
+F(x) = \frac{1}{L} \int_{-\frac{L}{2}}^{\frac{L}{2}} f(x) \cdot e^{-\frac{2\pi}{L} ikx} dx
+
+~~\text{where}~~
+
+k \in \Z
+++++
+
+Why use complex numbers in the Fourier series?::
++
 --
-* stem:[k \in \Z]
+1. They simplify the formula:
+  * stem:[\cos(kx) + i \cdot \sin(kx) = e^{ikx}] (Euler's formula)
+2. With them, FT is can be solved linearly. Without them, it's an optimization problem that must be solved numerically.
+TODO
+3. Complex numbers also symbolize rotation, which makes for a nice intuitive explanation (see below).
 --
 
-Proof of orthogonality of FS::
+Proof of orthogonality of the Fourier series::
 TODO
+
+Gibbs phenomenon::
+Functions with discontinuities are hard to be approximated with Fourier series as stem:[\sin] and stem:[\cos] are both smooth.
++
+image::./img/fa02_gibbs.png[]
 
 == Fourier transform
 
-Fourier transform stem:[\cal F]::
---
-* Is a function stem:[\cal F] taking a signal (a function stem:[f] of time) and converts it into function stem:[F] of the _frequency domain_.
---
+Fourier transform (FT)::
+Fourier transform stem:[\cal F] is a function taking a signal (a function stem:[f] of time) and converting it to the _frequency domain_ (function stem:[F] of frequencies).
 +
-- vstupem je signál a výstupem je signál převedený do frekvenční domény
-- většina věcí, které vnímáme jsou nízkofrekvenční
-- transformace gaussianu je (jiný) gaussian
-- Convolution theorem / věta o konvoluci 
-- fourierka je plnohodnotná, nic nezahazuje, je invertibilní, v podstatě bijekce
-- TODO: vlastnosti z prezentace
-- heat flow -- původní use case pro FT
-- fourierova transformace je zobecnění fourierových řad
-- analýza frekvenčních charakteristik
-- nástroj pro řešení diferenciálních rovnic (PDE)
-- je to linéarní zobrazení
-- fourier series řeší periodický signál, fourier transform řeší aperiodický signál
+--
+* FT is a generalization of FS.
+* FS handles only periodic signal. FT handles aperiodic signal.
+* It's total. Lossless. Doesn't throw away any information. It's invertible. A bijection. A linear mapping.
+* FT of a Gaussian is a (different) Gaussian.
+* It a tool for frequency analysis.
+--
 
-Visualizing FT::
-* Typically, we use a stem:[\log] scale.
+Psychovisual and psychoacoustic redundancy::
+Most things we humans see and hear contain low frequencies. If we remove the high-frequency data, the difference is near imperceivable.
+
+Convolution theorem::
+* (CZ: Věta o konvoluci)
+TODO
 
 Intuitive explanation of fourier transform <<yt3b1b-ft>>::
 +
@@ -186,6 +213,26 @@ Vlastnostni DFT::
 +
 image::./img/fa02_fa_summary.png[]
 
+Low-pass filter::
+* Linear filter
+* Low frequencies pass through
+
+High-pass filter::
+* Linear filter
+* High frequences pass through
+
+Sampling::
+- Abych mohl vzorkovat, musí mít spojitá funkce omezenou nejvyšší frekvenci. (Jinak se frekvenční spektrum ořízne.)
+- Vzorkovací frekvence je zespodu omezená tím, že nechceme ztratit informace, a seshora smysluplností - nechceme plýtvat místem a výkonem.
+- Vzorkováním vzniká omezený ale periodický frekvenční prostor.
+- Nyquist-Shannon theorem
+- Prefiltering jako řešení aliasingu
+- Resampling
+  - Warping
+- Post-filtering - supersampling
+
+== Fourier Transform in 2D
+
 Fourier transform in 2D::
 Forward continuous:
 +
@@ -234,49 +281,12 @@ Visually, each stem:[\omega = (u, v)] vector of FD represents a 2D sinusoidal fu
 +
 image::./img/fa02_2d_basis_function_example.png[]
 
-Low-pass filter::
-* Linear filter
-* Low frequencies pass through
-
-High-pass filter::
-* Linear filter
-* High frequences pass through
-
-Sampling::
-- Abych mohl vzorkovat, musí mít spojitá funkce omezenou nejvyšší frekvenci. (Jinak se frekvenční spektrum ořízne.)
-- Vzorkovací frekvence je zespodu omezená tím, že nechceme ztratit informace, a seshora smysluplností - nechceme plýtvat místem a výkonem.
-- Vzorkováním vzniká omezený ale periodický frekvenční prostor.
-- Nyquist-Shannon theorem
-- Prefiltering jako řešení aliasingu
-- Resampling
-  - Warping
-- Post-filtering - supersampling
-
-Discrete Cosine Transform (DCT)::
-* Uses just stem:[\cos] functions.
-* We modify the input signal to make it even so that the stem:[\sin] coefficients turn into zeroes.
-* We don't use complex numbers anymore, but we also lose some of the nice properties of the transform.
-* Good tool for compression, not so much for signal analysis.
-* Fast DCT (F-DCT) -- uses FDFT under the hood.
-* Coefficients are divided into "DC" (zero frequency) and "AC" (other frequencies).
-
-DCT in 2D::
-+
-image::./img/fa02_dct_2d_basis_functions.png[]
-
-Wavelet transform (WT)::
-* Uses wavelets -- functions with a peak at zero and brief, diminishing oscillations.
-** Parametrized both by **frequency and time**.
-* Compared to FT, which captures global frequency information, WT provides temporal information as well.
-
-Discrete Wavelet transform (DWT)::
-* First DWT invented by Alfréd Haar. Haar wavelets are the most educational.
-TODO
-
 == Questions
 
+====
+
 Explain the meaning of Fourier coefficients.::
-TODO
+They measure the amount of correlation of a single basis function with the expanded function.
 
 Prove that Fourier transform is a linear mapping.::
 TODO
@@ -288,7 +298,7 @@ Which frequencies dominate in the Gaussian plot?::
 TODO
 
 Which operation in frequency domain corresponds to convolution in time domain?::
-TODO
+Component-wise multiplication.
 
 Which frequencies are enhanced if we apply a derivative to an input signal?::
 TODO
@@ -338,16 +348,17 @@ TODO
 Describe the F-DCT algorithm and compute stem:[\text{F-DCT}\lparen\lbrack 1, 6, 6, 1 \rbrack\rparen].::
 TODO
 
-Existuje někdy praktický důvod, proč bych chtěl dělat konvoluci ve frekvenční doméně?::
+Is there ever any reason to do a convolution in the frequency domain?::
 TODO
 
+====
 
 
 [bibliography]
 == References
 
 * [[[pv291,1]]] David Svoboda, link:https://is.muni.cz/predmet/fi/jaro2025/PV291[PV291 -- Introduction to Digital Signal Processing], 2025
-* [[[yt3b1b-ft,2]]] 3Blue1Brown, link:https://www.youtube.com/watc h?v=spUNpyF58BY[But what is the Fourier Transform? A visual introduction.], 2018
+* [[[yt3b1b-ft,2]]] 3Blue1Brown, link:https://www.youtube.com/watch?v=spUNpyF58BY[But what is the Fourier Transform? A visual introduction.], 2018
 * [[[yt3b1b-fs,3]]] 3Blue1Brown, link:https://www.youtube.com/watch?v=r6sGWTCMz2k[But what is a Fourier series? From heat flow to drawing with circles], 2019
 * https://dsprelated.com/
 * https://www.youtube.com/playlist?list=PLMrJAkhIeNNT_Xh3Oy0Y4LTj0Oxo8GqsC

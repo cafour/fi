@@ -1,0 +1,25 @@
+= Cosine and Wavelet Transform
+:url: ./fa/cosine_and_wavelet/
+:page-group: fa
+:page-order: FA03
+
+Discrete Cosine Transform (DCT)::
+* Uses just stem:[\cos] functions.
+* We modify the input signal to make it even so that the stem:[\sin] coefficients turn into zeroes.
+* We don't use complex numbers anymore, but we also lose some of the nice properties of the transform.
+* Good tool for compression, not so much for signal analysis.
+* Fast DCT (F-DCT) -- uses FDFT under the hood.
+* Coefficients are divided into "DC" (zero frequency) and "AC" (other frequencies).
+
+DCT in 2D::
++
+image::./img/fa03_dct_2d_basis_functions.png[]
+
+Wavelet transform (WT)::
+* Uses wavelets -- functions with a peak at zero and brief, diminishing oscillations.
+** Parametrized both by **frequency and time**.
+* Compared to FT, which captures global frequency information, WT provides temporal information as well.
+
+Discrete Wavelet transform (DWT)::
+* First DWT invented by Alfréd Haar. Haar wavelets are the most educational.
+TODO

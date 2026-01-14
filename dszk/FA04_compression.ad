@@ -1,7 +1,7 @@
 = Compression
 :url: ./fa/compression/
 :page-group: fa
-:page-order: FA03
+:page-order: FA04
 
 Compression::
 * Encoding data to take up less storage space / bandwidth at the cost of additional decoding calculations.
@@ -37,11 +37,11 @@ Lossless predictive encoding::
 * Best when we know what "trends" in the data we can expect.
 --
 +
-image::./img/fa03_lossless_predictive_encoder.png[]
+image::./img/fa04_lossless_predictive_encoder.png[]
 +
 The decoder must know what the predictor is!
 +
-image::./img/fa03_lossless_predictive_decoder.png[]
+image::./img/fa04_lossless_predictive_decoder.png[]
 
 Lossy predictive coding::
 +
@@ -56,7 +56,7 @@ Lossy predictive coding::
 ** stem:[q(e(n)) = \begin{cases} +\xi & \text{for } e(n) > 0 \\ -\xi & \text{otherwise} \end{cases}], where stem:[\xi] is a positive constant.
 --
 +
-image::./img/fa03_lossy_predictive_coding.png[]
+image::./img/fa04_lossy_predictive_coding.png[]
 
 
 Transform coding::
@@ -161,7 +161,7 @@ The processed block is reconstructed and used for encoding the next block:
 ** Deblocking filter -- smoothing filter on block borders to make their boundaries less visible.
 --
 +
-image::./img/fa03_hybrid_block_encoder.png[]
+image::./img/fa04_hybrid_block_encoder.png[]
 +
 Decoder would do the same except the part in the upper left corner of the image. (It wouldn't subtract the input because there is no input to be encoded.) The entropy coding is reversed. The picture buffer contains the decoded video.
 
