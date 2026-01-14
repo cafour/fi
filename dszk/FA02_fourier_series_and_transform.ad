@@ -122,13 +122,13 @@ F(x) = \frac{1}{L} \int_{-\frac{L}{2}}^{\frac{L}{2}} f(x) \cdot e^{-\frac{2\pi}{
 k \in \Z
 ++++
 
-Why use complex numbers in the Fourier series?::
+Why use complex numbers in the Fourier series and Fourier transform?::
 +
 --
 1. They simplify the formula:
-  * stem:[\cos(kx) + i \cdot \sin(kx) = e^{ikx}] (Euler's formula)
-2. With them, FT is can be solved linearly. Without them, it's an optimization problem that must be solved numerically.
-TODO
+** stem:[\cos(kx) + i \cdot \sin(kx) = e^{ikx}] (Euler's formula)
+2. With them, FT is can be solved linearly and expressed using matrix multiplication. Without them, it's an optimization problem that must be solved numerically.
+** If we used real numbers and, for example, stem:[\sin(km - \alpha)] as the basis function, we would not be able to use matrix multiplication and would have to find stem:[\alpha] numerically.
 3. Complex numbers also symbolize rotation, which makes for a nice intuitive explanation (see below).
 --
 
@@ -146,21 +146,62 @@ Fourier transform (FT)::
 Fourier transform stem:[\cal F] is a function taking a signal (a function stem:[f] of time) and converting it to the _frequency domain_ (function stem:[F] of frequencies).
 +
 --
-* FT is a generalization of FS.
+* FT is a generalization of FS. It's derived from L-periodic complex FS with stem:[L \to \infty].
 * FS handles only periodic signal. FT handles aperiodic signal.
 * It's total. Lossless. Doesn't throw away any information. It's invertible. A bijection. A linear mapping.
-* FT of a Gaussian is a (different) Gaussian.
 * It a tool for frequency analysis.
 --
++
+_Inverse_ transform (frequency -> time):
++
+[stem]
+++++
+f(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) \cdot e^{i\omega x} d\omega
 
-Psychovisual and psychoacoustic redundancy::
-Most things we humans see and hear contain low frequencies. If we remove the high-frequency data, the difference is near imperceivable.
+~~\text{where}~~
 
-Convolution theorem::
-* (CZ: Věta o konvoluci)
-TODO
+x \in (-\infty,\infty)
+++++
++
+_Forward_ transform (time -> frequency):
++
+[stem]
+++++
+F(\omega) = \int_{-\infty}^{\infty} f(x) \cdot e^{-i\omega x}
 
-Intuitive explanation of fourier transform <<yt3b1b-ft>>::
+~~\text{where}~~
+
+\omega \in (-\infty, \infty)
+++++
++
+Commonly:
++
+[stem]
+++++
+\begin{aligned}
+
+F(\omega) &= \mathcal{F}(f(x)) \\
+G(\omega) &= \mathcal{F}(g(x))
+
+\end{aligned}
+++++
+
+Coefficients of the Fourier transform::
+* Each coefficient stem:[F(\omega)] is associated with a basis function stem:[e^{i\omega x}] oscillating at frequency stem:[\omega].
+* stem:[F(\omega) = A_\omega \cdot e^{i\phi_\omega}] is simply a complex number, where:
+** amplitude stem:[A_\omega] -- strength of basis function stem:[e^{i\omega x}]
+** phase stem:[\phi_\omega] -- controls the phase shift of basis function stem:[e^{i\omega x}]
+
+Spectral density::
+Plot of stem:[F(\omega)] for stem:[\omega \in (-\infty, \infty)].
++
+image::./img/fa02_spectral_density.png[]
+
+Function pairs in the Fourier transform::
+* FT of the rectangle function is sinc.
+* FT of a Gaussian is a (different) Gaussian.
+
+Intuitive explanation of the Fourier transform <<yt3b1b-ft>>::
 +
 --
 1. Complex numbers describe rotation, therefore multiplying stem:[f] by a set of complex numbers "winds stem:[f] up" around a circle.
@@ -174,18 +215,54 @@ image::./img/fa02_intuitive_ft_2.png[]
 +
 NOTE: The "winding" is clockwise by convention. That's why there's a stem:[-i] in the equation.
 
+Properties of the Fourier transform::
+* **Shift** affects only the phase
++
+[stem]
+++++
+\mathcal{F}\lbrack f(x-\textcolor{red}{a}) \rbrack (\omega) = \textcolor{red}{e^{-2 \pi \cdot i \cdot a \omega}} F(\omega)
+++++
++
+* **Scaling** -- Narrowing in the time domain causes widening in the frequency domain, and vice versa:\
++
+[stem]
+++++
+\mathcal{F}\lbrack f(\textcolor{red}{a}x) \rbrack (\omega) = \textcolor{red}{\frac{1}{|a|}} F\left( \frac{\omega}{\textcolor{red}{a}} \right)
+++++
++
+* **Derivative** enhances high frequencies:
++
+[stem]
+++++
+\begin{aligned}
 
-Frequency domain::
-TODO
+\mathcal{F}\left\lbrack \textcolor{red}{\frac{\partial}{\partial x}} f(x) \right\rbrack
+  &= \textcolor{red}{i \cdot \omega} \cdot F(\omega)
+  
+\mathcal{F}\left\lbrack \textcolor{red}{\frac{\partial}{\partial^2 x}} f(x) \right\rbrack
+  &= \textcolor{red}{i \cdot \omega^2} \cdot F(\omega)
+
+\end{aligned}
+++++
+
+Convolution theorem (CZ: věta o konvoluci)::
+Given two signals stem:[f] and stem:[g] and their Fourier transforms stem:[F] and stem:[G], respectively, the following holds:
++
+--
+* stem:[\mathcal{F}(f * g) = F \cdot G]
+* stem:[\mathcal{F}(f \cdot g) = F * G]
+--
++
+where 'stem:[*]' stands for a _convolution_ and 'stem:[\cdot]' for point-wise multiplication.
 
 Discrete time Fourier Transform (DTFT)::
-* Infinite, but sampled, signal.
+We sample the time domain:
++
+TODO
 
 Discrete Fourier transform (DFT)::
 * DTFT with a limited range
-* We use complex numbers (i.e., the stem:[\sin] and stem:[\cos] basis functions), so that the transformation is linear and thus expressable with matrix multiplication.
-- kdybychom nepoužívali reálná čísla, byli bychom nuceni použít k numerické metody ke hledání alpha_k
-- F(0) = "direct current (DC)" = normalizovaný součet / "průměr"
+* stem:[F(0)] is also called "direct current (DC)", "mean", or "normalizovaný součet"
 - prakticky má omezený rozsah, matematicky je periodická a dokonečna se opakuje
 
 Vlastnostni DFT::
@@ -298,7 +375,7 @@ Which frequencies dominate in the Gaussian plot?::
 TODO
 
 Which operation in frequency domain corresponds to convolution in time domain?::
-Component-wise multiplication.
+Point-wise multiplication.
 
 Which frequencies are enhanced if we apply a derivative to an input signal?::
 TODO

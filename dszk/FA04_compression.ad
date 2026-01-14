@@ -7,6 +7,9 @@ Compression::
 * Encoding data to take up less storage space / bandwidth at the cost of additional decoding calculations.
 * Algorithmical perspective: The goal is to remove redundancy.
 
+Psychovisual and psychoacoustic redundancy::
+Most things we humans see and hear contain low frequencies. If we remove the high-frequency data, the difference is near imperceivable.
+
 LZW coding (Lempel-Ziv-Welch)::
 * GIF, TIFF, PDF, ZIP
 * Doesn't need to transmit a dictionary, only the base set. 
