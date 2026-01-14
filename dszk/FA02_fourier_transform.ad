@@ -51,6 +51,9 @@ Fourier transform::
 - je to linéarní zobrazení
 - fourier series řeší periodický signál, fourier transform řeší aperiodický signál
 
+Frequency domain::
+TODO
+
 Discrete time Fourier Transform (DTFT)::
 * Infinite, but sampled, signal.
 
@@ -82,6 +85,58 @@ Vlastnostni DFT::
   - ...ale postupů je víc
   - na dně vracím vstup
 
+1D Fourier transform formula summary::
++
+image::./img/fa02_fa_summary.png[]
+
+Fourier transform in 2D::
+Forward continuous:
++
+[stem]
+++++
+\large
+F(u, v) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y) \cdot e^{-i \cdot 2\pi \cdot (ux + vy)} dx~dy
+++++
++
+Inverse continuous:
++
+[stem]
+++++
+\large
+f(x, y) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} F(u, v) \cdot e^{i \cdot 2\pi \cdot (ux + vy)} du~dv
+++++
++
+Forward **discrete** (2D DFT) of image with stem:[N \cdot M] pixels:
++
+[stem]
+++++
+\large
+F(u, v) = \sum_{x=0}^{N-1} \sum_{y=0}^{M-1} f(x, y) \cdot e^{-i\left( \frac{2\pi}{N}ux + \frac{2\pi}{M} vy \right)}
+++++
++
+Inverse **discrete** (2D IDFT) of frequency domain with stem:[N \cdot M] values:
++
+[stem]
+++++
+\large
+f(x, y) = \sum_{u=0}^{N-1} \frac{1}{NM} \sum_{v=0}^{M-1} F(u, v) \cdot e^{i\left( \frac{2\pi}{N}ux + \frac{2\pi}{M} vy \right)}
+++++
+
+Frequency domain (FD) in 2D DFT::
++
+--
+* We only care about one period of FD. Thus, the FD "image" has the same size as the original.
+* We shift the image by stem:[\left(\frac{N}{2}, \frac{M}{2}\right)] so that zero frequency is in the center (and not in the corner).
+* The FD has two components (real/imaginary, or magnitude/phase). Typically, we only display magnitude but phase still exists!
+* We show the FD magnitudes on a stem:[\log] scale.
+--
++
+image::./img/fa02_2d_frequency_domain.png[]
++
+Visually, each stem:[\omega = (u, v)] vector of FD represents a 2D sinusoidal function of stem:[(x, y)]. Magnitude of stem:[\omega] is the frequency. Direction of stem:[\omega] is the orientation of the "waves".
++
+image::./img/fa02_2d_basis_function_example.png[]
+
 Low-pass filter::
 * Linear filter
 * Low frequencies pass through
@@ -110,7 +165,7 @@ Discrete Cosine Transform (DCT)::
 
 DCT in 2D::
 +
-image::./da02_dct_2d_basis_functions.png[]
+image::./img/fa02_dct_2d_basis_functions.png[]
 
 Wavelet transform (WT)::
 * Uses wavelets -- functions with a peak at zero and brief, diminishing oscillations.
@@ -123,7 +178,72 @@ TODO
 
 == Questions
 
-* TODO: Existuje někdy praktický důvod, proč bych chtěl dělat konvoluci ve frekvenční doméně?
+Explain the meaning of Fourier coefficients.::
+TODO
+
+Prove that Fourier transform is a linear mapping.::
+TODO
+
+Describe the spectral density plot.::
+TODO
+
+Which frequencies dominate in the Gaussian plot?::
+TODO
+
+Which operation in frequency domain corresponds to convolution in time domain?::
+TODO
+
+Which frequencies are enhanced if we apply a derivative to an input signal?::
+TODO
+
+Define a discrete Fourier basis function with frequency k and overall length N.::
+TODO
+
+Create a matrix that can perform forward Fourier transform for a signal of length stem:[N = 2].::
+TODO
+
+What is the product of the projection of an even function into a sin wave?::
+TODO
+
+Why are the wide functions in time domain transformed into their narrow counterparts in frequency domain and vice versa?::
+TODO
+
+Compare the complexity of standard DFT and FFT.::
+TODO
+
+What happens in Fourier domain if the signal samples are interleaved with zeros?::
+TODO
+
+Prove that DFT is a linear mapping.::
+TODO
+
+Why does scaling not work in the case of DFT?::
+TODO
+
+Explain the reciprocity of time and frequency domain.::
+TODO
+
+Show an example of the aliasing effect.::
+TODO
+
+Explain the difference between low-pass and high-pass filter.::
+TODO
+
+What is a prefilter?::
+TODO
+
+Give an example of stem:[\gamma] warping function.::
+TODO
+
+Explain the relationship between DFT and DCT.::
+TODO
+
+Describe the F-DCT algorithm and compute stem:[\text{F-DCT}\lparen\lbrack 1, 6, 6, 1 \rbrack\rparen].::
+TODO
+
+Existuje někdy praktický důvod, proč bych chtěl dělat konvoluci ve frekvenční doméně?::
+TODO
+
 
 
 [bibliography]
@@ -134,3 +254,7 @@ TODO
 * [[[yt3b1b-fs,3]]] 3Blue1Brown, link:https://www.youtube.com/watch?v=r6sGWTCMz2k[But what is a Fourier series? From heat flow to drawing with circles], 2019
 * https://dsprelated.com/
 * https://www.youtube.com/playlist?list=PLMrJAkhIeNNT_Xh3Oy0Y4LTj0Oxo8GqsC
+* https://cbia.fi.muni.cz/software/ftutor2d.html
+* link:https://is.muni.cz/auth/el/fi/jaro2023/PV131[PV131 -- Digitální zpracování obrazu]
+** link:https://is.muni.cz/auth/el/fi/jaro2023/PV131/um/lectures/lecture03_2023.pdf[Lecture 03 -- Multi-dimensional Fourier Transform]
+* https://www.robots.ox.ac.uk/~az/lectures/ia/lect2.pdf
