@@ -226,6 +226,8 @@ AOMedia Video 1 (AV1)::
 
 == Questions
 
+====
+
 Explain the difference among coding redundancy, spatial/temporal redundancy, and psychoacoustic redundancy.::
 TODO
 
@@ -251,6 +253,8 @@ Why invent newer and newer image/video compression methods?::
 * Resolution and computation capabilities goe up, but network bandwidth is limiting.
 * Storage is also costly.
 * Better quality for the same bandwidth.
+
+====
 
 == References
 * https://benchpartner.com/q/explain-about-lossy-predictive-coding
