@@ -4,40 +4,119 @@
 :page-order: FA02
 
 Fourier analysis::
-Study of how general functions (e.g., on stem:[\Reals]) can be approximated by sums of simpler (e.g., trigonometric) functions.
+* Study of how general functions (e.g., on stem:[\Reals]) can be approximated by sums of simpler (e.g., trigonometric) functions.
+* Fourier's original motivation was to solve the _heat equation_, a partially differentiable equation.
+** A partially differentiable equation (PDE) involves multiple variables and one or more of their derivatives.
+** Example: I want to know what happens, when I put two rods of different temperatures into contact.
 
-Fourier series::
-Series expansion (CZ: rozvinutí nekonečné řady) of a periodic function into a sum of trigonometric functions.
+== Fourier series
+
+Fourier series (FS)::
+Series expansion (CZ: rozvinutí nekonečné řady) of a periodic function into a sum of basis functions.
 +
-* Uses stem:[\sin] and stem:[\cos]
-* Foundation for _Fourier analysis_ and expansion of periodic functions in general
-* Simple mathematical tool for approximation of periodic functions
+--
+* For basis functions, it uses stem:[\sin] and stem:[\cos] functions with an whole number frequency.
+* Foundation for _Fourier analysis_ and expansion of periodic functions in general.
+* Simple mathematical tool for approximation of periodic functions.
+* Each stem:[F(k)] coefficient is the projection of the stem:[k]-th basis function onto stem:[f].
+* It answers the question: "How important is this basis function in the grand scheme of stem:[f]?"
+--
 
-Fourier series (DS)::
-- Jako intro používá vzorečky, které má 3blue1brown na konci druhého videa jako challenge (ty dvousložkové).
-- Komplexní čísla zjednodušují notaci
-  - stem:[\cos(kx) + i \cdot \sin(kx) = e^{ikx}]
-- koeficienty F(k) jsou frequency spectrum / frekvenční spektrum
-- různé vzorečky pro stem:[2\pi]-periodické a L-periodické (stem:[L \in \Reals]) funkce
-- proof of orthogonality
-- typicky se amplitudy vizualizují na logarithmické škále
-  - co je y osa, velikost toho komplexního číslo nebo maximum z toho páru?
+FS on stem:[\pi]-periodic functions::
+Any stem:[\pi]-period function stem:[f] can be expanded in the following way:
++
+[stem]
+++++
+\begin{aligned}
 
-13Blue1Brown::
-- "wrapping signal around a circle"
-- two different frequencies => of the signal, of the circle-winding
-- používáme komplexní čísla místo vektoru o dvou složkách, protože komplexní čísla mají hodně co společného s otáčením a kruhy (Euler's formula)
-- konvence je clockwise, proto mínus v exponentu
-- winding a function around a circle === funkce * eulerova formule 
-- "center of mass" => máme samples té funkce (v limitě, takže integrál) a průměrujeme je
-  - opravdová Fourierka nepočítá s "center of mass", ale s jeho násobkem, protože neprůměruje
-  - takže čím déle je jedna bázová funkce aplikována, tím intenzivněji bude "započítána"
-- cosine functions with a whole number multiplication of a given frequency
-- complex exponential is at the heart of this 
+f(x) &= \sum_{k=0}^\infty (\textcolor{blue}{a_k} \cos(kx) + \textcolor{red}{b_k} \sin(kx)) \\
 
-Fourier transform::
-- spojujeme sin a cos pomocí komplexní jednotky do exponenciální funkce
-- jeden koeficient F(x) === projekce f(x) na danou bázovou funkci, "Jak důležitá je tahle bázová funkce pro tu velkou funkci?"
+& \text{where} \\
+
+\textcolor{blue}{a_k} &= \frac{\langle f(x), \cos(kx) \rangle}{\langle \cos(kx), \cos(kx) \rangle} \\
+
+\textcolor{red}{b_k} &= \frac{\langle f(x), \sin(kx) \rangle}{\langle \sin(kx), \sin(kx) \rangle}
+
+\end{aligned}
+++++
++
+--
+* stem:[k] -- frequency at which stem:[\sin] and stem:[\cos] oscillate
+* stem:[a_k] -- coefficients of even parts of stem:[f]
+* stem:[b_k] -- coefficients of odd parts of stem:[f]
+--
+
+FS on L-periodic functions::
+Similar to stem:[\pi]-periodic functions, but we multiply stem:[k] by stem:[\frac{2\pi}{L}], where stem:[L \in \reals]:
++
+[stem]
+++++
+\begin{aligned}
+
+\large
+f(x) &= \sum_{k=0}^\infty \left( \textcolor{blue}{a_k} \cos\left( \frac{2\pi}{L} kx \right) + \textcolor{red}{b_k} \sin\left( \frac{2\pi}{L} kx \right) \right) \\
+
+\normalsize
+& \text{where} \\
+
+\textcolor{blue}{a_k} &= \frac{\langle f(x), \cos(\frac{2\pi}{L} kx) \rangle}{\langle \cos(\frac{2\pi}{L} kx), \cos(\frac{2\pi}{L} kx) \rangle} \\
+
+\textcolor{red}{b_k} &= \frac{\langle f(x), \sin(\frac{2\pi}{L} kx) \rangle}{\langle \sin(\frac{2\pi}{L} kx), \sin(\frac{2\pi}{L} kx) \rangle}
+
+\end{aligned}
+++++
+
+Complex numbers in FS::
++
+--
+1. They simplify the formula:
+  * stem:[\cos(kx) + i \cdot \sin(kx) = e^{ikx}] (Euler's formula)
+2. With them, FT is can be solved linearly. Without them, it's an optimization problem that must be solved numerically.
+TODO
+3. Complex numbers also symbolize rotation, which makes for a nice intuitive explanation (see below).
+--
++
+With complex numbers the formula becomes:
++
+[stem]
+++++
+\begin{aligned}
+
+f(x) &= \sum_{k=-\infty}^\infty F(k) \cdot e^{ikx} \\
+
+& \text{where} \\
+
+F(x) &= \frac{\langle f(x), e^{ikx} \rangle}{\langle e^{ikx}, e^{ikx} \rangle}
+
+\end{aligned}
+++++
++
+--
+* stem:[x \in \langle -\pi, \pi \rangle]
+* The stem:[F(k)] coefficients are called _frequency spectrum_.
+--
++
+When used to express stem:[F(k)], it converts a function of time into a function of frequency:
++
+[stem]
+++++
+F(k) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) \cdot e^{-ikx} dx
+++++
++
+--
+* stem:[k \in \Z]
+--
+
+Proof of orthogonality of FS::
+TODO
+
+== Fourier transform
+
+Fourier transform stem:[\cal F]::
+--
+* Is a function stem:[\cal F] taking a signal (a function stem:[f] of time) and converts it into function stem:[F] of the _frequency domain_.
+--
++
 - vstupem je signál a výstupem je signál převedený do frekvenční domény
 - většina věcí, které vnímáme jsou nízkofrekvenční
 - transformace gaussianu je (jiný) gaussian
@@ -50,6 +129,24 @@ Fourier transform::
 - nástroj pro řešení diferenciálních rovnic (PDE)
 - je to linéarní zobrazení
 - fourier series řeší periodický signál, fourier transform řeší aperiodický signál
+
+Visualizing FT::
+* Typically, we use a stem:[\log] scale.
+
+Intuitive explanation of fourier transform <<yt3b1b-ft>>::
++
+--
+1. Complex numbers describe rotation, therefore multiplying stem:[f] by a set of complex numbers "winds stem:[f] up" around a circle.
+2. Sampling this wound-up version of stem:[f] (whether using an integral or sum) means calculating the center of mass of the wound up version.
+3. When the center of mass is far away from the origin, the wound-up stem:[f] "aligns" with itself, meaning there is a strong correlation between stem:[f] and the sinusoid given by the "winding" frequency.
+** Except in FT, there is no division by the length of the studied interval, so it's a "scaled center of mass". This has the effect that the more persistent a frequency is, the higher its spike.
+--
++
+image::./img/fa02_intuitive_ft_1.png[]
+image::./img/fa02_intuitive_ft_2.png[]
++
+NOTE: The "winding" is clockwise by convention. That's why there's a stem:[-i] in the equation.
+
 
 Frequency domain::
 TODO
@@ -250,7 +347,7 @@ TODO
 == References
 
 * [[[pv291,1]]] David Svoboda, link:https://is.muni.cz/predmet/fi/jaro2025/PV291[PV291 -- Introduction to Digital Signal Processing], 2025
-* [[[yt3b1b-ft,2]]] 3Blue1Brown, link:https://www.youtube.com/watch?v=spUNpyF58BY[But what is the Fourier Transform? A visual introduction.], 2018
+* [[[yt3b1b-ft,2]]] 3Blue1Brown, link:https://www.youtube.com/watc h?v=spUNpyF58BY[But what is the Fourier Transform? A visual introduction.], 2018
 * [[[yt3b1b-fs,3]]] 3Blue1Brown, link:https://www.youtube.com/watch?v=r6sGWTCMz2k[But what is a Fourier series? From heat flow to drawing with circles], 2019
 * https://dsprelated.com/
 * https://www.youtube.com/playlist?list=PLMrJAkhIeNNT_Xh3Oy0Y4LTj0Oxo8GqsC
