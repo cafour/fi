@@ -188,9 +188,9 @@ G(\omega) &= \mathcal{F}(g(x))
 
 Coefficients of the Fourier transform::
 * Each coefficient stem:[F(\omega)] is associated with a basis function stem:[e^{i\omega x}] oscillating at frequency stem:[\omega].
-* stem:[F(\omega) = A_\omega \cdot e^{i\phi_\omega}] is simply a complex number, where:
+* stem:[F(\omega) = A_\omega \cdot e^{i\varphi_\omega}] is simply a complex number, where:
 ** amplitude stem:[A_\omega] -- strength of basis function stem:[e^{i\omega x}]
-** phase stem:[\phi_\omega] -- controls the phase shift of basis function stem:[e^{i\omega x}]
+** phase stem:[\varphi_\omega] -- controls the phase shift of basis function stem:[e^{i\omega x}]
 
 Spectral density::
 Plot of stem:[F(\omega)] for stem:[\omega \in (-\infty, \infty)].
@@ -256,15 +256,117 @@ Given two signals stem:[f] and stem:[g] and their Fourier transforms stem:[F] an
 where 'stem:[*]' stands for a _convolution_ and 'stem:[\cdot]' for point-wise multiplication.
 
 Discrete time Fourier Transform (DTFT)::
-We sample the time domain:
 +
-TODO
+--
+* We sample the time domain.
+* In other words, we turn discrete samples that are evenly-spaced in time into a continous function.
+* Under the _Nyquist-Shannon sampling theorem_ we can, under certain conditions, recover the original continuous signal from the samples.
+--
++
+time -> frequency:
++
+[stem]
+++++
+F(\omega) = \sum_{k=-\infty}^{\infty} f(k) \cdot e^{-i\omega k}
+~~\text{where}~~
+\omega \in \langle -\pi, \pi \rangle
+++++
++
+frequency -> time:
++
+[stem]
+++++
+f(k) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) \cdot e^{i \omega k} d\omega
+~~\text{where}~~
+k = -\infty, ..., \infty
+++++
+
 
 Discrete Fourier transform (DFT)::
-* DTFT with a limited range
-* stem:[F(0)] is also called "direct current (DC)", "mean", or "normalizovaný součet"
-- prakticky má omezený rozsah, matematicky je periodická a dokonečna se opakuje
-- TODO: Derive DFT
++
+--
+* We obtain it from DTFT by limiting the time domain (i.e., it's not stem:[-\infty, ..., \infty] anymore).
+* In practice, it's finite. Mathematically, it's infinite but periodic.
+--
++
+Given a discrete 1D signal stem:[f] of length stem:[N] (stem:[|f| = N]), let stem:[\varphi_k] be an orthonormal basis:
++
+[stem]
+++++
+\varphi_k(n) = \frac{1}{\sqrt{N}} e^{2\pi n k}{N} = \frac{1}{\sqrt{N}}\left( \cos\frac{2\pi n k}{N} + i \sin \frac{2\pi n k}{N} \right)
+++++
++
+where:
++
+--
+* stem:[n \in {0, ..., N-1}] is the index (position)
+* stem:[k \in {0, ..., N-1}] is frequency (speed of oscillation)
+--
++
+Then a projection of stem:[f] into stem:[\varphi_k] basis would be:
++
+[stem]
+++++
+\langle f, \varphi_k \rangle = \sum_{n=0}^{N-1} f(n) \cdot \overline{\varphi_k(n)} = \sum_{n=0}^{N-1} f(n) \cdot \frac{1}{\sqrt{N}} \cdot e^{-\frac{2\pi}{N} k n}
+++++
++
+When the constant is extracted, we obtain the _forward 1D DFT_:
++
+[stem]
+++++
+F(k) = \langle f, \varphi_k \rangle = \frac{1}{\sqrt{N}} \sum_{n=0}^{N-1} f(n) \cdot e^{-\frac{2\pi}{N} k n}
+++++
++
+By expressing stem:[f(k)] out of the above formula, we perform _inverse 1D DFT_ (expansion):
++
+[stem]
+++++
+f(n) = \frac{1}{\sqrt{N}} \sum_{k=0}^{N-1} F(k) \cdot e^{\frac{2\pi}{N} k n}
+++++
++
+NOTE: If we define stem:[\varphi_k] without the stem:[\frac{1}{\sqrt{N}}], the forward transform would have no factor in the front, and the inverse would have stem:[\frac{1}{N}] similar to the L-periodic FS above.
+
+Root of unity::
+* A complex number that yields 1, when raised to some power stem:[n].
+* An n-th root of unit is stem:[z \in \Complex] where stem:[z^n = 1].
+* Any integer power of an n-th root of unity is also an n-th root of unity: stem:[(z^k)^n = z^{kn} = (z^n)^k = 1^k = 1].
+
+DFT in matrix notation::
+Let stem:[\psi = e^{-\frac{2\pi}{N} i}] be the Nth root of unity, then:
++
+[stem]
+++++
+\overline{\varphi_k(n)} = \frac{1}{\sqrt{N}}e^{-\frac{2\pi}{N} i n k} = \frac{1}{\sqrt{N}} \left( e^{-\frac{2\pi}{N} i} \right) = \frac{1}{\sqrt{N}} \psi^{nk}
+++++
++
+Then stem:[A] is the forward DFT matrix:
++
+[stem]
+++++
+A = \frac{1}{\sqrt{N}}
+
+\begin{bmatrix}
+
+1   & 1           & 1                 & \dots   & 1 \\
+1   & \psi^1      & \psi^2            & \dots   & \psi^{N-1} \\
+1   & \psi^2      & \psi^{2 \cdot 2}  & \dots   & \psi^{(N-1)2} \\
+1   & \vdots      & \vdots            & \ddots  & \vdots \\
+1   & \psi^{N-1}  & \psi^{2(N-1)}     & \dots   & \psi^{(N-1)(N-1)} \\
+\end{bmatrix}
+++++
++
+and stem:[F = Af], and stem:[f = A^{-1}F = \overline{A}^T F].
+
+Fourier coefficients of DFT::
+* stem:[F(0)] is the "direct current (DC)", "mean", or "normalizovaný součet"
++
+[stem]
+++++
+F(0) \equiv \frac{1}{\sqrt{N}} \sum_{n=0}^{N-1} f(n) \cdot e^{-\frac{2\pi}{N} i n 0}
+  = \frac{1}{\sqrt{N}} \sum_{n=0}^{N-1} f(n)
+++++
+* stem:[F(1) \dots F(N-1)] are the "alternating current (AC)" terms
+* stem:[F(\frac{N-1}{2})] corresponds to the highest frequency in stem:[f] (because of aliasing)
 
 Vlastnostni DFT::
 - V diskrétním světě nefunguje škálování, máme jen převzorkování.
@@ -382,7 +484,7 @@ Which frequencies are enhanced if we apply a derivative to an input signal?::
 High frequencies. Higher with every derivation.
 
 Define a discrete Fourier basis function with frequency stem:[k] and overall length stem:[N].::
-In FT, it would be stem:[\psi_k(t) = e^{ikt}] (where stem:[t \in \reals] replaces length stem:[N]), so in DFT it is stem:[\psi_k\lbrack n \rbrack = e^{i\frac{2\pi}{N}kn}] where stem:[n \in 0, ..., N-1]. (stem:[\psi_k] is a column vector.)
+In FT, it would be stem:[\varphi_k(t) = e^{ikt}] (where stem:[t \in \reals] replaces length stem:[N]), so in DFT it is stem:[\varphi_k\lbrack n \rbrack = \frac{1}{\sqrt{N}} \cdot e^{i\frac{2\pi}{N}kn}] where stem:[n \in 0, ..., N-1]. (stem:[\varphi_k] is a column vector.) stem:[\frac{1}{\sqrt{N}}] is added for normalization.
 +
 NOTE: This is how the basis functions would appear in the _inverse_ DFT, since that's derived from FS. In _forward_ FT, a _complex conjugate_ is used because of how dot products work with complex numbers, therefore there is a **negative sign** in front of stem:[i].
 
@@ -393,8 +495,8 @@ There is no point in having basis functions with frequency greater than stem:[N]
 ++++
 \begin{bmatrix}
 
-\overline\psi_0^T \\
-\overline\psi_1^T
+\overline\varphi_0^T \\
+\overline\varphi_1^T
 
 \end{bmatrix}
 
