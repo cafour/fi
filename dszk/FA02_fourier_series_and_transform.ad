@@ -368,30 +368,132 @@ F(0) \equiv \frac{1}{\sqrt{N}} \sum_{n=0}^{N-1} f(n) \cdot e^{-\frac{2\pi}{N} i 
 * stem:[F(1) \dots F(N-1)] are the "alternating current (AC)" terms
 * stem:[F(\frac{N-1}{2})] corresponds to the highest frequency in stem:[f] (because of aliasing)
 
-Vlastnostni DFT::
-- V diskrétním světě nefunguje škálování, máme jen převzorkování.
-- Periodicita
-  + můžeme sáhnout mimo a bude tam hodnota
-  - vstupní signál se tváří periodicky, takže může vzniknout "falešná hrana"
-    * řešení - rozmažeme hraje - Hammingovo okno (děláme konvoluci ve frekvenční doméně, takže násobíme v původní doméně)
-- zajímají nás nízké frekvence, proto v praxi je ve vizualizacích nula uprostřed
-- hermitovská symetrie
-- konvoluční teorém - platí, ale potřeba přidat normalizaci
-  - kronekrovo delta
-  - DFT a IDFT je efektivnější než konvoluce, ale musíme mít signál rozumné délky (na délce třeba 5 se to nevyplatí)
-- stretch
-  - TODO: proč musím snížit amplitudu o 1/sqrt(p)?
-- u piana a hlasů je v té vizualizaci vpravo dole jen amplituda?
-- mixážní pulty umožňují omezit/zvýšit konkrétní rozsahy frekvencí
-- fast fourier transform
-  - rekurzivní, rozděl a panuj
-  - využívá vlastnosti DFT (stretch, shift, linearity), vlastně vůbec nepočítá vzoreček DFT
-  - ...ale postupů je víc
-  - na dně vracím vstup
+Properties of DFT::
+* **Periodicity**
+** We can index outside of the stem:[N] range and a value will be there.
+** However, the input signal also seems periodic although it's not, resulting in a "false edge".
++
+[stem]
+++++
+F(k \textcolor{red}{+ N}) = F(k)
+++++
++
+* **Oddness and evenness**
+** DFT of an even function missed the imaginary part (stem:[\sin] waves)
+** DFT of an odd function missed the real part (stem:[\cos] waves)
+* **Shift**
++
+[stem]
+++++
+\mathcal{F}\lbrack f(n - \textcolor{red}{a}) \rbrack (k) = \textcolor{red}{e^{-\frac{2\pi}{N} i a k}} F(k)
+++++
++
+* **Reciprocity** -- a **narrow** signal results in a **wide** frequency domain and a **wide** signal results in a **narrow** frequency domain
+* **Hermitian symmetry**
++
+[stem]
+++++
+F(-k) = \overline{F(k)}
+++++
++
+* **Linearity**
++
+[stem]
+++++
+\mathcal{F}\lbrack \alpha f(n) + \beta g(n) \rbrack = \alpha \mathcal{F} \lbrack F(n) \rbrack + \beta \mathcal{F} \lbrack g(n) \rbrack
+++++
++
+* **Convolution theorem**
+** It's more effective to to a DFT followed by an IDFT than to do a convolution, but we need a long enough signal!
++
+[stem]
+++++
+f * g = \text{IDFT}\lbrack \text{DFT}(f) \cdot \text{DFT}(g) \rbrack \sqrt{N}
+++++
+* **Stretch** by a factor stem:[p] in the time domain results in stem:[p]-fold repetition of stem:[F(k)] in the frequency domain.
++
+image::./img/fa02_stretch.png[]
++
+* **Rayleigh theorem**
++
+[stem]
+++++
+\sum_n |f(n)|^2 = \sum_k |F(k)|^2
+++++
++
+WARNING: Scaling doesn't work in the discrete world. Instead, we undersample or oversample, which may result in loss of information.
+
+Hamming window::
+* A solution to the "false edge" problem of DFT periodicity.
+* We blur the edges of the frequency domain (using a convolution).
+
+Mixing console::
+Allows to limit/enhance specific ranges of frequencies.
+
+Fast Fourier transform (FFT)::
++
+--
+* Recursive, divide and conquer.
+* It doesn't really compute DFT directly, it uses its properties. Specifically, oddness & evenness, stretch, shift, and linearity:
++
+[stem]
+++++
+F(k) = \dots = F^e(k) + \psi^k F^o(k)
+++++
++
+* Also that stem:[\mathcal{F}\lbrack x \rbrack = \lbrack x \rbrack]. (FFT on a single sample, is just the single sample.)
+--
++
+--
+1. Split the original stem:[N]-point signal (stem:[N = 2^m, m \in \N]) into two N/2-point signals, one with all the odd samples and one with all the even samples. Run FFT recursively on each.
++
+[stem]
+++++
+\begin{aligned}
+
+\mathcal{F}\lbrack f_0~f_1~f_2~f_3~f_4~f_5~f_6~f_7 \rbrack \\
+
+~~\text{split into}~~ \\
+
+\mathcal{F}\lbrack f_0~f_2~f_4~f_6 \rbrack = \lbrack A~B~C~D \rbrack \\
+
+\mathcal{F}\lbrack f_1~f_3~f_5~f_7 \rbrack = \lbrack P~Q~R~S \rbrack \\
+
+\end{aligned}
+++++
++
+2. Stretch the even signal to the size of the original signal. There is now a zero at every odd index. The FFT of the streched signal is the same as before, but repeated twice.
++
+[stem]
+++++
+\mathcal{F}\lbrack f_0~0~f_2~0~f_4~0~f_6~0 \rbrack = \frac{1}{\sqrt{2}} \lbrack A~B~C~D~A~B~C~D \rbrack
+++++
++
+3. Stretch the odd signal to the size of the original signal and shift it one to the left. The FFT of the stretched and shifted signal is the same as before, but repeated twice and phase-shifted.
++
+[stem]
+++++
+\begin{aligned}
+
+\mathcal{F}\lbrack f_1~0~f_3~0~f_5~0~f_7~0 \rbrack &= \frac{1}{\sqrt{2}} \lbrack P~Q~R~S~P~Q~R~S \rbrack \\
+
+\mathcal{F}\lbrack 0~f_1~0~f_3~0~f_5~0~f_7 \rbrack &= \frac{1}{\sqrt{2}} \lbrack P~~\psi Q~~\psi^2 R~~\psi^3 S~~\psi^4 P~~\psi^5 Q~~\psi^6 R~~\psi^7 S \rbrack
+
+\end{aligned}
+++++
++
+4. Recombine the two signals (using linearity).
++
+[stem]
+++++
+\mathcal{F}\lbrack f_0~f_1~f_2~f_3~f_4~f_5~f_6~f_7 \rbrack = \frac{1}{\sqrt{2}} \lbrack (A+P)~(B+\psi Q)~(C+\psi^2 R)~ \dots~\rbrack
+++++
 
 1D Fourier transform formula summary::
 +
 image::./img/fa02_fa_summary.png[]
+
+== Sampling
 
 Low-pass filter::
 * Linear filter
@@ -480,6 +582,9 @@ Low frequencies, around 0.
 Which operation in frequency domain corresponds to convolution in time domain?::
 Point-wise multiplication.
 
+Is there ever any reason to do a convolution in the frequency domain?::
+TODO
+
 Which frequencies are enhanced if we apply a derivative to an input signal?::
 High frequencies. Higher with every derivation.
 
@@ -528,22 +633,25 @@ Why are the wide functions in time domain transformed into their narrow counterp
 Wide functions have low frequencies, which are near the origin of the frequency domain. The wider the function, the lower the frequency, the closer to the origin of the frequency domain. And vice versa.
 
 Compare the complexity of standard DFT and FFT.::
-TODO
+* Complexity of DFT is stem:[\mathcal{O}(n^2)], because of the double sum.
+* Complexity of FFT is stem:[\mathcal{O}(n \log n)], because of the binary-search-like approach.
 
 What happens in Fourier domain if the signal samples are interleaved with zeros?::
-TODO
+The values repeat because it's periodic.
 
 Prove that DFT is a linear mapping.::
 TODO
 
 Why does scaling not work in the case of DFT?::
-TODO
+Because the discrete world is not infinitely scalable like real numbers are.
 
 Explain the reciprocity of time and frequency domain.::
-TODO
+* Square functions in one turn to smooth in the other.
+* Wide turn into narrow.
 
 Show an example of the aliasing effect.::
-TODO
++
+image::./img/fa02_aliasing.png[]
 
 Explain the difference between low-pass and high-pass filter.::
 Low-pass filter preserves low frequencies. High-pass filter preserves high frequencies.
@@ -552,9 +660,6 @@ What is a prefilter?::
 TODO
 
 Give an example of stem:[\gamma] warping function.::
-TODO
-
-Is there ever any reason to do a convolution in the frequency domain?::
 TODO
 
 ====
