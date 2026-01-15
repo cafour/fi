@@ -8,8 +8,12 @@ Discrete Cosine Transform (DCT)::
 * We modify the input signal to make it an even function so that the stem:[\sin] coefficients turn into zeroes.
 * We don't use complex numbers anymore, but we also lose some of the nice properties of the transform.
 * Good tool for compression, not so much for signal analysis.
-* Fast DCT (F-DCT) -- uses FDFT under the hood.
+* Fast DCT (F-DCT) -- uses FFT under the hood.
 * Coefficients are divided into "DC" (zero frequency) and "AC" (other frequencies).
+
+FastDCT::
+TODO
+
 
 DCT in 2D::
 +
