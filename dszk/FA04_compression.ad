@@ -7,27 +7,41 @@ Compression::
 * Encoding data to take up less storage space / bandwidth at the cost of additional decoding calculations.
 * Algorithmical perspective: The goal is to remove redundancy.
 
+Coding redundancy::
+When we use more code symbols (bits) than is necessary.
+
 Psychovisual and psychoacoustic redundancy::
 Most things we humans see and hear contain low frequencies. If we remove the high-frequency data, the difference is near imperceivable.
 
+Spatial and temporal redundancy::
+When the value of a sample can be reasonably predicted from the values of neighboring samples.
++
+--
+* Spatial -- e.g., large areas of homogenous color
+* Temporal -- e.g., many pixels unchanged between consecutive frames
+--
+
 LZW coding (Lempel-Ziv-Welch)::
 * GIF, TIFF, PDF, ZIP
-* Doesn't need to transmit a dictionary, only the base set. 
-* není potřeba posílat ani pravděpodobnostní tabulku
-* když naplníme slovník, zahodíme ho a začneme nový
-* bylo navrženo na text
-
-Arithmetic coding::
-TODO
-
-Huffman coding::
-TODO
+* Designed for the compression of text.
+* Doesn't need to transmit a dictionary or a probability table, only the base set. 
+* When the dictionary is full, we discard it and start a new one.
 
 Entropy coding::
-TODO
+* Lossless compression method that remaps elements of data based on their statistical properties.
+* Assigns shorter codes to frequently encoutered data.
+
+Arithmetic coding::
+* Form of entropy coding. Maps the entire message onto a single arbitrary-precision fractional number in range 0 to 1 (i.e., _arithmetic code word_).
+* The input signal is usually very long. Therefore, it is split into sequences of fixed size.
+* If the length of sequences increases, the interval for the generated word is smaller and number of required bits increases.
+
+Huffman coding::
+Form of entropy coding. A prefix code assigning shorter codes to frequent values.
 
 Context-Adaptive Binary Arithmetic Coding (CABAC)::
-TODO
+* Form of entopy coding used in AVC and HEVC.
+* Uses multiple probability models and switches between them based on context.
 
 Lossless predictive encoding::
 +
@@ -132,10 +146,6 @@ TODO
 
 == Video Compression
 
-Video Data Redundancy::
-* Spatial -- large areas of homogenous color
-* Temporal -- many pixels unchanged between consecutive frames
-
 Hybrid Block Based Video Coding::
 * Each video frame is split into (square) blocks.
 * Called _superblocks_, _macroblocks_, _coding units_ depending on the codec.
@@ -190,8 +200,10 @@ Wavefront decoding::
 Decoding as many block as parallel, provided block to the top and left have been processed. The effect looks like a diagonal "wave".
 
 MPEG-1, MPEG-2::
-- _Moving Pictures Experts Group_
-- DCT and predictive coding
+* _Moving Pictures Experts Group_
+* DCT and predictive coding
++
+TODO
 
 Advanced Video Coding (AVC, h.264, MPEG-4 Part 10)::
 * Published in 2004.
@@ -232,16 +244,19 @@ AOMedia Video 1 (AV1)::
 ====
 
 Explain the difference among coding redundancy, spatial/temporal redundancy, and psychoacoustic redundancy.::
-TODO
+* Coding redundancy -- when more bits are used than needed.
+* Spatial/temporal redundancy -- when samples can be predicted based on neighboring samples.
+* Psychoacoustic redundancy -- removing high-frequency (sound) information because we don't hear them.
 
 What does quantizer do?::
-TODO
+Maps values from a large set onto values from a smaller set, while preserving the most important information (e.g., visible/audible by humans) <<quantization>>.
 
 Show the construction of Huffman coding tree.::
 TODO
 
 How does the arithmetic decoder know when it should stop decoding one codeword?::
-TODO
+1. The input sequences have a fixed length.
+2. There is an End of Message symbol.
 
 How does the encoder deliver the dictionary to the receiver's decoder in LZW compression scheme?::
 TODO
@@ -272,3 +287,5 @@ How does HEVC decide how deep is the quadtree inside a CTU?::
 * https://www.retrosix.wiki/yuv-vs-ycbcr-vs-rgb-color-space
 * [[[hevc-overview]]] Sullivan et al., link:https://ieeexplore.ieee.org/document/6316136[Overview of the High Efficiency Video Coding (HEVC) Standard], 2012
 * https://www.youtube.com/watch?v=Kv1Hiv3ox8I
+* [[[arithmetic-coding]]], link:https://en.wikipedia.org/wiki/Arithmetic_coding[Wikipedia: Arithmetic coding]
+* [[[quantization]]] link:https://en.wikipedia.org/wiki/Quantization_(signal_processing)[Wikipedia: Quantization (signal processing)]
