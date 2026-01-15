@@ -257,6 +257,11 @@ Why invent newer and newer image/video compression methods?::
 * Storage is also costly.
 * Better quality for the same bandwidth.
 
+How does HEVC decide how deep is the quadtree inside a CTU?::
+* Based on the signal characteristics of the region that is covered by the CTB <<hevc-overview>>.
+* Luma and chroma CBs can be also split based on the prediction-type decision.
+* The minimum allowed Luma CB size is 8x8.
+
 ====
 
 == References
@@ -265,5 +270,5 @@ Why invent newer and newer image/video compression methods?::
 * HandyAndy Tech Tips, link:https://www.youtube.com/watch?v=Fawcboio6g4[H.265 (HEVC) vs H.264 (AVC) Compression: Explained!], 2016
 * Christian Feldmann, link:https://www.youtube.com/watch?v=LDeL7-49qm4[Video Coding Basics - How is this so efficient?], 2022
 * https://www.retrosix.wiki/yuv-vs-ycbcr-vs-rgb-color-space
-* https://ieeexplore.ieee.org/document/6316136
+* [[[hevc-overview]]] Sullivan et al., link:https://ieeexplore.ieee.org/document/6316136[Overview of the High Efficiency Video Coding (HEVC) Standard], 2012
 * https://www.youtube.com/watch?v=Kv1Hiv3ox8I
