@@ -488,30 +488,101 @@ F(k) = \dots = F^e(k) + \psi^k F^o(k)
 ++++
 \mathcal{F}\lbrack f_0~f_1~f_2~f_3~f_4~f_5~f_6~f_7 \rbrack = \frac{1}{\sqrt{2}} \lbrack (A+P)~(B+\psi Q)~(C+\psi^2 R)~ \dots~\rbrack
 ++++
+--
 
 1D Fourier transform formula summary::
 +
 image::./img/fa02_fa_summary.png[]
 
+
 == Sampling
 
 Low-pass filter::
 * Linear filter
-* Low frequencies pass through
+* Low frequencies pass through. High get suppressed.
+* Examples: Gaussian, Sinc, Box, Tent, B-Spline, Lanczos
 
 High-pass filter::
 * Linear filter
-* High frequences pass through
+* High frequences pass through. Low get suppressed.
+* Examples: 1st and 2nd derivatives
 
 Sampling::
-- Abych mohl vzorkovat, musí mít spojitá funkce omezenou nejvyšší frekvenci. (Jinak se frekvenční spektrum ořízne.)
-- Vzorkovací frekvence je zespodu omezená tím, že nechceme ztratit informace, a seshora smysluplností - nechceme plýtvat místem a výkonem.
-- Vzorkováním vzniká omezený ale periodický frekvenční prostor.
-- Nyquist-Shannon theorem
-- Prefiltering jako řešení aliasingu
-- Resampling
-  - Warping
-- Post-filtering - supersampling
++
+--
+* In spatial/time domain, sampling of signal stem:[f] is multiplication by sampling (i.e., _comb_) function stem:[|||].
+* In Fourier domain, sampling is convolution of stem:[\mathcal{F}(f)] and stem:[\mathcal{F}(|||)].
+** Convolution with Dirac impulses, replicates stem:[\mathcal{F}(f)] (much like in DTFT).
+* To properly sample a continuous function, it has to have an frequency upper bound, otherwise the frequency spectrum will be cut off.
+* The sampling frequency is limited from the lower end by us not wanting to lose information, and from the upper end by reasonability.
+* The comb function density must be high enough to guarantee proper sampling.
+--
++
+image::./img/fa02_frequency_domain_sampling.png[]
+
+Nyquist-Shannon theorem::
+Exact reconstruction of a continuous signal from its samples is possible if the signal is bandlimited and the sampling frequency is greater thn twice the signal maximum frequency.
+
+Reconstruction::
+Reconstruction is a convolution of a discrete sequence with some _low-pass_ filter with the objective to get the original continuous signal.
+
+Aliasing::
+Phenomenon occurring when a continuous signal is samples at a rate insufficient to capture its complete frequency content.
++
+--
+* It happens when the Nyquist-Shannon condition is broken.
+** When the sampling frequency is not high enough (e.g., wagon wheel effect).
+** When the signal is not badlimited (e.g., far horizon).
+--
++
+image::./img/fa02_aliasing.png[]
+
+Prefiltering::
+A solution to aliasing, where we apply a **harware-based** low-pass filter before sampling the continuous signal, effectivelly lowing the upper bound of its frequencies.
+
+Resampling::
+Changing the sampling frequency of an already sampled signal, preferably without introducing aliasing.
++
+--
+1. Reconstruct the continuous signal from the discrete one.
+2. Warp the domain of the continuous signal.
+3. Prefilter the warped, continuous signal.
+4. Sample this signal to produce a new discrete signal.
+--
++
+During implementation:
++
+--
+* We don't actually construct any continuous signal.
+* For each position in the resampled signal that's being constructed, we look for the corresponding positions and their neighbors in the original signal.
+* Since the computation is inverted, we invert the warp (stem:[\gamma]) as well.
+--
++
+[stem]
+++++
+\begin{aligned}
+
+g(n) &= \sum_k f(k) \rho(n, k) \\
+
+\rho(n, k) &= \int p(n-t)t(\gamma^{-1}(t)-k) dt
+
+\end{aligned}
+++++
++
+where
++
+--
+* stem:[f(m)] is the original discrete signal
+* stem:[r(u)] is the reconstruction filter
+* stem:[p(x)] is a (lowpass) prefilter
+* stem:[\rho(n, k)] is called a _resampling filter_
+* stem:[\gamma(u)] is the warping function (i.e., mapping from one coordinate system to another)
+* If stem:[\gamma] is affine (linear + shift), then stem:[\rho(n, k) = p(\gamma^{-1}(n)-k)*(\gamma^{-1}(n)-k))]
+--
+
+Postfiltering/supersampling::
+If stem:[\gamma] is not affine, the resampling filter stem:[\rho(n, k)] os space variant. In that case, we do actually have to reconstruct the continous signal from the original discrete signal, warp it, sample it at _very high resolution_ to avoid aliasing, and the _postfilter_ it to produce a lower resolution output signal. The convolution happens at the very end.
+
 
 == Fourier Transform in 2D
 
@@ -657,10 +728,10 @@ Explain the difference between low-pass and high-pass filter.::
 Low-pass filter preserves low frequencies. High-pass filter preserves high frequencies.
 
 What is a prefilter?::
-TODO
+A low-pass filter to prevent aliasing while (re)sampling.
 
 Give an example of stem:[\gamma] warping function.::
-TODO
+Rotation, halving the resolution, offesetting by one pixel to the left, etc.
 
 ====
 

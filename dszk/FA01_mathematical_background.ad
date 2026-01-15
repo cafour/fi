@@ -28,6 +28,25 @@ Even and odd functions::
 * For even functions stem:[f(-x) = f(x)] (e.g., stem:[\cos]).
 * For odd functions stem:[f(-x) = -f(x)] (e.g., stem:[\sin]).
 
+Sinc::
++
+[stem]
+++++
+\text{sinc}(x) = \frac{\sin x}{x}
+++++
+
+Dirac delta::
+Also known as the _unit impulse_:
++
+[stem]
+++++
+\delta(x) =
+\begin{cases}
+    0, x \neq 0 \\
+    \infty x = 0
+\end{cases}
+++++
+
 == Questions
 
 ====
