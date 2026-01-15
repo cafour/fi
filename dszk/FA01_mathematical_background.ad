@@ -25,7 +25,8 @@ Funkční prostory::
 - snahou je získat dokonalý rozklad na bázové funkce (abychom se mohli vrátit), ale občas se musíme smířit s aproximací
 
 Even and odd functions::
-TODO
+* For even functions stem:[f(-x) = f(x)] (e.g., stem:[\cos]).
+* For odd functions stem:[f(-x) = -f(x)] (e.g., stem:[\sin]).
 
 == Questions
 

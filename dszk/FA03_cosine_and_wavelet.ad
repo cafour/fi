@@ -5,7 +5,7 @@
 
 Discrete Cosine Transform (DCT)::
 * Uses just stem:[\cos] functions.
-* We modify the input signal to make it even so that the stem:[\sin] coefficients turn into zeroes.
+* We modify the input signal to make it an even function so that the stem:[\sin] coefficients turn into zeroes.
 * We don't use complex numbers anymore, but we also lose some of the nice properties of the transform.
 * Good tool for compression, not so much for signal analysis.
 * Fast DCT (F-DCT) -- uses FDFT under the hood.
@@ -23,3 +23,17 @@ Wavelet transform (WT)::
 Discrete Wavelet transform (DWT)::
 * First DWT invented by Alfréd Haar. Haar wavelets are the most educational.
 TODO
+
+
+== Questions
+
+====
+
+Explain the relationship between DFT and DCT.::
+TODO
+
+Describe the F-DCT algorithm and compute stem:[\text{F-DCT}\lparen\lbrack 1, 6, 6, 1 \rbrack\rparen].::
+TODO
+
+
+====

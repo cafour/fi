@@ -264,6 +264,7 @@ Discrete Fourier transform (DFT)::
 * DTFT with a limited range
 * stem:[F(0)] is also called "direct current (DC)", "mean", or "normalizovaný součet"
 - prakticky má omezený rozsah, matematicky je periodická a dokonečna se opakuje
+- TODO: Derive DFT
 
 Vlastnostni DFT::
 - V diskrétním světě nefunguje škálování, máme jen převzorkování.
@@ -363,34 +364,66 @@ image::./img/fa02_2d_basis_function_example.png[]
 ====
 
 Explain the meaning of Fourier coefficients.::
-They measure the amount of correlation of a single basis function with the expanded function.
+They measure the amount of correlation of a particular basis function with the expanded function.
 
 Prove that Fourier transform is a linear mapping.::
 TODO
 
 Describe the spectral density plot.::
-TODO
+A chart with two axes: x = intensity, y = frequency. Similar to a histogram.
 
 Which frequencies dominate in the Gaussian plot?::
-TODO
+Low frequencies, around 0.
 
 Which operation in frequency domain corresponds to convolution in time domain?::
 Point-wise multiplication.
 
 Which frequencies are enhanced if we apply a derivative to an input signal?::
-TODO
+High frequencies. Higher with every derivation.
 
-Define a discrete Fourier basis function with frequency k and overall length N.::
-TODO
+Define a discrete Fourier basis function with frequency stem:[k] and overall length stem:[N].::
+In FT, it would be stem:[\psi_k(t) = e^{ikt}] (where stem:[t \in \reals] replaces length stem:[N]), so in DFT it is stem:[\psi_k\lbrack n \rbrack = e^{i\frac{2\pi}{N}kn}] where stem:[n \in 0, ..., N-1]. (stem:[\psi_k] is a column vector.)
++
+NOTE: This is how the basis functions would appear in the _inverse_ DFT, since that's derived from FS. In _forward_ FT, a _complex conjugate_ is used because of how dot products work with complex numbers, therefore there is a **negative sign** in front of stem:[i].
 
-Create a matrix that can perform forward Fourier transform for a signal of length stem:[N = 2].::
-TODO
+Create a matrix that can perform forward (discrete) Fourier transform for a signal of length stem:[N = 2].::
+There is no point in having basis functions with frequency greater than stem:[N], so the matrix will be N x N = 2 x 2:
++
+[stem]
+++++
+\begin{bmatrix}
+
+\overline\psi_0^T \\
+\overline\psi_1^T
+
+\end{bmatrix}
+
+= 
+
+\begin{bmatrix}
+
+e^{-i\frac{2\pi}{2} \cdot 0 \cdot 0} & e^{-i\frac{2\pi}{2} \cdot 0 \cdot 1} \\
+
+e^{-i\frac{2\pi}{2} \cdot 1 \cdot 0} & e^{-i\frac{2\pi}{2} \cdot 1 \cdot 1} \\
+
+\end{bmatrix}
+
+=
+
+\begin{bmatrix}
+
+1 & 1 \\
+
+1 & e^{-i\pi} \\
+
+\end{bmatrix}
+++++
 
 What is the product of the projection of an even function into a sin wave?::
-TODO
+Zero.
 
 Why are the wide functions in time domain transformed into their narrow counterparts in frequency domain and vice versa?::
-TODO
+Wide functions have low frequencies, which are near the origin of the frequency domain. The wider the function, the lower the frequency, the closer to the origin of the frequency domain. And vice versa.
 
 Compare the complexity of standard DFT and FFT.::
 TODO
@@ -411,18 +444,12 @@ Show an example of the aliasing effect.::
 TODO
 
 Explain the difference between low-pass and high-pass filter.::
-TODO
+Low-pass filter preserves low frequencies. High-pass filter preserves high frequencies.
 
 What is a prefilter?::
 TODO
 
 Give an example of stem:[\gamma] warping function.::
-TODO
-
-Explain the relationship between DFT and DCT.::
-TODO
-
-Describe the F-DCT algorithm and compute stem:[\text{F-DCT}\lparen\lbrack 1, 6, 6, 1 \rbrack\rparen].::
 TODO
 
 Is there ever any reason to do a convolution in the frequency domain?::
@@ -443,3 +470,4 @@ TODO
 * link:https://is.muni.cz/auth/el/fi/jaro2023/PV131[PV131 -- Digitální zpracování obrazu]
 ** link:https://is.muni.cz/auth/el/fi/jaro2023/PV131/um/lectures/lecture03_2023.pdf[Lecture 03 -- Multi-dimensional Fourier Transform]
 * https://www.robots.ox.ac.uk/~az/lectures/ia/lect2.pdf
+* https://ubcmath.github.io/MATH307/dft/dft.html
