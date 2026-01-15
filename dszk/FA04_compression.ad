@@ -21,6 +21,19 @@ When the value of a sample can be reasonably predicted from the values of neighb
 * Temporal -- e.g., many pixels unchanged between consecutive frames
 --
 
+General compression model::
++
+image::./img/fa04_general_compression_model.png[]
++
+--
+* stem:[f(m)] -- original input signal
+* stem:[f'(m)] -- input signal after compression and decompression
+* if stem:[f(m) = f'(m)], then the compression is _lossless_
+* if stem:[f(m) \neq f'(m)], then the compression is _lossy_
+* _encoder_ -- filter responsible for signal compression
+* _decoder_ -- filter responsible for signal decompression
+--
+
 LZW coding (Lempel-Ziv-Welch)::
 * GIF, TIFF, PDF, ZIP
 * Designed for the compression of text.
@@ -47,7 +60,7 @@ Lossless predictive encoding::
 +
 --
 * _Input_ stem:[f] -- the original signal to be encoded.
-* _Predictor_ stem[p] -- function that estimates the next piece of data based on predecessors (e.g., weighted average).
+* _Predictor_ stem:[p] -- function that estimates the next piece of data based on predecessors (e.g., weighted average).
 ** Example: stem:[p(f(n)) = \text{round}\left(\sum_{i=1}^M \alpha(i) \cdot f(n-i)\right)]
 * _Error_ stem:[e(n) = f(n) - p(f(n))]
 * Can be used as a preprocess stage before Huffman or some other _symbol encoder_.
@@ -75,14 +88,20 @@ Lossy predictive coding::
 +
 image::./img/fa04_lossy_predictive_coding.png[]
 
-
 Transform coding::
-* DFT nebo DCT - zahazujeme typicky vysoké frekvence
++
+--
+* Compression happens in the frequency domain instead of the original data.
+* We typically use DFT or DCT and disregard high frequencies.
+--
++
+image::./img/fa04_transform_coding.png[]
 
 Run length encoding (RLE)::
 * Lossless.
 * Stores repeated _runs_ of data as a single occurrence along with the number of occurrences.
 * `green green green green green` => (`green`, 5)
+* Most useful on data where these runs are common (e.g., palleted icons, pixel art, etc.)
 
 
 == Image Compression
@@ -259,13 +278,14 @@ How does the arithmetic decoder know when it should stop decoding one codeword?:
 2. There is an End of Message symbol.
 
 How does the encoder deliver the dictionary to the receiver's decoder in LZW compression scheme?::
-TODO
+It doesn't. Only the base symbol set may have to be sent. The dictionary is reconstructed on the fly.
 
 Explain the meaning of predictor and error in lossless predictive coding scheme.::
-TODO
+* _Predictor_ can leverage some known characteristic of the data to predict the next value based on the previous values.
+* If the _error_ -- difference between the prediction and the actual input -- is small, it can be encoded more efficiently.
 
 Explain the main idea of employing DCT into a transform coding compression scheme.::
-TODO
+It allows compression through the removal of psychovisual/psychospatial redundancy. Using DCT we transform the signal into the frequency domain, remove near-imperceivable frequencies, and encode the data using the DCT coefficients (usually further compressed using e.g., arithmetic coding).
 
 Why invent newer and newer image/video compression methods?::
 * Resolution and computation capabilities goe up, but network bandwidth is limiting.
