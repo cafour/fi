@@ -80,10 +80,23 @@ Data-driven / event-driven behavior::
 Something happened in the world. The goal is _opportunistic_. It's less precise, less certain, but also require less mental effort.
 
 Affordances::
-TODO
+* Affordances define what actions are possible and how something can be interacted with by a user.
+* "to afford" = "to offer" / "to make possible"
+* Relationship between the properties of an object and the capabilities of an agent (typically a human user).
+** _Example: Light switch on a wall can toggle the light but only for those that can reach it._
+** _Example: Glass affords transparency for non-blind people. Glass doesn't afford passage of solid objects._
+** _Example: Buttons can be pressed by people with hands._
+* They don't have to be perceivable to exist.
 
 Signifiers::
-TODO
+* Perceivable indicators that communicate the purpose, structure, operation, and behavior of an object to a user (i.e., make certain affordances perceivable).
+* Informs the user what is possible before they interact.
+* Examples: signs, labels, images, feel of a button on a controller, etc.
+* _Misleading signifiers_ can be ambiguous or represent an affordance that doesn't actually exist.
+* Can be unintentional but useful. For example, garbage on a beach represents unhealthy conditions.
+** Example: Something looks like a drawer although it cannot be opened.
+** Can be intentional and purposeful. For example, to motivate the user to find a key to the drawer.
+* Do not have to be attached to an object. Can signify general information, such as current interaction mode.
 
 Constraints::
 TODO
