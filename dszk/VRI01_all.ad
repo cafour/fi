@@ -3,4 +3,129 @@
 :page-group: vri
 :page-order: VRI01
 
-Interaction in VR is...
+Human-centered interaction design::
+Focuses on the human side of human-computer interaction -- the interface from the user's point of view. In the ideal case, VR experiences should be not only effective, but also engaging and enjoyable.
+
+Intuitiveness::
+* An intuitive interface can be quickly understood, accurately predicted, and easily used.
+* Intuitiveness in the mind of the user but the interface and the world can be designed to help form a useful mental model.
+* Exploit _interaction metaphors_ that the users are likely already familiar with.
+* In VR, the users are cut off and it's thus even less likely that they will read a manual or talk to someone.
+
+== Norman's principles of interaction design
+
+Don Norman::
+* American researcher, professor, and author.
+* Wrote _The Design of Everyday Things_.
+* Expert on design, usability engineering, and cognitive science.
+* Advocate of _user-centered design_.
+
+Cycle of interaction::
+High-quality interaction design considers tasks, requirements, intentions, and desires at each of this seven stages:
++
+--
+1. Forming the **goal** (one stage)
+2. **Executing** the action
+** Bridges the gap between goal and result.
+** Three stages:
+*** _plan_ -- What are my options of accomplishing my goals?
+*** _specify_ -- What is the specific sequence of actions I have to do?
+*** _perform_ -- Do the action.
+** The user should be able to anticipate the result (_feedforward_) based on signifiers, constraints, mappings, and their mental model.
+
+3. **Evaluating** the results
+** Allows the user to judge whether their goal has been achieved, make adjustments, and form new goals.
+** Three stages:
+*** _perceive_ -- What happened?
+*** _interpret_ -- What does it mean?
+*** _compare_ -- Is this what I wanted?
+** _Feedback_ is obtained by perceiving the impact of the action.
+--
++
+image::./img/vri01_cycle_of_interaction.png[]
++
+.Moving a boulder
+====
+**Goal:** Move a boulder blocking the path.
+
+**Plan:** Go to the boulder (or select it from a distance) and move it.
+
+**Specify:** Shoot a ray from the hand, intersect the boulder, push the _grab_ button, move the hand, release the _grab_ button.
+
+**Perfom:** Move the boulder.
+
+**Perceive:** The boulder is now at a new location.
+
+**Interpret:** The boulder is no longer in the path.
+
+**Compare**: I have cleared the route and can continue on my path.
+====
+
+Conscious and subconscious thought in the cycle of interaction::
+* Goals tend to be _reflective_ (slow conscious thought).
+* We are often unaware of the execution and evaluation stages unless we encounter an obstacle.
+** _Specify_ and _interpret_ are often semi-conscious.
+** _Perform_ and _perceive_ are typically automatic and subconscious.
+
+Gulf of execution::
+The goal is known, but the path to it isn't.
+
+Gulf of evaluation::
+When we don't understand the results of an action.
+
+Goal-driven behavior::
+The user themselves have initiated the interaction cycle by setting a goal for themselves.
+
+Data-driven / event-driven behavior::
+Something happened in the world. The goal is _opportunistic_. It's less precise, less certain, but also require less mental effort.
+
+Affordances::
+TODO
+
+Signifiers::
+TODO
+
+Constraints::
+TODO
+
+Feedback::
+TODO
+
+Mappings::
+TODO
+
+Compliance::
+TODO
+
+== Modes and flow
+
+TODO
+
+== Selection patterns
+
+TODO
+
+
+== Manipulation patterns
+TODO
+
+== Compound patterns
+
+World-in-Miniature (WiM)::
+TODO
+
+== Questions
+
+====
+
+How can it be applied to SoftVis in VR?::
+TODO
+
+What should I think about from the design perspective?::
+TODO
+
+====
+
+== Sources
+
+* Jason Jerald, The VR Book: Human-Centered Design for Virtual Reality, 2016
