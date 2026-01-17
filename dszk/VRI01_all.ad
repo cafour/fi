@@ -12,6 +12,12 @@ Intuitiveness::
 * Exploit _interaction metaphors_ that the users are likely already familiar with.
 * In VR, the users are cut off and it's thus even less likely that they will read a manual or talk to someone.
 
+Break-in-presence::
+When the illusion of being in virtual world is broken and the user realizes they are in the real world wearing a headset. Can be caused by, for example, rendering issues, loss of tracking, tripping over a wire, people talking IRL,etc.
+
+Proprioception::
+Sensation of limb and body pose and motion. Derived from nerves in muscles, tendons, joints, etc. It's what allows us to touch our nose even with eyes closed. Can be leveraged in VR as, for example, users don't need to see the tools in their hands to use them.
+
 == Norman's principles of interaction design
 
 Don Norman::
@@ -80,16 +86,21 @@ Data-driven / event-driven behavior::
 Something happened in the world. The goal is _opportunistic_. It's less precise, less certain, but also require less mental effort.
 
 Affordances::
-* Affordances define what actions are possible and how something can be interacted with by a user.
+Relationships that define what actions are possible and how something can be interacted with by a user.
++
+--
 * "to afford" = "to offer" / "to make possible"
 * Relationship between the properties of an object and the capabilities of an agent (typically a human user).
 ** _Example: Light switch on a wall can toggle the light but only for those that can reach it._
 ** _Example: Glass affords transparency for non-blind people. Glass doesn't afford passage of solid objects._
 ** _Example: Buttons can be pressed by people with hands._
 * They don't have to be perceivable to exist.
+--
 
 Signifiers::
-* Perceivable indicators that communicate the purpose, structure, operation, and behavior of an object to a user (i.e., make certain affordances perceivable).
+Perceivable indicators that communicate the purpose, structure, operation, and behavior of an object to a user (i.e., make certain affordances perceivable).
++
+--
 * Informs the user what is possible before they interact.
 * Examples: signs, labels, images, feel of a button on a controller, etc.
 * _Misleading signifiers_ can be ambiguous or represent an affordance that doesn't actually exist.
@@ -97,22 +108,110 @@ Signifiers::
 ** Example: Something looks like a drawer although it cannot be opened.
 ** Can be intentional and purposeful. For example, to motivate the user to find a key to the drawer.
 * Do not have to be attached to an object. Can signify general information, such as current interaction mode.
+--
 
 Constraints::
-TODO
+Limitations of actions and behavior.
++
+--
+* Signifiers should be used to make constraints easy to understand.
+* If communicated well, they can improve accuracy, precision, and user efficiency.
+* Should be consistent, so that learning can be transferred across tasks.
+* Experts should be able to disable constraints.
+* In VR, they are typically physical or mathematical, but in general can be also be semantic or even cultural.
+* _Degrees of Freedom (DoF)_ -- Number of independent dimensions available for motion of an entity.
+** 6 DoF -- 3 axes for movement, 3 axes for rotation
+** _Example: A UI slider has 1 DoF. It's constrained to move either left or right._
+* Constraints can add realism (e.g., preventing users from clipping through walls) but can also make interactions more difficult.
+** _Example: It can be useful to leave virtual tools hanging in the air instead of picking them up from the ground._
+--
 
 Feedback::
-TODO
+Communicates results of an action or task status. Helps the user understand current state of things and drive future action.
++
+--
+* Lack of immediate visual feedback when the user moves can result in break-in-presence or even motion sickness.
+* Haptic feedback is especially difficult to implement (e.g., real forces caused by walls) but _sensory substitution_ can be used.
+* Should be prioritized based on importance to avoid overwhelming the user.
+* Instead of putting stuff on a heads-up display (or near the head), consider putting it near the waist. There, it can be easily accessed but isn't obtrusive.
+* Users should be allowed to configure or disable it.
+--
+
+Sensory substitution::
+Replacement of an ideal sensory cue, which is unavailable, with one or more other sensory cues.
++
+--
+* _Ghosting_ -- Second rendering of an object in a different pose.
+* _Highlighting_ -- Visually outlining an object.
+* _Audio cues_ -- For example, sounds that signify collision.
+* _Passive haptics_ -- Static objects IRL that can be touched.
+* _Rumble_ -- Vibration of input devices.
+--
+
 
 Mappings::
-TODO
+Correlation between two sets of things. Typical example is a set of inputs controling a corresponding set of actions.
++
+--
+* Mappings are useful even when the thing cannot be manipulated with directly (e.g., using a broom to flip a switch).
+* Input devices have a mapping natural for some interaction pattern but poor for another.
+** _Example: Hand-tracked devices are good for pointing, not so much as a steering wheel._
+* _Non-spatial mappings_ transform spatial input to non-spatial and vice versa.
+** _Example: Raising hand means "more". Lowering hand means "less"._
+** Some are universal, other may be personal or culture dependent.
+--
 
 Compliance::
-TODO
+Matching of sensory feedback with input devices across time and space. Results in perceptual binding -- feeling of interacting with one coherent object.
++
+--
+* _Spatial compliance_ -- Direct mappings in space lead immediately to understanding.
+** _Position compliance_ -- Co-location of sensory feedback and input device position. For example, when we see our hand in VR where we would expect based on our proprioception.
+** _Directional compliance_ -- Objects in VR should move and rotate as the manipulated input device. It's the most important spatial compliance. For example, mouse and cursor.
+** _Nulling compliance_ -- When an input device is returned to its initial placement, its VR object is too. Allows the user to use their "muscle memory" to remember the initial object placements.
+* _Temporal compliance_ -- Different types of feedback (e.g., proprioceptive and visual) to the same action should be synced.
+** _Visio-vestibular compliance_ -- Viewpoint feedback should be immediate. When we move our head, we should see and perceive with the inner ear what we'd expect. Especially important to avoid motion sickness.
+** If action cannot be completed immediately, there should be some kind of feedback implying that the action is in progress. However, slow of poor feedback is more frustrating than no feedback.
+--
+
 
 == Modes and flow
 
-TODO
+Modes::
+Complex applications with different types of tasks may require different interaction techniques. One or more settings that change the available interaction techniques.
++
+--
+* Current mode can be changed by pressing a button, selecting it in a UI panel, or it may be order-dependent (i.e., activate automatically based on previous actions).
+* The current mode should always be made clear to the user.
+--
+
+Flow::
+Seamless integration of various tasks and techniques provided by the application.
++
+--
+* _Example: An object should be selected first, before an action can be done upon it._
+* Sequence of interactions should occur without distractions.
+* Users should not have to physically (e.g., eyes, hands, head) or cognitively move between tasks.
+* Lightweight mode switching, physical props, and multimodal techniques help maintain flow.
+--
+
+Object-action vs action-object::
+People prefer to first think about an object and then an action done upon/with the object.
++
+--
+* In natural language, action-object is more common (e.g., "Pick up the book.")
+* Object is concrete an easier to think about.
+* Action is abstract. It's easier to imagine the action with an object already in mind.
+--
+
+Multimodal interaction::
+When multiple input and output sensory modalities are available for accomplishing the same thing. Individual to both the application and the users.
++
+--
+* It's better the use a specialized modality when it's clearly the best (e.g., selection by pointing for your app).
+* When user preference is divided, it may be better to implement both options.
+--
+
 
 == Selection patterns
 
