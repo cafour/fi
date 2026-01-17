@@ -18,6 +18,12 @@ When the illusion of being in virtual world is broken and the user realizes they
 Proprioception::
 Sensation of limb and body pose and motion. Derived from nerves in muscles, tendons, joints, etc. It's what allows us to touch our nose even with eyes closed. Can be leveraged in VR as, for example, users don't need to see the tools in their hands to use them.
 
+Gorilla arm::
+Arm fatigue caused by extended usage of gesture-based interfaces. Typically happens when the user must hold hands above waist for more than 10 seconds.
+
+Clutching::
+Having to release and re-grasp an object to complete a task because it's impossible to do in one motion (e.g., wrench).
+
 == Norman's principles of interaction design
 
 Don Norman::
@@ -215,16 +221,60 @@ When multiple input and output sensory modalities are available for accomplishin
 
 == Selection patterns
 
+Hand selection pattern::
+* When selection needs to be realistic.
+* Can simulate entire arms, or just hands.
+* _Go-go technique_ -- When extended beyond 2/3 of reach, the hand grows non-linearly, allowing to pick up far-away objects.
+
+Pointing pattern::
+* Eye tracking based on dwell selection (looking for a period of time) can be frustrating. Don't use unless necessary.
++
+TODO
+
+Image-plane selection pattern::
+* Don't use when selection is frequent, because of gorilla arm.
++
+TODO
+
+Volume-based selection pattern::
+* Good for selecting data without geometric surfaces.
+* Can be difficult for novice users.
++
 TODO
 
 
 == Manipulation patterns
+
+Direct hand manipulation pattern::
+* More efficient and satisfying than other manipulation patterns.
+* For high fidelity, use in combination with hand selection.
+* Non-isomorphic rotations can reduce clutching and increase performance and precision.
++
+TODO
+
+Proxy pattern::
+* Useful for remote manipulation or when the world or the user themself is scaled.
+* Use tracked physical props for natural two-handed interactions and tactile feedback.
++
+TODO
+
+3D tool pattern::
+* Enhances manipulation capability of the hands.
+* Use signifiers for object-attached tools to make it obvious how it's used.
+* Use _jigs_ for user-controlled contraints and snapping.
++
 TODO
 
 == Compound patterns
 
 World-in-Miniature (WiM)::
+* Provides situational awareness, user-defined proxies, and quick movement.
+* Use maps where forward is always up so that the orientation of the map matches the orientation of the world.
+** Allow disabling.
+* Don't map the user's doll's movement to the user's perspective (causes motion sickness), teleport instead.
++
 TODO
+
 
 == Questions
 
