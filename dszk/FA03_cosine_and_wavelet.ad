@@ -20,9 +20,55 @@ DCT in 2D::
 image::./img/fa03_dct_2d_basis_functions.png[]
 
 Wavelet transform (WT)::
++
+--
+* In FT, we lose all information about time.
+** _Example: We could not use FT to reconstruct the order of colors on a traffic light._
 * Uses wavelets -- functions with a peak at zero and brief, diminishing oscillations.
+** The main idea is to constrain the basis functions in time ("wavelet" = "little wave").
 ** Parametrized both by **frequency and time**.
 * Compared to FT, which captures global frequency information, WT provides temporal information as well.
+* It's not possible to have perfect information about time and frequency at the same time. WT is in the middle.
+* A mother wavelet can be any function that satisfies the _wavelet constraints_.
+* WT turns a 1D time function stem:[f(t)] into a 2D function of time and frequency stem:[F(t, \omega)].
+* We translate the mother wavelet (shift it in time) or scale it (change its frequency).
+** Translating stem:[\psi_b(t) = \psi(t-b)]
+** Scaling stem:[\psi_a(t) = \psi(t/a)]
+** Scaling and traslating stem:[\psi_{a,b} = \psi\left( \frac{t-b}{a} \right)]
+* stem:[\psi_{a,b}] are the _daughter wavelets_.
+* The mother wavelet is complex.
+** If it were just real, then when WT would output zero it wouldn't necessarily mean that there is no wave of the specified frequency because the waves can cancel each other out instead of resonating. We use complex wavelets so that we can take the absolute value of the complex result and avoid this problem.
+* Time vs frequency trade-off: High-time detail for high frequencies. High-frequency detail for low frequencies. 
+--
++
+[stem]
+++++
+
+\int_{-\infty}^{\infty} f(t) \cdot \psi_{a,b}(t) dt
+++++
+
+Wavelet constraints::
+Function stem:[\psi(t)] is a wevelet if:
+1. Admissability condition: It has zero mean. There is no zero frequency component.
++
+[stem]
+++++
+\int_{-\infty}^{\infty} \psi(t) dt = 0
+++++
+2. Has finite energy. This makes it localized in time.
++
+[stem]
+++++
+\int_{-\infty}^{\infty} |\psi(t)|^2 dt < \infty
+++++
+
+Well-known mother wavelets::
+* _Haar_
+* _Daubechies_
+* _Shannon_
+* _Morlet_
+* _Meyer_
+* _Gaussian_
 
 Discrete Wavelet transform (DWT)::
 * First DWT invented by Alfréd Haar. Haar wavelets are the most educational.
@@ -41,3 +87,8 @@ TODO
 
 
 ====
+
+[Bibliography]
+== Sources
+
+* Artem Kirsanov, link:https://www.youtube.com/watch?v=jnxqHcObNK4[Wavelets: a mathematical microscope], 2022
