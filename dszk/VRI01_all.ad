@@ -251,7 +251,7 @@ The user touches objects directly just as they would in the real world. They rea
 * Limited by what the user can physically reach. They may need to travel to the object first.
 --
 +
-**Techniques:**
+**_Techniques:_**
 +
 --
 * _Realistic hands_ -- As close to reality as possible. Arm pose may be computed using inverse kinematics. Measuring the user's arms and adjustments to the environment may be necessary.
@@ -269,7 +269,7 @@ Extends a ray into the distance from an input device (e.g., finger, controller, 
 * Dwell selection (pointing for a period of time) can be frustrating (especially with eye gaze). Don't use unless necessary.
 --
 +
-**Techniques:**
+**_Techniques:_**
 +
 --
 * _Hand pointing_ -- Ray from a hand/finger.
@@ -294,7 +294,7 @@ The user holds one or two hands between their eye and the desired object and use
 * The hands occlude the scene unless transparent.
 --
 +
-**Techniques:**
+**_Techniques:_**
 +
 --
 * _Head crusher_ -- Users positions their thumb and forefinger around the desired object.
@@ -315,7 +315,7 @@ Allows selection of a volume of space (e.g., box, sphere, or cone) that is indep
 * Can be difficult than selecting a single object.
 --
 +
-**Techniques::**
+**_Techniques_:**
 +
 --
 * _Cone-casting flashlight_ -- Pointing but with a cone instead of a ray. _Aperture_ is a modification that allows the user to specify the size of the cone by bringinng the closer or further.
@@ -325,35 +325,80 @@ Allows selection of a volume of space (e.g., box, sphere, or cone) that is indep
 
 == Manipulation patterns
 
+Manipulation::
+Modification of attributes (e.g., position, orientation, scale, shape, color, etc.) for one or more objects. Typically follows selection.
+
 Direct hand manipulation pattern::
-* More efficient and satisfying than other manipulation patterns.
-* For high fidelity, use in combination with hand selection.
-* Non-isomorphic rotations can reduce clutching and increase performance and precision.
+After selecting an object, it is attached to the hand and moving with in until released.
 +
-TODO
+--
+* More efficient and satisfying than other manipulation patterns.
+* Like hand selection, it is limited by the reach of the user.
+* For high realism, use in combination with hand selection.
+--
++
+**_Techniques:_**
++
+--
+* _Non-isomorphic rotations_ -- Allow more rotation with smaller wrist movements. Reduces clutching.
+* _Go-go technique_ -- Just like with hand selection. It allows manipulation as well.
+--
 
 Proxy pattern::
-* Useful for remote manipulation or when the world or the user themself is scaled.
-* Use tracked physical props for natural two-handed interactions and tactile feedback.
+Physical or virtual object that represents and maps directly to a remote object. As the user manipulates the proxy, the remote object is manipulated with as well.
 +
-TODO
+--
+* Useful for remote manipulation or when the object or the user themself is scaled.
+* Can be difficult if there is no directional compliance (e.g., when there is a rotational offset between the proxy and the remote object).
+* Use tracked physical props for 
+--
++
+**_Techniques:_**
++
+--
+* _Tracked physical props_ -- The user manipulates a physical object. Natural two-handed interactions and tactile feedback (passive haptics). Extremely easy to use without training.
+--
 
 3D tool pattern::
-* Enhances manipulation capability of the hands.
-* Use signifiers for object-attached tools to make it obvious how it's used.
-* Use _jigs_ for user-controlled contraints and snapping.
+The user manipulates an intermediary 3D tool that in turn manipulates an object. For example, a stick that extends one's reach.
 +
-TODO
+--
+* Enhances manipulation capability of the hands.
+* Can take more effort if the user must first travel and maneuver to an appropriate angle to apply the tool.
+--
++
+**_Techniques:_**
+--
+* _Hand-held tools_ -- Virtual objects attached to the hand. Can be used from afar (e.g., TV remote) or directly (e.g., a paintbrush). Often easier to use and more direct than widgets.
+* _Object-attached tools_ -- The tool is attached to the object being manipulated (not the hand). Signifier representing the affordance between the object, tool, and user (e.g., vertex handles in the corners, or a color icon that triggers a color cube tool). The signifier should make obvious what the tool does. 
+* _Jigs_ -- Similar to real-world physical guides used by carpenters and machinists. Grids, rulers, other shapes that the user attaches to object vertices, edges, and faces. Allows customizable constraints and snapping. Jigs can be combined into jig kits.
+--
+
 
 == Compound patterns
 
+Compound patterns combine two or more patterns into more complicated mechanisms.
+
 World-in-Miniature (WiM)::
-* Provides situational awareness, user-defined proxies, and quick movement.
-* Use maps where forward is always up so that the orientation of the map matches the orientation of the world.
-** Allow disabling.
-* Don't map the user's doll's movement to the user's perspective (causes motion sickness), teleport instead.
+An interactive live 3D map. An exocentric miniature of the world.
 +
-TODO
+--
+* Provides situational awareness, user-defined proxies, and quick movement.
+* Features a "doll", an avatar for the user that matches their movements. A transparent frustum may show what the user currently sees.
+* Use maps where forward is always up so that the orientation of the map matches the orientation of the world.
+** Allow disabling for advanced users.
+--
++
+**_Techniques:_**
++
+--
+* _Voodoo doll_ -- Combines WIM with image-plane selection. The user has a partial WIM in non-dominant hand and a proxy for the manipulated object in the dominant hand. By moving the proxy doll in relation to the world doll, the user can position and orient the manipulated world object. The world doll does not move.
+* _Moving into one's own avatar_ -- The user can move their own doll in the WIM. Don't map the user's doll's movement to the user's perspective (causes motion sickness), teleport instead. Using multiple WIMs can act as a portal between worlds.
+* _Viewbox_ -- The user creates the WIM using volume selection. It acts as a reference: it and its insides can be manipulated. Make sure it's not recursive.
+--
+
+.World-in-Miniature <<rollerchimp>>
+image::./img/vri01_wim.png[]
 
 
 == Questions
@@ -361,13 +406,28 @@ TODO
 ====
 
 How can it be applied to SoftVis in VR?::
-TODO
+* It depends on what is visualized. But there is typically a lot of data either relate to the source code or to its execution.
+* Suitable selection and manipulation patterns are key.
+* World in miniature may be very suitable if the visualization is very large.
+* If source code is visualized, the user should be provided with a way to have a quick look at it without having to exit VR. This might mean reimplementing portions of an IDE in the visualization which could be difficult.
 
-What should I think about from the design perspective?::
-TODO
+What should a designer of a SoftVis VR visualization think about from the design perspective?::
+* First and foremost, is there a good enough reason to use VR? What's the advantage that a regular 2D or 3D visualization can't have?
+* Software artifacts are very abstract but interaction in VR is very visceral (especially with hands). Most important are the mappings and metaphors giving the abstract concepts a more concrete representation that can be manipulated.
+* What tasks is the user going to want to do? From that question we can start thinking about the metaphors, affordances, signifiers, constraints, and suitable interaction patterns.
+
+For example, let's say Ritgard was in VR. What would it be like?::
+* Hand gesture or at least a 3D tool for moving and resizing the sliding time window.
+* Hand selection and manipulation for looking at the details of a single developer conversation.
+* A floating/hand-held panel showing the actual conversation on GitHub.
+* Maybe some object-attached tools for changing properties of the conversion: status, assignees, labels.
+** "Tree shaking" for closing would be fun. Or maybe setting them on fire.
+* It could be intersting to play with a first-person view with a WIM vs a purely exocentric visualization.
+* If the islands represented labels instead of ML-derived topics, the user could "replant" the trees to give them different labels.
 
 ====
 
 == Sources
 
 * Jason Jerald, The VR Book: Human-Centered Design for Virtual Reality, 2016
+* [[rollerchimp]] link:https://www.rollerchimp.com/project/miniature-metaworlds/[Rollerchimp], link:https://dl.acm.org/doi/10.1145/3359997.3365682[Miniature Metaworlds], 2019
