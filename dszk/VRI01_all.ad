@@ -280,16 +280,47 @@ Extends a ray into the distance from an input device (e.g., finger, controller, 
 * _Two-handed pointing_ -- Ray starts from the hand closer to the body and extends through the farther hand.
 --
 
+.Semi-realistic hands in Half-Life: Alyx
+image::./img/vri01_alyx_hands.png[]
+
 Image-plane selection pattern::
-* Don't use when selection is frequent, because of gorilla arm.
+The user holds one or two hands between their eye and the desired object and uses a trigger a trigger when the object lines up with the hands and the eyes. (The "image" in the title refers to the 2D plane on which users make the selection.)
 +
-TODO
+--
+* Simulates touch at long distances.
+* Works well at any distance as long as the object can be seen.
+* Don't use when selection is frequent, because of gorilla arm.
+* Works for a single eye, so users should close the other.
+* The hands occlude the scene unless transparent.
+--
++
+**Techniques:**
++
+--
+* _Head crusher_ -- Users positions their thumb and forefinger around the desired object.
+* _Sticky finger_ -- The object underneath the user's finger gets selected.
+* _Lifting palm_ -- The user positions their palm so that it looks like the object is lying on it.
+* _Framing hands_ -- Using both hands, the user makes a frame around the object.
+--
+
+.The head-crusher selection technique
+image::./img/vri01_head_crusher.png[]
 
 Volume-based selection pattern::
-* Good for selecting data without geometric surfaces.
-* Can be difficult for novice users.
+Allows selection of a volume of space (e.g., box, sphere, or cone) that is independent of the objects/data being selected.
 +
-TODO
+--
+* Good for selecting data when there are no geometrical surfaces (e.g., CT datasets).
+* Great for making selections inside point clouds, voxels, subsets of surfaces, or even empty space.
+* Can be difficult than selecting a single object.
+--
++
+**Techniques::**
++
+--
+* _Cone-casting flashlight_ -- Pointing but with a cone instead of a ray. _Aperture_ is a modification that allows the user to specify the size of the cone by bringinng the closer or further.
+* _Two-handed box_ -- Using both hands, the user positions and orients a box with snapping and nudging. _Snap_ brings the box to the hand and allows setting its initial pose. _Nudge_ enables precise adjustments; motion of the box after the initial position is locked to the hand; it can be reshaped with the other hand as well.21
+--
 
 
 == Manipulation patterns
