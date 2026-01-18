@@ -1,4 +1,4 @@
-= Interaction in VR
+= Interaction in Virtual Reality
 :url: ./vr_interaction/
 :page-group: vri
 :page-order: VRI01
@@ -17,12 +17,32 @@ When the illusion of being in virtual world is broken and the user realizes they
 
 Proprioception::
 Sensation of limb and body pose and motion. Derived from nerves in muscles, tendons, joints, etc. It's what allows us to touch our nose even with eyes closed. Can be leveraged in VR as, for example, users don't need to see the tools in their hands to use them.
++
+Interactions done releative to the body's frame of references are _egocentric_; the users's body is in the world. The opposite, where the user manipulates the world outside of it, are _exocentric_ interactions.
 
 Gorilla arm::
 Arm fatigue caused by extended usage of gesture-based interfaces. Typically happens when the user must hold hands above waist for more than 10 seconds.
 
 Clutching::
 Having to release and re-grasp an object to complete a task because it's impossible to do in one motion (e.g., wrench).
+
+Interaction pattern::
+Generalized high-level interaction concept. Describes a common approach usable across many different applications.
++
+--
+* Described from the user's point of view.
+* Largely implementation dependent.
+* Thinking about high-level concepts allows us to consider more design possibilities than if we locked ourselves down a technology-dependent technique.
+* Not to be confused with software architecture patterns!
+--
+
+Interaction technique::
+A specific and technology-dependent "implementation" of an interaction pattern.
++
+--
+* When one technique fails. Others from the same pattern can be considered.
+* There is **no single best** technique or pattern. It's all trade-offs.
+--
 
 == Norman's principles of interaction design
 
@@ -154,7 +174,6 @@ Replacement of an ideal sensory cue, which is unavailable, with one or more othe
 * _Rumble_ -- Vibration of input devices.
 --
 
-
 Mappings::
 Correlation between two sets of things. Typical example is a set of inputs controling a corresponding set of actions.
 +
@@ -221,15 +240,45 @@ When multiple input and output sensory modalities are available for accomplishin
 
 == Selection patterns
 
+Selection::
+Specification of one or more object before an action is done on these objects.
+
 Hand selection pattern::
-* When selection needs to be realistic.
-* Can simulate entire arms, or just hands.
-* _Go-go technique_ -- When extended beyond 2/3 of reach, the hand grows non-linearly, allowing to pick up far-away objects.
+The user touches objects directly just as they would in the real world. They reach out with their hand, touch an object, and then grab it using some input.
++
+--
+* When selection needs to be (somewhat) realistic.
+* Limited by what the user can physically reach. They may need to travel to the object first.
+--
++
+**Techniques:**
++
+--
+* _Realistic hands_ -- As close to reality as possible. Arm pose may be computed using inverse kinematics. Measuring the user's arms and adjustments to the environment may be necessary.
+* _Non-realistic hands_ -- Focus on usability rather than realism. Often floating hands without arms or abstract cursors. Reduce visual occlusion.
+* _Go-go technique_ -- When extended beyond 2/3 of reach, the arm grows non-linearly, allowing to pick up far-away objects.
+--
 
 Pointing pattern::
-* Eye tracking based on dwell selection (looking for a period of time) can be frustrating. Don't use unless necessary.
+Extends a ray into the distance from an input device (e.g., finger, controller, head, etc.). The first intersected can ten be selected by using a trigger (e.g., controller button).
 +
-TODO
+--
+* One of the most fundamental and used selection patterns.
+* Typically more effective than hand selection unless realism is required. When selecting objects beyond personal space, it's faster and more precise.
+* Naive implementation can be imprecise due to hand tremor.
+* Dwell selection (pointing for a period of time) can be frustrating (especially with eye gaze). Don't use unless necessary.
+--
++
+**Techniques:**
++
+--
+* _Hand pointing_ -- Ray from a hand/finger.
+* _Head pointing_ -- Ray from the center of vision.
+* _Eye gaze selection_ -- Selecting by looking with the eyes. Problematic because people expect to be able to look at stuff without it triggering something (_Midas touch problem_).
+* _Object snapping_ -- Fixes hand tremor imprecision by snapping/bending the ray towards the closest/most important object.
+* _Precision mode pointing_ -- "Slowed down" cursor. Can be combined with a zoom lense.
+* _Two-handed pointing_ -- Ray starts from the hand closer to the body and extends through the farther hand.
+--
 
 Image-plane selection pattern::
 * Don't use when selection is frequent, because of gorilla arm.
