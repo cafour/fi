@@ -259,6 +259,8 @@ MPEG::
 * Relies on DCT and predictive coding.
 
 Advanced Video Coding (AVC, h.264, MPEG-4 Part 10)::
++
+--
 * Published in 2004.
 * Relies on DCT
 * Macroblocks (maximum 16x16)
@@ -272,6 +274,7 @@ Advanced Video Coding (AVC, h.264, MPEG-4 Part 10)::
 ** Most common
 ** Difference between the current frame and a prediction of it based on the previous I- or P-frame and the next P-frame.
 * Seemingly can also use DWT for specific purposes, such as encoding of textures and watermarking.
+--
 
 .Chronological order of frames in a video
 image::./img/fa04_chronological_frames.png[]
