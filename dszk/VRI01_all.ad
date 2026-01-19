@@ -18,7 +18,7 @@ When the illusion of being in virtual world is broken and the user realizes they
 Proprioception::
 Sensation of limb and body pose and motion. Derived from nerves in muscles, tendons, joints, etc. It's what allows us to touch our nose even with eyes closed. Can be leveraged in VR as, for example, users don't need to see the tools in their hands to use them.
 +
-Interactions done releative to the body's frame of references are _egocentric_; the users's body is in the world. The opposite, where the user manipulates the world outside of it, are _exocentric_ interactions.
+Interactions done relative to the body's frame of references are _egocentric_; the users's body is in the world. The opposite, where the user manipulates the world outside of it, are _exocentric_ interactions.
 
 Gorilla arm::
 Arm fatigue caused by extended usage of gesture-based interfaces. Typically happens when the user must hold hands above waist for more than 10 seconds.
@@ -40,8 +40,8 @@ Interaction technique::
 A specific and technology-dependent "implementation" of an interaction pattern.
 +
 --
-* When one technique fails. Others from the same pattern can be considered.
-* There is **no single best** technique or pattern. It's all trade-offs.
+* When one technique fails, others from the same pattern can be considered.
+* There is **no single best** technique or pattern. They all have trade-offs.
 --
 
 == Norman's principles of interaction design
@@ -51,9 +51,13 @@ Don Norman::
 * Wrote _The Design of Everyday Things_.
 * Expert on design, usability engineering, and cognitive science.
 * Advocate of _user-centered design_.
+* His principles are: _affordances_, _signifiers_, _constraints_, _feedback_, and _mappings_ (see all of them below).
+
+.The Design of Everyday Things
+image::./img/vri01_design_of_everyday_things.png[]
 
 Cycle of interaction::
-High-quality interaction design considers tasks, requirements, intentions, and desires at each of this seven stages:
+High-quality interaction design considers tasks, requirements, intentions, and desires at each of these seven stages:
 +
 --
 1. Forming the **goal** (one stage)
@@ -109,7 +113,7 @@ Goal-driven behavior::
 The user themselves have initiated the interaction cycle by setting a goal for themselves.
 
 Data-driven / event-driven behavior::
-Something happened in the world. The goal is _opportunistic_. It's less precise, less certain, but also require less mental effort.
+Something happened in the world. The goal is _opportunistic_. It's less precise, less certain, but also requires less mental effort.
 
 Affordances::
 Relationships that define what actions are possible and how something can be interacted with by a user.
@@ -187,7 +191,7 @@ Correlation between two sets of things. Typical example is a set of inputs contr
 --
 
 Compliance::
-Matching of sensory feedback with input devices across time and space. Results in perceptual binding -- feeling of interacting with one coherent object.
+Matching of sensory feedback with input devices across time and space. Results in _perceptual binding_ -- feeling of interacting with one coherent object.
 +
 --
 * _Spatial compliance_ -- Direct mappings in space lead immediately to understanding.
@@ -266,7 +270,9 @@ Extends a ray into the distance from an input device (e.g., finger, controller, 
 * One of the most fundamental and used selection patterns.
 * Typically more effective than hand selection unless realism is required. When selecting objects beyond personal space, it's faster and more precise.
 * Naive implementation can be imprecise due to hand tremor.
+* It can also be imprecise of the hardware of the input device is imprecise or loses tracking.
 * Dwell selection (pointing for a period of time) can be frustrating (especially with eye gaze). Don't use unless necessary.
+* Shooting rays from hands is actually quite natural because of laser pointers.
 --
 +
 **_Techniques:_**
@@ -368,6 +374,7 @@ The user manipulates an intermediary 3D tool that in turn manipulates an object.
 --
 +
 **_Techniques:_**
++
 --
 * _Hand-held tools_ -- Virtual objects attached to the hand. Can be used from afar (e.g., TV remote) or directly (e.g., a paintbrush). Often easier to use and more direct than widgets.
 * _Object-attached tools_ -- The tool is attached to the object being manipulated (not the hand). Signifier representing the affordance between the object, tool, and user (e.g., vertex handles in the corners, or a color icon that triggers a color cube tool). The signifier should make obvious what the tool does. 
@@ -406,7 +413,7 @@ image::./img/vri01_wim.png[]
 ====
 
 How can it be applied to SoftVis in VR?::
-* It depends on what is visualized. But there is typically a lot of data either relate to the source code or to its execution.
+* It depends on what is visualized. But there is typically a lot of data either related to the source code or to its execution.
 * Suitable selection and manipulation patterns are key.
 * World in miniature may be very suitable if the visualization is very large.
 * If source code is visualized, the user should be provided with a way to have a quick look at it without having to exit VR. This might mean reimplementing portions of an IDE in the visualization which could be difficult.
