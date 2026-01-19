@@ -179,7 +179,7 @@ Replacement of an ideal sensory cue, which is unavailable, with one or more othe
 --
 
 Mappings::
-Correlation between two sets of things. Typical example is a set of inputs controling a corresponding set of actions.
+Correlation between two sets of things. Typical example is a set of inputs controling a corresponding set of actions (e.g., a row of light switches controls a row of lights). We also use the related term _compliance_ instead of mappings.
 +
 --
 * Mappings are useful even when the thing cannot be manipulated with directly (e.g., using a broom to flip a switch).
