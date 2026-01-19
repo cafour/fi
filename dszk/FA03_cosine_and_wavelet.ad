@@ -3,6 +3,8 @@
 :page-group: fa
 :page-order: FA03
 
+== Cosine Transform
+
 Discrete Cosine Transform (DCT)::
 * Uses just stem:[\cos] functions.
 * We modify the input signal to make it an even function so that the stem:[\sin] coefficients turn into zeroes.
@@ -19,19 +21,19 @@ DCT in 2D::
 +
 image::./img/fa03_dct_2d_basis_functions.png[]
 
+== Wavelet Transform
+
 Wavelet transform (WT)::
 +
 --
-* In FT, we lose all information about time.
-** _Example: We could not use FT to reconstruct the order of colors on a traffic light._
+* Compared to FT, which captures global frequency information, WT provides temporal information as well.
 * Uses wavelets -- functions with a peak at zero and brief, diminishing oscillations.
 ** The main idea is to constrain the basis functions in time ("wavelet" = "little wave").
 ** Parametrized both by **frequency and time**.
-* Compared to FT, which captures global frequency information, WT provides temporal information as well.
 * It's not possible to have perfect information about time and frequency at the same time. WT is in the middle.
 * A mother wavelet can be any function that satisfies the _wavelet constraints_.
-* WT turns a 1D time function stem:[f(t)] into a 2D function of time and frequency stem:[F(t, \omega)].
-* We translate the mother wavelet (shift it in time) or scale it (change its frequency).
+* WT turns a 1D time function stem:[f(t)] into a 2D function of time and frequency stem:[T(a, b)].
+* We translate the mother wavelet stem:[\psi] (shift it in time) or scale it (change its frequency).
 ** Translating stem:[\psi_b(t) = \psi(t-b)]
 ** Scaling stem:[\psi_a(t) = \psi(t/a)]
 ** Scaling and traslating stem:[\psi_{a,b} = \psi\left( \frac{t-b}{a} \right)]
@@ -40,15 +42,23 @@ Wavelet transform (WT)::
 ** If it were just real, then when WT would output zero it wouldn't necessarily mean that there is no wave of the specified frequency because the waves can cancel each other out instead of resonating. We use complex wavelets so that we can take the absolute value of the complex result and avoid this problem.
 * Time vs frequency trade-off: High-time detail for high frequencies. High-frequency detail for low frequencies. 
 --
+
+Continuous Wavelet Transform (CWT)::
 +
 [stem]
 ++++
 
-\int_{-\infty}^{\infty} f(t) \cdot \psi_{a,b}(t) dt
+T(a, b) = \frac{1}{\sqrt{|a|}} \int_{-\infty}^{\infty} f(t) \cdot \overline{\psi_{a,b}(t)} dt
 ++++
++
+[NOTE]
+====
+* We conjugate stem:[\psi_{a,b}] because it's complex and dot product works like that with complex numbers.
+* The stem:[\frac{1}{\sqrt{|a|}}] is a normalization factor it preserves the "energy" of each stretched daughter wavelet so we treat them equally.
+====
 
 Wavelet constraints::
-Function stem:[\psi(t)] is a wevelet if:
+Function stem:[\psi(t)] is a wavelet if:
 1. Admissability condition: It has zero mean. There is no zero frequency component.
 +
 [stem]
@@ -63,24 +73,158 @@ Function stem:[\psi(t)] is a wevelet if:
 ++++
 
 Well-known mother wavelets::
-* _Haar_
+* _Haar_ -- The original wavelet used in DWT. Most educational.
+* _Morlet_ -- Complex exponential (stem:[e^{ix}]) + Gaussian. First wavelet used in CWT.
 * _Daubechies_
 * _Shannon_
-* _Morlet_
 * _Meyer_
-* _Gaussian_
+* _Mexican hat_
+* _triangular_
 
-Discrete Wavelet transform (DWT)::
-* First DWT invented by Alfréd Haar. Haar wavelets are the most educational.
-TODO
+.The Haar Wavelet
+image::./img/fa03_haar_wavelet.png[]
 
+== Discrete Wavelet Transform
+
+Discrete wavelet transform (DWT)::
+Any WT where the wavelets are discretely sampled. In the following general definition, the original signal stem:[f] has length stem:[M = 2^J] and stem:[j \in \{j_0, ..., J-1\}] is the decomposition level.
++
+--
+* All computations are performed with floating point numbers. No complex numbers are used.
+* One forward step is between two consecutive decomposition levels is just **separation** of low and high frequencies.
+* One backward step between two consecutive decomposition levels is just **merging** of low and high frequencies.
+* The complete decomposition of a signal can be done step by step (i.e., recursively) or all at once (i.e., with a matrix).
+* The scaling function acts as a "bottom" to the recursion/sub-banding because we need to stop somewhere.
+** That being said, we also have to stop once we reach the resolution of the original signal.
+* The scaling function also shows "trends" in the signal. Thanks to it, we can be sure that we don't miss any frequencies in the signal. In other words, it fixes the problem which in CWT is addressed by using complex numbers.
+--
++
+**_Forward DWT:_**
++
+[stem]
+++++
+\begin{aligned}
+
+A_{j_0}(k) &= \frac{1}{\sqrt{M}} \sum_{m=0}^{M-1} f(m) \cdot \varphi_{j_0,k}(m) \\
+
+D_j(k) &= \frac{1}{\sqrt{M}} \sum_{m=0}^{M-1} f(m) \cdot \psi_{j,k}(m)
+
+\end{aligned}
+++++
++
+**_Inverse DWT:_**
++
+[stem]
+++++
+\begin{aligned}
+
+f(m) = \frac{1}{\sqrt{M}} \sum_{k=0}^{2^{j_0}-1} A_{j_0}(k) \cdot \phi{j_0, k}(m) + \frac{1}{\sqrt{M}} \sum_{j=j_0}^{J-1} \sum_{k=0}^{2^j-1} D_j(k) \cdot \psi_{j,k}(m)
+
+\end{aligned}
+++++
++
+where
++
+--
+* stem:[\varphi] and stem:[\psi] -- Orthogonal scaling and wavelet functions respectively.
+* stem:[A_{j_0}] -- Scaling coefficients, approximations for low frequencies (low = in the stem:[j_0] sub-band).
+* stem:[D_{j}] -- Wavelet coefficients, details for high frequencies (high = in the stem:[j] sub-band).
+* stem:[k \in \{0, 1, ..., 2^j - 1\}]
+--
++
+image::./img/fa03_dwt_coefficients.png[]
+
+The Haar scaling and wavelet functions in DWT:: 
+We shift and scale the _scaling function stem:[\varphi_{j,k}]_ to cover the whole signal stem:[f] with length stem:[M]:
++
+[stem]
+++++
+\varphi_{j,k}(x) = 2^{j/2} \cdot \varphi(2^j \frac{x}{M} - k)
+++++
++
+where:
++
+--
+* stem:[j] -- Scale (stretch).
+* stem:[k] -- Shift along x-axis.
+--
++
+With growing stem:[j], stem:[\varphi{j,k}] covers a smaller fraction of the original signal range:
++
+image::./img/fa03_dwt_scaling_function.png[]
++
+We shift and scale the _Haar wavelet_ in much the same way:
++
+[stem]
+++++
+\psi_{j,k}(x) = 2^{j/2} \cdot \psi(2^j \frac{x}{M} - k)
+++++
++
+image::./img/fa03_dwt_haar_wavelet.png[]
++
+NOTE: Notice that stem:[\varphi] is a box filter (a low-pass filter), whereas stem:[\psi] is a difference filter (a high-pass filter). Both functions are orthogonal to their integer shifts because their range is stem:[\langle 0, 1 \rangle].
+
+Filterbank::
+An array of bandpass filters that separate the original signal into multiple components, each carrying information about a sub-band.
+
+DWT with the Haar functions::
+* stem:[\varphi_{j,k}] and stem:[\psi_{j,k}] form the basis of the DWT.
+* stem:[j] controls which sub-band is analyzed; it's the _decomposition level_.
+** stem:[0 \leq j < \log_2(M)] covers all frequencies.
+** stem:[0 \ll j_0 < \log_2(M)] focuses on high-frequencies (stem:[j_0] is the lowest decomposition level).
+* stem:[k \in \{0, 1, ..., 2^j-1\}] shifts the focus the the k-th "fraction" of the signal being decomposed.
+* Haar wavelets are given explicitly. The other families are _enumerated_ (given by a table of values).
+
+Fast discrete wavelet transform (FastDWT)::
+Each step corresponds to convolution with a high-pass and low-pass decomposition filter followed by down-sampling.
++
+--
+* It performs sub-band coding.
+* If it has odd length, we pad it from the right.
+* Has complexity stem:[\mathcal{O}(n)] compared to FFT's stem:[\mathcal{O}(n\log n)].
+--
+
+Fast lifting wavelet transform (LiftingWT)::
+An even faster DWT than FastDWT. The idea is the same as in FastDWT except the transition between decomposition levels is computed differently. It gets rid off the convolution and tries to "predict" the data instead. Has three broad phases:
++
+--
+1. **Split** into _odd_ and _even_ samples. (AKA _the lazy wavelet_)
+2. **Predict** the _odd_ samples based on the _even_ samples and store the difference between the actual and predicted values (_error_) instead of the actual odd samples. (AKA _dual lifting_)
+3. **Update** the _even_ samples by adding the _error_. (AKA _primal lifting_)
+4. (**Normalize** the output to avoid boosting the original signal.)
+--
++
+image::./img/fa03_lifting_wt.png[]
++
+Compared to FastDWT, LiftingWT:
++
+--
+* Requires less memory, since it can be computed in-place (overwriting the previous values).
+* Can be computed on integers only, avoiding floating-point arithmetic.
+--
+
+2D DWT::
+We use these functions:
++
+--
+* stem:[\varphi(x, y) = \varphi(x) \cdot \varphi(y)] scaling function at row stem:[y] and column stem:[x].
+* stem:[\psi^H(x, y) = \psi(x) \cdot \varphi(y)] intensity variantions along **columns**.
+* stem:[\psi^V(x, y) = \varphi(x) \cdot \psi(y)] intensity variantions along **rows**.
+* stem:[\psi^D(x, y) = \psi(x) \cdot \psi(y)] intensity variantions along **diagonals**.
+--
++
+image::./img/fa03_2d_dwt.png[]
++
+--
+Used for edge detection, removal of high frequencies, image compression (JPEG 2000), image fusion (merging photos)
+--
 
 == Questions
 
 ====
 
 Explain the relationship between DFT and DCT.::
-TODO
+DCT uses DFT under the hood. It uses some properties of DFT to remove the imaginary part of the result.
 
 Describe the F-DCT algorithm and compute stem:[\text{F-DCT}\lparen\lbrack 1, 6, 6, 1 \rbrack\rparen].::
 TODO
@@ -92,3 +236,4 @@ TODO
 == Sources
 
 * Artem Kirsanov, link:https://www.youtube.com/watch?v=jnxqHcObNK4[Wavelets: a mathematical microscope], 2022
+* PolyValens, link:http://www.polyvalens.com/wavelets/theory[A Really Friendly Guide To Wavelets]
