@@ -9,20 +9,16 @@ Discrete Cosine Transform (DCT)::
 +
 --
 * Uses just stem:[\cos] functions.
-* We modify the input signal to make it an even function so that the stem:[\sin] coefficients turn into zeroes.
 * We don't use complex numbers anymore, but we also lose some of the nice properties of the transform.
-* Good tool for compression, not so much for signal analysis.**
-* Fast DCT (F-DCT) -- uses FFT under the hood.
+* Good tool for compression, not so much for signal analysis.
 * Coefficients are divided into "DC" (zero frequency) and "AC" (other frequencies).
 --
-+
-image::./img/fa03_dct_example.png[]
 +
 **_Forward DCT:_**
 +
 [stem]
 ++++
-C(k) = \alpha(k) \sum_{l=0}^{N-1} \left\lbrack \cos \frac{(2l + 1)\pi k}{2N} \right\rbrack,~k = \{0, 1, ... N-1\} \\
+C(k) = \alpha(k) \sum_{l=0}^{N-1} f(l) \cdot \left\lbrack \cos \frac{(2l + 1)\pi k}{2N} \right\rbrack,~k = \{0, 1, ... N-1\} \\
 
 ~~\text{where}~~ \\
 
@@ -39,16 +35,64 @@ C(k) = \alpha(k) \sum_{l=0}^{N-1} \left\lbrack \cos \frac{(2l + 1)\pi k}{2N} \ri
 +
 [stem]
 ++++
-f(l) = \sum_{k=0}^{N-1} \alpha(k) C(k) \left\lbrack \cos \frac{(2l + 1) \pi k}{2N} \right\rbrack,~l = \{0, 1, ..., N-1\}
+f(l) = \sum_{k=0}^{N-1} \alpha(k) \cdot C(k) \left\lbrack \cos \frac{(2l + 1) \pi k}{2N} \right\rbrack,~l = \{0, 1, ..., N-1\}
 ++++
 
-FastDCT::
+Derivation of DCT::
+1. Let's do the following transformation to the original signal stem:[f] of length stem:[N]:
++
+image::./img/fa03_dct_example.png[]
++
+[NOTE]
+====
+The addition of interleaved zeroes is the same as **stretching** the original signal.
+
+stem:[c] is even (ready for DFT without complex number), has length stem:[4N], and the following is true:
+
+[stem]
+++++
+\begin{aligned}
+
+c(2n) &= 0 ~\text{iff}~ 0 \leq n < N \\
+c(2n + 1) &= f(n) ~\text{iff}~ 0 \leq n < N \\
+c(4N-n) &= c(n) ~\text{iff}~ 0 < n < 2N
+
+\end{aligned}
+++++
+====
+2. Apply DFT to stem:[c]:
++
+[stem]
+++++
+\begin{aligned}
+
+C(k) &= \sum_{j=0}^{4N-1} c(j) \cdot e^{-\frac{2\pi i j k}{4N}} = \text{/symmetry/} \\
+
+&= \sum_{j=0}^{2N-1} c(j) \cdot \left\lbrack e^{\frac{2\pi i j k}{4N}} + e^{-\frac{2\pi i (4N - j) k}{4N}}\right\rbrack = \\
+
+&= \sum_{j=0}^{2N-1} c(j) \cdot \left\lbrack e^{-\frac{2\pi i j k}{4N}} + e^{\frac{2\pi i j k}{4N}} \right\rbrack = \text{/Euler-Moivre eq./} \\
+
+&= \sum_{j=0}^{2N-1} c(j) \cdot \left\lbrack \left( \cos \frac{2\pi j k}{4N} - i \sin \frac{2\pi j k}{4N} \right) + \left( \cos \frac{2\pi j k}{4N} + i \sin \frac{2 \pi j k}{4N} \right) \right\rbrack = \\
+
+&= \sum_{j=0}^{2N-1} c(j) \cdot \left\lbrack 2 \cos \frac{2 \pi j k}{4N} \right\rbrack = \text{/split odd and even positions/}\\
+
+&= \sum_{l=0}^{N-1} 2c(2l) \cdot \left\lbrack \cos{\frac{2\pi 2 l k}{4N}} \right\rbrack + \sum_{l=0}^{N-1} 2c(2l + 1) \cdot \left\lbrack \cos{\frac{2\pi (2l + 1) k}{4N}} \right\rbrack = \text{/c is 0 at even pos./} \\
+
+&= \sum_{l=0}^{N-1} 2f(l) \cdot \left\lbrack \cos \frac{(2l + 1)\pi k}{2N} \right\rbrack ~~\text{(DCT-II)}
+
+
+\end{aligned}
+++++
+
+Fast discrete cosine transform (F-DCT)::
++
+--
 1. Recombine signal stem:[f] of length stem:[N] to get stem:[y]:
 +
 [stem]
 ++++
 y(l) = f(2l) \\
-y(N - 1 - l) = f(2l + 1) ~ (l = 0, 1, ..., \frac{N}{2}-1)
+y(N - 1 - l) = f(2l + 1) ~ (l = 0, 1, ..., N/2-1)
 ++++
 2. Run FFT on stem:[y].
 3. For each stem:[k = 0, 1, ... N-1] do:
@@ -64,6 +108,12 @@ Y'(k) = e^{\frac{\pi i k}{2 N}} \cdot Y(k)
 ++++
 C(k) = \alpha(k) \cdot \text{Real}\lbrack Y'(k) \rbrack \cdot \sqrt{N}
 ++++
+--
++
+[NOTE]
+====
+The recombination step, which created stem:[y], is a clever hack of converting a sequence meant for DCT into something that can be digested by DFT, allowing us to use FFT inside FastDCT.
+====
 
 
 DCT in 2D::
@@ -276,10 +326,10 @@ Used for edge detection, removal of high frequencies, image compression (JPEG 20
 ====
 
 Explain the relationship between DFT and DCT.::
-DCT uses DFT under the hood. It uses some properties of DFT to remove the imaginary part of the result.
+DCT uses DFT under the hood. It uses some properties of DFT to remove the imaginary part of the result. As a result DCT uses some of the nice properties of DFT.
 
 Describe the F-DCT algorithm and compute stem:[\text{F-DCT}\lparen\lbrack 1, 6, 6, 1 \rbrack\rparen].::
-TODO
+See F-DCT above.
 
 
 ====

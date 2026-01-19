@@ -111,11 +111,22 @@ CCITT Group 3::
 * Used for **transmission** fax machines for black-and-white bitmaps.
 * A combination of Huffman and RLE.
 * Also called _Modified Huffman coding_.
-TODO
+* Code words for lengths 1-2560 are stored in well-known table. One table for black pixels, another for white pixels.
+* Run lengths represented by zero or more _make-up_ code words and one _terminating_ code word.
+** 0-63 pixels runs are encoding using just the one terminating code work.
+** Example: 2561 black pixels (= 2560 + 1) -> `0000_0001_1111|010`
+* Each line ends with EOL `0000_0000_0001`.
+
+CCITT Group 3 2D::
+* Images divided into groups of stem:[K] lines each (typically stem:[K] is 2 or 4).
+* First line of each group is encoded by CCITT Group 3.
+* The rest is encoded using a differential scheme with new code words specific for 2D encoding.
 
 CCITT Group 4::
+* Like CCITT Group 3 2D but stem:[K = \infty].
 * Used for **storage** on disk drives.
-TODO
+* No EOL codes.
+* Used in TIFF compression Type 4
 
 Chroma subsampling::
 * Using less bandwidth for chroma than for luma.
@@ -158,9 +169,34 @@ JPEG::
 --
 
 JPEG 2000 (J2K)::
-- Hierarchical
-- Relies on _Discrete Wavelet Transform (DWT)_.
-TODO
++
+--
+* Hierarchical
+* Relies on _Discrete Wavelet Transform (DWT)_.
+* Has a lossy and lossless mode.
+* Image is partitioned into _tiles_ > _precincts_ > _code-blocks_.
+* Eliminites blockiness typicall for JPEG.
+* Simple modification (e.g., rotation or crop) or reading of special _regions of interest_ (ROIs) do not require decompression.
+--
++
+**_Algorithm:_**
++
+--
+1. Cut into tiles of size greater than 128x128 to prevent blocking artifacts but enabling ROI selection.
+2. DC level shift for channel of stem:[s] bit depth so that they are centered around 0.
+** For example, shifts 8-bit images from range [0, 255] to [-128, 127].
+** This makes some of the later calculations easier.
+3. Convert from RGB to YCbCr. Either in a lossy or lossless way.
+4. Apply DWT with lifting to each tile independently.
+** Level of detail of DWT is a compression parameter.
+5. Quantize the DWT coefficients for each subband individually (or leave as is in lossless mode).
+6. Divide each DWRT subband intop rectangular blocks, _precincts_.
+7. Divide each precint into non-overlapping rectangles, _code-blocks_.
+8. Encode each code-block using arithmetic encoding.
+** Coefficients in a code-block are separated into bitplanes and read in order from most-significant bit to least-significant bit
+--
++
+image::./img/fa04_jpeg2000.png[]
 
 
 == Video Compression
@@ -218,15 +254,13 @@ Bad artifacts resulting from encoder and decoder not using the same prediction m
 Wavefront decoding::
 Decoding as many block as parallel, provided block to the top and left have been processed. The effect looks like a diagonal "wave".
 
-MPEG-1, MPEG-2::
+MPEG::
 * _Moving Pictures Experts Group_
-* DCT and predictive coding
-+
-TODO
+* Relies on DCT and predictive coding.
 
 Advanced Video Coding (AVC, h.264, MPEG-4 Part 10)::
 * Published in 2004.
-* DCT
+* Relies on DCT
 * Macroblocks (maximum 16x16)
 * Intra-/independent frames (I-frames)
 ** Relatively few (e.g., 1/30 depending on framerate).
@@ -238,6 +272,12 @@ Advanced Video Coding (AVC, h.264, MPEG-4 Part 10)::
 ** Most common
 ** Difference between the current frame and a prediction of it based on the previous I- or P-frame and the next P-frame.
 * Seemingly can also use DWT for specific purposes, such as encoding of textures and watermarking.
+
+.Chronological order of frames in a video
+image::./img/fa04_chronological_frames.png[]
+
+.Coded order of frames in a video
+image::./img/fa04_coded_frames.png[]
 
 High Efficiency Video Coding (HEVC, h.265, MPEG-H Part 2)::
 * Published in 2013.
@@ -286,6 +326,8 @@ Explain the meaning of predictor and error in lossless predictive coding scheme.
 
 Explain the main idea of employing DCT into a transform coding compression scheme.::
 It allows compression through the removal of psychovisual/psychospatial redundancy. Using DCT we transform the signal into the frequency domain, remove near-imperceivable frequencies, and encode the data using the DCT coefficients (usually further compressed using e.g., arithmetic coding).
+
+TODO: Add missing questions from compression.
 
 Why invent newer and newer image/video compression methods?::
 * Resolution and computation capabilities goe up, but network bandwidth is limiting.
