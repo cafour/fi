@@ -61,7 +61,7 @@
     @include create-admonition(tip);
     @include create-admonition(warning);
 
-    .amonition-title {
+    .admonition-title {
         display: none;
     }
 }

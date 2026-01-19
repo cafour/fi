@@ -19,7 +19,7 @@ $color-admonition-warning: adjust-color($color-mt-red, $lightness: 25%);
         border: 3px solid config.mt-shift($color, -2);
         
         &::before {
-            content: "";
+            content: " ";
             display: block;
             background-image: url('/icons/#{$kind}.png');
         }
@@ -39,7 +39,7 @@ $color-admonition-warning: adjust-color($color-mt-red, $lightness: 25%);
     @include configure-admonition(tip, $color-admonition-tip);
     @include configure-admonition(warning, $color-admonition-warning);
     
-    .amonition-title {
+    .admonition-title {
         display: none;
     }
 }

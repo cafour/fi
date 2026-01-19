@@ -18,6 +18,32 @@ $color-admonition-warning: adjust-color($color-mt-red, $lightness: 25%);
         background-color: $color;
         color: config.mt-shift($color, -4);
         border: 3px solid config.mt-shift($color, -2);
+        
+        .icon {
+            width: 6rem;
+            min-height: 4rem;
+            position: relative;
+            display: block;
+            
+            .title {
+                display: none;
+            }
+            
+            &::before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                font-size: 4rem;
+                width: 4rem;
+                height: 4rem;
+                content: ' ';
+                background-image: url('/icons/#{$kind}.png');
+                background-size: 4rem;
+                background-position: 50% 50%;
+                background-repeat: no-repeat;
+            }
+        }
     }
 }
 
@@ -180,16 +206,6 @@ $color-admonition-warning: adjust-color($color-mt-red, $lightness: 25%);
         @include configure-admonition(note, $color-admonition-note);
         @include configure-admonition(tip, $color-admonition-tip);
         @include configure-admonition(warning, $color-admonition-warning);
-
-        .icon {
-            vertical-align: middle;
-            width: 6rem;
-            padding: 0rem 1rem;
-
-            img {
-                width: 100%;
-            }
-        }
 
         .content {
             vertical-align: top;
