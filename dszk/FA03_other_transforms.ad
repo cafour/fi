@@ -120,8 +120,37 @@ DCT in 2D::
 +
 image::./img/fa03_dct_2d_basis_functions.png[]
 
+== Z-transform
+
 Z-transform::
-TODO
+It's a generalization of the (discrete time) Fourier transform. Wheras DTFT projects stem:[f] on the unit circle in the complex plane, Z-transform uses the whole complex plane. Whereas DTFT can only analyze frequencies that are stable, Z-transform can also handle unstable or exploding signals (e.g., screaching sounds or the whole image turns white or black).
++
+--
+* It's used to check that recursive linear filters don't blow up to "infinite white" or are unstable.
+* In optimizing DWT.
+* Understanding and frequency analysis of linear filters.
+* Forward Z-tranform converts discrete time series into a continuous signal (Z-plane).
+* Forward Z-transform applied to discrete signals or linear filters always creats a polynomial with one variable stem:[z].
+--
++
+**_Bilateral forward Z-transform:_**
++
+[stem]
+++++
+F(z) = \sum_{-\infty}^{\infty} f(n) z^{-n} ~\text{where}~ z \in \Complex
+++++
++
+**_Inverse Z-transform:_**
++
+If stem:[F(z)] is a polynomial, that is stem:[F(z) = \sum_{k=-\infty}^{\infty} c_k z^{-k}], then
++
+[stem]
+++++
+f(n) = \mathcal{Z}^{-1}(F(z)) = \sum_{k=-\infty}^{\infty} c_k \delta(n-k)
+++++
+
+Linear recursive filters::
+The idea is that convolution is computationally expensive (stem:[\mathcal{O}(n^2)]) but if they could be recursive and use already-convolved neighbors as their input, the complexity would be lower (stem:[\mathcal{O}(n\long n)]).
 
 == Wavelet Transform
 
