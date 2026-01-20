@@ -91,7 +91,8 @@ Inner product (in function spaces)::
 ++++
 * Both products perform projection of one function into another.
 * Orthogonal has the same meaning as in vector spaces.
-* for stem:[\cos(x)] and stem:[\sin(x)], we use stem:[a = -\pi] and stem:[b = \pi].
+* For stem:[\cos(x)] and stem:[\sin(x)], we use stem:[a = -\pi] and stem:[b = \pi].
+* stem:[\sin] and stem:[\cos] are orthogonal to one another, but neither is "normalized".
 
 Expansion of discrete functions::
 +
