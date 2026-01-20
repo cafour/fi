@@ -334,22 +334,22 @@ Explain the main idea of employing DCT into a transform coding compression schem
 It allows compression through the removal of psychovisual/psychospatial redundancy. Using DCT we transform the signal into the frequency domain, remove near-imperceivable frequencies, and encode the data using the DCT coefficients (usually further compressed using e.g., arithmetic coding).
 
 Why do we convert RGB into YCrCb in JPEG and JPEG2000 standard?::
-TODO
+Because in YCrCb we can throw away some information about color. This works because human eyes are kinda crap and see color way worse than luminance.
 
 Explain the meaning of luminance/chrominance table.::
-TODO
+An empiracally derived table used for the quantization of the luminance and chrominance channels, the throwing away of information.
 
 Explain the origin of the phenomenon called blocking artifact.::
-TODO
+JPEG divides the original picture into blocks of 8x8 pixels which are then ran through DCT. The higher the compression, the more of an approximation we're looking at, the more pronounced are the edges of these blocks.
 
 How and why do we use predictive coding in JPEG standard?::
 TODO
 
 Describe the frame ordering in MPEG scheme.::
-TODO
+The encoded ordering is different from the chronological ordering, so that bidirectionally predicted frames (B-frames) are stored after the frames they are compared against.
 
 What is a difference between I, P, and B frames?::
-TODO
+I(ndepent) frame have all of the information; P(redicted) frames contain only the difference compared to the previous frames; B(idirectional) frames contains the difference compared to the previous **and the chronologically next** frame.
 
 How do we loose the information when using JPEG/JPEG2000?::
 TODO
