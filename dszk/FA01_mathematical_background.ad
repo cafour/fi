@@ -42,8 +42,8 @@ Also known as the _unit impulse_:
 ++++
 \delta(x) =
 \begin{cases}
-    0, x \neq 0 \\
-    \infty x = 0
+    0,          & x \neq 0 \\
+    \infty,     & x = 0
 \end{cases}
 ++++
 

@@ -330,7 +330,29 @@ Explain the meaning of predictor and error in lossless predictive coding scheme.
 Explain the main idea of employing DCT into a transform coding compression scheme.::
 It allows compression through the removal of psychovisual/psychospatial redundancy. Using DCT we transform the signal into the frequency domain, remove near-imperceivable frequencies, and encode the data using the DCT coefficients (usually further compressed using e.g., arithmetic coding).
 
-TODO: Add missing questions from compression.
+Why do we convert RGB into YCrCb in JPEG and JPEG2000 standard?::
+TODO
+
+Explain the meaning of luminance/chrominance table.::
+TODO
+
+Explain the origin of the phenomenon called blocking artifact.::
+TODO
+
+How and why do we use predictive coding in JPEG standard?::
+TODO
+
+Describe the frame ordering in MPEG scheme.::
+TODO
+
+What is a difference between I, P, and B frames?::
+TODO
+
+How do we loose the information when using JPEG/JPEG2000?::
+TODO
+
+Encode the sequence [101010101010] using CCITT G3 1D scheme.::
+TODO
 
 Why invent newer and newer image/video compression methods?::
 * Resolution and computation capabilities goe up, but network bandwidth is limiting.
