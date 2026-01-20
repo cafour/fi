@@ -3,26 +3,123 @@
 :page-group: fa
 :page-order: FA01
 
-// TODO: Vector spaces intro
+Vector space::
+A vector space stem:[V] over a field stem:[\mathbb{K}] is a set with operations stem:[+] and stem:[\cdot], where stem:[(\forall a, b, c \in V)(\forall x, y \in \mathbb{K})]:
++
+[%header,cols=2*]
+|===
+| Axiom | Formula
+| Associativity of addition | stem:[(a + b) + c = a + (b + c)]
+| Commutativity | stem:[a + b = b + a]
+| Neutral element wrt. addition | stem:[(\exists 0 \in V)(a + 0 = a)]
+| Inverse element wrt. addition | stem:[(\exists d \in V)(a + d = 0)]
+| -- | --
+| Distributivity of multiplying a vector by a scalar wrt. to **vector** addition | stem:[x \cdot (a + b) = x \cdot a + x \cdot b]
+| Distributivity of multiplying a vector by a scalar wrt. to **scalar** addition | stem:[(x + y) \cdot a = x \cdot a + y \cdot a]
+| Associativity of multiplication | stem:[(a \cdot b) \cdot c = a \cdot (b \cdot c)]
+| Neutral element wrt. multiplication | stem:[(\exists 1 \in \mathbb{K})(1 \cdot a = a)]
+|===
 
-Dot product::
-- v komplexních číslech, se druhá složka konjuguje -> Proč?
-- míra projekce jednoho vektoru do druhého
+Vector::
+Vectors are elements of a vector space stem:[V].
 
-Vektorové prostory::
-- ortonormální báze lze vyjádřit maticí
-- unitární matice - z ortonormální báze
-- inverzní -> transponovaná a komplexně konjugovaná
-- vektor projektujeme do báze === vector rozkládáme lineární kombinací bázových vektorů
-- N-složkový vektor lze vyjádřit diskrétní funkcí o mohutnosti N
+Dot product (inner product)::
+Geometrically, it's a projection of stem:[u] into stem:[v]. A number that describes the similarity of stem:[u] and stem:[v].
++
+[stem]
+++++
+\langle u, v \rangle = \sum_{i=1}^n u_i \cdot \overline{v_i} \in \mathbb{K}
+++++
++
+--
+* Two vectors are _orthogonal_ iff stem:[\langle u, v \rangle = 0].
+* With complex numbers, we have to conjugate stem:[v] (hence the overline).
+* stem:[\langle v, v \rangle = |v|] (length of vector stem:[v]).
+* A vector stem:[v] is normalized (or unit) if stem:[|v| = 1].
+--
 
-Funkční prostory::
-- dekompozice (1d diskrétní) funkce (s N vzorky => N-dimenzionální prostor) pomocí předem zadefinované množiny funkcí
-- chceme jednoznačný, rychlý a numericky stabilní dekompozici funkce
-- dekomponují se úplně stejně jako vektory: do n-dimenzionální, ortogonální báze (je potřeba normovat, pokud není ortonormální)
-- projekce funkcí (inner product) je stejná jako dot produkt u vektorů -> součin po složkách + součet
-- sin a cos jsou vůči sobě ortogonální
-- snahou je získat dokonalý rozklad na bázové funkce (abychom se mohli vrátit), ale občas se musíme smířit s aproximací
+Basis::
+A Euclidian vector space stem:[V] can be generated using a finite set of vectors that form the _basis_ stem:[\{u_1, u_2, ..., u_n\}]. For every stem:[v \in V], stem:[v = a_1 u_1 + a_2 u_2 + ... + a_n u_n], where stem:[a_i \in \mathbb{K}].
++
+--
+* A basis is _orthonormal_ if all of its vectors are both normalized and orthogonal to each other.
+* Each orthonormal basis can be expressed as a _square matrix_.
+* Cartesian coordinate system (standard basis) is, for example in 3D, stem:[\{e_1, e_2, e_3\}] where:
++
+[stem]
+++++
+e_1 = (1, 0, 0)\\
+e_2 = (0, 1, 0)\\
+e_3 = (0, 0, 1)\\
+++++
+--
+
+Projecting vectors to a different basis::
+Projection is a change of coordinate system. A vector stem:[v \in V] can be projected into basis stem:[\{u_1, u_2, ..., u_n\}]:
++
+[stem]
+++++
+v = a_1 u_1 + a_2 u_2 + ... + a_n u_n \\
+
+(\forall i = \{1, ..., n\}: a_i = \frac{\langle v, u_i \rangle}{\langle u_i, u_i \rangle})
+++++
++
+--
+* Projection can be realized using matrix multiplication stem:[v_{\{u_1, u_2\}} = A v_{\{e_1, e_2\}}].
+* Transform from one basis to another is a linear mapping.
+* An orthonormal transform matrix is _unitary_: stem:[A^{-1} = \overline{A}^{T}] (conjugate transpose).
+** If stem:[y = Ax] is _forward transform_, then stem:[x = A^{-1}y = \overline{A}^T y] is _inverse transform_.
+* "A vector is projected into basis" = "A vector is expanded into linear combination of basis vectors".
+* An stem:[N]-dimensional vector is the same as a discrete function with length stem:[N].
+--
+
+Function space::
+A set of functions between two sets.
+
+Inner product (in function spaces)::
+* Discerete:
++
+[stem]
+++++
+\langle f, g \rangle = \sum_{n=0}^{\infty} f(n) \overline{g(n)}
+++++
+* Continuous:
++
+[stem]
+++++
+\langle f, g \rangle = \int_a^b f(x) \overline{g(x)} dx
+++++
+* Both products perform projection of one function into another.
+* Orthogonal has the same meaning as in vector spaces.
+* for stem:[\cos(x)] and stem:[\sin(x)], we use stem:[a = -\pi] and stem:[b = \pi].
+
+Expansion of discrete functions::
++
+--
+* Each discrete function can be _decomposed_ into a linear combination of some simpler, well-known functions.
+* Any discrete 1D function stem:[f] of stem:[N] samples can be uniquely expressed as a linear combination of mutually orthogonal functions stem:[\varphi_1, \varphi_2, ..., \varphi_N]:
++
+[stem]
+++++
+f(m) = \sum_{k=1}^{N} a_k \varphi_k(m)
+++++
++
+** Where stem:[a_k] is a scalar and is found using inner product stem:[a_k = \frac{\langle f, \varphi_k \rangle}{\langle \varphi_k, \varphi_k \rangle}].
+* The set of functions stem:[\varphi_k] is predefined.
+* We want the decomposition to be unique, fast, and numerically stable.
+* It's very similar to decomposition of vectors, except we have an orthonormal basis of functions instead of vectors.
+* Ideally we want a perfect decomposition, so that we can go back, but sometimes approximation is enough (e.g., compression).
+--
+
+Expansion of continuous functions::
+Any continous function stem:[f] can be uniquely expanded into mutually orthogonal functions stem:[\varphi_k, k \in \N]:
++
+[stem]
+++++
+f(x) = \sum_{k=0}^{\infty} a_k \varphi_k(x)
+++++
++
+where scalar coefficients stem:[a_k = \frac{\langle f, \varphi_k \rangle}{\langle \varphi_k, \varphi_k \rangle}].
 
 Even and odd functions::
 * For even functions stem:[f(-x) = f(x)] (e.g., stem:[\cos]).
@@ -33,6 +130,18 @@ Sinc::
 [stem]
 ++++
 \text{sinc}(x) = \frac{\sin x}{x}
+++++
+
+Kronecker delta::
++
+[stem]
+++++
+\delta_{i,j} = \begin{cases}
+
+0, & i \ne j \\
+1, & i = j \\
+
+\end{cases}
 ++++
 
 Dirac delta::
@@ -52,25 +161,24 @@ Also known as the _unit impulse_:
 ====
 
 What is a vector space generated by the given basis?::
-TODO
+A set of all linear combinations of the basis vectors.
 
-What are the orthogonal vectors?::
-TODO
+What are orthogonal vectors?::
+Geometrically, vectors that are perpendicular. Mathematically, those whose inner product is zero.
 
 What is the orthonormal basis?::
-TODO
+Basis formed of unit vectors that are orthogonal to one another.
 
 How can we simply convert a vector from one basis to another basis?::
-TODO
+Simply by multiplying it with a transform matrix (possibly going through the standard basis in the middle).
 
 What is the unitary/orthogonal matrix?::
-TODO
+A matrix whose inversion is the same as its conjugate transpose.
 
 What is the difference between basis vector and basis function?::
-TODO
+A discrete function is a N-dimensional vector. A continous function is a (possibly) (uncountably) infinite vector.
 
 Explain the meaning of expansion coefficients.::
-TODO
-
+They measure the "significance" of the respective basis function used in the expansion.
 
 ====
