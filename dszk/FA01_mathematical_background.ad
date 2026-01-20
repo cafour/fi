@@ -155,6 +155,8 @@ Also known as the _unit impulse_:
     0,          & x \neq 0 \\
     \infty,     & x = 0
 \end{cases}
+
+\int_{\infty}^{\infty} \delta(x) dx = 1
 ++++
 
 Euler's formula (Euler-Moivre equation)::

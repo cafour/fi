@@ -198,6 +198,9 @@ JPEG 2000 (J2K)::
 +
 image::./img/fa04_jpeg2000.png[]
 
+PNG::
+Uses DEFLATE, a combination of LZ (Lempel-Ziv) and Huffman coding.
+
 
 == Video Compression
 

@@ -86,7 +86,7 @@ F(x) &= \frac{\langle f(x), e^{ikx} \rangle}{\langle e^{ikx}, e^{ikx} \rangle}
 \end{aligned}
 ++++
 +
-When we express stem:[F(k)] out of the above formula, it converts time into frequency:
+After expanding the inner product in the above formula for stem:[F(k)], we get a conversion from time to frequency:
 +
 [stem]
 ++++
@@ -171,13 +171,14 @@ image::./img/fa02_gibbs.png[]
 == Fourier transform
 
 Fourier transform (FT)::
+A tool for frequency analysis. It decomposes a signal into a sum of sine and cosine waves of varying frequencies (and phases).
++
 Fourier transform stem:[\cal F] is a function taking a signal (a function stem:[f] of time) and converting it to the _frequency domain_ (function stem:[F] of frequencies).
 +
 --
 * FT is a generalization of FS. It's derived from L-periodic complex FS with stem:[L \to \infty].
 * FS handles only periodic signal. FT handles aperiodic signal.
 * It's total. Lossless. Doesn't throw away any information. It's invertible. A bijection. A linear mapping.
-* It a tool for frequency analysis.
 --
 +
 _Inverse_ transform (frequency -> time):
@@ -251,7 +252,7 @@ Properties of the Fourier transform::
 \mathcal{F}\lbrack f(x-\textcolor{red}{a}) \rbrack (\omega) = \textcolor{red}{e^{-2 \pi \cdot i \cdot a \omega}} F(\omega)
 ++++
 +
-* **Scaling** -- Narrowing in the time domain causes widening in the frequency domain, and vice versa:\
+* **Scaling** -- Narrowing in the time domain causes widening in the frequency domain, and vice versa:
 +
 [stem]
 ++++
@@ -272,6 +273,19 @@ Properties of the Fourier transform::
 
 \end{aligned}
 ++++
+
+Proof of scaling of FT::
+**_We want to show:_**
++
+[stem]
+++++
+\mathcal{F}\lbrack f(\textcolor{red}{a}x) \rbrack (\omega) = \textcolor{red}{\frac{1}{|a|}} F\left( \frac{\omega}{\textcolor{red}{a}} \right)
+++++
++
+**_Proof:_**
++
+image::./img/fa02_proof_cft_scaling.png[]
+
 
 Convolution theorem (CZ: věta o konvoluci)::
 Given two signals stem:[f] and stem:[g] and their Fourier transforms stem:[F] and stem:[G], respectively, the following holds:
@@ -309,7 +323,6 @@ f(k) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) \cdot e^{i \omega k} d\o
 k = -\infty, ..., \infty
 ++++
 
-
 Discrete Fourier transform (DFT)::
 +
 --
@@ -345,7 +358,7 @@ When the constant is extracted, we obtain the _forward 1D DFT_:
 F(k) = \langle f, \varphi_k \rangle = \frac{1}{\sqrt{N}} \sum_{n=0}^{N-1} f(n) \cdot e^{-\frac{2\pi}{N} k n}
 ++++
 +
-By expressing stem:[f(k)] out of the above formula, we perform _inverse 1D DFT_ (expansion):
+_Inverse 1D DFT_ (expansion):
 +
 [stem]
 ++++
@@ -397,7 +410,7 @@ F(0) \equiv \frac{1}{\sqrt{N}} \sum_{n=0}^{N-1} f(n) \cdot e^{-\frac{2\pi}{N} i 
 * stem:[F(\frac{N-1}{2})] corresponds to the highest frequency in stem:[f] (because of aliasing)
 
 Properties of DFT::
-* **Periodicity**
+* **_Periodicity_**
 ** We can index outside of the stem:[N] range and a value will be there.
 ** However, the input signal also seems periodic although it's not, resulting in a "false edge".
 +
@@ -406,43 +419,43 @@ Properties of DFT::
 F(k \textcolor{red}{+ N}) = F(k)
 ++++
 +
-* **Oddness and evenness**
+* **_Oddness and evenness_**
 ** DFT of an even function missed the imaginary part (stem:[\sin] waves)
 ** DFT of an odd function missed the real part (stem:[\cos] waves)
-* **Shift**
+* **_Shift_**
 +
 [stem]
 ++++
 \mathcal{F}\lbrack f(n - \textcolor{red}{a}) \rbrack (k) = \textcolor{red}{e^{-\frac{2\pi}{N} i a k}} F(k)
 ++++
 +
-* **Reciprocity** -- a **narrow** signal results in a **wide** frequency domain and a **wide** signal results in a **narrow** frequency domain
-* **Hermitian symmetry**
+* **_Reciprocity_** -- a **narrow** signal results in a **wide** frequency domain and a **wide** signal results in a **narrow** frequency domain
+* **_Hermitian symmetry_**
 +
 [stem]
 ++++
 F(-k) = \overline{F(k)}
 ++++
 +
-* **Linearity**
+* **_Linearity_**
 +
 [stem]
 ++++
 \mathcal{F}\lbrack \alpha f(n) + \beta g(n) \rbrack = \alpha \mathcal{F} \lbrack F(n) \rbrack + \beta \mathcal{F} \lbrack g(n) \rbrack
 ++++
 +
-* **Convolution theorem**
+* **_Convolution theorem_**
 ** It's more effective to to a DFT followed by an IDFT than to do a convolution, but we need a long enough signal!
 +
 [stem]
 ++++
 f * g = \text{IDFT}\lbrack \text{DFT}(f) \cdot \text{DFT}(g) \rbrack \sqrt{N}
 ++++
-* **Stretch** by a factor stem:[p] in the time domain results in stem:[p]-fold repetition of stem:[F(k)] in the frequency domain.
+* **_Stretch_** by a factor stem:[p] in the time domain results in stem:[p]-fold repetition of stem:[F(k)] in the frequency domain. These repetitions are dampened by stem:[\sqrt{p}].
 +
 image::./img/fa02_stretch.png[]
 +
-* **Rayleigh theorem**
+* **_Rayleigh theorem_** -- Conservation of "energy".
 +
 [stem]
 ++++
@@ -450,6 +463,43 @@ image::./img/fa02_stretch.png[]
 ++++
 +
 WARNING: Scaling doesn't work in the discrete world. Instead, we undersample or oversample, which may result in loss of information.
+
+Proof of periodicity of DFT::
+**_We want to show:_**
++
+[stem]
+++++
+F(k + N) = f(k)
+++++
++
+**_Proof:_**
++
+image::./img/fa02_proof_dft_periodicity.png[]
+
+Proof of shift of DFT::
+**_We want to show:_**
++
+[stem]
+++++
+\mathcal{F}\lbrack f(m-a) \rbrack (k) = e^{-\frac{2\pi i a k}{N}} F(k)
+++++
++
+**_Proof:_**
++
+image::./img/fa02_proof_dft_shift.png[]
+
+
+Proof of Hermitian symmetry of real signal in DFT::
+**_We want to show:_**
++
+[stem]
+++++
+F(-k) = \overline{F(k)}
+++++
++
+**_Proof:_**
++
+image::./img/fa02_proof_dft_hermitian_symmetry.png[]
 
 Proof of linearity of DFT::
 **_We want to show:_**
@@ -475,6 +525,20 @@ Proof of linearity of DFT::
 
 \end{aligned}
 ++++
+
+Proof of the convolution theorem for DFT::
+**_We want to show:_**
++
+[stem]
+++++
+f * g = \text{IDFT}\lbrack \text{DFT}(f) \cdot \text{DFT}(g) \rbrack \sqrt{N}
+++++
++
+**_Proof:_**
++
+image::./img/fa02_proof_dft_convolution_theorem.png[]
++
+where stem:[\delta] is Kronecker delta (not Dirac delta).
 
 Hamming window::
 * A solution to the "false edge" problem of DFT periodicity.
