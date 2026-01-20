@@ -132,8 +132,36 @@ Why use complex numbers in the Fourier series and Fourier transform?::
 3. Complex numbers also symbolize rotation, which makes for a nice intuitive explanation (see below).
 --
 
-Proof of orthogonality of the Fourier series::
-TODO
+Proof of orthogonality for the Fourier series::
+**_We want to show that:_**:
++
+[stem]
+++++
+\forall j, k \in \N :~ \langle e^{ixk}, e^{ixj} \rangle = 0 ~\text{if}~ j \ne k
+++++
++
+**_Proof:_**
++
+[stem]
+++++
+\begin{aligned}
+
+\langle e^{ixk}, e^{ixj} \rangle &= \int_{-\pi}^{\pi} e^{ixk} \cdot \overline{e^{ixj}} dx = \\
+
+&= \int_{-\pi}^{\pi} e^{ix (k-j)} dx = ~\text{/substitute } u = ix(k-j) \text{ /} \\
+
+&= \frac{1}{i(k-j)} \left\lbrack e^{i(k-j)x} \right\rbrack_{-\pi}^\pi \\
+
+&= \begin{cases}
+  
+  2\pi  & j = k \\
+  0     & j \ne k
+
+  \end{cases}
+
+\end{aligned}
+++++
+
 
 Gibbs phenomenon::
 Functions with discontinuities are hard to be approximated with Fourier series as stem:[\sin] and stem:[\cos] are both smooth.
@@ -423,6 +451,31 @@ image::./img/fa02_stretch.png[]
 +
 WARNING: Scaling doesn't work in the discrete world. Instead, we undersample or oversample, which may result in loss of information.
 
+Proof of linearity of DFT::
+**_We want to show:_**
++
+[stem]
+++++
+\mathcal{F}\lbrack \alpha f(m) + \beta g(m) \rbrack = \alpha \mathcal{F} \lbrack f(m) \rbrack + \beta \mathcal{F} \lbrack g(m) \rbrack
+++++
++
+**_Proof:_**
++
+[stem]
+++++
+\begin{aligned}
+
+\mathcal{F} \lbrack \alpha f(m) + \beta g(m) \rbrack (k) 
+
+&= \frac{1}{\sqrt{N}} \sum_{m=0}^{N-1} \lbrack \alpha f(m) + \beta g(m) \rbrack e^{-\frac{2\pi i m k}{N}} \\
+
+&= \alpha \frac{1}{\sqrt{N}} \sum_{m=0}^{N-1} f(m) e^{\frac{2\pi i m k}{N}} + \beta \frac{1}{\sqrt{N}} \sum_{m=0}^{N-1} g(m) e^{\frac{2\pi i m k}{N}} \\
+
+&= \alpha \mathcal{F} \lbrack f(m) \rbrack (k) + \beta \mathcal{F}\lbrack g(m) \rbrack (k)
+
+\end{aligned}
+++++
+
 Hamming window::
 * A solution to the "false edge" problem of DFT periodicity.
 * We blur the edges of the frequency domain (using a convolution).
@@ -642,7 +695,7 @@ Explain the meaning of Fourier coefficients.::
 They measure the amount of correlation of a particular basis function with the expanded function.
 
 Prove that Fourier transform is a linear mapping.::
-TODO
+See proof of linearity for DFT above. It's the same except there are integrals instead of sums.
 
 Describe the spectral density plot.::
 A chart with two axes: x = intensity, y = frequency. Similar to a histogram.
@@ -654,7 +707,7 @@ Which operation in frequency domain corresponds to convolution in time domain?::
 Point-wise multiplication.
 
 Is there ever any reason to do a convolution in the frequency domain?::
-TODO
+Yes. If we do a convolution in the frequency domain, we duplicate the signal many times. We can use this to check if the sampling frequency is selected properly (not too low, not too high). See _Sampling_ above.
 
 Which frequencies are enhanced if we apply a derivative to an input signal?::
 High frequencies. Higher with every derivation.
@@ -711,7 +764,7 @@ What happens in Fourier domain if the signal samples are interleaved with zeros?
 The values repeat because it's periodic.
 
 Prove that DFT is a linear mapping.::
-TODO
+See _Proof of linarity of DFT_ above.
 
 Why does scaling not work in the case of DFT?::
 Because the discrete world is not infinitely scalable like real numbers are.

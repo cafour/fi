@@ -157,6 +157,13 @@ Also known as the _unit impulse_:
 \end{cases}
 ++++
 
+Euler's formula (Euler-Moivre equation)::
++
+[stem]
+++++
+e^{ix} = \cos x + i \cdot \sin x
+++++
+
 == Questions
 
 ====
