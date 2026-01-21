@@ -18,7 +18,7 @@ When the illusion of being in virtual world is broken and the user realizes they
 Proprioception::
 Sensation of limb and body pose and motion. Derived from nerves in muscles, tendons, joints, etc. It's what allows us to touch our nose even with eyes closed. Can be leveraged in VR as, for example, users don't need to see the tools in their hands to use them.
 +
-Interactions done relative to the body's frame of references are _egocentric_; the users's body is in the world. The opposite, where the user manipulates the world outside of it, are _exocentric_ interactions.
+Interactions done relative to the body's frame of references are _egocentric_; the user's body is in the world. The opposite, where the user manipulates the world outside of it, are _exocentric_ interactions.
 
 Gorilla arm::
 Arm fatigue caused by extended usage of gesture-based interfaces. Typically happens when the user must hold hands above waist for more than 10 seconds.
@@ -32,7 +32,7 @@ Generalized high-level interaction concept. Describes a common approach usable a
 --
 * Described from the user's point of view.
 * Largely implementation dependent.
-* Thinking about high-level concepts allows us to consider more design possibilities than if we locked ourselves down a technology-dependent technique.
+* Thinking about high-level concepts allows us to consider more design possibilities than if we locked ourselves down with a technology-dependent technique.
 * Not to be confused with software architecture patterns!
 --
 
@@ -110,7 +110,7 @@ Gulf of evaluation::
 When we don't understand the results of an action.
 
 Goal-driven behavior::
-The user themselves have initiated the interaction cycle by setting a goal for themselves.
+The user themself has initiated the interaction cycle by setting a goal for themselves.
 
 Data-driven / event-driven behavior::
 Something happened in the world. The goal is _opportunistic_. It's less precise, less certain, but also requires less mental effort.
@@ -225,7 +225,7 @@ Seamless integration of various tasks and techniques provided by the application
 --
 
 Object-action vs action-object::
-People prefer to first think about an object and then an action done upon/with the object.
+People prefer to first think about an object and then about the action done on/with the object.
 +
 --
 * In natural language, action-object is more common (e.g., "Pick up the book.")
@@ -356,7 +356,7 @@ Physical or virtual object that represents and maps directly to a remote object.
 --
 * Useful for remote manipulation or when the object or the user themself is scaled.
 * Can be difficult if there is no directional compliance (e.g., when there is a rotational offset between the proxy and the remote object).
-* Use tracked physical props for 
+* Use tracked physical props for tactile feedback and realism.
 --
 +
 **_Techniques:_**
@@ -429,7 +429,7 @@ For example, let's say Ritgard was in VR. What would it be like?::
 * A floating/hand-held panel showing the actual conversation on GitHub.
 * Maybe some object-attached tools for changing properties of the conversion: status, assignees, labels.
 ** "Tree shaking" for closing would be fun. Or maybe setting them on fire.
-* It could be intersting to play with a first-person view with a WIM vs a purely exocentric visualization.
+* It could be interesting to play with a first-person view with a WIM vs a purely exocentric visualization.
 * If the islands represented labels instead of ML-derived topics, the user could "replant" the trees to give them different labels.
 
 ====
