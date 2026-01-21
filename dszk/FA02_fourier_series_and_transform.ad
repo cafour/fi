@@ -297,6 +297,18 @@ Given two signals stem:[f] and stem:[g] and their Fourier transforms stem:[F] an
 +
 where 'stem:[*]' stands for a _convolution_ and 'stem:[\cdot]' for point-wise multiplication.
 
+Proof of convolution theorem for CFT::
+**_We want to show:_**
++
+[stem]
+++++
+\mathcal{F}(f * g) = F \cdot G
+++++
++
+**_Proof:_**
++
+image::./img/fa02_proof_cft_convolution_theorem.png[]
+
 Discrete time Fourier Transform (DTFT)::
 +
 --
