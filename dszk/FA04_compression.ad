@@ -42,7 +42,7 @@ LZW coding (Lempel-Ziv-Welch)::
 
 Entropy coding::
 * Lossless compression method that remaps elements of data based on their statistical properties.
-* Assigns shorter codes to frequently encoutered data.
+* Assigns shorter codes to frequently encountered data.
 
 Arithmetic coding::
 * Form of entropy coding. Maps the entire message onto a single arbitrary-precision fractional number in range 0 to 1 (i.e., _arithmetic code word_).
@@ -51,6 +51,17 @@ Arithmetic coding::
 
 Huffman coding::
 Form of entropy coding. A prefix code assigning shorter codes to frequent values.
++
+**_Algorithm:_**
++
+--
+1. Order the source symbols based on their probability of appearance.
+2. Reduce/merge the two lowest probable symbols into a new single symbol.
+3. Repeat tyhe reductions until it is no longer possible.
+4. Get the coding tree.
+5. Mark the tree nodes with binary code (left -> 0, right -> 1).
+6. Use the path to each source symbol (leaves) to encode their new code.
+--
 
 Context-Adaptive Binary Arithmetic Coding (CABAC)::
 * Form of entopy coding used in AVC and HEVC.
@@ -154,9 +165,11 @@ JPEG::
 - Relies on _Discrete Cosine Transform (DCT)_.
 --
 +
+**_Algorithm:_**
++
 --
-1. Convert RGB to YCbCr
-2. Reduce resolution of Cb and Cr by 2 (i.e., subsampling scheme 4:2:0)
+1. Convert RGB to YCbCr.
+2. Reduce resolution of Cb and Cr by 2 (i.e., subsampling scheme 4:2:0).
 3. Process each of Y, Cb, Cr independently.
 4. Split into 8x8 _blocks_.
 5. Apply 8x8 forward DCT on each block.
@@ -164,8 +177,10 @@ JPEG::
 ** One matrix for Y, different for Cb and Cr. Both empirically derived and emphasizing lower frequencies, resulting in many zeroes in lower right corner.
 ** The quantization matrix is multiplied by the stem:[Q]-scale (1-100 %) quality factor.
 7. Use lossless predictive coding on the quantized DC coefficient of each block.
+** Effectivelly store the average color of each block.
 8. Store quantized AC coefficients in a zigzag pattern and use RLE.
-9. Use Huffman/arithmetic codingon zero run-lengths and magnitude of AC values.
+** Since most of the zeroes are in the lower right corner, the zigzag patterns creates long runs of zeroes.
+9. Use Huffman/arithmetic coding on zero run-lengths and magnitude of AC values.
 --
 
 JPEG 2000 (J2K)::
@@ -175,7 +190,7 @@ JPEG 2000 (J2K)::
 * Relies on _Discrete Wavelet Transform (DWT)_.
 * Has a lossy and lossless mode.
 * Image is partitioned into _tiles_ > _precincts_ > _code-blocks_.
-* Eliminites blockiness typicall for JPEG.
+* Eliminates blockiness typical for JPEG (because it uses DWT and processes the image as a whole or in very large blocks).
 * Simple modification (e.g., rotation or crop) or reading of special _regions of interest_ (ROIs) do not require decompression.
 --
 +
@@ -316,9 +331,6 @@ Explain the difference among coding redundancy, spatial/temporal redundancy, and
 What does quantizer do?::
 Maps values from a large set onto values from a smaller set, while preserving the most important information (e.g., visible/audible by humans) <<quantization>>.
 
-Show the construction of Huffman coding tree.::
-TODO
-
 How does the arithmetic decoder know when it should stop decoding one codeword?::
 1. The input sequences have a fixed length.
 2. There is an End of Message symbol.
@@ -343,7 +355,7 @@ Explain the origin of the phenomenon called blocking artifact.::
 JPEG divides the original picture into blocks of 8x8 pixels which are then ran through DCT. The higher the compression, the more of an approximation we're looking at, the more pronounced are the edges of these blocks.
 
 How and why do we use predictive coding in JPEG standard?::
-TODO
+Lossless predictive coding is in JPEG used on the DC value of each block.
 
 Describe the frame ordering in MPEG scheme.::
 The encoded ordering is different from the chronological ordering, so that bidirectionally predicted frames (B-frames) are stored after the frames they are compared against.
@@ -352,10 +364,8 @@ What is a difference between I, P, and B frames?::
 I(ndepent) frame have all of the information; P(redicted) frames contain only the difference compared to the previous frames; B(idirectional) frames contains the difference compared to the previous **and the chronologically next** frame.
 
 How do we loose the information when using JPEG/JPEG2000?::
-TODO
-
-Encode the sequence [101010101010] using CCITT G3 1D scheme.::
-TODO
+* By reducing the bandwidth of the Cb and Cr channels.
+* By using DCT/DWT and quantizing the coefficients.
 
 Why invent newer and newer image/video compression methods?::
 * Resolution and computation capabilities goe up, but network bandwidth is limiting.
