@@ -9,9 +9,9 @@ Discrete Cosine Transform (DCT)::
 +
 --
 * Uses just stem:[\cos] functions.
-* We don't use complex numbers anymore, but we also lose some of the nice properties of the transform.
+* We don't use complex numbers anymore, but we also lose some of the nice properties of the transform (e.g., shift and convolution theorem).
 * Good tool for compression, not so much for signal analysis.
-* Coefficients are divided into "DC" (zero frequency) and "AC" (other frequencies).
+* Coefficients are divided into "DC" (zero frequency) and "AC" (other frequencies) just like with DFT.
 --
 +
 **_Forward DCT:_**
@@ -100,7 +100,7 @@ y(N - 1 - l) = f(2l + 1) ~ (l = 0, 1, ..., N/2-1)
 +
 [stem]
 ++++
-Y'(k) = e^{\frac{\pi i k}{2 N}} \cdot Y(k)
+Y'(k) = e^{-\frac{\pi i k}{2 N}} \cdot Y(k)
 ++++
 .. Get only the real part of each Fourier coefficient and normalize the results:
 +
@@ -150,7 +150,7 @@ f(n) = \mathcal{Z}^{-1}(F(z)) = \sum_{k=-\infty}^{\infty} c_k \delta(n-k)
 ++++
 
 Linear recursive filters::
-The idea is that convolution is computationally expensive (stem:[\mathcal{O}(n^2)]) but if they could be recursive and use already-convolved neighbors as their input, the complexity would be lower (stem:[\mathcal{O}(n\log n)]).
+The idea is that convolution is computationally expensive (stem:[\mathcal{O}(n^2)]) but if it could be recursive and use already-convolved neighbors as their input, the complexity would be lower (stem:[\mathcal{O}(n\log n)]).
 
 == Wavelet Transform
 
@@ -224,7 +224,7 @@ Any WT where the wavelets are discretely sampled. In the following general defin
 * All computations are performed with floating point numbers. No complex numbers are used.
 * One forward step is between two consecutive decomposition levels is just **separation** of low and high frequencies.
 * One backward step between two consecutive decomposition levels is just **merging** of low and high frequencies.
-* The complete decomposition of a signal can be done step by step (i.e., recursively) or all at once (i.e., with a matrix).
+* The complete decomposition of a signal can be done step-by-step (i.e., recursively) or all at once (i.e., with a matrix).
 * The scaling function acts as a "bottom" to the recursion/sub-banding because we need to stop somewhere.
 ** That being said, we also have to stop once we reach the resolution of the original signal.
 * The scaling function also shows "trends" in the signal. Thanks to it, we can be sure that we don't miss any frequencies in the signal. In other words, it fixes the problem which in CWT is addressed by using complex numbers.
@@ -249,7 +249,7 @@ D_j(k) &= \frac{1}{\sqrt{M}} \sum_{m=0}^{M-1} f(m) \cdot \psi_{j,k}(m)
 ++++
 \begin{aligned}
 
-f(m) = \frac{1}{\sqrt{M}} \sum_{k=0}^{2^{j_0}-1} A_{j_0}(k) \cdot \phi{j_0, k}(m) + \frac{1}{\sqrt{M}} \sum_{j=j_0}^{J-1} \sum_{k=0}^{2^j-1} D_j(k) \cdot \psi_{j,k}(m)
+f(m) = \frac{1}{\sqrt{M}} \sum_{k=0}^{2^{j_0}-1} A_{j_0}(k) \cdot \varphi{j_0, k}(m) + \frac{1}{\sqrt{M}} \sum_{j=j_0}^{J-1} \sum_{k=0}^{2^j-1} D_j(k) \cdot \psi_{j,k}(m)
 
 \end{aligned}
 ++++
@@ -280,7 +280,7 @@ where:
 * stem:[k] -- Shift along x-axis.
 --
 +
-With growing stem:[j], stem:[\varphi{j,k}] covers a smaller fraction of the original signal range:
+With growing stem:[j], stem:[\varphi_{j,k}] covers a smaller fraction of the original signal range:
 +
 image::./img/fa03_dwt_scaling_function.png[]
 +
@@ -303,7 +303,7 @@ DWT with the Haar functions::
 * stem:[j] controls which sub-band is analyzed; it's the _decomposition level_.
 ** stem:[0 \leq j < \log_2(M)] covers all frequencies.
 ** stem:[0 \ll j_0 < \log_2(M)] focuses on high-frequencies (stem:[j_0] is the lowest decomposition level).
-* stem:[k \in \{0, 1, ..., 2^j-1\}] shifts the focus the the k-th "fraction" of the signal being decomposed.
+* stem:[k \in \{0, 1, ..., 2^j-1\}] shifts the focus the k-th "fraction" of the signal being decomposed.
 * Haar wavelets are given explicitly. The other families are _enumerated_ (given by a table of values).
 
 Fast discrete wavelet transform (FastDWT)::
