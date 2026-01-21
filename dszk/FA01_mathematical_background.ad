@@ -61,7 +61,7 @@ Projection is a change of coordinate system. A vector stem:[v \in V] can be proj
 ++++
 v = a_1 u_1 + a_2 u_2 + ... + a_n u_n \\
 
-(\forall i = \{1, ..., n\}: a_i = \frac{\langle v, u_i \rangle}{\langle u_i, u_i \rangle})
+\left( \forall i = \{1, ..., n\}: a_i = \frac{\langle v, u_i \rangle}{\langle u_i, u_i \rangle} \right)
 ++++
 +
 --
@@ -69,7 +69,7 @@ v = a_1 u_1 + a_2 u_2 + ... + a_n u_n \\
 * Transform from one basis to another is a linear mapping.
 * An orthonormal transform matrix is _unitary_: stem:[A^{-1} = \overline{A}^{T}] (conjugate transpose).
 ** If stem:[y = Ax] is _forward transform_, then stem:[x = A^{-1}y = \overline{A}^T y] is _inverse transform_.
-* "A vector is projected into basis" = "A vector is expanded into linear combination of basis vectors".
+* _"A vector is projected into a basis."_ is the same as _"A vector is expanded into linear combination of basis vectors."_.
 * An stem:[N]-dimensional vector is the same as a discrete function with length stem:[N].
 --
 
@@ -108,7 +108,7 @@ f(m) = \sum_{k=1}^{N} a_k \varphi_k(m)
 ** Where stem:[a_k] is a scalar and is found using inner product stem:[a_k = \frac{\langle f, \varphi_k \rangle}{\langle \varphi_k, \varphi_k \rangle}].
 * The set of functions stem:[\varphi_k] is predefined.
 * We want the decomposition to be unique, fast, and numerically stable.
-* It's very similar to decomposition of vectors, except we have an orthonormal basis of functions instead of vectors.
+* It's very similar to decomposition of vectors, except we have an orthogonal basis of functions instead of vectors.
 * Ideally we want a perfect decomposition, so that we can go back, but sometimes approximation is enough (e.g., compression).
 --
 
@@ -146,17 +146,27 @@ Kronecker delta::
 ++++
 
 Dirac delta::
-Also known as the _unit impulse_:
+Contiguous equivalent to the Kronecker delta. Also known as the _unit impulse_:
 +
 [stem]
 ++++
+\begin{aligned}
+
 \delta(x) =
 \begin{cases}
     0,          & x \neq 0 \\
     \infty,     & x = 0
-\end{cases}
+\end{cases} \\
+
+\;\\
+
+\text{such that} \\
+
+\;\\
 
 \int_{\infty}^{\infty} \delta(x) dx = 1
+
+\end{aligned}
 ++++
 
 Euler's formula (Euler-Moivre equation)::
