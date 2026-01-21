@@ -125,6 +125,20 @@ where scalar coefficients stem:[a_k = \frac{\langle f, \varphi_k \rangle}{\langl
 Even and odd functions::
 * For even functions stem:[f(-x) = f(x)] (e.g., stem:[\cos]).
 * For odd functions stem:[f(-x) = -f(x)] (e.g., stem:[\sin]).
+* Any function can be split into an even and odd function:
++
+[stem]
+++++
+\begin{aligned}
+
+E(m) &= \frac{1}{2} \lbrack f(m) + f(-m) \rbrack \\
+
+O(m) &= \frac{1}{2} \lbrack f(m) - f(-m) \rbrack \\
+
+f(m) &= E(m) + O(m)
+
+\end{aligned}
+++++
 
 Sinc::
 +

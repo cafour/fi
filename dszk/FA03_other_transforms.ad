@@ -339,9 +339,9 @@ We use these functions:
 +
 --
 * stem:[\varphi(x, y) = \varphi(x) \cdot \varphi(y)] scaling function at row stem:[y] and column stem:[x].
-* stem:[\psi^H(x, y) = \psi(x) \cdot \varphi(y)] intensity variantions along **columns**.
-* stem:[\psi^V(x, y) = \varphi(x) \cdot \psi(y)] intensity variantions along **rows**.
-* stem:[\psi^D(x, y) = \psi(x) \cdot \psi(y)] intensity variantions along **diagonals**.
+* stem:[\psi^H(x, y) = \psi(x) \cdot \varphi(y)] intensity variations along **columns**.
+* stem:[\psi^V(x, y) = \varphi(x) \cdot \psi(y)] intensity variations along **rows**.
+* stem:[\psi^D(x, y) = \psi(x) \cdot \psi(y)] intensity variations along **diagonals**.
 --
 +
 image::./img/fa03_2d_dwt.png[]

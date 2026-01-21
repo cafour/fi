@@ -7,7 +7,7 @@ Fourier analysis::
 * Study of how general functions (e.g., on stem:[\Reals]) can be approximated by sums of simpler (e.g., trigonometric) functions.
 * Fourier's original motivation was to solve the _heat equation_, a partially differentiable equation.
 ** A partially differentiable equation (PDE) involves multiple variables and one or more of their derivatives.
-** Example: I want to know what happens, when I put two rods of different temperatures into contact.
+** _Example: I want to know what happens, when I put two rods of different temperatures into contact._
 
 == Fourier series
 
@@ -20,7 +20,7 @@ Series expansion (CZ: rozvinutí nekonečné řady) of a periodic function into 
 * Simple mathematical tool for approximation of periodic functions.
 * The stem:[F(k)] coefficients are called _frequency spectrum_.
 * Each stem:[F(k)] coefficient is the projection of the stem:[k]-th basis function onto stem:[f].
-* It answers the question: "How important is this basis function in the grand scheme of stem:[f]?"
+* It answers the question: _"How important is this basis function in the grand scheme of stem:[f]?"_
 * Typically, we use a stem:[\log] scale for visualization of the coefficients.
 --
 
@@ -285,6 +285,8 @@ Proof of scaling of FT::
 **_Proof:_**
 +
 image::./img/fa02_proof_cft_scaling.png[]
++
+NOTE: We solve the integral using substitution stem:[u = ax]. Normally, we would get a factor stem:[\frac{1}{a}] in front of the integral. However, we must make one case for stem:[a > 0] and another for stem:[a < 0], which together resolve in stem:[\frac{1}{|a|}].
 
 
 Convolution theorem (CZ: věta o konvoluci)::
@@ -315,6 +317,7 @@ Discrete time Fourier Transform (DTFT)::
 * We sample the time domain.
 * In other words, we turn discrete samples that are evenly-spaced in time into a continous function.
 * Under the _Nyquist-Shannon sampling theorem_ we can, under certain conditions, recover the original continuous signal from the samples.
+* Theoretical tool used in mathematics but not in signal processing.
 --
 +
 time -> frequency:
@@ -346,7 +349,7 @@ Given a discrete 1D signal stem:[f] of length stem:[N] (stem:[|f| = N]), let ste
 +
 [stem]
 ++++
-\varphi_k(n) = \frac{1}{\sqrt{N}} e^{2\pi n k}{N} = \frac{1}{\sqrt{N}}\left( \cos\frac{2\pi n k}{N} + i \sin \frac{2\pi n k}{N} \right)
+\varphi_k(n) = \frac{1}{\sqrt{N}} e^{\frac{2\pi n k}{N}} = \frac{1}{\sqrt{N}}\left( \cos\frac{2\pi n k}{N} + i \sin \frac{2\pi n k}{N} \right)
 ++++
 +
 where:
@@ -389,7 +392,7 @@ Let stem:[\psi = e^{-\frac{2\pi}{N} i}] be the Nth root of unity, then:
 +
 [stem]
 ++++
-\overline{\varphi_k(n)} = \frac{1}{\sqrt{N}}e^{-\frac{2\pi}{N} i n k} = \frac{1}{\sqrt{N}} \left( e^{-\frac{2\pi}{N} i} \right) = \frac{1}{\sqrt{N}} \psi^{nk}
+\overline{\varphi_k(n)} = \frac{1}{\sqrt{N}}e^{-\frac{2\pi}{N} i n k} = \frac{1}{\sqrt{N}} \left( e^{-\frac{2\pi}{N} i} \right)^{nk} = \frac{1}{\sqrt{N}} \psi^{nk}
 ++++
 +
 Then stem:[A] is the forward DFT matrix:
@@ -650,13 +653,13 @@ Sampling::
 image::./img/fa02_frequency_domain_sampling.png[]
 
 Nyquist-Shannon theorem::
-Exact reconstruction of a continuous signal from its samples is possible if the signal is bandlimited and the sampling frequency is greater thn twice the signal maximum frequency.
+Exact reconstruction of a continuous signal from its samples is possible if the signal is bandlimited and the sampling frequency is greater than twice the signal maximum frequency.
 
 Reconstruction::
 Reconstruction is a convolution of a discrete sequence with some _low-pass_ filter with the objective to get the original continuous signal.
 
 Aliasing::
-Phenomenon occurring when a continuous signal is samples at a rate insufficient to capture its complete frequency content.
+Phenomenon occurring when a continuous signal is sampled at a rate insufficient to capture its complete frequency content.
 +
 --
 * It happens when the Nyquist-Shannon condition is broken.
@@ -667,7 +670,7 @@ Phenomenon occurring when a continuous signal is samples at a rate insufficient 
 image::./img/fa02_aliasing.png[]
 
 Prefiltering::
-A solution to aliasing, where we apply a **harware-based** low-pass filter before sampling the continuous signal, effectivelly lowing the upper bound of its frequencies.
+A solution to aliasing, where we apply a **harware-based** low-pass filter before sampling the continuous signal, effectivelly lowering the upper bound of its frequencies.
 
 Resampling::
 Changing the sampling frequency of an already sampled signal, preferably without introducing aliasing.
@@ -710,7 +713,7 @@ where
 --
 
 Postfiltering/supersampling::
-If stem:[\gamma] is not affine, the resampling filter stem:[\rho(n, k)] os space variant. In that case, we do actually have to reconstruct the continous signal from the original discrete signal, warp it, sample it at _very high resolution_ to avoid aliasing, and the _postfilter_ it to produce a lower resolution output signal. The convolution happens at the very end.
+If stem:[\gamma] is not affine, the resampling filter stem:[\rho(n, k)] is space-variant. In that case, we do actually have to reconstruct the continous signal from the original discrete signal, warp it, sample it at _very high resolution_ to avoid aliasing, and the _postfilter_ it to produce a lower resolution output signal. The convolution happens at the very end.
 
 
 == Fourier Transform in 2D
@@ -758,6 +761,10 @@ Frequency domain (FD) in 2D DFT::
 --
 +
 image::./img/fa02_2d_frequency_domain.png[]
++
+The phase contains what seems like noise, but it's important for the structure (edges) of the image:
++
+image::./img/fa02_2d_dft_phase.png[]
 +
 Visually, each stem:[\omega = (u, v)] vector of FD represents a 2D sinusoidal function of stem:[(x, y)]. Magnitude of stem:[\omega] is the frequency. Direction of stem:[\omega] is the orientation of the "waves".
 +
@@ -860,7 +867,7 @@ What is a prefilter?::
 A low-pass filter to prevent aliasing while (re)sampling.
 
 Give an example of stem:[\gamma] warping function.::
-Rotation, halving the resolution, offesetting by one pixel to the left, etc.
+Rotation, halving the resolution, offsetting by one pixel to the left, etc.
 
 ====
 
@@ -878,3 +885,4 @@ Rotation, halving the resolution, offesetting by one pixel to the left, etc.
 ** link:https://is.muni.cz/auth/el/fi/jaro2023/PV131/um/lectures/lecture03_2023.pdf[Lecture 03 -- Multi-dimensional Fourier Transform]
 * https://www.robots.ox.ac.uk/~az/lectures/ia/lect2.pdf
 * https://ubcmath.github.io/MATH307/dft/dft.html
+* [[so-phase]] link:https://stackoverflow.com/questions/13549186/how-to-plot-a-2d-fft-in-matlab[How to plot a 2D FFT in Matlab?]
