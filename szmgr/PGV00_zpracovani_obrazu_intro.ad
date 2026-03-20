@@ -1,8 +1,8 @@
-[TIP]
-====
-Doporučuju kouknout na shrnutí v link:https://xrosecky.notion.site/PA166-Image-analysis-II-b2875a07366c404dabbf20a8b75a6e2e?pvs=74[zápiscích z předmětu PA166 od xrosecky]
-====
-
+= Zpracování obrazu -- Intro
+:url: ./zaklady_vizualizace/
+:page-group: pgv
+:page-order: PGV00
+:description: Úvod do státnicových otázek specializace Zpracování obrazu (PGV).
 
 Gradient stem:[\nabla]::
 Vektorové pole ve směru největšího nárůstu.
@@ -32,3 +32,10 @@ f'(x) \approx \frac{f(x + 1) - f(x - 1)}{2h}
 ++++
 +
 Podobným stylem získáme i druhou derivaci
+
+== Další zdroje
+
+[TIP]
+====
+Doporučuju kouknout na shrnutí v link:https://xrosecky.notion.site/PA166-Image-analysis-II-b2875a07366c404dabbf20a8b75a6e2e?pvs=74[zápiscích z předmětu PA166 od xrosecky]
+====

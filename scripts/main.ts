@@ -35,9 +35,9 @@ export function toggleTheme(): void {
 }
 
 const localStorageTheme = getLocalStorageTheme();
-    if (localStorageTheme) {
-        setTheme(localStorageTheme);
-    }
+if (localStorageTheme) {
+    setTheme(localStorageTheme);
+}
 
 // self.addEventListener("load", () => {
     

@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: "Space Grotesk", ui-sans-serif, sans-serif;
+    --font-serif: "Bitter", ui-serif, "Georgia", "Times New Roman", serif;
+    --font-mono: "Cascadia Mono", ui-monospace, "Liberation Mono", "Consolas", "Courier New", monospace;
+    --color-paper: #faf2eb;
+    --color-desk: #3a322b;
+    --color-dark: #202020;
+    --color-light: #efefef;
+
+    --color-cocoa-50:  "#fcfbf8";
+    --color-cocoa-100: "#faf1df";
+    --color-cocoa-200: "#f4d7bc";
+    --color-cocoa-300: "#e5af8a";
+    --color-cocoa-400: "#d7815a";
+    --color-cocoa-500: "#c05e38";
+    --color-cocoa-600: "#924924"; /*$color-link*/
+    --color-cocoa-700: "#7d321d";
+    --color-cocoa-800: "#562215";
+    --color-cocoa-900: "#35150d";
+}
+
+@custom-variant dark {
+    @media (prefers-color-scheme: dark) {
+        html:not([data-theme="light"]) & {
+            @slot;
+        }
+    }
+
+    html[data-theme="dark"] & {
+        @slot;
+    }
+}

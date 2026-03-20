@@ -1,11 +1,13 @@
 = Guidelines
+:description: Guidelines for contributing notes
 
 Při psaní těchhle poznámek jsem se snažil (s proměnlivou mírou uspěšnosti) držet několika pravidel:
 
 _Stopařův průvodce_ ne _Galaktická encyklopedie_::
 * Drž se formátu _heslo_ -> _stručný popis_.
 * Nepiš román.
-* Používej definition lists.
+* Nepiš zbytečně o věcech, na které se otázka neptá, pokud na nich některé z hesel nezávisí.
+* Používej link:https://docs.asciidoctor.org/asciidoc/latest/lists/description/[_description lists_].
 
 Upřednosťnuj hesla ze zadání::
 Nejprve popiš věci ze zadání a pak se teprve věnuj souvisejícím věcem.
@@ -17,7 +19,7 @@ Zdroje::
 Pokud je to možné, odkazuj na zdroje.
 
 Využívej možností Asciidocu::
-Existují _example blocks_, _admonitions_, _code blocks_, atd. Využívej je, ať to není jenom nudný text.
+Existují _example blocks_, _admonitions_, _code blocks_, atd. Využívej je, ať to není všechno jenom text.
 
 Obrázky::
 Pokud se hodí, přidej obrázek. *Nevkládej ale jen screenshoty ze slidů.*

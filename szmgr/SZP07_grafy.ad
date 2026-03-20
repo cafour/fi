@@ -148,6 +148,9 @@ Hledá nejkratší cesty z jednoho vrcholu do všech ostatních.
 * Využívá relaxaci hran.
 * Funguje i na grafech se zápornými hranami.
 * Má časovou složitost stem:[\mathcal{O}(\lvert V \rvert \cdot \lvert E \rvert)].
+* Udělá max $V-1$ iterací, protože nejdelší cesta může mít max $V-1$ hran (přes žádný vertex nepůjdeš dvakrát).
+* _Modifikace_: Po $V-1$ by už nejkratší cesty měly být nalezeny. Udělejme ještě jednu iteraci - pokud se hodnoty změní, pak nejkratší cesta obsahuje negativní cyklus. Viz python kód dole.
+* _Modifikace_: Early stop - pokud se 2 interace po sobě hodnoty vrcholů nezmění, pak jsme našli nejkratší cesty.
 --
 
 [source, python]
@@ -389,7 +392,7 @@ Je to pětice stem:[G_f = (V, E_f, s, t, c_f)], kde
 ]
 
 Augmenting path stem:[P]::
-Jednoduchá stem:[s \rightsquigarrow t] cesta v residuální síti stem:[G_f].
+Jednoduchá stem:[s \rightsquigarrow t] cesta v residuální síti stem:[G_f]. Cesty hledáš buď BFS nebo DFS - každou iteraci si prostě nějakou vybereš.
 +
 NOTE: T.j. cesta která může jít i proti směru toku stem:[f].
 +

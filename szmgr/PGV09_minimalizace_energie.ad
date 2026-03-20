@@ -10,7 +10,10 @@ Variační filtrování. Aktivní křivky a plochy (geodetický model, Chan-Vese
 _PA166_
 ====
 
-include::./PGV_zpracovani_obrazu_intro.ad[]
+[WARNING]
+====
+Ujisti se, že máš přečtený link:./PGV00_zpracovani_obrazu_intro.ad[_Úvod do zpracování obrazu_].
+====
 
 == Variační filtrování
 Variační filtrování neřeší lokálně jednotlivé pixely, ale snaží se minimalizovat enetgii celého obrázku.
