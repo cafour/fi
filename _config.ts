@@ -111,7 +111,6 @@ site.use(sass({
 }));
 site.use(tailwindcss());
 site.use(postcss());
-site.use(metas());
 site.use(resolveUrls());
 site.use(sitemap({
     query: "indexable=true"
@@ -141,6 +140,7 @@ site.use(transformImages({
         }
     }
 }));
+site.use(metas());
 site.use(inline());
 site.use(katex({
     options: {
@@ -169,7 +169,7 @@ site.add("index.md");
 site.add("scripts");
 site.add("styles");
 site.add([".md", ".ad"]);
-site.add([".png", ".jpg", ".jpeg", ".gif", ".svg"])
+site.add([".png", ".jpg", ".jpeg", ".gif", ".svg"]);
 site.use(finder());
 site.use(git());
 site.use(pagefind({
