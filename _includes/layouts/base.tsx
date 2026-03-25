@@ -33,6 +33,7 @@ export default function (
 
         <link href="/katex.css" rel="stylesheet" />
         <script type="text/javascript" src="/scripts/main.js" />
+        <script defer src="https://stats.mlejnek.cafour.cz/do.js" data-website-id="5f5e5531-ab6e-47bb-a570-c1ed6d8ebdb3"></script>
       </head>
 
       <body className={styles?.join(" ")}>{children}</body>
