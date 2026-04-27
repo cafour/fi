@@ -1,13 +1,11 @@
-= Renderování s využitím GPU (2023)
-:url: ./renderovani-s-vyuzitim-gpu/
+= Vykreslování s využitím GPU (2026)
+:url: ./vykreslovani-s-vyuzitim-gpu/
 :page-group: vph
-:page-order: VPH07 2023
-
-WARNING: Tato otázka zatím nebyla aktualizována. Nová varze obsahuje pár termínů navíc!
+:page-order: VPH07 2026
 
 [NOTE]
 ====
-Principy OpenGL, souřadnicové systémy (prostor světa, prostor kamery, prostor objektů), typy shaderů a jejich použití (vertex, fragment, compute, teselační). Technika stínových map. Principy odloženého stínování a jejich použití. Efekty prostoru obrazu (anti-alias, ambientní okluze).
+Principy OpenGL, souřadnicové prostory (prostor objektu, prostor světa, prostor kamery, ořezávací prostor a normalizovaný prostor zařízení). Typy shaderů a jejich použití ve hrách (vertex, fragment, geometry, compute, teselační). Technika stínových map. Principy odloženého stínování. Ambientní okluze v prostoru obrazovky.
 
 _PV227_
 ====
@@ -83,15 +81,15 @@ Prostor, který je viděn z pozice kamery.
 +
 _View_ matice (stem:[V]) slouží k otočení, posunutí a případnému zvětšení nebo zmenšení prostoru světa tak, aby se objekty nacházely v prostoru před kamerou.
 
-Clip space::
-OpenGL očekává, že všechno, co bude vykresleno se nachází v jistém objemu -- clip space. Všechny souřadnice musíme do tohoto objemu převést a zároveň (pokud je to žádané) na ně aplikovat nějakou projekci (perspektivní, ortogonální, atd).
+Clip space / ořezávací prostor::
+OpenGL očekává, že všechno, co bude vykresleno, se po vertex shaderu nachází v jistém objemu -- clip space. Souřadnice jsou zde stále homogenní, tedy mají čtyři složky stem:[(x, y, z, w)]. Primitiva mimo kanonický objem stem:[-w \leq x \leq w], stem:[-w \leq y \leq w], stem:[-w \leq z \leq w] jsou ořezána, aby se dál nerasterizovalo nic, co kamera nemůže vidět.
 +
 Pro převod do clip space slouží _projection_ matice (stem:[P]). Ta nám umožňuje objekt nejen posunout ale i otočit a změnit jeho měřítko. <<coordinate-systems>>
 +
 Tento prostor stále používá 4-dimenzionální homogenní souřadnice.
 
-Normalized Device Coordinates (NDC)::
-NDC je jako clip space, ale po převodu z homogenních souřadnic do kartézských pomocí _perspective divide_ (dělení stem:[w]).
+Normalized Device Coordinates (NDC) / normalizovaný prostor zařízení::
+NDC je clip space po převodu z homogenních souřadnic do kartézských pomocí _perspective divide_ (dělení stem:[w]). Je to normalizovaný mezikrok nezávislý na konkrétním rozlišení okna.
 +
 V OpenGL je to kostka stem:[x \in (-1.0, 1.0), y \in (-1.0, 1.0), z \in (-1.0, 1.0)].
 
@@ -174,7 +172,7 @@ Volitelně umožňuje předaný patch rozdělit na více menších patchů (subd
 --
 
 Geometry shader (GS)::
-Volitně umožňuje upravit / dogenerovat (teselovat) data per primitive. Je spušten jednou per primitive. Je mocnější než tesselation, ale tím pádem i méně efektivní.
+Volitelně umožňuje upravit / dogenerovat data per primitive. Je spuštěn jednou pro celé primitivum a na vstupu typicky dostane bod, čáru nebo trojúhelník včetně jeho vrcholů. Na výstupu může primitivum zahodit, změnit, nebo emitovat nová primitiva, takže se hodí třeba pro billboarding, vizualizaci normál, jednoduché procedurální doplnění geometrie či výběr vrstvy pro renderování do cube mapy. Je flexibilní, ale často pomalejší než specializovanější fáze pipeline, takže se nepoužívá na masivní teselaci.
 
 Vertex post-processing::
 OpenGL následně: <<post-process>>
@@ -332,26 +330,6 @@ Nevýhody:
 
 == Screen space effects / efekty prostoru obrazu
 
-=== Anti-aliasing
-
-Aliasing::
-Aliasing vzniká, když je sample rate nižší než Nyquist frequency. Projevuje se jako nová nízko-frekvenční informace, která v obrazu neexistuje. Při renderování se projevuje jako "schody" na hranách objektů.
-+
-.Aliasing <<anti-aliasing>>
-image::./img/vph07_aliasing.png[width=500rem]
-
-Anti-aliasing::
-Anti-aliasing jsou techniky, které zvyšují "samplovací frekvenci" renderování, a tak pomáhání eliminovat aliasing.
-
-Super sample anti-aliasing (SSAA)::
-Vyrenderujeme scénu v mnohem vyšším rozlišení a pak ji downscalujeme. Nevýhodou je, že počítáme _mnohem_ více fragmentů.
-
-Multisample anti-aliasing (MSAA)::
-Pro každý pixel máme 2/4/8/... subsamply. Každý fragment počítáme jen jednou, ale podle toho, kolik subsamplů ho pokrývá, ho blendujeme s již existují barvou.
-+
-.MSAA <<anti-aliasing>>
-image::./img/vph07_msaa.png[width=500rem]
-
 === Ambient occlusion
 
 Ambient occlusion approximuje, jak moc je objekt vystaven ambientním světlu. Jinými slovy jak moc by měl být objekt v daném místě tmavý kvůli okolním objektům. Pokud používáme ray-tracing máme ambient occlusion "zadarmo", jelikož paprsky narazí na okolní objekty. Pokud nemáme ray tracing, můžeme použít nějakou fintu.
@@ -376,11 +354,10 @@ image::./img/vph07_ssao.png[width=500rem]
 * [[[depth-range,6]]] link:https://registry.khronos.org/OpenGL-Refpages/gl4/html/glDepthRange.xhtml[`glDepthRange`]
 * [[[vulkan-coords,7]]] link:http://anki3d.org/vulkan-coordinate-system/[Vulkan's coordinate system]
 * [[[pv227,8]]] link:https://is.muni.cz/auth/el/fi/podzim2022/PV227/[PV227 GPU Rendering (podzim 2022)]
-* [[[anti-aliasing,9]]] link:https://learnopengl.com/Advanced-OpenGL/Anti-Aliasing[LearnOpenGL: Anti-Aliasing]
-* [[[ambient-occlusion,10]]] link:https://en.wikipedia.org/wiki/Ambient_occlusion[Wikipedia: Ambient occlusion]
-* [[[ssao,11]]] link:https://learnopengl.com/Advanced-Lighting/SSAO[LearnOpenGL: SSAO]
-* [[[shadow-maps,12]]] link:https://developer.download.nvidia.com/CgTutorial/cg_tutorial_chapter09.html[The Cg Tutorial: Shadow Mapping]
-* [[[pa010-2021,13]]] Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)
+* [[[ambient-occlusion,9]]] link:https://en.wikipedia.org/wiki/Ambient_occlusion[Wikipedia: Ambient occlusion]
+* [[[ssao,10]]] link:https://learnopengl.com/Advanced-Lighting/SSAO[LearnOpenGL: SSAO]
+* [[[shadow-maps,11]]] link:https://developer.download.nvidia.com/CgTutorial/cg_tutorial_chapter09.html[The Cg Tutorial: Shadow Mapping]
+* [[[pa010-2021,12]]] Byška, Furmanová, Kozlíková, Trtík: PA010 Intermediate Computer Graphics (podzim 2021)
 
 == Další zdroje
 
