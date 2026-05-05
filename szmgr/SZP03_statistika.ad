@@ -344,7 +344,7 @@ NOTE: Taky někdy označovaný jako _centrální moment druhého řádu / druhý
 Směrodatná odchylka / standard deviation::
 Míra variability NV. Značí se stem:[\sigma] nebo stem:[\text{SD}(X)]. Je definovaná jako stem:[\sqrt{\sigma^2}].
 
-ovariance veličin stem:[X] a stem:[Y]::
+Kovariance veličin stem:[X] a stem:[Y]::
 Měří určitou podobnost mezi stem:[X] a stem:[Y].
 +
 [stem]
